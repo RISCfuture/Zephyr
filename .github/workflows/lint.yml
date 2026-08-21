@@ -1,0 +1,57 @@
+name: Linters
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swiftlint:
+    name: Run SwiftLint
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: SwiftyLab/setup-swift@latest
+        with:
+          swift-version: "6.3"
+      # .swiftlint.yml's parent_config is a gist URL that SwiftLint fetches itself, and a slow or
+      # unreachable gist fails the run. Fetching it here with retries, then pointing the config at
+      # the local copy, takes the network out of the linter's path.
+      - name: Pre-fetch parent SwiftLint config
+        run: |
+          curl -fsSL --retry 3 --retry-delay 2 -o .swiftlint-parent.yml \
+            'https://gist.githubusercontent.com/RISCfuture/c57d132e5e0160a768df1625e20ae3b8/raw/.swiftlint.yml'
+          sed -i '' 's|parent_config:.*|parent_config: .swiftlint-parent.yml|' .swiftlint.yml
+      - name: Install SwiftLint
+        run: brew install swiftlint
+      - name: Run SwiftLint
+        run: swiftlint --strict
+
+  swift-format:
+    name: Run swift-format
+    runs-on: ubuntu-latest
+    container:
+      image: swift:latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Download .swift-format config
+        # The checked-in .swift-format is a symlink to the one in the author's home directory, so a
+        # clean checkout has a dangling link. It has to be removed rather than written through:
+        # `wget -O` follows the link and fails on the missing target. Replace it with the same
+        # shared config the symlink points at locally.
+        run: |
+          apt-get update && apt-get install -y wget
+          rm -f .swift-format
+          wget -O .swift-format \
+            https://gist.githubusercontent.com/RISCfuture/e0c21afb7bd80a88d128a42bf40d2ecd/raw/.swift-format
+      - name: Run swift-format lint
+        run: |
+          find libZephyr "Zephyr Common" Zephyr-MAS Zephyr-download \
+            FileProvider FileProviderUI ShareExtension Widget zephyr-cli \
+            libZephyrTests ZephyrTests ZephyrUITests \
+            -name '*.swift' -exec swift format lint --strict {} +

@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Use Zephyr in a shortcut</title>
+<meta name="description" content="Pause syncing, upload a file, or get a share link from the Shortcuts app.">
+<meta name="keywords" content="shortcuts, automation, siri, spotlight, script, app intents, action, automate">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="automate-shortcuts" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="automate-shortcuts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Use Zephyr in a shortcut</h1>
+<p>Zephyr adds actions to the Shortcuts app, so you can pause syncing, send a file to Dropbox, or
+get a share link as a step in something larger. Both versions of Zephyr have them.</p>
+
+<div class="Task">
+<h2 class="Name">Add a Zephyr action to a shortcut</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Open the Shortcuts app, then click the add button in the toolbar to make a new
+      shortcut.</p></li>
+  <li><p>In the action list on the right, type <em>Zephyr</em> in the search field.</p></li>
+  <li><p>Double-click the action you want. It appears in the shortcut.</p></li>
+  <li><p>Fill in whatever the action asks for &#8212; a file, a folder, an account &#8212; then
+      click the run button to try it.</p></li>
+</ol>
+<p>These are the actions Zephyr adds:</p>
+<ul>
+  <li><p><em>Pause or Resume Syncing</em> stops or starts syncing for every account, the same as
+      the menu-bar panel&#8217;s Pause Syncing.</p></li>
+  <li><p><em>Snooze Zephyr Notifications</em> holds every notification for 30 minutes, an hour, or
+      eight hours, or ends a snooze early. Syncing carries on.</p></li>
+  <li><p><em>Get Sync Status</em> answers with how many files and folders Zephyr has indexed and
+      how many items couldn&#8217;t sync.</p></li>
+  <li><p><em>Upload to Dropbox</em> sends a file to a folder you pick.</p></li>
+  <li><p><em>Get Dropbox Share Link</em> answers with a link to a file or folder, making one if it
+      doesn&#8217;t already have one. Follow it with Copy to Clipboard to put the link
+      there.</p></li>
+  <li><p><em>Restore Dropbox File</em> puts a file back to one of the versions Dropbox kept. It
+      asks before it does.</p></li>
+</ul>
+<p>The file and folder fields search Zephyr&#8217;s index rather than your disk, so a folder
+nothing has ever downloaded is offered exactly like one that&#8217;s already here.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Run an action without building a shortcut</h2>
+<div class="TaskBody">
+<p>Pause Syncing, Snooze Notifications, and Sync Status are also offered on their own.</p>
+<ol>
+  <li><p>Press Command-Space to open Spotlight.</p></li>
+  <li><p>Type the name of the action, such as <em>Pause Syncing</em>.</p></li>
+  <li><p>Press Return.</p></li>
+</ol>
+<p>You can ask Siri for them too, by saying something like &#8220;Pause syncing in Zephyr.&#8221;
+Zephyr doesn&#8217;t need to be open: it starts in the background, does the work, and doesn&#8217;t
+come to the front.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">If an action says no account is linked</h2>
+<div class="TaskBody">
+<p>Shortcuts act as the accounts you linked <em>in the Zephyr app</em>. The <code>zephyr</code>
+command-line tool keeps its own separate credentials, so an account you linked only by running
+<code>zephyr auth link</code> is not one a shortcut can use.</p>
+<ol>
+  <li><p>Click Zephyr in the menu bar, then click Manage Accounts&#8230;</p></li>
+  <li><p>Click Link Dropbox Account&#8230; in the toolbar, and link the account
+      there.</p></li>
+</ol>
+<p>When you have more than one account linked, actions that reach into a Dropbox ask which one.
+With only one, they use it without asking.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pause syncing</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Choose which notifications Zephyr shows</a>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Install the <code>zephyr</code> command-line tool</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Use more than one Dropbox account</a>
+</div>
+</body>
+</html>

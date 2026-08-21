@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>If a file won’t sync</title>
+<meta name="description" content="Find which items couldn't sync, read what went wrong, and clear them.">
+<meta name="keywords" content="sync issues, couldn't sync, failed, error, dismiss, show, stuck, not syncing">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="sync-issues" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="sync-issues"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>If a file won’t sync</h1>
+<p>When Zephyr can&#8217;t sync something it keeps the item and the reason rather than retrying
+silently. A count appears under the account, and the list behind it says which items and why.</p>
+
+<div class="Task">
+<h2 class="Name">See what couldn&#8217;t sync</h2>
+<div class="TaskBody">
+<figure>
+  <picture>
+    <source srcset="images/sync-issues-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/sync-issues.webp" width="688" height="500" alt="The Sync Issues window, listing items grouped under their account, each with the reason it failed and Show and Dismiss buttons.">
+  </picture>
+  <figcaption>Each item names its path, the reason, and what you can do.</figcaption>
+</figure>
+<ol>
+  <li><p>Click Zephyr in the menu bar.</p></li>
+  <li><p>Click the couldn&#8217;t sync row under the account.</p>
+      <p>You can also choose Account &#9656; Sync Issues from the
+      menu bar while a Zephyr window is open.</p></li>
+</ol>
+<p>Each row names the item by its path in your Dropbox and says what went wrong underneath.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Deal with an item</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>Show</em> reveals the item in Finder, so you can see what state it&#8217;s
+      in.</p></li>
+  <li><p><em>Dismiss</em> takes the row off the list. It doesn&#8217;t fix anything &#8212; use it
+      once you&#8217;ve dealt with the item, or when the reason no longer applies.</p></li>
+</ul>
+<p>Common causes worth checking: the item is larger than your Dropbox has room for, its name uses
+something Dropbox won&#8217;t accept, or the item is a symbolic link, which Dropbox will not take at
+all. A row saying an item can&#8217;t be shared until the account&#8217;s email is verified is
+waiting on you rather than on Zephyr &#8212; verify the address with Dropbox and it clears.</p>
+<p>A file changed in two places at once is not a failure and doesn&#8217;t appear here. Dropbox keeps
+both and names the second copy itself &#8212; see
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">If the same file was
+changed in two places</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">A failure at the top of the list</h2>
+<div class="TaskBody">
+<p>A red row above the items is a problem with the account itself rather than with any one file, and
+nothing below it can sync while it stands. Deal with that first &#8212; see
+<a href="reauthorize.html#reauthorize" class="xRef AppleTopic">If Zephyr can&#8217;t connect to your
+Dropbox account</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Start the account&#8217;s index over</h2>
+<div class="TaskBody">
+<p>If the list is long and nothing about it makes sense, rebuilding what Zephyr knows about the
+account is the blunt instrument.</p>
+<ol>
+  <li><p>Click Zephyr in the menu bar, then click Manage Accounts&#8230;</p></li>
+  <li><p>Control-click the account, then choose Rebuild Index&#8230;</p></li>
+</ol>
+<p>Zephyr reads the account from Dropbox again from scratch. Your files aren&#8217;t touched; only
+Zephyr&#8217;s record of them is replaced.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="reauthorize.html#reauthorize" class="xRef AppleTopic">If Zephyr can&#8217;t connect to your Dropbox account</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Choose which notifications Zephyr shows</a>
+<a href="diagnostics.html#diagnostics" class="xRef AppleTopic">Collect a diagnostic report</a>
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">If the same file was changed in two places</a>
+</div>
+</body>
+</html>

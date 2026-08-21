@@ -1,0 +1,252 @@
+/*
+ * Zephyr Help.
+ *
+ * A help book is system UI. It is read in a window Apple draws, from a menu item Apple names,
+ * beside the help for Finder and Mail — so it is set the way Apple sets its own. The class names
+ * and the metrics below come from a real Apple help book,
+ * /Library/Documentation/Help/Offline.help/Contents/Resources/harrier/app.css, rather than from
+ * this project's marketing site, whose typeface and colour would read here as somebody's web page
+ * embedded in the app.
+ *
+ * That stylesheet is not copied: it is 54 KB of minified Apple asset that @imports a webfont from
+ * apple.com, which a book served off the local disk cannot reach. This is the same design,
+ * rewritten in what these pages actually use.
+ *
+ * `font: -apple-system-body` is the load-bearing declaration. Apple's own sheet sets a 13px root,
+ * but a hard pixel size silently defeats Help Viewer's text-size controls; the relative scale
+ * above it is Apple's.
+ */
+
+:root {
+  color-scheme: light dark;
+  --base-color: #000;
+  --subheading-color: #000;
+  --border-color: #e6e6e6;
+  --link-color: #007aff;
+  --footer-color: #888;
+  --emphasis-color: #555;
+  --figcaption-color: #888;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --base-color: #fff;
+    --subheading-color: #fff;
+    --border-color: #343434;
+    --link-color: #307bf6;
+    --footer-color: #888;
+    --emphasis-color: #999;
+    --figcaption-color: #888;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font: -apple-system-body;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+  line-height: 1.5;
+  color: var(--base-color);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: 320px;
+  max-width: 1442px;
+  padding: 1.7em 1.55em;
+}
+
+/* Headings ------------------------------------------------------------------------------------ */
+
+h1 {
+  margin: 0 0 .85em;
+  font-size: 1.692rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--subheading-color);
+}
+
+.topicIcon {
+  display: inline-block;
+  float: left;
+  width: 40px;
+  height: 30px;
+  margin: 0;
+}
+
+.topicIcon img { display: inline; }
+.topicIcon + h1 { margin-top: .1em; }
+
+/* Body copy ----------------------------------------------------------------------------------- */
+
+p {
+  margin: .1em 0 1em;
+  word-wrap: break-word;
+  widows: 3;
+  orphans: 3;
+}
+
+ol, ul { margin-top: .3em; margin-bottom: 1em; }
+ol { margin-left: 1.65em; }
+ul { margin-left: 1.45em; }
+li { margin-bottom: .35em; }
+li > p:last-child { margin-bottom: 0; }
+li ol, li ul { margin-top: .35em; }
+
+strong { font-weight: 700; }
+em { font-style: italic; }
+span.NoBreak { white-space: nowrap; }
+
+code, kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .92em;
+}
+
+/* Links --------------------------------------------------------------------------------------- */
+
+a {
+  position: relative;
+  outline: 0;
+  text-decoration: none;
+  color: var(--link-color);
+}
+
+a:visited { color: var(--link-color); }
+a:hover { text-decoration: underline; }
+
+/* Leaving the book for a browser is a surprise worth marking; a link that opens a settings pane
+   or another topic is not, so neither is marked. */
+a[href^="http"]::after {
+  content: " ↗";
+  font-size: .85em;
+}
+
+/* Tasks --------------------------------------------------------------------------------------- */
+
+/*
+ * Apple's task headers are collapsible, driven by its app.js. This book ships no JavaScript, so
+ * every task is Apple's own always-open variant: the rules above and below stay, the disclosure
+ * arrow and the pointer cursor do not.
+ */
+div.Task {
+  border-top: .5px solid var(--border-color);
+  border-bottom: .5px solid var(--border-color);
+  padding: 1.3em 0;
+  margin: 1.3em 0;
+}
+
+div.Task:first-of-type { margin-top: 1.4em; }
+div.Task + div.Task { border-top-color: transparent; padding-top: .4em; margin-top: 0; }
+
+div.Task > .Name {
+  width: 100%;
+  margin: 0;
+  padding: 0 1em .79em 0;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.43;
+  color: var(--subheading-color);
+}
+
+div.Task .TaskBody > p:first-child { margin-top: .3em; }
+
+/* Notes --------------------------------------------------------------------------------------- */
+
+/*
+ * Not a box. Apple gives an alert no background, no border, and no rule — the whole treatment is
+ * the italic lead-in, and anything more shouts over the step it belongs to.
+ */
+.Alert { margin: .75em 0; }
+.Alert + .Alert { margin-top: .75em; }
+.Alert + p { margin-top: .8em; }
+li p.Note { margin-top: .75em; }
+p.Note em { font-style: italic; }
+
+/* Tables -------------------------------------------------------------------------------------- */
+
+.table-wrapper { overflow-x: auto; }
+
+table {
+  width: 100%;
+  margin: 0 0 2em;
+  font-size: .9231rem;
+  line-height: 1.38465rem;
+  border-collapse: collapse;
+  table-layout: fixed;
+  text-align: left;
+}
+
+th, td { vertical-align: top; text-align: left; padding: .5em .8em .5em 0; }
+p.TableHead { font-weight: 700; margin: 0; }
+thead > tr { border-top: 2px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+tbody > tr { border-bottom: 1px solid var(--border-color); }
+td > p { margin: 0 0 .4em; }
+td > p:last-child { margin-bottom: 0; }
+
+/* Figures ------------------------------------------------------------------------------------- */
+
+figure:not(.topicIcon) { margin: 1em 0 1.4em; }
+
+figure:not(.topicIcon) img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+figcaption {
+  margin-top: .5em;
+  font-size: .7rem;
+  color: var(--figcaption-color);
+}
+
+/* An inline UI glyph sits in the run of a sentence, not on a line of its own. */
+p img, li img, td img { vertical-align: middle; border: none; border-radius: 0; }
+
+/* See also ------------------------------------------------------------------------------------ */
+
+.LinkUniversal { margin: 2em 0 0; }
+.LinkUniversal strong { display: block; }
+.LinkUniversal a { display: block; margin: .2em 0 .3em; }
+
+/* The table of contents ----------------------------------------------------------------------- */
+
+/*
+ * The landing page. Apple groups a guide's topics under plain headings and lets the titles do the
+ * work, so the list carries no bullets and each entry gets one line saying what is on the page.
+ */
+.landing .Intro {
+  margin-bottom: 2em;
+  font-size: 1.15rem;
+  line-height: 1.45;
+  color: var(--emphasis-color);
+}
+
+.landing section { margin: 0 0 1.9em; }
+
+.landing section > h2 {
+  margin: 0 0 .5em;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.43;
+  color: var(--subheading-color);
+}
+
+.landing ul { list-style: none; margin: 0; }
+.landing li { margin: 0 0 .7em; }
+.landing .gloss { display: block; color: var(--footer-color); }
+
+.Footnote {
+  margin-top: 2.5em;
+  padding-top: 1.2em;
+  border-top: .5px solid var(--border-color);
+  font-size: .8rem;
+  color: var(--footer-color);
+}

@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>If Zephyr is waiting for your permission</title>
+<meta name="description" content="Grant the things macOS holds back: the Finder extension, notifications, and opening at login.">
+<meta name="keywords" content="permission, approval, needs attention, system settings, login items, notifications, withheld, enable">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="withheld-approval" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="withheld-approval"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>If Zephyr is waiting for your permission</h1>
+<p>Three things Zephyr needs are granted by you in System Settings rather than by Zephyr. When
+macOS is withholding one, Zephyr says so under Needs Attention in the menu-bar
+panel, and along the bottom of its window, where the row carries an
+Open System Settings button &#8212; and says nothing at all when everything is
+in order.</p>
+
+<div class="Task">
+<h2 class="Name">Grant one</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Click Zephyr in the menu bar.</p></li>
+  <li><p>Click the row under Needs Attention &#8212;
+      Enable Zephyr in Finder&#8230;, Allow Zephyr&#8217;s
+      Notifications&#8230;, or Allow Zephyr to Open at Login&#8230;</p>
+      <p>System Settings opens at the pane that grants it. Zephyr can open the pane; only you can
+      turn the switch on.</p></li>
+  <li><p>Turn on the setting, then return to Zephyr.</p></li>
+</ol>
+<p>Zephyr checks again each time the panel opens and when its window comes forward, so the warning
+clears on its own once you&#8217;ve done it.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">What each one costs</h2>
+<div class="TaskBody">
+<div class="table-wrapper">
+<table data-type="Multicolumn" aria-label="What Zephyr needs from macOS">
+<thead><tr><th scope="col"><p class="TableHead">Withheld</p></th><th scope="col"><p class="TableHead">What stops working</p></th><th scope="col"><p class="TableHead">Where to grant it</p></th></tr></thead>
+<tbody>
+<tr><td><p>Enable Zephyr in Finder&#8230;</p></td><td><p>A linked account&#8217;s files can&#8217;t appear in Finder at all.</p></td><td><p>General &#9656; Login Items &amp; Extensions &#9656; File Providers</p></td></tr>
+<tr><td><p>Allow Zephyr&#8217;s Notifications&#8230;</p></td><td><p>File changes and sync issues go unannounced.</p></td><td><p>Notifications</p></td></tr>
+<tr><td><p>Allow Zephyr to Open at Login&#8230;</p></td><td><p>Finder only hears about remote changes while you have Zephyr open yourself.</p></td><td><p>General &#9656; Login Items &amp; Extensions</p></td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.fileprovider-nonui" class="URL">Open
+File Providers for me</a></p>
+<p><a href="x-apple.systempreferences:com.apple.LoginItems-Settings.extension" class="URL">Open
+Login Items &amp; Extensions for me</a></p>
+<p><a href="x-apple.systempreferences:com.apple.Notifications-Settings.extension" class="URL">Open
+Notifications for me</a></p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Why Zephyr can&#8217;t just ask</h2>
+<div class="TaskBody">
+<p>macOS shows an app&#8217;s permission prompt once. After you&#8217;ve answered, an app asking
+again gets the same answer without anything reaching the screen &#8212; which is why Zephyr sends
+you to System Settings instead of prompting a second time.</p>
+<p>Zephyr also only mentions what you have actually withheld. Something it has never asked you for
+is a preference, not a refusal, and it stays quiet about that.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Turn on Zephyr in Finder</a>
+<a href="notifications-denied.html#notifications-denied" class="xRef AppleTopic">If you don&#8217;t see Zephyr&#8217;s notifications</a>
+<a href="settings-general.html#settings-general" class="xRef AppleTopic">Keep Zephyr running in the background</a>
+</div>
+</body>
+</html>

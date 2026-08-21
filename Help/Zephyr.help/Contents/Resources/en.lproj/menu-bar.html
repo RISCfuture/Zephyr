@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Check what Zephyr is doing</title>
+<meta name="description" content="Read sync status, open an account in Finder, and reach Zephyr's controls from the menu bar.">
+<meta name="keywords" content="menu bar, status, panel, icon, uploading, up to date, accounts, quit, settings">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="menu-bar" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="menu-bar"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Check what Zephyr is doing</h1>
+<p>Zephyr has no main window that stays open. Its icon in the menu bar is the status readout, and
+clicking it opens the panel that holds everything else.</p>
+
+<div class="Task">
+<h2 class="Name">Read the panel</h2>
+<div class="TaskBody">
+<p>Click the Zephyr icon in the menu bar.</p>
+<figure>
+  <picture>
+    <source srcset="images/menu-bar-panel-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/menu-bar-panel.webp" width="448" height="480" alt="The Zephyr menu-bar panel, listing two accounts with their file and folder counts above Manage Accounts, Settings, Pause Syncing, Snooze Notifications, and Quit Zephyr.">
+  </picture>
+  <figcaption>One row per account, with the panel&#8217;s actions beneath.</figcaption>
+</figure>
+<ul>
+  <li><p><em>The top line</em> is the busiest thing happening across all your accounts, or
+      that syncing is paused: <em>Up to date</em>, <em>Syncing</em>, <em>Uploading</em>,
+      <em>Sync issues</em>, <em>Offline</em>, or <em>Can&#8217;t reach Dropbox</em>.</p></li>
+  <li><p><em>Waiting for a cheaper network</em> means this Mac is on a connection that costs you
+      something and Zephyr is holding back the work nobody asked for. Files you open still
+      download. See <a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limit
+      how much bandwidth Zephyr uses</a>.</p></li>
+  <li><p><em>Needs Attention</em> appears only when macOS is withholding something Zephyr needs.
+      Each row opens the System Settings pane that grants it.</p></li>
+  <li><p><em>Accounts</em> lists each linked account with what it&#8217;s doing and how many files
+      and folders it holds. Click an account to open it in Finder.</p></li>
+  <li><p><em>A warning under an account</em> is either a problem with the account itself or a
+      count of items that couldn&#8217;t sync. Clicking it opens the window that explains
+      which.</p></li>
+</ul>
+<p>The icon itself changes with the busiest account, so you can tell at a glance whether anything
+is moving without opening the panel.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Actions at the foot of the panel</h2>
+<div class="TaskBody">
+<div class="table-wrapper">
+<table data-type="Multicolumn" aria-label="The menu-bar panel's actions">
+<thead><tr><th scope="col"><p class="TableHead">Action</p></th><th scope="col"><p class="TableHead">What it does</p></th></tr></thead>
+<tbody>
+<tr><td><p>Manage Accounts&#8230;</p></td><td><p>Opens the Zephyr window, where accounts are linked and unlinked.</p></td></tr>
+<tr><td><p>Settings&#8230;</p></td><td><p>Opens Zephyr&#8217;s settings. <kbd>&#8984;,</kbd></p></td></tr>
+<tr><td><p>Pause Syncing</p></td><td><p>Stops sending and fetching until you resume. See <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pause syncing</a>.</p></td></tr>
+<tr><td><p>Snooze Notifications</p></td><td><p>Holds every notification for 30 minutes, 1 hour, or 8 hours.</p></td></tr>
+<tr><td><p>Quit Zephyr</p></td><td><p>Quits. Your files stay in Finder, but nothing new syncs until you open Zephyr again. <kbd>&#8984;Q</kbd></p></td></tr>
+</tbody>
+</table>
+</div>
+<p>A row that opens a window closes the panel behind it; a row that changes something in place
+leaves it open. Press <kbd>Escape</kbd> to close the panel.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pause syncing</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Choose which notifications Zephyr shows</a>
+<a href="sync-issues.html#sync-issues" class="xRef AppleTopic">If a file won&#8217;t sync</a>
+<a href="add-widget.html#add-widget" class="xRef AppleTopic">Add the Zephyr widget to your desktop</a>
+</div>
+</body>
+</html>

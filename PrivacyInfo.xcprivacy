@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  What Zephyr sends, in the form App Store Connect reads.
+
+	  Both editions carry this one file, so the two builds cannot come to
+	  describe themselves differently. Everything declared here comes from
+	  CrashReporting, which is the only part of Zephyr that sends anything
+	  anywhere but Dropbox: `sendDefaultPii` stays off, and every string goes
+	  through ReportRedaction on the way out, so no path, file name, account
+	  name, or credential is among what follows.
+
+	  Apple requires the required-reason API section only on iOS, iPadOS,
+	  tvOS, visionOS, and watchOS — never on macOS. It is declared anyway
+	  because the two APIs below are genuinely used and the answers do not
+	  change, which leaves nothing to work out later if that ever widens.
+	-->
+
+	<!-- Nothing is linked to third-party data, and no tracking domain is
+	     contacted. Sentry's ingest endpoint receives diagnostics Zephyr sends
+	     about itself; it is not a tracking domain. -->
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array>
+		<!--
+		  Crashes from all six Zephyr processes. Four are hosted out of the
+		  user's sight — by fileproviderd, the Finder, the share sheet, and
+		  WidgetKit — so when one dies there is no window to show it and
+		  nobody who would think to report it.
+		-->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeCrashData</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+
+		<!--
+		  Traces and profiles from the two long-lived processes, sampled at a
+		  fifth: where time goes in a sync client that runs all day.
+		-->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypePerformanceData</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAnalytics</string>
+			</array>
+		</dict>
+
+		<!--
+		  Handled errors and the breadcrumbs leading to them, which is how a
+		  sync failure nobody was watching gets explained.
+		-->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeOtherDiagnosticData</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+
+		<!--
+		  CrashReporting's installation identifier: a UUID minted on first need
+		  and kept in the app group container, so that repeated reports from
+		  one Mac group together and all six processes report as one
+		  installation. Nothing about it derives from the Dropbox account, the
+		  Apple Account, or any hardware serial number, and deleting the
+		  container forgets it — so it is collected, but linked to no identity.
+		-->
+		<dict>
+			<key>NSPrivacyCollectedDataType</key>
+			<string>NSPrivacyCollectedDataTypeDeviceID</string>
+			<key>NSPrivacyCollectedDataTypeLinked</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypeTracking</key>
+			<false/>
+			<key>NSPrivacyCollectedDataTypePurposes</key>
+			<array>
+				<string>NSPrivacyCollectedDataTypePurposeAppFunctionality</string>
+			</array>
+		</dict>
+	</array>
+
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array>
+		<!--
+		  CA92.1 for the app's own settings in the standard domain; 1C8F.1 for
+		  the ones in the group.codes.tim.Zephyr suite, which is how the
+		  widget, the extensions, and `zephyr` read the same bandwidth and
+		  notification settings the app writes.
+		-->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+				<string>1C8F.1</string>
+			</array>
+		</dict>
+
+		<!--
+		  C617.1 for the app group container, where the File Provider stamps a
+		  downloaded file with Dropbox's modified date and reads it back to
+		  decide what changed; 3B52.1 for a file the user hands the share
+		  sheet, whose modified date becomes the upload's `client_modified`.
+		-->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>C617.1</string>
+				<string>3B52.1</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

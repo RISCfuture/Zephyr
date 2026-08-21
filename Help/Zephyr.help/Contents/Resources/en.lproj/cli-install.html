@@ -1,0 +1,100 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>If the command-line tool won’t install</title>
+<meta name="description" content="What to do when the zephyr link can't be made, or the tool isn't in your build.">
+<meta name="keywords" content="command line, install, failed, authorization, usr local bin, symlink, sudo, password, administrator, path, not found">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="cli-install" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="cli-install"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>If the command-line tool won’t install</h1>
+<p>Installing the tool means making a link at <code>/usr/local/bin/zephyr</code>. The installer
+package makes it for you; a copy dragged out of a disk image takes one command in Terminal. These
+are the ways that goes wrong.</p>
+
+<div class="Task">
+<h2 class="Name">If you expected Zephyr to install it for you</h2>
+<div class="TaskBody">
+<p>The installer package does, while it runs, unless you cleared Command-Line Tool in its Customize
+pane. macOS keeps a running app out of <code>/usr/local/bin</code>, though, so a Zephyr that was
+dragged out of a disk image &#8212; or installed without that choice &#8212; can only show you the
+command and let you run it once yourself.</p>
+<ol>
+  <li><p>In Zephyr&#8217;s settings, scroll to Command-Line Tool and click Copy.</p></li>
+  <li><p>Paste the command into Terminal and press Return.</p></li>
+</ol>
+<p>Zephyr doesn&#8217;t need to be running, and you only do this once per copy of the app. If the
+pane says <em>Installed in /usr/local/bin</em> and offers no command, there is nothing to do.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">If Terminal won&#8217;t make the link</h2>
+<div class="TaskBody">
+<p>The command starts with <code>sudo</code>, which has two requirements.</p>
+<ul>
+  <li><p><em>It asks for a password.</em> Type your login password &#8212; nothing appears as you
+      type, which is normal &#8212; and press Return.</p></li>
+  <li><p><em>Your account has to be an administrator.</em> A standard account can&#8217;t write
+      there. Check in System Settings &gt; Users &amp; Groups, or ask whoever administers the
+      Mac.</p></li>
+</ul>
+<p>If Terminal says <code>no such file or directory</code>, the folder itself is missing. Run
+<code>sudo mkdir -p /usr/local/bin</code> first, then the command Zephyr showed you.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">If Zephyr says the tool isn&#8217;t included</h2>
+<div class="TaskBody">
+<p>Two builds say this, for different reasons.</p>
+<ul>
+  <li><p><em>The App Store version.</em> The App Store doesn&#8217;t allow an app to install
+      anything onto your <code>PATH</code>, so it ships without the tool and the pane says so. The
+      downloadable version is at <a href="https://riscfuture.github.io/Zephyr/#download">riscfuture.github.io/Zephyr</a>
+      &#8212; see <a href="editions.html#editions" class="xRef AppleTopic">Choose between the two
+      versions of Zephyr</a>.</p></li>
+  <li><p><em>A build that simply doesn&#8217;t carry it.</em> Download Zephyr again from the
+      project&#8217;s site.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">If the shell can&#8217;t find <code>zephyr</code></h2>
+<div class="TaskBody">
+<p>The link is installed but your shell isn&#8217;t looking there.</p>
+<ol>
+  <li><p>Open a new Terminal window. A shell already running never picks up a new
+      command.</p></li>
+  <li><p>Run <code>echo $PATH</code> and check that <code>/usr/local/bin</code> is in
+      it.</p></li>
+  <li><p>If it isn&#8217;t, add it in your shell&#8217;s startup file &#8212;
+      <code>~/.zshrc</code> for zsh.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Note: </em>If you move Zephyr.app somewhere else, the link
+still points at where it used to be. Copy the command from Zephyr&#8217;s settings again and run
+it: it names the new location and replaces the old link.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">If the tool can&#8217;t authenticate</h2>
+<div class="TaskBody">
+<p><code>zephyr</code> keeps its credentials separately from the app, so an account the app linked
+is one the tool can list but not act as. Run <code>zephyr auth link</code> once for the tool.
+Exit&nbsp;69 means no account is linked at all, which is how a script can tell that apart from a
+real failure.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Install the zephyr command-line tool</a>
+<a href="editions.html#editions" class="xRef AppleTopic">Choose between the two versions of Zephyr</a>
+</div>
+</body>
+</html>

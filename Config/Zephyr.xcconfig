@@ -1,0 +1,24 @@
+// Project-wide base configuration.
+
+// Zephyr's Dropbox app registration (https://www.dropbox.com/developers/apps).
+//
+// This is an OAuth *public client* identifier, not a secret. Zephyr authenticates
+// with PKCE and never sends a client secret, so the key is safe to commit — it is
+// already visible in every authorization redirect the app performs. Committing it
+// is what lets a fresh clone link an account without any additional setup.
+//
+// To build against your own registration instead, create Config/Secrets.xcconfig
+// (gitignored) from Config/Secrets.example.xcconfig; the include below lands after
+// this assignment, so whatever it sets wins.
+DROPBOX_APP_KEY = m1zxz1c298uhpg8
+
+// The signing team's identifier prefix ("TEAMID."), which prefixes the keychain
+// access group the app and its extensions share — the same $(AppIdentifierPrefix)
+// every target's keychain-access-groups entitlement is written with.
+//
+// The build system substitutes it only when a provisioning profile is applied.
+// Unsigned (CODE_SIGNING_ALLOWED=NO), ad-hoc, and teamless builds expand it to
+// nothing; GroupKeychainTokenStore treats that empty value as "not injected".
+ZEPHYR_KEYCHAIN_TEAM_PREFIX = $(AppIdentifierPrefix)
+
+#include? "Secrets.xcconfig"

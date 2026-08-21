@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Limit how much bandwidth Zephyr uses</title>
+<meta name="description" content="Cap Zephyr's upload and download rates, and say what it does on a hotspot or in Low Data Mode.">
+<meta name="keywords" content="bandwidth, limit, throttle, upload, download, speed, rate, unlimited, metered, hotspot, tethering, Low Data Mode, cellular, expensive">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="settings-bandwidth" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="settings-bandwidth"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Limit how much bandwidth Zephyr uses</h1>
+<p>A large upload can take a connection over entirely. Zephyr can be held to a rate you choose, in
+each direction.</p>
+
+<div class="Task">
+<h2 class="Name">Set a limit</h2>
+<div class="TaskBody">
+<figure>
+  <picture>
+    <source srcset="images/settings-bandwidth-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/settings-bandwidth.webp" width="460" height="156" alt="The Bandwidth section of Zephyr's settings: an Upload limit slider and a Download limit slider, each reading Unlimited, above a line saying that new limits take effect immediately and that every linked account shares them.">
+  </picture>
+  <figcaption>The Bandwidth section, with a rate beside each slider.</figcaption>
+</figure>
+<ol>
+  <li><p>Click Zephyr in the menu bar, then click Settings&#8230;</p></li>
+  <li><p>Scroll to Bandwidth.</p></li>
+  <li><p>Drag the Upload limit or Download limit slider.</p>
+      <p>The rate it&#8217;s set to is shown beside it. The stops run from 250&nbsp;kB/s at the
+      bottom of its travel up to 100&nbsp;MB/s, and then Unlimited at the top.
+      There is no stop below 250&nbsp;kB/s.</p></li>
+</ol>
+<p>New limits take effect immediately &#8212; a transfer already running slows down rather than
+waiting to finish. There is nothing to save.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>A limit belongs to this Mac, not to one account.
+With several accounts linked they share it, so two accounts syncing at once stay under the rate you
+set between them rather than each taking all of it.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">On a metered network</h2>
+<div class="TaskBody">
+<p>A metered network is one that costs you to use: a personal hotspot, a connection macOS reads as
+costly, or one you have put in Low Data Mode. Zephyr holds back on those, and the Metered Networks
+section is where you say how far. It stays folded up until you click it.</p>
+<ol>
+  <li><p>Click Zephyr in the menu bar, then click Settings&#8230;</p></li>
+  <li><p>Click Metered Networks.</p></li>
+  <li><p>Drag the Transfer limit slider. It starts at 250&nbsp;kB/s.</p>
+      <p>Unlike the sliders above it, this one rate caps uploads and downloads alike, and only
+      while you are on a network that costs something. It caps the limits above rather than
+      replacing them, so whichever is lower is what you get.</p></li>
+  <li><p>Switch on Keep indexing if this Mac&#8217;s connection is fine to use.</p>
+      <p>Zephyr otherwise waits for a cheaper network before it indexes your Dropbox or checks for
+      changes &#8212; the work nobody asked for. Files you open still download either way, on any
+      network.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Note: </em>Low Data Mode always holds indexing back, whatever
+Keep indexing says. Switching it on is an instruction you gave macOS, where &#8220;costly&#8221; is
+a guess macOS made &#8212; and only the guess is yours to overrule.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Choosing a rate</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>Upload</em> is the one worth limiting on most home connections, where it is much the
+      narrower of the two and where a video call shares it.</p></li>
+  <li><p><em>Download</em> rarely needs a limit, since Zephyr only downloads what you open.</p></li>
+  <li><p>If you want Zephyr to stop entirely rather than go slowly, pause it instead &#8212; see
+      <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pause syncing</a>.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pause syncing</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Use more than one Dropbox account</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Open a file, and free up space again</title>
+<meta name="description" content="Files download when you open them, and you can hand the space back when you're done.">
+<meta name="keywords" content="download, open, free up space, remove download, offline, disk space, materialize, evict">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="open-and-download" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="open-and-download"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Open a file, and free up space again</h1>
+<p>You don&#8217;t download a file in Zephyr &#8212; you open it, and Finder fetches it. When
+you&#8217;re finished you can give the space back without taking the file out of your Dropbox.</p>
+
+<div class="Task">
+<h2 class="Name">Open a file</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>In Finder, find the file in your Dropbox.</p></li>
+  <li><p>Double-click it.</p>
+      <p>Finder downloads it and hands it to the app that opens it. A large file over a slow
+      connection can take a moment; Finder shows the progress on the file&#8217;s icon.</p></li>
+</ol>
+<p>Zephyr checks every download against the content hash Dropbox recorded for it, so a file that
+arrived damaged is refused rather than opened.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Free up the space again</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Control-click the file in Finder.</p></li>
+  <li><p>Choose Remove Download.</p></li>
+</ol>
+<p>The file stays in your Dropbox and stays listed in Finder. Only the copy on this Mac goes, and
+opening the file again brings it back.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>macOS may also free up downloads on its own when
+your disk fills. That isn&#8217;t Zephyr deleting anything, and nothing leaves your
+Dropbox.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Edit, move, and delete</h2>
+<div class="TaskBody">
+<p>Everything you do to a file in Finder reaches Dropbox: saving an edit uploads it, moving or
+renaming it moves or renames it in Dropbox, and dragging it to the Trash deletes it there too.
+Zephyr syncs both ways; there is nothing to press.</p>
+<p>A delete reaches Dropbox and every device signed in to the account, and there is no Dropbox
+trash to take it back out of &#8212; see
+<a href="recover-deleted-file.html#recover-deleted-file" class="xRef AppleTopic">If you deleted
+something you needed</a>.</p>
+<p>To take an item out of Dropbox but keep it here, use
+<a href="stop-syncing-item.html#stop-syncing-item" class="xRef AppleTopic">Stop syncing a file or
+folder</a> instead of deleting it.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="file-versions.html#file-versions" class="xRef AppleTopic">Go back to an earlier version of a file</a>
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Where your Dropbox files are kept</a>
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limit how much bandwidth Zephyr uses</a>
+<a href="upload-from-app.html#upload-from-app" class="xRef AppleTopic">Send a file to Dropbox from another app</a>
+<a href="sync-issues.html#sync-issues" class="xRef AppleTopic">If a file won&#8217;t sync</a>
+<a href="recover-deleted-file.html#recover-deleted-file" class="xRef AppleTopic">If you deleted something you needed</a>
+</div>
+</body>
+</html>

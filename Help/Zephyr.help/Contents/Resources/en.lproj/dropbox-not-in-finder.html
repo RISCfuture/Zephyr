@@ -1,0 +1,122 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>If your Dropbox doesn’t appear in Finder</title>
+<meta name="description" content="Work through the reasons a linked account might not show up in the Finder sidebar.">
+<meta name="keywords" content="finder, missing, sidebar, not showing, cloud storage, locations, file provider, applications folder, reset domains, wedged">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="dropbox-not-in-finder" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="dropbox-not-in-finder"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>If your Dropbox doesn’t appear in Finder</h1>
+<p>An account can be linked, indexed, and syncing and still not appear in Finder. These are the
+reasons, in the order worth checking.</p>
+
+<div class="Task">
+<h2 class="Name">Check that Zephyr is switched on</h2>
+<div class="TaskBody">
+<p>macOS asks you, not Zephyr, whether a file provider may show files. This is much the most common
+cause.</p>
+<ol>
+  <li><p>Choose Apple menu &gt; System Settings, click General,
+      click Login Items &amp; Extensions, then click File Providers.</p>
+      <p><a href="x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.fileprovider-nonui" class="URL">Open
+      File Providers for me</a></p></li>
+  <li><p>Turn on Zephyr.</p></li>
+</ol>
+<p>If Zephyr isn&#8217;t listed there at all, no account is linked yet &#8212; there is nothing for
+macOS to offer. See <a href="link-account.html#link-account" class="xRef AppleTopic">Link your
+Dropbox account</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Check that Finder is showing cloud locations</h2>
+<div class="TaskBody">
+<p>Finder keeps every cloud location &#8212; Zephyr&#8217;s, and any other sync app&#8217;s &#8212;
+behind a single setting, and hides them all while it is switched off. An account can be linked,
+switched on, indexed, and syncing and still have no row in the sidebar.</p>
+<ol>
+  <li><p>Click the Finder icon in the Dock, then choose Finder &gt; Settings.</p></li>
+  <li><p>Click Sidebar.</p></li>
+  <li><p>Under Locations, select Cloud Storage.</p></li>
+</ol>
+<p>Your Dropbox appears straight away &#8212; there is nothing to restart, and nothing in Zephyr to
+change. If you use another sync app, it appears at the same moment, which is the clearest sign this
+was the cause.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>This setting belongs to Finder rather than to any
+app whose files it shows, so Zephyr can neither read it nor switch it on for you &#8212; and
+can&#8217;t warn you when it is what is wrong. It costs nothing to check first.</p></div>
+<p>If you would rather leave the setting alone, put your Dropbox in Favorites instead: open it in
+Finder, then drag the folder&#8217;s icon from the top of the window into the Favorites section of
+the sidebar. A favorite doesn&#8217;t depend on Cloud Storage. See
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Where your files live</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Check that Zephyr isn&#8217;t running from a copy</h2>
+<div class="TaskBody">
+<p>An app you downloaded carries a flag saying so, and macOS runs a flagged app out of a temporary
+copy of its own rather than from the folder you put it in. It will not register a file provider for
+one, so Zephyr never reaches the File Providers list at all.</p>
+<p>Zephyr can&#8217;t clear the flag itself, and moving the app in the Finder doesn&#8217;t clear it
+either. Installing it does.</p>
+<ol>
+  <li><p>Quit Zephyr.</p></li>
+  <li><p>Download the installer package &#8212; the file ending in <code>.pkg</code> &#8212; from
+      <a href="https://riscfuture.github.io/Zephyr/#download">riscfuture.github.io/Zephyr</a>.</p></li>
+  <li><p>Open it and follow the installer. It writes Zephyr into your Applications folder without
+      the flag, replacing the copy you have.</p></li>
+  <li><p>Open Zephyr again.</p></li>
+</ol>
+<p>The flag is set once, by the Finder, when you drag an app out of a downloaded disk image. It is
+never set on anything an installer writes, so this is a one-time fix &#8212; not something to repeat
+after an update.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>If you would rather not download Zephyr again, the
+flag can be cleared by hand instead. Quit Zephyr, run <code>xattr -dr com.apple.quarantine
+&quot;/Applications/Zephyr.app&quot;</code> in Terminal &#8212; naming wherever you keep Zephyr, if
+that isn&#8217;t your Applications folder &#8212; and open it again.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Check that only one version is installed</h2>
+<div class="TaskBody">
+<p>The App Store and downloadable versions are the same app as far as macOS is concerned, and with
+both installed an older one can end up serving your files. Keep one. See
+<a href="editions.html#editions" class="xRef AppleTopic">Choose between the two versions of
+Zephyr</a>.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>To switch versions, install the new copy and open
+it, confirm your account still appears in Finder, and only then delete the old one. Deleting first
+can take the Finder location with it.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Start the Finder location over</h2>
+<div class="TaskBody">
+<p>A Finder location outlives the app that registered it, and one registered by an older build can
+keep settings you can&#8217;t talk it out of. This clears them.</p>
+<ol>
+  <li><p>Quit Zephyr.</p></li>
+  <li><p>In Terminal, run:</p>
+      <p><code>/Applications/Zephyr.app/Contents/MacOS/Zephyr --reset-domains</code></p></li>
+  <li><p>Open Zephyr again.</p></li>
+</ol>
+<p>Zephyr registers your accounts from scratch and each one re-indexes. Nothing in your Dropbox is
+touched, and no download you already have is lost &#8212; but you will have to switch Zephyr on
+under File Providers again.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Turn on Zephyr in Finder</a>
+<a href="withheld-approval.html#withheld-approval" class="xRef AppleTopic">If Zephyr is waiting for your permission</a>
+<a href="diagnostics.html#diagnostics" class="xRef AppleTopic">Collect a diagnostic report</a>
+</div>
+</body>
+</html>

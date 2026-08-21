@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>If the same file was changed in two places</title>
+<meta name="description" content="Why a second copy of a file turns up, what Dropbox named it, and which one to keep.">
+<meta name="keywords" content="conflict, conflicted copy, two devices, duplicate, second copy, overwrote, same file, both">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="conflicted-copies" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="conflicted-copies"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>If the same file was changed in two places</h1>
+<p>When a file is changed in two places before either has synced, Dropbox keeps both rather than
+choosing, and the second one turns up beside the first under a name Dropbox gave it.</p>
+
+<div class="Task">
+<h2 class="Name">What you&#8217;ll see</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Two files in the folder: the one you know, holding whichever change reached Dropbox first,
+      and a second file named after it.</p></li>
+  <li><p>Dropbox chooses that name, not Zephyr. It says which account and which day the copy came
+      from.</p></li>
+  <li><p>Nothing in Sync Issues, and no notification of a failure. Nothing failed:
+      Zephyr never writes over a change it didn&#8217;t know about, so keeping both is the
+      answer.</p></li>
+</ul>
+<p>Both files are ordinary files in your Dropbox from that moment on, on this Mac and on every
+device signed in to the account.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Decide which one to keep</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Open both and compare them.</p></li>
+  <li><p>Copy anything you want out of the one you&#8217;re not keeping.</p></li>
+  <li><p>Delete the one you&#8217;re not keeping, or rename it if you want to hold on to it.</p>
+      <p>Deleting removes it from Dropbox and from your other devices too &#8212; see
+      <a href="recover-deleted-file.html#recover-deleted-file" class="xRef AppleTopic">If you
+      deleted something you needed</a>.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Note: </em>The file you kept still has its own history, so a
+change you meant to keep and then wrote over is recoverable on its own &#8212; see
+<a href="file-versions.html#file-versions" class="xRef AppleTopic">Go back to an earlier version of
+a file</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Make it happen less</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Let Zephyr run. Finder only hears about a change made elsewhere while Zephyr is running,
+      and a Mac that hasn&#8217;t heard is a Mac about to make a second copy &#8212; see
+      <a href="settings-general.html#settings-general" class="xRef AppleTopic">Keep Zephyr running
+      in the background</a>.</p></li>
+  <li><p>Give a Mac that has been asleep or offline a moment to catch up before editing anything in
+      your Dropbox. The menu-bar panel says when it is done.</p></li>
+  <li><p>Watch for this after a spell with syncing paused, which is exactly the situation that
+      produces it &#8212; see <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pause
+      syncing</a>.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="file-versions.html#file-versions" class="xRef AppleTopic">Go back to an earlier version of a file</a>
+<a href="sync-issues.html#sync-issues" class="xRef AppleTopic">If a file won&#8217;t sync</a>
+<a href="recover-deleted-file.html#recover-deleted-file" class="xRef AppleTopic">If you deleted something you needed</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+git_url("git@github.com:RISCfuture/certificates.git")
+storage_mode("git")
+
+type("appstore")
+team_id("2NFSK2WB24")
+
+# `type` is only the default for a bare `match` run; the Fastfile passes the type each edition needs,
+# so this repository holds both an `appstore` and a `developer_id` profile for every identifier
+# below. One App ID carrying two kinds of profile is what sharing a bundle identifier across the two
+# editions costs.
+#
+# Profiles are stored alongside the certificates because `exportArchive` cannot obtain one on its
+# own — cloud signing is refused for distribution. The archive still signs automatically, so the
+# project stays on automatic signing for local development; only the export consumes these profiles,
+# which build_app wires into its export options from match's mapping.
+#
+# All five bundles are listed, and all five have to be. Each one carries the app group and keychain
+# access group entitlements, which a bare signature of either kind cannot satisfy — so each needs a
+# profile of its own rather than a certificate alone. They are also all exported together, and gym
+# turns a bundle identifier with no synced profile into an empty value in the export options, which
+# `exportArchive` rejects outright. A missing entry here is a failed export, not a missing feature.
+#
+# `zephyr-cli` is absent deliberately: it is a bare Mach-O tool with no bundle, so there is no App ID
+# to attach a profile to. It ships only in the downloadable edition, signed with that app's own
+# identity by the Sign Embedded Command-Line Tool build phase, which grants it the app group it
+# needs to reach the shared container. A profile authorizes entitlements for a bundle; an unbundled
+# tool carries its entitlements directly.
+app_identifier([
+  "codes.tim.Zephyr",
+  "codes.tim.Zephyr.FileProvider",
+  "codes.tim.Zephyr.FileProviderUI",
+  "codes.tim.Zephyr.ShareExtension",
+  "codes.tim.Zephyr.Widget"
+])

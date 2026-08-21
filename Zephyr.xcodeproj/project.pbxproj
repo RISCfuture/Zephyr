@@ -1,0 +1,2525 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 100;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		018BFED7303A0DC700F97190 /* GitHubUpdateChecker in Frameworks */ = {isa = PBXBuildFile; productRef = 018BFED6303A0DC700F97190 /* GitHubUpdateChecker */; };
+		018BFED8303A0DC700F97190 /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		018BFED9303A0DC700F97190 /* libZephyr.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		018BFEDC303A0DC700F97190 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 01EFF3A2303886F70082969B /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		018BFEDF303A0DC700F97190 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 01EFF3B73038870F0082969B /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		018BFEE4303A0DD400F97190 /* FileProvider.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 01EFF3893038868F0082969B /* FileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		01AE92F83043BA3500EC863B /* FileProviderUI.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 01AE92EE3043BA3500EC863B /* FileProviderUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		01AE93043043BAAE00EC863B /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		01AE930A3043BAB500EC863B /* FileProviderUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01AE93093043BAB500EC863B /* FileProviderUI.framework */; };
+		01AE93103043BB0000EC863B /* FileProviderUI.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 01AE92EE3043BA3500EC863B /* FileProviderUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		01EFF38C3038868F0082969B /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF38B3038868F0082969B /* UniformTypeIdentifiers.framework */; };
+		01EFF3983038868F0082969B /* FileProvider.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 01EFF3893038868F0082969B /* FileProvider.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		01EFF3AE303886F70082969B /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 01EFF3A2303886F70082969B /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		01EFF3B93038870F0082969B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3B83038870F0082969B /* WidgetKit.framework */; };
+		01EFF3BB3038870F0082969B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3BA3038870F0082969B /* SwiftUI.framework */; };
+		01EFF3CA303887100082969B /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 01EFF3B73038870F0082969B /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		01EFF3EA3038873E0082969B /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		01EFF3F43038873E0082969B /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		01EFF3F53038873E0082969B /* libZephyr.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		01EFF3FD303887470082969B /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		01EFF405303890640082969B /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		01EFF40A303890670082969B /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		01EFF40F3038906A0082969B /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		01EFF416303891310082969B /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFF415303891310082969B /* GRDB */; };
+		01EFF4193038914C0082969B /* Semaphore in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFF4183038914C0082969B /* Semaphore */; };
+		01EFF4223038920000829690 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFF4213038920000829690 /* ArgumentParser */; };
+		01EFF9013038999900829691 /* zephyr-cli in Embed Command-Line Tool */ = {isa = PBXBuildFile; fileRef = 01EFF3D33038872F0082969B /* zephyr-cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		01EFFAB33038A6AC0082969B /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFFAB23038A6AC0082969B /* AsyncAlgorithms */; };
+		01EFFB063038B00000829705 /* XCUITestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFFB043038B00000829703 /* XCUITestKit */; };
+		0AC0000000000000000000AB /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		0AC0000000000000000000B3 /* ZephyrCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC0000000000000000000A2 /* ZephyrCommon.framework */; };
+		0AC0000000000000000000B4 /* ZephyrCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC0000000000000000000A2 /* ZephyrCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0AC0000000000000000000B7 /* ZephyrCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC0000000000000000000A2 /* ZephyrCommon.framework */; };
+		0AC0000000000000000000B8 /* ZephyrCommon.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC0000000000000000000A2 /* ZephyrCommon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0AC0000000000000000000C1 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 0AC0000000000000000000C2 /* Sentry */; };
+		0AC0000000000000000000C6 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 0AC0000000000000000000C7 /* Sentry */; };
+		0AC0000000000000000000D1 /* ZephyrCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC0000000000000000000A2 /* ZephyrCommon.framework */; };
+		0AC0000000000000000000D2 /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
+		0AC0000000000000000000E2 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0AC0000000000000000000E1 /* PrivacyInfo.xcprivacy */; };
+		0AC0000000000000000000E3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 0AC0000000000000000000E1 /* PrivacyInfo.xcprivacy */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		018BFEDA303A0DC700F97190 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3DE3038873E0082969B;
+			remoteInfo = libZephyr;
+		};
+		018BFEDD303A0DC700F97190 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3A1303886F70082969B;
+			remoteInfo = ShareExtension;
+		};
+		018BFEE0303A0DC700F97190 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3B63038870F0082969B;
+			remoteInfo = WidgetExtension;
+		};
+		018BFEE5303A0DD400F97190 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3883038868F0082969B;
+			remoteInfo = FileProvider;
+		};
+		01AE92F63043BA3500EC863B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01AE92ED3043BA3500EC863B;
+			remoteInfo = FileProviderUI;
+		};
+		01AE93063043BAAE00EC863B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3DE3038873E0082969B;
+			remoteInfo = libZephyr;
+		};
+		01AE93113043BB0000EC863B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01AE92ED3043BA3500EC863B;
+			remoteInfo = FileProviderUI;
+		};
+		01EFF3693038864A0082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF35A3038864A0082969B;
+			remoteInfo = Zephyr;
+		};
+		01EFF3733038864A0082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF35A3038864A0082969B;
+			remoteInfo = Zephyr;
+		};
+		01EFF3963038868F0082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3883038868F0082969B;
+			remoteInfo = FileProvider;
+		};
+		01EFF3AC303886F70082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3A1303886F70082969B;
+			remoteInfo = ShareExtension;
+		};
+		01EFF3C8303887100082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3B63038870F0082969B;
+			remoteInfo = WidgetExtension;
+		};
+		01EFF3EB3038873E0082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3DE3038873E0082969B;
+			remoteInfo = libZephyr;
+		};
+		01EFF3F23038873E0082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3DE3038873E0082969B;
+			remoteInfo = libZephyr;
+		};
+		01EFF3FF303887470082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3DE3038873E0082969B;
+			remoteInfo = libZephyr;
+		};
+		01EFF407303890640082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3DE3038873E0082969B;
+			remoteInfo = libZephyr;
+		};
+		01EFF40C303890670082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3DE3038873E0082969B;
+			remoteInfo = libZephyr;
+		};
+		01EFF4113038906A0082969B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3DE3038873E0082969B;
+			remoteInfo = libZephyr;
+		};
+		01EFF9033038999900829693 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3D23038872F0082969B;
+			remoteInfo = "zephyr-cli";
+		};
+		0AC0000000000000000000AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01EFF3DE3038873E0082969B;
+			remoteInfo = libZephyr;
+		};
+		0AC0000000000000000000B1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0AC0000000000000000000A7;
+			remoteInfo = "Zephyr Common";
+		};
+		0AC0000000000000000000B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01EFF3533038864A0082969B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0AC0000000000000000000A7;
+			remoteInfo = "Zephyr Common";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		018BFEE2303A0DC800F97190 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = Frameworks;
+			files = (
+				0AC0000000000000000000B8 /* ZephyrCommon.framework in Embed Frameworks */,
+				018BFED9303A0DC700F97190 /* libZephyr.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+		};
+		018BFEE3303A0DC800F97190 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = PlugIns;
+			files = (
+				018BFEDF303A0DC700F97190 /* WidgetExtension.appex in Embed Foundation Extensions */,
+				018BFEE4303A0DD400F97190 /* FileProvider.appex in Embed Foundation Extensions */,
+				018BFEDC303A0DC700F97190 /* ShareExtension.appex in Embed Foundation Extensions */,
+				01AE93103043BB0000EC863B /* FileProviderUI.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+		};
+		01EFF39D3038868F0082969B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = PlugIns;
+			files = (
+				01EFF3AE303886F70082969B /* ShareExtension.appex in Embed Foundation Extensions */,
+				01AE92F83043BA3500EC863B /* FileProviderUI.appex in Embed Foundation Extensions */,
+				01EFF3983038868F0082969B /* FileProvider.appex in Embed Foundation Extensions */,
+				01EFF3CA303887100082969B /* WidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+		};
+		01EFF3F93038873E0082969B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = Frameworks;
+			files = (
+				0AC0000000000000000000B4 /* ZephyrCommon.framework in Embed Frameworks */,
+				01EFF3F53038873E0082969B /* libZephyr.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+		};
+		01EFF9023038999900829692 /* Embed Command-Line Tool */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = Contents/Helpers;
+			dstSubfolder = Wrapper;
+			files = (
+				01EFF9013038999900829691 /* zephyr-cli in Embed Command-Line Tool */,
+			);
+			name = "Embed Command-Line Tool";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		018BFEAE303A0D4200F97190 /* Zephyr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zephyr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01AE92EE3043BA3500EC863B /* FileProviderUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FileProviderUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		01AE93093043BAB500EC863B /* FileProviderUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FileProviderUI.framework; path = System/Library/Frameworks/FileProviderUI.framework; sourceTree = SDKROOT; };
+		01EFF35B3038864A0082969B /* Zephyr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zephyr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01EFF3683038864A0082969B /* ZephyrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZephyrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01EFF3723038864A0082969B /* ZephyrUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZephyrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01EFF3893038868F0082969B /* FileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FileProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		01EFF38B3038868F0082969B /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+		01EFF3A2303886F70082969B /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		01EFF3B73038870F0082969B /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		01EFF3B83038870F0082969B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		01EFF3BA3038870F0082969B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		01EFF3D33038872F0082969B /* zephyr-cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "zephyr-cli"; sourceTree = BUILT_PRODUCTS_DIR; };
+		01EFF3DF3038873E0082969B /* libZephyr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = libZephyr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		01EFF3E93038873E0082969B /* libZephyrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = libZephyrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		01EFF4043038903A0082969B /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
+		01EFF430303892AA0082969B /* Zephyr.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Zephyr.xcconfig; path = Config/Zephyr.xcconfig; sourceTree = "<group>"; };
+		0AC0000000000000000000A2 /* ZephyrCommon.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZephyrCommon.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0AC0000000000000000000E1 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		01673F193039C8B20053BC7A /* Exceptions for "Widget" folder in "ShareExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Localizable.xcstrings,
+			);
+			target = 01EFF3A1303886F70082969B /* ShareExtension */;
+		};
+		01AE92F93043BA3500EC863B /* Exceptions for "FileProviderUI" folder in "FileProviderUI" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 01AE92ED3043BA3500EC863B /* FileProviderUI */;
+		};
+		01EFF3993038868F0082969B /* Exceptions for "FileProvider" folder in "FileProvider" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 01EFF3883038868F0082969B /* FileProvider */;
+		};
+		01EFF3AF303886F70082969B /* Exceptions for "ShareExtension" folder in "ShareExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 01EFF3A1303886F70082969B /* ShareExtension */;
+		};
+		01EFF3CB303887100082969B /* Exceptions for "Widget" folder in "WidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 01EFF3B63038870F0082969B /* WidgetExtension */;
+		};
+		01EFF431303892AA0082969B /* Exceptions for "libZephyr" folder in "libZephyr" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		018BFEAF303A0D4200F97190 /* Zephyr-download */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Zephyr-download";
+			sourceTree = "<group>";
+		};
+		01AE92EF3043BA3500EC863B /* FileProviderUI */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				01AE92F93043BA3500EC863B /* Exceptions for "FileProviderUI" folder in "FileProviderUI" target */,
+			);
+			path = FileProviderUI;
+			sourceTree = "<group>";
+		};
+		01EFF35D3038864A0082969B /* Zephyr-MAS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Zephyr-MAS";
+			sourceTree = "<group>";
+		};
+		01EFF36B3038864A0082969B /* ZephyrTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ZephyrTests;
+			sourceTree = "<group>";
+		};
+		01EFF3753038864A0082969B /* ZephyrUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ZephyrUITests;
+			sourceTree = "<group>";
+		};
+		01EFF38D3038868F0082969B /* FileProvider */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				01EFF3993038868F0082969B /* Exceptions for "FileProvider" folder in "FileProvider" target */,
+			);
+			path = FileProvider;
+			sourceTree = "<group>";
+		};
+		01EFF3A3303886F70082969B /* ShareExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				01EFF3AF303886F70082969B /* Exceptions for "ShareExtension" folder in "ShareExtension" target */,
+			);
+			path = ShareExtension;
+			sourceTree = "<group>";
+		};
+		01EFF3BC3038870F0082969B /* Widget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				01673F193039C8B20053BC7A /* Exceptions for "Widget" folder in "ShareExtension" target */,
+				01EFF3CB303887100082969B /* Exceptions for "Widget" folder in "WidgetExtension" target */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
+		01EFF3D43038872F0082969B /* zephyr-cli */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "zephyr-cli";
+			sourceTree = "<group>";
+		};
+		01EFF3E03038873E0082969B /* libZephyr */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				01EFF431303892AA0082969B /* Exceptions for "libZephyr" folder in "libZephyr" target */,
+			);
+			path = libZephyr;
+			sourceTree = "<group>";
+		};
+		01EFF3EF3038873E0082969B /* libZephyrTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = libZephyrTests;
+			sourceTree = "<group>";
+		};
+		0AC0000000000000000000A1 /* Zephyr Common */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Zephyr Common";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		018BFEAB303A0D4200F97190 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				0AC0000000000000000000B7 /* ZephyrCommon.framework in Frameworks */,
+				018BFED8303A0DC700F97190 /* libZephyr.framework in Frameworks */,
+				018BFED7303A0DC700F97190 /* GitHubUpdateChecker in Frameworks */,
+			);
+		};
+		01AE92EB3043BA3500EC863B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01AE93043043BAAE00EC863B /* libZephyr.framework in Frameworks */,
+				01AE930A3043BAB500EC863B /* FileProviderUI.framework in Frameworks */,
+			);
+		};
+		01EFF3583038864A0082969B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				0AC0000000000000000000B3 /* ZephyrCommon.framework in Frameworks */,
+				01EFF3F43038873E0082969B /* libZephyr.framework in Frameworks */,
+			);
+		};
+		01EFF3653038864A0082969B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				0AC0000000000000000000D1 /* ZephyrCommon.framework in Frameworks */,
+				0AC0000000000000000000D2 /* libZephyr.framework in Frameworks */,
+			);
+		};
+		01EFF36F3038864A0082969B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01EFFB063038B00000829705 /* XCUITestKit in Frameworks */,
+			);
+		};
+		01EFF3863038868F0082969B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01EFF40F3038906A0082969B /* libZephyr.framework in Frameworks */,
+				01EFF38C3038868F0082969B /* UniformTypeIdentifiers.framework in Frameworks */,
+			);
+		};
+		01EFF39F303886F70082969B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01EFF40A303890670082969B /* libZephyr.framework in Frameworks */,
+			);
+		};
+		01EFF3B43038870F0082969B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01EFF3BB3038870F0082969B /* SwiftUI.framework in Frameworks */,
+				01EFF3B93038870F0082969B /* WidgetKit.framework in Frameworks */,
+				01EFF405303890640082969B /* libZephyr.framework in Frameworks */,
+			);
+		};
+		01EFF3D03038872F0082969B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				01EFF3FD303887470082969B /* libZephyr.framework in Frameworks */,
+				01EFF4223038920000829690 /* ArgumentParser in Frameworks */,
+			);
+		};
+		01EFF3DC3038873E0082969B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				0AC0000000000000000000C1 /* Sentry in Frameworks */,
+				01EFF416303891310082969B /* GRDB in Frameworks */,
+				01EFF4193038914C0082969B /* Semaphore in Frameworks */,
+				01EFFAB33038A6AC0082969B /* AsyncAlgorithms in Frameworks */,
+			);
+		};
+		01EFF3E63038873E0082969B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				0AC0000000000000000000C6 /* Sentry in Frameworks */,
+				01EFF3EA3038873E0082969B /* libZephyr.framework in Frameworks */,
+			);
+		};
+		0AC0000000000000000000A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+				0AC0000000000000000000AB /* libZephyr.framework in Frameworks */,
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01EFF3523038864A0082969B = {
+			isa = PBXGroup;
+			children = (
+				01EFF430303892AA0082969B /* Zephyr.xcconfig */,
+				01EFF4043038903A0082969B /* WidgetExtension.entitlements */,
+				0AC0000000000000000000E1 /* PrivacyInfo.xcprivacy */,
+				0AC0000000000000000000A1 /* Zephyr Common */,
+				01EFF35D3038864A0082969B /* Zephyr-MAS */,
+				01EFF36B3038864A0082969B /* ZephyrTests */,
+				01EFF3753038864A0082969B /* ZephyrUITests */,
+				01EFF38D3038868F0082969B /* FileProvider */,
+				01EFF3A3303886F70082969B /* ShareExtension */,
+				01EFF3BC3038870F0082969B /* Widget */,
+				01EFF3D43038872F0082969B /* zephyr-cli */,
+				01EFF3E03038873E0082969B /* libZephyr */,
+				01EFF3EF3038873E0082969B /* libZephyrTests */,
+				018BFEAF303A0D4200F97190 /* Zephyr-download */,
+				01AE92EF3043BA3500EC863B /* FileProviderUI */,
+				01EFF38A3038868F0082969B /* Frameworks */,
+				01EFF35C3038864A0082969B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		01EFF35C3038864A0082969B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				01EFF35B3038864A0082969B /* Zephyr.app */,
+				01EFF3683038864A0082969B /* ZephyrTests.xctest */,
+				01EFF3723038864A0082969B /* ZephyrUITests.xctest */,
+				01EFF3893038868F0082969B /* FileProvider.appex */,
+				01EFF3A2303886F70082969B /* ShareExtension.appex */,
+				01EFF3B73038870F0082969B /* WidgetExtension.appex */,
+				01EFF3D33038872F0082969B /* zephyr-cli */,
+				01EFF3DF3038873E0082969B /* libZephyr.framework */,
+				01EFF3E93038873E0082969B /* libZephyrTests.xctest */,
+				018BFEAE303A0D4200F97190 /* Zephyr.app */,
+				0AC0000000000000000000A2 /* ZephyrCommon.framework */,
+				01AE92EE3043BA3500EC863B /* FileProviderUI.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		01EFF38A3038868F0082969B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				01AE93093043BAB500EC863B /* FileProviderUI.framework */,
+				01EFF38B3038868F0082969B /* UniformTypeIdentifiers.framework */,
+				01EFF3B83038870F0082969B /* WidgetKit.framework */,
+				01EFF3BA3038870F0082969B /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		01EFF3DA3038873E0082969B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			files = (
+			);
+		};
+		0AC0000000000000000000A3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			files = (
+			);
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		018BFEAD303A0D4200F97190 /* Zephyr (download) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 018BFECC303A0D4300F97190 /* Build configuration list for PBXNativeTarget "Zephyr (download)" */;
+			buildPhases = (
+				018BFEAA303A0D4200F97190 /* Sources */,
+				018BFEAB303A0D4200F97190 /* Frameworks */,
+				018BFEAC303A0D4200F97190 /* Resources */,
+				018BFEE2303A0DC800F97190 /* Embed Frameworks */,
+				018BFEE3303A0DC800F97190 /* Embed Foundation Extensions */,
+				01EFF9023038999900829692 /* Embed Command-Line Tool */,
+				01F0B1000000000000000001 /* Build Help Book */,
+				01EFFC013038B10000829710 /* Sign Embedded Command-Line Tool */,
+				0AC0000000000000000000C4 /* Upload Debug Symbols to Sentry */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0AC0000000000000000000B6 /* PBXTargetDependency */,
+				01EFF9043038999900829694 /* PBXTargetDependency */,
+				018BFEDB303A0DC700F97190 /* PBXTargetDependency */,
+				018BFEDE303A0DC700F97190 /* PBXTargetDependency */,
+				018BFEE1303A0DC700F97190 /* PBXTargetDependency */,
+				018BFEE6303A0DD400F97190 /* PBXTargetDependency */,
+				01AE93123043BB0000EC863B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				018BFEAF303A0D4200F97190 /* Zephyr-download */,
+			);
+			name = "Zephyr (download)";
+			packageProductDependencies = (
+				018BFED6303A0DC700F97190 /* GitHubUpdateChecker */,
+			);
+			productName = "Zephyr (download)";
+			productReference = 018BFEAE303A0D4200F97190 /* Zephyr.app */;
+			productType = "com.apple.product-type.application";
+		};
+		01AE92ED3043BA3500EC863B /* FileProviderUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01AE92FA3043BA3500EC863B /* Build configuration list for PBXNativeTarget "FileProviderUI" */;
+			buildPhases = (
+				01AE92EA3043BA3500EC863B /* Sources */,
+				01AE92EB3043BA3500EC863B /* Frameworks */,
+				01AE92EC3043BA3500EC863B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01AE93073043BAAE00EC863B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01AE92EF3043BA3500EC863B /* FileProviderUI */,
+			);
+			name = FileProviderUI;
+			productName = FileProviderUI;
+			productReference = 01AE92EE3043BA3500EC863B /* FileProviderUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		01EFF35A3038864A0082969B /* Zephyr (MAS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01EFF37C3038864A0082969B /* Build configuration list for PBXNativeTarget "Zephyr (MAS)" */;
+			buildPhases = (
+				01EFF3573038864A0082969B /* Sources */,
+				01EFF3583038864A0082969B /* Frameworks */,
+				01EFF3593038864A0082969B /* Resources */,
+				01EFF39D3038868F0082969B /* Embed Foundation Extensions */,
+				01EFF3F93038873E0082969B /* Embed Frameworks */,
+				01F0B1000000000000000002 /* Build Help Book */,
+				0AC0000000000000000000C5 /* Upload Debug Symbols to Sentry */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01EFF3973038868F0082969B /* PBXTargetDependency */,
+				01EFF3AD303886F70082969B /* PBXTargetDependency */,
+				01EFF3C9303887100082969B /* PBXTargetDependency */,
+				0AC0000000000000000000B2 /* PBXTargetDependency */,
+				01EFF3F33038873E0082969B /* PBXTargetDependency */,
+				01AE92F73043BA3500EC863B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01EFF35D3038864A0082969B /* Zephyr-MAS */,
+			);
+			name = "Zephyr (MAS)";
+			productName = Zephyr;
+			productReference = 01EFF35B3038864A0082969B /* Zephyr.app */;
+			productType = "com.apple.product-type.application";
+		};
+		01EFF3673038864A0082969B /* ZephyrTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01EFF37F3038864A0082969B /* Build configuration list for PBXNativeTarget "ZephyrTests" */;
+			buildPhases = (
+				01EFF3643038864A0082969B /* Sources */,
+				01EFF3653038864A0082969B /* Frameworks */,
+				01EFF3663038864A0082969B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01EFF36A3038864A0082969B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01EFF36B3038864A0082969B /* ZephyrTests */,
+			);
+			name = ZephyrTests;
+			productName = ZephyrTests;
+			productReference = 01EFF3683038864A0082969B /* ZephyrTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		01EFF3713038864A0082969B /* ZephyrUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01EFF3823038864A0082969B /* Build configuration list for PBXNativeTarget "ZephyrUITests" */;
+			buildPhases = (
+				01EFF36E3038864A0082969B /* Sources */,
+				01EFF36F3038864A0082969B /* Frameworks */,
+				01EFF3703038864A0082969B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01EFF3743038864A0082969B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01EFF3753038864A0082969B /* ZephyrUITests */,
+			);
+			name = ZephyrUITests;
+			packageProductDependencies = (
+				01EFFB043038B00000829703 /* XCUITestKit */,
+			);
+			productName = ZephyrUITests;
+			productReference = 01EFF3723038864A0082969B /* ZephyrUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		01EFF3883038868F0082969B /* FileProvider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01EFF39A3038868F0082969B /* Build configuration list for PBXNativeTarget "FileProvider" */;
+			buildPhases = (
+				01EFF3853038868F0082969B /* Sources */,
+				01EFF3863038868F0082969B /* Frameworks */,
+				01EFF3873038868F0082969B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01EFF4123038906A0082969B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01EFF38D3038868F0082969B /* FileProvider */,
+			);
+			name = FileProvider;
+			productName = FileProvider;
+			productReference = 01EFF3893038868F0082969B /* FileProvider.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		01EFF3A1303886F70082969B /* ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01EFF3B0303886F70082969B /* Build configuration list for PBXNativeTarget "ShareExtension" */;
+			buildPhases = (
+				01EFF39E303886F70082969B /* Sources */,
+				01EFF39F303886F70082969B /* Frameworks */,
+				01EFF3A0303886F70082969B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01EFF40D303890670082969B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01EFF3A3303886F70082969B /* ShareExtension */,
+			);
+			name = ShareExtension;
+			productName = ShareExtension;
+			productReference = 01EFF3A2303886F70082969B /* ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		01EFF3B63038870F0082969B /* WidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01EFF3CC303887100082969B /* Build configuration list for PBXNativeTarget "WidgetExtension" */;
+			buildPhases = (
+				01EFF3B33038870F0082969B /* Sources */,
+				01EFF3B43038870F0082969B /* Frameworks */,
+				01EFF3B53038870F0082969B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01EFF408303890640082969B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01EFF3BC3038870F0082969B /* Widget */,
+			);
+			name = WidgetExtension;
+			productName = WidgetExtension;
+			productReference = 01EFF3B73038870F0082969B /* WidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		01EFF3D23038872F0082969B /* zephyr-cli */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01EFF3D73038872F0082969B /* Build configuration list for PBXNativeTarget "zephyr-cli" */;
+			buildPhases = (
+				01EFF3CF3038872F0082969B /* Sources */,
+				01EFF3D03038872F0082969B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01EFF400303887470082969B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01EFF3D43038872F0082969B /* zephyr-cli */,
+			);
+			name = "zephyr-cli";
+			packageProductDependencies = (
+				01EFF4213038920000829690 /* ArgumentParser */,
+			);
+			productName = "zephyr-cli";
+			productReference = 01EFF3D33038872F0082969B /* zephyr-cli */;
+			productType = "com.apple.product-type.tool";
+		};
+		01EFF3DE3038873E0082969B /* libZephyr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01EFF3F63038873E0082969B /* Build configuration list for PBXNativeTarget "libZephyr" */;
+			buildPhases = (
+				01EFF3DA3038873E0082969B /* Headers */,
+				01EFF3DB3038873E0082969B /* Sources */,
+				01EFF3DC3038873E0082969B /* Frameworks */,
+				01EFF3DD3038873E0082969B /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				01EFF3E03038873E0082969B /* libZephyr */,
+			);
+			name = libZephyr;
+			packageProductDependencies = (
+				0AC0000000000000000000C2 /* Sentry */,
+				01EFF415303891310082969B /* GRDB */,
+				01EFF4183038914C0082969B /* Semaphore */,
+				01EFFAB23038A6AC0082969B /* AsyncAlgorithms */,
+			);
+			productName = libZephyr;
+			productReference = 01EFF3DF3038873E0082969B /* libZephyr.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		01EFF3E83038873E0082969B /* libZephyrTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01EFF3FA3038873E0082969B /* Build configuration list for PBXNativeTarget "libZephyrTests" */;
+			buildPhases = (
+				01EFF3E53038873E0082969B /* Sources */,
+				01EFF3E63038873E0082969B /* Frameworks */,
+				01EFF3E73038873E0082969B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01EFF3EC3038873E0082969B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				01EFF3EF3038873E0082969B /* libZephyrTests */,
+			);
+			name = libZephyrTests;
+			packageProductDependencies = (
+				0AC0000000000000000000C7 /* Sentry */,
+			);
+			productName = libZephyrTests;
+			productReference = 01EFF3E93038873E0082969B /* libZephyrTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		0AC0000000000000000000A7 /* Zephyr Common */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0AC0000000000000000000A8 /* Build configuration list for PBXNativeTarget "Zephyr Common" */;
+			buildPhases = (
+				0AC0000000000000000000A3 /* Headers */,
+				0AC0000000000000000000A4 /* Sources */,
+				0AC0000000000000000000A5 /* Frameworks */,
+				0AC0000000000000000000A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0AC0000000000000000000AD /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				0AC0000000000000000000A1 /* Zephyr Common */,
+			);
+			name = "Zephyr Common";
+			productName = "Zephyr Common";
+			productReference = 0AC0000000000000000000A2 /* ZephyrCommon.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		01EFF3533038864A0082969B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					018BFEAD303A0D4200F97190 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01AE92ED3043BA3500EC863B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01EFF35A3038864A0082969B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01EFF3673038864A0082969B = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 01EFF35A3038864A0082969B;
+					};
+					01EFF3713038864A0082969B = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 01EFF35A3038864A0082969B;
+					};
+					01EFF3883038868F0082969B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01EFF3A1303886F70082969B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01EFF3B63038870F0082969B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01EFF3D23038872F0082969B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01EFF3DE3038873E0082969B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					01EFF3E83038873E0082969B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = 01EFF3563038864A0082969B /* Build configuration list for PBXProject "Zephyr" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 01EFF3523038864A0082969B;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				01EFF414303891310082969B /* XCRemoteSwiftPackageReference "GRDB" */,
+				01EFF4173038914C0082969B /* XCRemoteSwiftPackageReference "Semaphore" */,
+				01EFF4203038920000829690 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+				01EFFAB13038A6AC0082969B /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
+				01EFFB013038B00000829700 /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */,
+				01EFFB023038B00000829701 /* XCRemoteSwiftPackageReference "XCUITestKit" */,
+				0AC0000000000000000000C3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+			);
+			preferredProjectObjectVersion = 100;
+			productRefGroup = 01EFF35C3038864A0082969B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0AC0000000000000000000A7 /* Zephyr Common */,
+				01EFF35A3038864A0082969B /* Zephyr (MAS) */,
+				018BFEAD303A0D4200F97190 /* Zephyr (download) */,
+				01EFF3673038864A0082969B /* ZephyrTests */,
+				01EFF3713038864A0082969B /* ZephyrUITests */,
+				01EFF3883038868F0082969B /* FileProvider */,
+				01AE92ED3043BA3500EC863B /* FileProviderUI */,
+				01EFF3E83038873E0082969B /* libZephyrTests */,
+				01EFF3A1303886F70082969B /* ShareExtension */,
+				01EFF3B63038870F0082969B /* WidgetExtension */,
+				01EFF3D23038872F0082969B /* zephyr-cli */,
+				01EFF3DE3038873E0082969B /* libZephyr */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		018BFEAC303A0D4200F97190 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+				0AC0000000000000000000E3 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+		};
+		01AE92EC3043BA3500EC863B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3593038864A0082969B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+				0AC0000000000000000000E2 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+		};
+		01EFF3663038864A0082969B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3703038864A0082969B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3873038868F0082969B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3A0303886F70082969B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3B53038870F0082969B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3DD3038873E0082969B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3E73038873E0082969B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		0AC0000000000000000000A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		01EFFC013038B10000829710 /* Sign Embedded Command-Line Tool */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			inputPaths = (
+				"$(SRCROOT)/Zephyr-download/CommandLineTool.entitlements",
+			);
+			name = "Sign Embedded Command-Line Tool";
+			shellPath = /bin/sh;
+			shellScript = (
+				"# Code-Sign-On-Copy signs the embedded tool with no entitlements at all, but zephyr-cli",
+				"# reaches the app group container (see ZephyrEnvironment.standard), so without",
+				"# com.apple.security.application-groups it traps the moment it resolves a session.",
+				"# Re-sign it here, before the app bundle is sealed around it.",
+				"#",
+				"# Deliberately NOT com.apple.security.inherit: the app installs this tool into",
+				"# /usr/local/bin (CommandLineToolInstaller) and the user runs it from a shell, where a",
+				"# binary signed to inherit a sandbox is aborted by libsystem_secinit with \"Process is",
+				"# not in an inherited sandbox\".",
+				"if [ \"${CODE_SIGNING_ALLOWED}\" = \"NO\" ]; then",
+				"  echo \"note: code signing disabled; leaving the embedded tool unsigned\"",
+				"  exit 0",
+				"fi",
+				"",
+				"IDENTITY=\"${EXPANDED_CODE_SIGN_IDENTITY:-${CODE_SIGN_IDENTITY}}\"",
+				"TOOL=\"${BUILT_PRODUCTS_DIR}/${CONTENTS_FOLDER_PATH}/Helpers/zephyr-cli\"",
+				"",
+				"[ -f \"${TOOL}\" ] || { echo \"error: embedded tool missing at ${TOOL}\"; exit 1; }",
+				"codesign --force --sign \"${IDENTITY}\" \\",
+				"  --entitlements \"${SRCROOT}/Zephyr-download/CommandLineTool.entitlements\" \\",
+				"  --options runtime \\",
+				"  \"${TOOL}\" || exit 1",
+				"",
+			);
+		};
+		01F0B1000000000000000001 /* Build Help Book */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			inputPaths = (
+				"$(SRCROOT)/Scripts/build-help-book.sh",
+				"$(SRCROOT)/Help/Zephyr.help/Contents/Info.plist",
+				"$(SRCROOT)/libZephyr/Support/HelpAnchor.swift",
+			);
+			name = "Build Help Book";
+			shellPath = /bin/sh;
+			shellScript = (
+				"# Always out of date because no list of input paths can express \"every file under this tree\",",
+				"# and a list that misses one silently ships stale documentation. The script content-hashes the",
+				"# book and the anchor source instead, and returns in milliseconds when nothing changed.",
+				"\"${SRCROOT}/Scripts/build-help-book.sh\" \\",
+				"  \"${SRCROOT}/Help/Zephyr.help\" \\",
+				"  \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\" \\",
+				"  \"${DERIVED_FILE_DIR}\" \\",
+				"  \"${SRCROOT}/libZephyr/Support/HelpAnchor.swift\"",
+				"",
+			);
+		};
+		01F0B1000000000000000002 /* Build Help Book */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			inputPaths = (
+				"$(SRCROOT)/Scripts/build-help-book.sh",
+				"$(SRCROOT)/Help/Zephyr.help/Contents/Info.plist",
+				"$(SRCROOT)/libZephyr/Support/HelpAnchor.swift",
+			);
+			name = "Build Help Book";
+			shellPath = /bin/sh;
+			shellScript = (
+				"# Always out of date because no list of input paths can express \"every file under this tree\",",
+				"# and a list that misses one silently ships stale documentation. The script content-hashes the",
+				"# book and the anchor source instead, and returns in milliseconds when nothing changed.",
+				"\"${SRCROOT}/Scripts/build-help-book.sh\" \\",
+				"  \"${SRCROOT}/Help/Zephyr.help\" \\",
+				"  \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}\" \\",
+				"  \"${DERIVED_FILE_DIR}\" \\",
+				"  \"${SRCROOT}/libZephyr/Support/HelpAnchor.swift\"",
+				"",
+			);
+		};
+		0AC0000000000000000000C4 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			inputPaths = (
+				"$(SRCROOT)/.sentryclirc",
+			);
+			name = "Upload Debug Symbols to Sentry";
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = (
+				"# Uploads this build's debug symbols and source context to Sentry, so a crash report from it",
+				"# arrives symbolicated and with the failing lines attached. Runs only for an install build, which",
+				"# is what an archive does; an ordinary Debug build uploads nothing.",
+				"#",
+				"# Org and project come from .sentryclirc, which is why this changes directory first: sentry-cli",
+				"# looks for that file in the working directory. Only the auth token is passed in, through",
+				"# SENTRY_AUTH_TOKEN.",
+				"#",
+				"#",
+				"# The dSYM is deliberately not declared as an input. Both editions build a Zephyr.app, so that",
+				"# path is the same string in either target, and joining their graphs on it makes their identical",
+				"# products collide. alwaysOutOfDate already runs this every build, so inputs would buy nothing.",
+				"# Nothing here may fail the build. A machine without sentry-cli, or without a token, still",
+				"# produces a shippable app — fastlane's release lanes upload the same symbols out of the archive,",
+				"# and that is what makes symbolication a property of the release rather than of whoever archived",
+				"# it.",
+				"if ! command -v sentry-cli >/dev/null 2>&1; then",
+				"  if [ -x /opt/homebrew/bin/sentry-cli ]; then",
+				"    PATH=\"/opt/homebrew/bin:$PATH\"",
+				"  elif [ -x /usr/local/bin/sentry-cli ]; then",
+				"    PATH=\"/usr/local/bin:$PATH\"",
+				"  else",
+				"    echo \"warning: sentry-cli not installed, so this build's symbols went nowhere; see https://github.com/getsentry/sentry-cli/releases\"",
+				"    exit 0",
+				"  fi",
+				"  export PATH",
+				"fi",
+				"",
+				"cd \"${SRCROOT}\" || exit 0",
+				"",
+				"if ! ERROR=$(sentry-cli debug-files upload --include-sources \"${DWARF_DSYM_FOLDER_PATH}\" 2>&1 >/dev/null); then",
+				"  echo \"warning: sentry-cli - ${ERROR}\"",
+				"fi",
+				"",
+			);
+		};
+		0AC0000000000000000000C5 /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			inputPaths = (
+				"$(SRCROOT)/.sentryclirc",
+			);
+			name = "Upload Debug Symbols to Sentry";
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = (
+				"# Uploads this build's debug symbols and source context to Sentry, so a crash report from it",
+				"# arrives symbolicated and with the failing lines attached. Runs only for an install build, which",
+				"# is what an archive does; an ordinary Debug build uploads nothing.",
+				"#",
+				"# Org and project come from .sentryclirc, which is why this changes directory first: sentry-cli",
+				"# looks for that file in the working directory. Only the auth token is passed in, through",
+				"# SENTRY_AUTH_TOKEN.",
+				"#",
+				"#",
+				"# The dSYM is deliberately not declared as an input. Both editions build a Zephyr.app, so that",
+				"# path is the same string in either target, and joining their graphs on it makes their identical",
+				"# products collide. alwaysOutOfDate already runs this every build, so inputs would buy nothing.",
+				"# Nothing here may fail the build. A machine without sentry-cli, or without a token, still",
+				"# produces a shippable app — fastlane's release lanes upload the same symbols out of the archive,",
+				"# and that is what makes symbolication a property of the release rather than of whoever archived",
+				"# it.",
+				"if ! command -v sentry-cli >/dev/null 2>&1; then",
+				"  if [ -x /opt/homebrew/bin/sentry-cli ]; then",
+				"    PATH=\"/opt/homebrew/bin:$PATH\"",
+				"  elif [ -x /usr/local/bin/sentry-cli ]; then",
+				"    PATH=\"/usr/local/bin:$PATH\"",
+				"  else",
+				"    echo \"warning: sentry-cli not installed, so this build's symbols went nowhere; see https://github.com/getsentry/sentry-cli/releases\"",
+				"    exit 0",
+				"  fi",
+				"  export PATH",
+				"fi",
+				"",
+				"cd \"${SRCROOT}\" || exit 0",
+				"",
+				"if ! ERROR=$(sentry-cli debug-files upload --include-sources \"${DWARF_DSYM_FOLDER_PATH}\" 2>&1 >/dev/null); then",
+				"  echo \"warning: sentry-cli - ${ERROR}\"",
+				"fi",
+				"",
+			);
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		018BFEAA303A0D4200F97190 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01AE92EA3043BA3500EC863B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3573038864A0082969B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3643038864A0082969B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF36E3038864A0082969B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3853038868F0082969B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF39E303886F70082969B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3B33038870F0082969B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3CF3038872F0082969B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3DB3038873E0082969B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		01EFF3E53038873E0082969B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		0AC0000000000000000000A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		018BFEDB303A0DC700F97190 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+			targetProxy = 018BFEDA303A0DC700F97190 /* PBXContainerItemProxy */;
+		};
+		018BFEDE303A0DC700F97190 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3A1303886F70082969B /* ShareExtension */;
+			targetProxy = 018BFEDD303A0DC700F97190 /* PBXContainerItemProxy */;
+		};
+		018BFEE1303A0DC700F97190 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3B63038870F0082969B /* WidgetExtension */;
+			targetProxy = 018BFEE0303A0DC700F97190 /* PBXContainerItemProxy */;
+		};
+		018BFEE6303A0DD400F97190 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3883038868F0082969B /* FileProvider */;
+			targetProxy = 018BFEE5303A0DD400F97190 /* PBXContainerItemProxy */;
+		};
+		01AE92F73043BA3500EC863B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01AE92ED3043BA3500EC863B /* FileProviderUI */;
+			targetProxy = 01AE92F63043BA3500EC863B /* PBXContainerItemProxy */;
+		};
+		01AE93073043BAAE00EC863B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+			targetProxy = 01AE93063043BAAE00EC863B /* PBXContainerItemProxy */;
+		};
+		01AE93123043BB0000EC863B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01AE92ED3043BA3500EC863B /* FileProviderUI */;
+			targetProxy = 01AE93113043BB0000EC863B /* PBXContainerItemProxy */;
+		};
+		01EFF36A3038864A0082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF35A3038864A0082969B /* Zephyr (MAS) */;
+			targetProxy = 01EFF3693038864A0082969B /* PBXContainerItemProxy */;
+		};
+		01EFF3743038864A0082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF35A3038864A0082969B /* Zephyr (MAS) */;
+			targetProxy = 01EFF3733038864A0082969B /* PBXContainerItemProxy */;
+		};
+		01EFF3973038868F0082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3883038868F0082969B /* FileProvider */;
+			targetProxy = 01EFF3963038868F0082969B /* PBXContainerItemProxy */;
+		};
+		01EFF3AD303886F70082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3A1303886F70082969B /* ShareExtension */;
+			targetProxy = 01EFF3AC303886F70082969B /* PBXContainerItemProxy */;
+		};
+		01EFF3C9303887100082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3B63038870F0082969B /* WidgetExtension */;
+			targetProxy = 01EFF3C8303887100082969B /* PBXContainerItemProxy */;
+		};
+		01EFF3EC3038873E0082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+			targetProxy = 01EFF3EB3038873E0082969B /* PBXContainerItemProxy */;
+		};
+		01EFF3F33038873E0082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+			targetProxy = 01EFF3F23038873E0082969B /* PBXContainerItemProxy */;
+		};
+		01EFF400303887470082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+			targetProxy = 01EFF3FF303887470082969B /* PBXContainerItemProxy */;
+		};
+		01EFF408303890640082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+			targetProxy = 01EFF407303890640082969B /* PBXContainerItemProxy */;
+		};
+		01EFF40D303890670082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+			targetProxy = 01EFF40C303890670082969B /* PBXContainerItemProxy */;
+		};
+		01EFF4123038906A0082969B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+			targetProxy = 01EFF4113038906A0082969B /* PBXContainerItemProxy */;
+		};
+		01EFF9043038999900829694 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01EFF3D23038872F0082969B /* zephyr-cli */;
+			targetProxy = 01EFF9033038999900829693 /* PBXContainerItemProxy */;
+		};
+		0AC0000000000000000000AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libZephyr;
+			target = 01EFF3DE3038873E0082969B /* libZephyr */;
+			targetProxy = 0AC0000000000000000000AC /* PBXContainerItemProxy */;
+		};
+		0AC0000000000000000000B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Zephyr Common";
+			target = 0AC0000000000000000000A7 /* Zephyr Common */;
+			targetProxy = 0AC0000000000000000000B1 /* PBXContainerItemProxy */;
+		};
+		0AC0000000000000000000B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Zephyr Common";
+			target = 0AC0000000000000000000A7 /* Zephyr Common */;
+			targetProxy = 0AC0000000000000000000B5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		018BFECD303A0D4300F97190 /* Debug configuration for PBXNativeTarget "Zephyr (download)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Zephyr-download/Zephyr-download.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Zephyr-download-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr;
+				PRODUCT_NAME = Zephyr;
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		018BFECE303A0D4300F97190 /* Release configuration for PBXNativeTarget "Zephyr (download)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Zephyr-download/Zephyr-download.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Zephyr-download-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr;
+				PRODUCT_NAME = Zephyr;
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01AE92FB3043BA3500EC863B /* Debug configuration for PBXNativeTarget "FileProviderUI" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FileProviderUI/FileProviderUI.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FileProviderUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.FileProviderUI;
+				PRODUCT_MODULE_NAME = ZephyrFileProviderUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01AE92FC3043BA3500EC863B /* Release configuration for PBXNativeTarget "FileProviderUI" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FileProviderUI/FileProviderUI.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FileProviderUI/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.FileProviderUI;
+				PRODUCT_MODULE_NAME = ZephyrFileProviderUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01EFF37A3038864A0082969B /* Debug configuration for PBXProject "Zephyr" */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01EFF430303892AA0082969B /* Zephyr.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		01EFF37B3038864A0082969B /* Release configuration for PBXProject "Zephyr" */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01EFF430303892AA0082969B /* Zephyr.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		01EFF37D3038864A0082969B /* Debug configuration for PBXNativeTarget "Zephyr (MAS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Zephyr-MAS/Zephyr.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Zephyr-MAS-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr;
+				PRODUCT_NAME = Zephyr;
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01EFF37E3038864A0082969B /* Release configuration for PBXNativeTarget "Zephyr (MAS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Zephyr-MAS/Zephyr.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Zephyr-MAS-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr;
+				PRODUCT_NAME = Zephyr;
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01EFF3803038864A0082969B /* Debug configuration for PBXNativeTarget "ZephyrTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.ZephyrTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01EFF3813038864A0082969B /* Release configuration for PBXNativeTarget "ZephyrTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.ZephyrTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01EFF3833038864A0082969B /* Debug configuration for PBXNativeTarget "ZephyrUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.ZephyrUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				TEST_TARGET_NAME = "Zephyr (MAS)";
+			};
+			name = Debug;
+		};
+		01EFF3843038864A0082969B /* Release configuration for PBXNativeTarget "ZephyrUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.ZephyrUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				TEST_TARGET_NAME = "Zephyr (MAS)";
+			};
+			name = Release;
+		};
+		01EFF39B3038868F0082969B /* Debug configuration for PBXNativeTarget "FileProvider" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FileProvider/FileProvider.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_DEBUG_DYLIB = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FileProvider/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.FileProvider;
+				PRODUCT_MODULE_NAME = ZephyrFileProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01EFF39C3038868F0082969B /* Release configuration for PBXNativeTarget "FileProvider" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FileProvider/FileProvider.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_DEBUG_DYLIB = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FileProvider/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.FileProvider;
+				PRODUCT_MODULE_NAME = ZephyrFileProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01EFF3B1303886F70082969B /* Debug configuration for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01EFF3B2303886F70082969B /* Release configuration for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01EFF3CD303887100082969B /* Debug configuration for PBXNativeTarget "WidgetExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.Widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01EFF3CE303887100082969B /* Release configuration for PBXNativeTarget "WidgetExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = WidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Zephyr;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.Widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01EFF3D83038872F0082969B /* Debug configuration for PBXNativeTarget "zephyr-cli" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.cli;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01EFF3D93038872F0082969B /* Release configuration for PBXNativeTarget "zephyr-cli" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				ENABLE_HARDENED_RUNTIME = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.cli;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		01EFF3F73038873E0082969B /* Debug configuration for PBXNativeTarget "libZephyr" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = libZephyr/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.libZephyr;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		01EFF3F83038873E0082969B /* Release configuration for PBXNativeTarget "libZephyr" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = libZephyr/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.libZephyr;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		01EFF3FB3038873E0082969B /* Debug configuration for PBXNativeTarget "libZephyrTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.libZephyrTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Debug;
+		};
+		01EFF3FC3038873E0082969B /* Release configuration for PBXNativeTarget "libZephyrTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = codes.tim.Zephyr.libZephyrTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+			};
+			name = Release;
+		};
+		0AC0000000000000000000A9 /* Debug configuration for PBXNativeTarget "Zephyr Common" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.Zephyr-Common";
+				PRODUCT_NAME = ZephyrCommon;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		0AC0000000000000000000AA /* Release configuration for PBXNativeTarget "Zephyr Common" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 2NFSK2WB24;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©2026 Tim Morgan";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "codes.tim.Zephyr-Common";
+				PRODUCT_NAME = ZephyrCommon;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		018BFECC303A0D4300F97190 /* Build configuration list for PBXNativeTarget "Zephyr (download)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				018BFECD303A0D4300F97190 /* Debug configuration for PBXNativeTarget "Zephyr (download)" */,
+				018BFECE303A0D4300F97190 /* Release configuration for PBXNativeTarget "Zephyr (download)" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01AE92FA3043BA3500EC863B /* Build configuration list for PBXNativeTarget "FileProviderUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01AE92FB3043BA3500EC863B /* Debug configuration for PBXNativeTarget "FileProviderUI" */,
+				01AE92FC3043BA3500EC863B /* Release configuration for PBXNativeTarget "FileProviderUI" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF3563038864A0082969B /* Build configuration list for PBXProject "Zephyr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF37A3038864A0082969B /* Debug configuration for PBXProject "Zephyr" */,
+				01EFF37B3038864A0082969B /* Release configuration for PBXProject "Zephyr" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF37C3038864A0082969B /* Build configuration list for PBXNativeTarget "Zephyr (MAS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF37D3038864A0082969B /* Debug configuration for PBXNativeTarget "Zephyr (MAS)" */,
+				01EFF37E3038864A0082969B /* Release configuration for PBXNativeTarget "Zephyr (MAS)" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF37F3038864A0082969B /* Build configuration list for PBXNativeTarget "ZephyrTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF3803038864A0082969B /* Debug configuration for PBXNativeTarget "ZephyrTests" */,
+				01EFF3813038864A0082969B /* Release configuration for PBXNativeTarget "ZephyrTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF3823038864A0082969B /* Build configuration list for PBXNativeTarget "ZephyrUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF3833038864A0082969B /* Debug configuration for PBXNativeTarget "ZephyrUITests" */,
+				01EFF3843038864A0082969B /* Release configuration for PBXNativeTarget "ZephyrUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF39A3038868F0082969B /* Build configuration list for PBXNativeTarget "FileProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF39B3038868F0082969B /* Debug configuration for PBXNativeTarget "FileProvider" */,
+				01EFF39C3038868F0082969B /* Release configuration for PBXNativeTarget "FileProvider" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF3B0303886F70082969B /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF3B1303886F70082969B /* Debug configuration for PBXNativeTarget "ShareExtension" */,
+				01EFF3B2303886F70082969B /* Release configuration for PBXNativeTarget "ShareExtension" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF3CC303887100082969B /* Build configuration list for PBXNativeTarget "WidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF3CD303887100082969B /* Debug configuration for PBXNativeTarget "WidgetExtension" */,
+				01EFF3CE303887100082969B /* Release configuration for PBXNativeTarget "WidgetExtension" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF3D73038872F0082969B /* Build configuration list for PBXNativeTarget "zephyr-cli" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF3D83038872F0082969B /* Debug configuration for PBXNativeTarget "zephyr-cli" */,
+				01EFF3D93038872F0082969B /* Release configuration for PBXNativeTarget "zephyr-cli" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF3F63038873E0082969B /* Build configuration list for PBXNativeTarget "libZephyr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF3F73038873E0082969B /* Debug configuration for PBXNativeTarget "libZephyr" */,
+				01EFF3F83038873E0082969B /* Release configuration for PBXNativeTarget "libZephyr" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		01EFF3FA3038873E0082969B /* Build configuration list for PBXNativeTarget "libZephyrTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01EFF3FB3038873E0082969B /* Debug configuration for PBXNativeTarget "libZephyrTests" */,
+				01EFF3FC3038873E0082969B /* Release configuration for PBXNativeTarget "libZephyrTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		0AC0000000000000000000A8 /* Build configuration list for PBXNativeTarget "Zephyr Common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AC0000000000000000000A9 /* Debug configuration for PBXNativeTarget "Zephyr Common" */,
+				0AC0000000000000000000AA /* Release configuration for PBXNativeTarget "Zephyr Common" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		01EFF414303891310082969B /* XCRemoteSwiftPackageReference "GRDB" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRDB.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.1;
+			};
+		};
+		01EFF4173038914C0082969B /* XCRemoteSwiftPackageReference "Semaphore" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/Semaphore";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
+		01EFF4203038920000829690 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.0;
+			};
+		};
+		01EFFAB13038A6AC0082969B /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-async-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.5;
+			};
+		};
+		01EFFB013038B00000829700 /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RISCfuture/GitHubUpdateChecker";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
+		01EFFB023038B00000829701 /* XCRemoteSwiftPackageReference "XCUITestKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RISCfuture/XCUITestKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		0AC0000000000000000000C3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.26.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		018BFED6303A0DC700F97190 /* GitHubUpdateChecker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01EFFB013038B00000829700 /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */;
+			productName = GitHubUpdateChecker;
+		};
+		01EFF415303891310082969B /* GRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01EFF414303891310082969B /* XCRemoteSwiftPackageReference "GRDB" */;
+			productName = GRDB;
+		};
+		01EFF4183038914C0082969B /* Semaphore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01EFF4173038914C0082969B /* XCRemoteSwiftPackageReference "Semaphore" */;
+			productName = Semaphore;
+		};
+		01EFF4213038920000829690 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01EFF4203038920000829690 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+		01EFFAB23038A6AC0082969B /* AsyncAlgorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01EFFAB13038A6AC0082969B /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
+		};
+		01EFFB043038B00000829703 /* XCUITestKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01EFFB023038B00000829701 /* XCRemoteSwiftPackageReference "XCUITestKit" */;
+			productName = XCUITestKit;
+		};
+		0AC0000000000000000000C2 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0AC0000000000000000000C3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+		0AC0000000000000000000C7 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0AC0000000000000000000C3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 01EFF3533038864A0082969B /* Project object */;
+}

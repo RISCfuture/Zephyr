@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!--
+	  Xcode generates the rest of this app's Info.plist from build settings, but it carries only
+	  the keys it knows: an INFOPLIST_KEY_CFBundleHelpBookFolder is silently dropped. These two
+	  are what point AppKit's "Zephyr Help" menu item, and every HelpLink, at the book that
+	  Scripts/build-help-book.sh stages into Contents/Resources.
+
+	  The identifier is written out rather than derived from PRODUCT_BUNDLE_IDENTIFIER because
+	  both editions already share one; deriving it would only hide that they do.
+	-->
+	<key>CFBundleHelpBookFolder</key>
+	<string>Zephyr.help</string>
+	<key>CFBundleHelpBookName</key>
+	<string>codes.tim.Zephyr.help</string>
+	<!--
+	  The URL scheme Dropbox redirects back to once the user has approved access in the web
+	  authentication session the link form opens. GENERATE_INFOPLIST_FILE has no build setting for
+	  CFBundleURLTypes either, so this is written here too — spelled with $(DROPBOX_APP_KEY) so the
+	  scheme follows whichever registration the build points at, a fork's own Secrets.xcconfig
+	  included. It has to spell DropboxOAuthFlow.redirectURI's scheme exactly: Dropbox compares the
+	  redirect URI it is sent against the one registered in the app console character for character.
+	-->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>codes.tim.Zephyr.oauth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>db-$(DROPBOX_APP_KEY)</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

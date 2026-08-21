@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Privacy Policy — Zephyr for macOS</title>
+    <meta
+      name="description"
+      content="How Zephyr for macOS handles your data: your files move between your Mac and Dropbox and nowhere else, credentials stay in your Keychain, and the only diagnostics that leave your Mac are crash reports carrying no file names or paths."
+    />
+    <link rel="canonical" href="https://riscfuture.github.io/Zephyr/privacy.html" />
+    <meta name="author" content="Tim Morgan" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#080f1b" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/svg+xml" href="assets/zephyr-mark.svg" />
+    <link rel="apple-touch-icon" href="assets/zephyr-mark.svg" />
+    <link
+      rel="preload"
+      href="assets/fonts/schibsted-grotesk.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/hanken-grotesk.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Zephyr" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://riscfuture.github.io/Zephyr/privacy.html" />
+    <meta property="og:title" content="Privacy Policy — Zephyr for macOS" />
+    <meta
+      property="og:description"
+      content="Your files go between your Mac and Dropbox, and nowhere else. No Zephyr server, no ad tracking, and crash reports that carry none of your data."
+    />
+    <meta property="article:published_time" content="2026-08-21" />
+    <meta property="article:modified_time" content="2026-08-24" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Privacy Policy — Zephyr for macOS" />
+    <meta
+      name="twitter:description"
+      content="Your files go between your Mac and Dropbox, and nowhere else. No Zephyr server, no ad tracking, and crash reports that carry none of your data."
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://riscfuture.github.io/Zephyr/privacy.html#policy",
+            "url": "https://riscfuture.github.io/Zephyr/privacy.html",
+            "name": "Zephyr Privacy Policy",
+            "inLanguage": "en-US",
+            "datePublished": "2026-08-21",
+            "dateModified": "2026-08-24",
+            "isPartOf": { "@id": "https://riscfuture.github.io/Zephyr/#website" },
+            "about": {
+              "@type": "SoftwareApplication",
+              "@id": "https://riscfuture.github.io/Zephyr/#app",
+              "name": "Zephyr"
+            },
+            "publisher": {
+              "@type": "Person",
+              "@id": "https://riscfuture.github.io/Zephyr/#author",
+              "name": "Tim Morgan"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://riscfuture.github.io/Zephyr/privacy.html#breadcrumbs",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Zephyr",
+                "item": "https://riscfuture.github.io/Zephyr/"
+              },
+              { "@type": "ListItem", "position": 2, "name": "Privacy Policy" }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="./">
+          <img src="assets/zephyr-mark.svg" width="27" height="27" alt="" />
+          <span>Zephyr</span>
+        </a>
+        <nav class="site-nav" aria-label="Sections">
+          <a href="./#macos">Integration</a>
+          <a href="./#features">Features</a>
+          <a href="./#cli">Command line</a>
+          <a href="./#setup">Setup</a>
+          <a href="./#get-it">Download</a>
+          <a href="./#faq">FAQ</a>
+        </nav>
+        <a class="btn btn-primary btn-sm" href="https://github.com/RISCfuture/Zephyr/releases/latest"
+          >Download</a
+        >
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="wrap doc">
+        <p class="tag">Privacy</p>
+        <h1>Privacy Policy</h1>
+        <p class="doc-date">Effective 24 August 2026</p>
+
+        <div class="doc-summary">
+          <h2>The short version</h2>
+          <ul>
+            <li>Zephyr is a Dropbox client. Moving your files between your Mac and Dropbox is
+              its entire function — and that is the only place they go.</li>
+            <li>There is no Zephyr server, anywhere. Nothing reaches the developer: not your
+              files, not their names, not your credentials.</li>
+            <li>Your Dropbox refresh token is stored in the macOS Keychain and sent only to
+              Dropbox.</li>
+            <li>The index Zephyr keeps of your account is a database on your Mac. It never
+              leaves the machine.</li>
+            <li>Crash reports go to Sentry so bugs can be found and fixed. They describe the
+              Application, not your files, and there is currently no setting to switch them
+              off.</li>
+            <li>No advertising identifiers, no cross-app tracking, no profiling, and nothing sold
+              or shared with advertisers or data brokers.</li>
+            <li>The diagnostics report you can collect for a bug report does name your files. It
+              is written to your Mac and goes nowhere unless you send it.</li>
+            <li>The direct download checks GitHub for new releases. You can set that to Never in
+              Settings ▸ Updates.</li>
+          </ul>
+          <p>The full policy below is what governs.</p>
+        </div>
+
+        <div class="doc-body">
+          <p>
+            This privacy policy applies to the Zephyr app (hereby referred to as “Application”)
+            for macOS that was created by Timothy Morgan (hereby referred to as “Service
+            Provider”) as an Open Source service. This service is intended for use “AS IS”.
+          </p>
+          <p>
+            Zephyr is an independent Dropbox client. It is not affiliated with, endorsed by, or
+            sponsored by Dropbox, Inc.
+          </p>
+
+          <h2>What information does the Application obtain and how is it used?</h2>
+          <p>
+            Zephyr has no accounts of its own, collects no information for the Service Provider,
+            and transmits nothing to any server the Service Provider operates — because none
+            exists. What follows describes every category of data the Application touches and
+            everywhere it goes.
+          </p>
+
+          <h3>Your files and your Dropbox account</h3>
+          <p>
+            Unlike an app that keeps your data on your own machine, Zephyr’s entire purpose is
+            to move it: it downloads the contents of files you open from Dropbox, uploads files
+            you create or change, and keeps a record of your account’s folder structure so the
+            Finder can show it to you. This is the service you are asking for when you link an
+            account.
+          </p>
+          <p>
+            That traffic travels directly between your Mac and Dropbox over encrypted (HTTPS)
+            connections, to <code>www.dropbox.com</code>, <code>api.dropboxapi.com</code>,
+            <code>content.dropboxapi.com</code>, and <code>notify.dropboxapi.com</code>, and to
+            no other host. It does not pass through any intermediary, proxy, or service operated
+            by the Service Provider. Once your data is with Dropbox it is held by Dropbox under
+            <a href="https://www.dropbox.com/privacy">Dropbox’s own privacy policy</a>, which
+            governs what Dropbox does with it and which is worth reading alongside this one.
+          </p>
+
+          <h3>What access Zephyr requests from Dropbox</h3>
+          <p>
+            Zephyr is registered with Dropbox as a scoped-access application with full Dropbox
+            access, because it presents your whole account in the Finder rather than a single
+            app folder. When you link an account, Dropbox shows you what is being requested and
+            asks you to approve it. What may be requested is set by Zephyr’s registration with
+            Dropbox rather than by the app: the authorization request names no scopes of its own,
+            so Dropbox grants what that registration enables, which is exactly these six and no
+            others:
+          </p>
+          <dl class="scopes">
+            <dt>account_info.read</dt>
+            <dd>
+              Read your account’s basic profile — the name and email on the account, and how much
+              of your storage quota is in use. Zephyr uses it to label linked accounts and to
+              show usage.
+            </dd>
+
+            <dt>files.metadata.read</dt>
+            <dd>
+              Read the names, paths, sizes, timestamps, revision identifiers, and content hashes
+              of the files and folders in your Dropbox, and follow the account’s feed of changes.
+              This is what lets the Finder show your Dropbox without downloading it.
+            </dd>
+
+            <dt>files.content.read</dt>
+            <dd>Download the contents of your files, which happens when something opens one.</dd>
+
+            <dt>files.content.write</dt>
+            <dd>
+              Create, modify, move, rename, and delete files and folders in your Dropbox —
+              everything you do to the account through the Finder, the Share extension, or the
+              command-line tool.
+            </dd>
+
+            <dt>sharing.read</dt>
+            <dd>List the shared links that already exist on your account.</dd>
+
+            <dt>sharing.write</dt>
+            <dd>Create and revoke shared links, when you ask for one.</dd>
+          </dl>
+          <p>
+            No team, team member, file request, contacts, or Paper scope is enabled, and Zephyr
+            cannot see any account other than the one you link. You can withdraw this
+            access at any time — see <a href="#opt-out">opt-out rights</a> below.
+          </p>
+
+          <h3>Credentials</h3>
+          <p>
+            Zephyr signs in using Dropbox’s OAuth 2 authorization-code flow with PKCE, as a
+            public client. You enter your Dropbox password on Dropbox’s own website, never in
+            Zephyr; the Application never sees it. No client secret exists anywhere in Zephyr,
+            and none is ever sent.
+          </p>
+          <p>
+            What Dropbox returns is a refresh token, which Zephyr stores in the macOS Keychain
+            and exchanges with Dropbox for short-lived access tokens as it works. There are
+            deliberately two stores: the app and its extensions keep their token in a
+            data-protection keychain item shared through the Application’s keychain access
+            group, while the <code>zephyr</code> command-line tool — which is not sandboxed and
+            cannot carry that entitlement — keeps its own item in your login keychain. Access
+            tokens are held in memory only.
+          </p>
+          <p>
+            No credential of any kind is transmitted to the Service Provider. Tokens are sent
+            only to Dropbox, at <code>api.dropboxapi.com</code>, over HTTPS. There is no Zephyr
+            account, no Zephyr login, and no Zephyr server to send anything to.
+          </p>
+
+          <h3>The local sync index</h3>
+          <p>
+            So that the Finder can list your Dropbox instantly and without downloading it, Zephyr
+            keeps a SQLite database (using GRDB) for each linked account on your Mac. It records,
+            for every item in the account: its name and path, its Dropbox identifier and revision
+            id, its size, its content hash, its timestamps, whether it is marked as ignored, and
+            the position of Zephyr’s place in the account’s change feed. It also keeps a rolling
+            week of sync history — what changed and when — and a small set of notes about items
+            that failed to sync.
+          </p>
+          <p>
+            This database never leaves your Mac. It is not backed up to any service by Zephyr, is
+            not transmitted anywhere, and is not readable by the Service Provider. It lives in
+            the Application’s app group container, at
+            <code
+              >~/Library/Group Containers/group.codes.tim.Zephyr/Library/Application
+              Support/Zephyr/Accounts/&lt;account&nbsp;id&gt;/index.sqlite</code
+            >, alongside that account’s cached details and a staging folder for in-flight
+            downloads. One level above it sit the registry of linked accounts and the settings that
+            belong to this Mac rather than to one account. Unlinking an account or deleting that
+            container removes it.
+          </p>
+
+          <h3>Update checks</h3>
+          <p>
+            The copy of Zephyr downloaded directly from GitHub checks for its own updates; the
+            Mac App Store edition does not, because the App Store updates it. In the direct
+            download, on launch and then periodically — daily by default — the app requests the
+            public list of releases for the Zephyr repository from GitHub’s API, at
+            <code>api.github.com</code>. The request is unauthenticated and carries no
+            information about you, your Dropbox account, your files, or your copy of the app
+            beyond what any web request necessarily reveals to the server answering it: your IP
+            address, the time, and a generic user-agent string. It is governed by
+            <a
+              href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement"
+              >GitHub’s privacy statement</a
+            >. If you choose to install an update it is downloaded from GitHub as well.
+          </p>
+          <p>
+            You can turn automatic checks off. In the direct download's <strong>Settings ▸
+            Updates</strong>, the “Check automatically” setting offers Hourly, Daily, Weekly, and
+            <strong>Never</strong>; choosing Never stops all background checks, and the
+            Application will then contact GitHub only if you press “Check Now” yourself.
+          </p>
+
+          <h3>Diagnostic logging</h3>
+          <p>
+            Zephyr writes diagnostic messages to the macOS unified log under the subsystem
+            <code>codes.tim.Zephyr</code>. These records — which can include Dropbox paths and
+            file names — stay on your Mac, under the system’s own log retention, and Zephyr never
+            uploads them anywhere.
+          </p>
+          <p>
+            Be aware that unified log data is included in a <em>sysdiagnose</em>. If you generate
+            one and send it to Apple, or attach it (or the output of <code>log show</code>) to a
+            bug report, that log data goes wherever you send it. It is worth a look before you
+            share one.
+          </p>
+          <p>
+            <strong>Settings ▸ Troubleshooting ▸ Collect…</strong> writes a diagnostics report
+            meant for a bug report, and it is the one thing Zephyr produces that names your files:
+            it lists the path of every item that failed to sync and of every item you have excluded
+            from syncing. Around those it puts the Application’s version, your macOS version,
+            whether syncing is paused, your notification level and transfer limits, any approvals
+            macOS is withholding, and — for each linked account — its Dropbox identifier, its
+            namespace, when it was linked, and how many files and folders it holds, followed by a
+            tail of the Application’s own recent log. It is written to a file on your Mac and
+            revealed in the Finder; the Application never sends it anywhere. Read it before you
+            attach it to anything.
+          </p>
+
+          <h3 id="diagnostics">Crash reports</h3>
+          <p>
+            The Application reports its own crashes to
+            <a href="https://sentry.io">Sentry</a>, a diagnostics service operated by Functional
+            Software, Inc., along with a sample of its own performance and, from the menu-bar app
+            alone, its own hangs. The purpose is narrow: to
+            find out that something is broken or slow, and to have enough context to fix it. The
+            Application sends nothing about what you do with it — it counts no features, no
+            commands, and no settings.
+          </p>
+          <p>What a report contains:</p>
+          <ul>
+            <li>the Application’s version and build, the macOS version, and the Mac’s model
+              identifier, CPU architecture, locale, and available memory;</li>
+            <li>for a crash or a hang: the exception type, the message, and the stack trace, plus
+              which of the Application’s components it came from — the app, the File Provider
+              extension, the File Provider UI extension that draws the version-history sheet, the
+              Share extension, the widget, or the command-line tool;</li>
+            <li>a short trail of what that component did just before the fault: the network
+              requests it made, with their Dropbox API routes, HTTP statuses, and durations, and
+              its own start-up and lifecycle events;</li>
+            <li>from the app and the File Provider extension only, and from about a fifth of their
+              own work: timings for the network and file-system work the Application does, and
+              periodic samples of which of its own functions were running, so that slow paths can
+              be found. The other four components send no performance data at all;</li>
+            <li>a random identifier generated on this Mac, so that repeated reports from one
+              installation can be recognized as the same installation. It is not derived from
+              your Dropbox account, your Apple Account, or any hardware serial number, and
+              deleting the Application’s app group container discards it.</li>
+          </ul>
+          <p>What a report does not contain:</p>
+          <ul>
+            <li>the contents of any file;</li>
+            <li>file names, folder names, or Dropbox paths — the Application scrubs these out of
+              error messages, breadcrumbs, and log lines before a report is sent;</li>
+            <li>your Dropbox account identifier, display name, or email address;</li>
+            <li>your refresh token, any access token, or any other credential;</li>
+            <li>your IP address, which is discarded rather than stored with the report.</li>
+          </ul>
+          <p>
+            <strong>There is currently no setting that turns this off.</strong> The Application
+            reports for as long as it is running. A future version may add one; if it does, this
+            policy will be updated to describe it before that version is published. In the
+            meantime, removing the Application stops the reports, as does blocking
+            <code>*.ingest.us.sentry.io</code> at your firewall or DNS.
+          </p>
+          <p>
+            Sentry processes this data as the Service Provider’s processor, under
+            <a href="https://sentry.io/privacy/">Sentry’s privacy policy</a> and its
+            <a href="https://sentry.io/legal/dpa/">data processing addendum</a>. Reports are
+            retained for 90 days and then deleted. No report is sold, rented, or shared with
+            advertisers or data brokers, and none of it is used to profile you or to track you
+            across apps or websites. The Application uses no advertising identifier and does no
+            cross-app tracking of any kind.
+          </p>
+
+          <h2>
+            Do third parties see and/or have access to information obtained by the Application?
+          </h2>
+          <p>
+            <strong>Dropbox</strong> receives your files and their metadata, necessarily — that
+            is what a Dropbox client does — under the terms of your own Dropbox account.
+            <strong>GitHub</strong> sees the update-check requests described above.
+            <strong>Sentry</strong> receives the crash reports and performance data described
+            above and processes them on the Service Provider’s behalf.
+            <strong>Apple</strong> is involved only insofar as macOS itself stores the file
+            contents it has materialized on your Mac, and insofar as you choose to send Apple a
+            sysdiagnose. Nobody else receives anything. No data is sold, rented, or shared with
+            advertisers or data brokers, and nothing about the contents of your Dropbox is sent
+            to the Service Provider.
+          </p>
+
+          <h2 id="opt-out">What are my opt-out rights?</h2>
+          <p>
+            You can stop all use of your data by the Application by unlinking your account, which
+            deletes the stored refresh token from your Keychain and revokes Zephyr’s access with
+            Dropbox. You can also revoke that access independently from the
+            <a href="https://www.dropbox.com/account/connected_apps"
+              >connected apps page of your Dropbox account</a
+            >, which the Application cannot override. Removing the Application from your Mac ends
+            everything else, and deleting its app group container removes the local index along
+            with it. The direct download's update checks can be turned off in Settings ▸
+            Updates, and notifications reduced or silenced in Settings ▸ Notifications and in
+            macOS System Settings. Crash reports have no such setting yet — see
+            <a href="#diagnostics">crash reports</a> above for what stops them.
+          </p>
+
+          <h2>Children</h2>
+          <p>
+            The Application is a utility and is not used to knowingly solicit data from or market
+            to children under the age of 13.
+          </p>
+          <p>
+            The Service Provider does not knowingly collect personally identifiable information
+            from children — or, indeed, from anyone. If you have reason to believe that a child
+            has provided personally identifiable information to the Service Provider through the
+            Application, please contact the Service Provider (<a
+              href="https://github.com/RISCfuture/Zephyr/issues"
+              >github.com/RISCfuture/Zephyr/issues</a
+            >) so that they will be able to take the necessary actions. You must also be at least
+            16 years of age to consent to the processing of your personally identifiable
+            information in your country (in some countries we may allow your parent or guardian
+            to do so on your behalf).
+          </p>
+
+          <h2>Security</h2>
+          <p>
+            The Service Provider is concerned about safeguarding the confidentiality of your
+            information. Every request the Application makes — to Dropbox and to GitHub alike —
+            is made over an encrypted (HTTPS) connection. Your Dropbox refresh token is held in
+            the macOS Keychain rather than in a file, protected by the system, and the app and
+            its extensions use a data-protection keychain item that is unavailable until after
+            the first unlock following a restart. Because Zephyr authenticates as a public client
+            with PKCE, there is no client secret to be extracted from the app or intercepted.
+            Every file transfer is verified against Dropbox’s content hash. The app and its
+            extensions run in Apple’s App Sandbox; the command-line tool, by necessity, does not.
+          </p>
+          <p>
+            Zephyr is open source, and the code behind every claim on this page can be read in
+            the repository.
+          </p>
+
+          <h2>Changes</h2>
+          <p>
+            This Privacy Policy may be updated from time to time for any reason. The Service
+            Provider will notify you of any changes to their Privacy Policy by updating this page
+            with the new Privacy Policy. You are advised to consult this Privacy Policy regularly
+            for any changes, as continued use is deemed approval of all changes.
+          </p>
+          <p>This privacy policy is effective as of 24 August 2026.</p>
+
+          <h2>Your consent</h2>
+          <p>
+            By using the Application, you are consenting to the processing of your information as
+            set forth in this Privacy Policy now and as amended by the Service Provider.
+          </p>
+
+          <h2>Contact</h2>
+          <p>
+            If you have any questions regarding privacy while using the Application, or have
+            questions about the practices, please contact the Service Provider by opening an
+            issue at
+            <a href="https://github.com/RISCfuture/Zephyr/issues"
+              >github.com/RISCfuture/Zephyr/issues</a
+            >.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <div class="footer-top">
+          <a class="wordmark" href="./">
+            <img src="assets/zephyr-mark.svg" width="27" height="27" alt="" />
+            <span>Zephyr</span>
+          </a>
+          <p class="footer-links">
+            <a href="./">Home</a>
+            <a href="https://github.com/RISCfuture/Zephyr/releases/latest">Download</a>
+            <a href="https://github.com/RISCfuture/Zephyr">Source</a>
+            <a href="https://github.com/RISCfuture/Zephyr/issues">Report an issue</a>
+          </p>
+        </div>
+        <p class="attribution">
+          Zephyr is not affiliated with, endorsed by, or sponsored by Dropbox, Inc. It is an
+          independent client built against Dropbox’s public HTTP API. Dropbox is a trademark of
+          Dropbox, Inc.
+        </p>
+        <p class="copyright">© 2026 Tim Morgan · MIT License</p>
+      </div>
+    </footer>
+  </body>
+</html>

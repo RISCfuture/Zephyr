@@ -1,0 +1,1482 @@
+/*
+ * Zephyr marketing site.
+ *
+ * The whole page is drawn out of the app icon: the hero panel is the icon's own
+ * gradient at page scale, the tilted square that marks each section is one of
+ * its three panes, and the gusts that sweep the panel are its wind, verbatim.
+ * Everything outside that panel stays quiet — warm daylight paper, white cards,
+ * one blue.
+ *
+ * Schibsted Grotesk sets display type tight and plain and Hanken Grotesk keeps
+ * the body open and soft. Those two carry everything, labels included; a
+ * monospace face appears only where characters have to line up in columns.
+ */
+
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("assets/fonts/schibsted-grotesk.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("assets/fonts/hanken-grotesk.woff2") format("woff2-variations");
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─────────────────────────────  Tokens  ───────────────────────────── */
+
+:root {
+  color-scheme: light dark;
+
+  --paper: #f7f6f3;
+  --paper-tint: #edf2fa;
+  --card: #ffffff;
+  --ink: #0c1b2a;
+  --ink-soft: #56687c;
+  --ink-faint: #8697a8;
+  --rule: #e4e2dc;
+  --rule-cool: #d8e2f3;
+
+  --action: #0b4fe0;
+  --action-hover: #0038b0;
+  --on-action: #ffffff;
+  --link: #0b4fe0;
+  --link-hover: #0038b0;
+
+  /* The icon's own blues. */
+  --sky: #2b98fd;
+  --deep: #002f8f;
+  --vapor: #e7effc;
+
+  /* The dark chassis, shared by the hero panel and the terminal. */
+  --slate: #0a1526;
+  --slate-raised: #12213a;
+  --slate-rule: #22344f;
+  --slate-ink: #e8f0fb;
+  --slate-ink-dim: #93a8c4;
+
+  --shadow-card: 0 1px 2px rgb(12 27 42 / 5%), 0 10px 28px -16px rgb(12 27 42 / 22%);
+  --shadow-lift: 0 2px 4px rgb(12 27 42 / 6%), 0 22px 46px -24px rgb(12 27 42 / 28%);
+  --shadow-panel: 0 30px 70px -36px rgb(0 47 143 / 55%);
+
+  --page: 1120px;
+  --gutter: 1.5rem;
+  --measure: 62ch;
+
+  --r-sm: 10px;
+  --r: 14px;
+  --r-lg: 22px;
+  --r-xl: 32px;
+
+  --display: "Schibsted Grotesk", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --text: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #080f1b;
+    --paper-tint: #0d1727;
+    --card: #101c2e;
+    --ink: #e9eff7;
+    --ink-soft: #9aabbf;
+    --ink-faint: #6c7e93;
+    --rule: #1d2a3d;
+    --rule-cool: #22334c;
+
+    --action: #1b6ff5;
+    --action-hover: #3d8afd;
+    --link: #74b4ff;
+    --link-hover: #9dcbff;
+
+    --vapor: #0f1f38;
+
+    --slate: #0b1626;
+    --slate-raised: #13233c;
+
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 40%), 0 10px 28px -16px rgb(0 0 0 / 60%);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 40%), 0 22px 46px -24px rgb(0 0 0 / 70%);
+    --shadow-panel: 0 30px 70px -36px rgb(0 0 0 / 80%);
+  }
+}
+
+/* ──────────────────────────────  Base  ────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--display);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  margin: 0 0 1rem;
+}
+
+h1 {
+  font-size: clamp(2.3rem, 5vw, 3.6rem);
+  margin-bottom: 1.25rem;
+}
+
+h2 {
+  font-size: clamp(1.9rem, 3.8vw, 2.75rem);
+  margin-bottom: 1.25rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.84em;
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  border-radius: 4px;
+  padding: 0.14em 0.38em;
+
+  /* Container paths and hostnames offer nothing to break at on a narrow screen. */
+  overflow-wrap: anywhere;
+}
+
+strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -4rem;
+  z-index: 30;
+  padding: 0.6rem 1.1rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-card);
+  transition: top 140ms var(--ease);
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+/* ─────────────────────────────  Layout  ───────────────────────────── */
+
+.wrap {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.band {
+  padding-block: 6rem;
+  scroll-margin-top: 4.5rem;
+}
+
+.band-tight {
+  padding-block: 3.5rem;
+}
+
+/*
+ * A band is also the content column, so its tint has to reach past its own
+ * edges: the spread shadow paints the gutters, the clip keeps it horizontal.
+ */
+.band-tinted {
+  background: var(--paper-tint);
+  box-shadow: 0 0 0 100vmax var(--paper-tint);
+  clip-path: inset(0 -100vmax);
+}
+
+/* The section eyebrow: one of the icon's panes, then the name. */
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1.1rem;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.tag::before {
+  content: "";
+  flex: none;
+  width: 0.62rem;
+  height: 0.62rem;
+  border-radius: 2px;
+  background: var(--action);
+  transform: rotate(45deg) skewY(-14deg);
+}
+
+.section-lede {
+  max-width: var(--measure);
+  margin: 0 0 3rem;
+  font-size: 1.125rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.fine {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--ink-faint);
+}
+
+/* ─────────────────────────────  Header  ───────────────────────────── */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  backdrop-filter: saturate(180%) blur(18px);
+  border-bottom: 1px solid color-mix(in srgb, var(--rule) 70%, transparent);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding-block: 0.7rem;
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.wordmark img {
+  display: block;
+  width: 27px;
+  height: 27px;
+  border-radius: 7px;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.75rem;
+  margin-right: auto;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.site-nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding-block: 0.4rem;
+  border-bottom: 1px solid transparent;
+  transition: color 140ms var(--ease), border-color 140ms var(--ease);
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--action);
+}
+
+/* ────────────────────────────  Buttons  ───────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--text);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 140ms var(--ease), border-color 140ms var(--ease),
+    color 140ms var(--ease), transform 140ms var(--ease);
+}
+
+.btn:hover {
+  border-color: color-mix(in srgb, var(--action) 45%, var(--rule));
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--on-action);
+}
+
+.btn-primary:hover {
+  background: var(--action-hover);
+  border-color: var(--action-hover);
+  color: var(--on-action);
+}
+
+.btn-sm {
+  padding: 0.4rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* On the hero panel the buttons sit on blue, so they carry their own palette. */
+.btn-onblue {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #0a2a6b;
+}
+
+.btn-onblue:hover {
+  background: #eaf2ff;
+  border-color: #eaf2ff;
+  color: #0a2a6b;
+}
+
+.btn-ghost {
+  background: rgb(255 255 255 / 10%);
+  border-color: rgb(255 255 255 / 42%);
+  color: #ffffff;
+}
+
+.btn-ghost:hover {
+  background: rgb(255 255 255 / 18%);
+  border-color: rgb(255 255 255 / 70%);
+  color: #ffffff;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+/* A quieter alternative to the primary download. Taking the full basis puts it on its own line
+   under the buttons, where it reads as a footnote to them rather than a third choice; the wrapper
+   keeps the click target on the words rather than the whole width. */
+.cta-aside {
+  flex-basis: 100%;
+  font-size: 0.875rem;
+}
+
+.cta-aside a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentcolor 45%, transparent);
+  text-underline-offset: 3px;
+}
+
+.cta-aside a:hover {
+  text-decoration-color: currentcolor;
+}
+
+/* ──────────────────────────────  Hero  ────────────────────────────── */
+
+.hero {
+  padding-block: 2rem 0;
+}
+
+/*
+ * The signature: the app icon, blown up until it is the page. Same gradient,
+ * same three panes, same two gusts — only now the panes drift and the wind
+ * takes eighteen seconds to cross.
+ */
+.hero-panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  background: linear-gradient(112deg, #002a92 0%, #0b57e8 52%, #2b98fd 100%);
+  box-shadow: var(--shadow-panel);
+  color: #ffffff;
+  isolation: isolate;
+}
+
+.hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: center;
+  gap: 2.5rem;
+  padding: clamp(2.5rem, 4.5vw, 4rem);
+}
+
+.hero-copy .tag {
+  color: rgb(255 255 255 / 72%);
+}
+
+.hero-copy .tag::before {
+  background: #ffffff;
+}
+
+.hero h1 {
+  color: #ffffff;
+  max-width: 15ch;
+}
+
+.hero-lede {
+  max-width: 46ch;
+  margin-bottom: 2rem;
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  color: rgb(255 255 255 / 88%);
+}
+
+.hero-fine {
+  margin: 0;
+  color: rgb(255 255 255 / 78%);
+}
+
+/* The gusts cross the panel edge to edge, running off both sides. */
+.hero-weather {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero-art {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  margin-inline: auto;
+}
+
+.pane-stack .pane {
+  animation: pane-drift 13s var(--ease) infinite;
+  will-change: transform;
+}
+
+.pane-stack .pane-mid {
+  animation-duration: 15s;
+  animation-delay: -3.5s;
+}
+
+.pane-stack .pane-low {
+  animation-duration: 17s;
+  animation-delay: -7s;
+}
+
+@keyframes pane-drift {
+  0%,
+  100% {
+    transform: translate(0, -14px);
+  }
+
+  50% {
+    transform: translate(10px, 14px);
+  }
+}
+
+/*
+ * The background wind is one gust laid end to end and translated by exactly one
+ * tile width, so the loop closes on itself. Group opacity composites the whole
+ * track at once, which is what keeps the overlaps from banding.
+ */
+.gust-track {
+  animation: gust-scroll var(--gust-duration, 108s) linear infinite;
+  will-change: transform;
+}
+
+/* One tile per cycle: the ribbon repeats on exactly this distance. */
+@keyframes gust-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(var(--gust-period));
+  }
+}
+
+/* A second band, further off and slower, so the two never repeat in step. */
+.gust-track-slow {
+  --gust-duration: 200s;
+}
+
+.gust-track-cta {
+  --gust-duration: 156s;
+}
+
+/* The mark's own gusts only breathe; they are part of the icon, not the sky. */
+.gust {
+  animation: gust-cross 19s ease-in-out infinite;
+  will-change: transform;
+}
+
+.gust-low {
+  animation-duration: 25s;
+  animation-delay: -9s;
+}
+
+@keyframes gust-cross {
+  0% {
+    transform: translateX(-2.5%);
+  }
+
+  50% {
+    transform: translateX(2.5%);
+  }
+
+  100% {
+    transform: translateX(-2.5%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .pane-stack .pane,
+  .gust,
+  .gust-track {
+    animation: none;
+  }
+
+  .surfaces {
+    scroll-behavior: auto;
+  }
+
+  .surfaces-dot {
+    transition: none;
+  }
+}
+
+/* ─────────────────────────────  Claims  ───────────────────────────── */
+
+.claims {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2.5rem 3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Section-level statements, set at the size the rest of the page uses for h3. */
+.claims h2 {
+  max-width: 20ch;
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.claims p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* ──────────────────────────  Integration  ─────────────────────────── */
+
+.integration {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: 3.5rem;
+}
+
+/*
+ One surface at a time, beside the window.
+
+ There are seven of these and each is a paragraph, so listed out they ran far longer than the
+ window they sit beside and left the column to be scrolled on its own. A track carries them
+ instead: it advances by itself once the section is in view, and it is an ordinary horizontally
+ scrolling element, so a trackpad, a shift-wheel, a drag, an arrow key or a dot all move it. With
+ no script at all it stays exactly that, which is why the dots are added by one rather than
+ written here.
+*/
+.surfaces-carousel {
+  position: relative;
+}
+
+.surfaces {
+  display: flex;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.surfaces::-webkit-scrollbar {
+  display: none;
+}
+
+.surfaces:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 4px;
+  border-radius: var(--r);
+}
+
+/* Dragging the track rather than reading it: snapping has to let go for the duration. */
+.surfaces.is-dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
+}
+
+.surfaces li {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  gap: 0.9rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-card);
+}
+
+.surfaces-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.surfaces-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--rule);
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.surfaces-dot:hover {
+  background: var(--ink-soft);
+}
+
+.surfaces-dot[aria-current="true"] {
+  background: var(--action);
+  transform: scale(1.3);
+}
+
+.surfaces-dot:focus-visible {
+  outline: 2px solid var(--action);
+  outline-offset: 3px;
+}
+
+.surfaces .surface-icon {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.1rem;
+  color: var(--action);
+}
+
+.surfaces h3 {
+  margin: 0 0 0.15rem;
+  font-size: 1rem;
+}
+
+.surfaces p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* A stylized Finder window: enough of it to recognize, none of it pretending. */
+.finder {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow-lift);
+  font-size: 0.8125rem;
+}
+
+.finder-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--ink) 3%, var(--card));
+}
+
+.finder-bar i {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 16%, transparent);
+}
+
+.finder-bar span {
+  margin-left: 0.5rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: -0.01em;
+  color: var(--ink-soft);
+}
+
+.finder-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+
+.finder-side {
+  padding: 0.9rem 0.75rem;
+  border-right: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--ink) 2%, var(--card));
+}
+
+.finder-group {
+  margin: 0.9rem 0 0.4rem;
+  padding-left: 0.55rem;
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.finder-group:first-child {
+  margin-top: 0;
+}
+
+.finder-side ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.finder-side li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 6px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.finder-side li svg {
+  flex: none;
+  width: 0.95rem;
+  height: 0.95rem;
+  color: var(--ink-faint);
+}
+
+.finder-side .is-selected {
+  background: var(--action);
+  color: var(--on-action);
+  font-weight: 600;
+}
+
+.finder-side .is-selected svg {
+  color: var(--on-action);
+}
+
+.finder-side .is-zephyr img {
+  flex: none;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 3px;
+}
+
+.finder-files {
+  padding: 0.55rem 0.6rem;
+}
+
+.finder-files div {
+  display: grid;
+  grid-template-columns: 0.95rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.34rem 0.5rem;
+  border-radius: 6px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.finder-files div:nth-child(even) {
+  background: color-mix(in srgb, var(--ink) 3%, transparent);
+}
+
+.finder-files svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  color: var(--ink-faint);
+}
+
+.finder-files b {
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.finder-files em {
+  font-style: normal;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+}
+
+.finder-files .is-local svg {
+  color: var(--action);
+}
+
+.finder-note {
+  margin: 1rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ─────────────────────  Illustrated topics  ───────────────────────── */
+
+/*
+ * A capture beside what it is: two columns on a wide screen, one on a narrow
+ * one. Which side the capture falls on is the source order's business, so the
+ * page can alternate without a modifier class.
+ */
+.topic {
+  display: grid;
+  /* min() so the track floor cannot outgrow a phone's content column. */
+  grid-template-columns: repeat(auto-fit, minmax(min(21rem, 100%), 1fr));
+  align-items: center;
+  gap: 2rem 3.5rem;
+  margin-top: 4rem;
+}
+
+.topic-text > :first-child {
+  margin-top: 0;
+}
+
+.topic-text > :last-child {
+  margin-bottom: 0;
+}
+
+.topic-text h3 {
+  margin: 0 0 0.9rem;
+  font-family: var(--display);
+  font-size: 1.5rem;
+  letter-spacing: -0.015em;
+}
+
+.topic-text p {
+  max-width: 42ch;
+  margin: 0 0 1rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.topic-text code {
+  font-size: 0.9em;
+}
+
+.shot {
+  margin: 0;
+}
+
+/*
+ * Capped at the size the capture really is, so they are all drawn to one scale:
+ * the menu-bar panel is half the width of the accounts window, and stretching
+ * both to a column would say otherwise. Every capture is 2×, so its own size is
+ * half its pixels.
+ *
+ * No frame and no shadow of the page's own, either: each capture is taken on
+ * the page's colour and carries the window's real corners, its shadow, and a
+ * margin of that colour beyond it — so anything drawn around it would be a
+ * second window edge outside the first.
+ */
+.shot img {
+  display: block;
+  width: 100%;
+  max-width: var(--shot-width);
+  height: auto;
+}
+
+.shot-panel {
+  --shot-width: 28rem;
+}
+
+.shot-accounts,
+.shot-issues {
+  --shot-width: 43rem;
+}
+
+.shot-setup {
+  --shot-width: 44.25rem;
+}
+
+.shot-menu {
+  --shot-width: 23.125rem;
+}
+
+.shot-versions {
+  --shot-width: 40.25rem;
+}
+
+.shot-share {
+  --shot-width: 39rem;
+}
+
+.shot-widget {
+  --shot-width: 33.75rem;
+}
+
+.shot-settings {
+  --shot-width: 36.75rem;
+}
+
+/* ────────────────────────────  Features  ──────────────────────────── */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.features li {
+  padding: 1.6rem 1.5rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  transition: transform 180ms var(--ease), box-shadow 180ms var(--ease);
+}
+
+.features li:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+}
+
+.features p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.features code {
+  font-size: 0.8em;
+}
+
+/* ──────────────────────────  Command line  ────────────────────────── */
+
+.cli {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.terminal {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--slate);
+  border: 1px solid var(--slate-rule);
+  box-shadow: var(--shadow-lift);
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--slate-raised);
+  border-bottom: 1px solid var(--slate-rule);
+}
+
+.terminal-bar i {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 16%);
+}
+
+.terminal-bar span {
+  margin-left: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--slate-ink-dim);
+}
+
+.cli-copy .section-lede {
+  margin-bottom: 1.5rem;
+}
+
+.cli-copy .btn {
+  margin-top: 0.75rem;
+}
+
+.terminal pre {
+  margin: 0;
+  padding: 1.4rem 1.5rem;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.85;
+  color: var(--slate-ink);
+  tab-size: 2;
+}
+
+.terminal .prompt {
+  color: var(--sky);
+}
+
+.terminal .out {
+  color: var(--slate-ink-dim);
+}
+
+.terminal .flag {
+  color: #8fd0ff;
+}
+
+/* ────────────────────────────  Get it  ────────────────────────────── */
+
+.get {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  padding: clamp(2.25rem, 4.5vw, 3.5rem);
+  background: linear-gradient(112deg, #002a92 0%, #0b57e8 68%, #2b98fd 120%);
+  box-shadow: var(--shadow-panel);
+  color: #ffffff;
+  isolation: isolate;
+}
+
+.get-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 56ch;
+}
+
+.get-inner > :last-child {
+  margin-bottom: 0;
+}
+
+.get h2 {
+  color: #ffffff;
+}
+
+.get .tag {
+  color: rgb(255 255 255 / 72%);
+}
+
+.get .tag::before {
+  background: #ffffff;
+}
+
+.get p {
+  color: rgb(255 255 255 / 88%);
+}
+
+.get .fine {
+  color: rgb(255 255 255 / 78%);
+}
+
+.get-notice {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid rgb(255 255 255 / 30%);
+  border-radius: var(--r-sm);
+  background: rgb(255 255 255 / 10%);
+  font-size: 0.9rem;
+}
+
+/* ─────────────────────────────  FAQ  ──────────────────────────────── */
+
+.faq-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+  gap: 3.5rem;
+}
+
+.faq-heading {
+  position: sticky;
+  top: 5.5rem;
+  align-self: start;
+}
+
+.faq-heading h2 {
+  margin: 0;
+}
+
+.faq {
+  max-width: var(--measure);
+  margin: 0;
+}
+
+.faq dt {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+}
+
+.faq dt:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.faq dd {
+  margin: 0.5rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* ────────────────────  Long-form document page  ───────────────────── */
+
+.doc {
+  padding-block: 4rem 6rem;
+}
+
+.doc h1 {
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  margin-bottom: 0.6rem;
+}
+
+.doc-date {
+  margin-bottom: 2.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* A plain-language précis of the sections below; the policy itself governs. */
+.doc-summary {
+  max-width: var(--measure);
+  margin-bottom: 3.5rem;
+  padding: 1.75rem 2rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.doc-summary h2 {
+  font-size: 1.0625rem;
+  margin-bottom: 1rem;
+}
+
+.doc-summary ul {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.doc-summary li {
+  position: relative;
+  padding-left: 1.35rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.doc-summary li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 1px;
+  background: var(--action);
+  transform: rotate(45deg) skewY(-14deg);
+}
+
+.doc-summary > p:last-child {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+}
+
+.doc-body {
+  max-width: var(--measure);
+}
+
+.doc-body h2 {
+  margin: 3rem 0 1rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--rule);
+  font-size: 1.375rem;
+  letter-spacing: -0.025em;
+  text-wrap: pretty;
+}
+
+.doc-body h3 {
+  margin: 2rem 0 0.5rem;
+}
+
+.doc-body p,
+.doc-body li {
+  color: var(--ink-soft);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.doc-body ul {
+  margin: 0 0 1rem;
+  padding-left: 1.15rem;
+}
+
+.doc-body li {
+  margin-bottom: 0.45rem;
+  padding-left: 0.25rem;
+}
+
+.doc-body li::marker {
+  color: var(--action);
+}
+
+.scopes {
+  margin: 1.25rem 0 1.75rem;
+  font-size: 0.9375rem;
+}
+
+.scopes dt {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  color: var(--ink);
+}
+
+.scopes dt:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.scopes dd {
+  margin: 0.35rem 0 0;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+/* ────────────────────────────  Footer  ────────────────────────────── */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  background: var(--paper-tint);
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+.footer-inner {
+  padding-block: 3.5rem;
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.footer-links a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.footer-links a:hover {
+  border-bottom-color: var(--action);
+}
+
+.attribution {
+  max-width: var(--measure);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.copyright {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--ink-soft);
+}
+
+/* ───────────────────────────  Responsive  ─────────────────────────── */
+
+@media (max-width: 980px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .hero h1,
+  .hero-lede {
+    max-width: none;
+  }
+
+  .hero-art {
+    max-width: 420px;
+    margin-inline: auto;
+  }
+
+  .integration,
+  .cli,
+  .faq-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .faq-heading {
+    position: static;
+  }
+}
+
+@media (max-width: 820px) {
+  .site-nav {
+    display: none;
+  }
+
+  .header-inner {
+    gap: 1rem;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 620px) {
+  :root {
+    --gutter: 1.25rem;
+    --r-xl: 24px;
+  }
+
+  body {
+    font-size: 16px;
+  }
+
+  .band {
+    padding-block: 4rem;
+  }
+
+  .band-tight {
+    padding-block: 2.75rem;
+  }
+
+  .finder-body {
+    grid-template-columns: 1fr;
+  }
+
+  .finder-side {
+    border-right: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+}

@@ -1,0 +1,221 @@
+name: Tests
+
+# What CI can and cannot prove about the File Provider.
+#
+# `NSFileProviderManager.add(domain:)` will only accept a bundle signed with the real team
+# identifier, carrying the app group its extension shares with the app, installed somewhere
+# `fileproviderd` will load it from, and enabled by a human in System Settings. A hosted runner
+# satisfies none of those: it has no signing identity, no installed app, and nobody to click the
+# checkbox. Any job that tried to register a domain would be testing the runner's refusal, not
+# Zephyr — so no job here attempts it.
+#
+# What is left is real coverage of everything on either side of that boundary: the `build` job
+# compiles the extension, and the `unit` job exercises the adapters in libZephyr/ProviderCore that
+# hold all of its logic. Verifying that a domain actually mounts is a manual pre-release smoke
+# check on a real Mac, not something to chase here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  # macOS enforces code signing to build and launch; the runner has no cert or profile. Ad-hoc sign
+  # instead, and drop the entitlements file (CODE_SIGN_ENTITLEMENTS=) — its app group and File
+  # Provider entitlements would otherwise demand a provisioning profile. The UI tests don't need
+  # them: they launch with --uitest-skip-setup and never register a domain. This only affects the
+  # throwaway CI build.
+  SIGNING: >-
+    CODE_SIGN_IDENTITY=-
+    CODE_SIGNING_REQUIRED=NO
+    CODE_SIGNING_ALLOWED=YES
+    CODE_SIGN_STYLE=Manual
+    DEVELOPMENT_TEAM=
+    PROVISIONING_PROFILE_SPECIFIER=
+    CODE_SIGN_ENTITLEMENTS=
+
+jobs:
+  # The bulk of the real coverage: the libZephyr scheme is host-less, so it builds just the
+  # framework and its test bundle and needs no signing at all.
+  unit:
+    name: Unit Tests
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v6
+
+      # Observation's @Observable macro can fail fingerprint validation on hosted runners; skipping
+      # it lets the build resolve the macro implementations.
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages/checkouts
+            ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      - name: Run unit tests
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Zephyr.xcodeproj \
+            -scheme libZephyr \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath "$RUNNER_TEMP/dd-unit" \
+            -resultBundlePath "TestResults-Unit.xcresult" \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcbeautify --renderer github-actions
+
+      - name: Upload test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-unit
+          path: TestResults-Unit.xcresult
+          if-no-files-found: ignore
+
+  # The four app extensions belong to no test target, and the CLI is a dependency of the
+  # downloadable edition alone, so this build is the only thing that ever compiles them. Both
+  # editions are built: they share the Zephyr Common framework but each has its own entry point, and
+  # only the downloadable one embeds the CLI. It is deliberately kept apart from the UI tests: a
+  # compile break should read as a compile break, not as a launch failure buried in a UI run, and
+  # this job needs no signing to produce that answer.
+  build:
+    name: Build App
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v6
+
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages/checkouts
+            ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      # Both editions emit Zephyr.app, so the second build replaces the first in the shared derived
+      # data. That is only a compile check, and each still compiles its own sources.
+      - name: Build both editions and everything they embed
+        run: |
+          set -o pipefail
+          for scheme in "Zephyr (MAS)" "Zephyr (download)"; do
+            echo "::group::Build $scheme"
+            xcodebuild build \
+              -project Zephyr.xcodeproj \
+              -scheme "$scheme" \
+              -destination 'platform=macOS,arch=arm64' \
+              -derivedDataPath "$RUNNER_TEMP/dd-build" \
+              CODE_SIGNING_ALLOWED=NO \
+              | xcbeautify --renderer github-actions
+            echo "::endgroup::"
+          done
+
+  # Unlike the other two, these launch the app, and macOS will not launch an unsigned bundle — hence
+  # the ad-hoc SIGNING block. The Zephyr (MAS) scheme's test action carries ZephyrTests alongside
+  # ZephyrUITests, so this job runs both bundles; that is where the host-bound unit tests run.
+  ui:
+    name: UI Tests
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v6
+
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      # XCUITEST_TIMEOUT_MULTIPLIER stretches XCUITestKit's waits so the slower CI hardware doesn't
+      # trip element lookups that pass locally. The waits are read by the test code, which runs in
+      # the runner process rather than in xcodebuild's, and only the TEST_RUNNER_ prefix reaches it
+      # — xcodebuild forwards those with the prefix stripped.
+      - name: Run UI tests
+        env:
+          TEST_RUNNER_XCUITEST_TIMEOUT_MULTIPLIER: "3"
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Zephyr.xcodeproj \
+            -scheme "Zephyr (MAS)" \
+            -destination 'platform=macOS,arch=arm64' \
+            -derivedDataPath "$RUNNER_TEMP/dd-ui" \
+            -resultBundlePath "TestResults-UI.xcresult" \
+            ${{ env.SIGNING }} \
+            | xcbeautify --renderer github-actions
+
+      - name: Upload test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-ui
+          path: TestResults-UI.xcresult
+          if-no-files-found: ignore
+
+  # Only libZephyr has a documentation catalog. Zephyr and zephyr-cli are built anyway, and each
+  # emits an empty archive — that is expected, not a misconfiguration to go fix. What their builds
+  # buy is the compiler's verdict on every doc comment in the app and the tool: a symbol link or a
+  # `- Parameter` name that has drifted from the code is caught here.
+  docbuild:
+    name: Documentation
+    runs-on: macos-26
+    timeout-minutes: 45
+    steps:
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - uses: actions/checkout@v6
+
+      - name: Enable macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages/checkouts
+            ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      # One derived-data directory for all three schemes: the app and the tool both build on the
+      # framework, so a shared one compiles it once. The archives are throwaway — nothing publishes
+      # them, and the exit status is the whole point.
+      - name: Build documentation
+        run: |
+          set -o pipefail
+          for scheme in libZephyr "Zephyr (MAS)" zephyr-cli; do
+            echo "::group::Document $scheme"
+            xcodebuild docbuild \
+              -project Zephyr.xcodeproj \
+              -scheme "$scheme" \
+              -destination 'platform=macOS,arch=arm64' \
+              -derivedDataPath "$RUNNER_TEMP/dd-docs" \
+              CODE_SIGNING_ALLOWED=NO \
+              | xcbeautify --renderer github-actions
+            echo "::endgroup::"
+          done

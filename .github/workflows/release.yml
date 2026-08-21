@@ -1,0 +1,91 @@
+name: Release
+
+# Pushing a version tag builds both editions: the App Store build is uploaded to App Store Connect,
+# and the downloadable build is notarized, packaged as an installer package and a disk image, and
+# published as a GitHub release. Nothing here re-runs the tests: tag a commit CI has already
+# passed.
+#
+# The App Store upload only puts a build on App Store Connect. Attaching it to a version and
+# submitting it for review stays a manual step.
+#
+# Tags carry no "v" prefix. The in-app update checker compares release tags against
+# CFBundleShortVersionString, so "1.2" is the tag for version 1.2.
+on:
+  push:
+    tags: ["[0-9]+.[0-9]+*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Marketing version to build and release.
+        required: true
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.version || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@main
+    with:
+      # Not a platform in the Apple sense — it is macOS. The reusable workflow runs the release
+      # lane once per entry, and `ci_release` reads each one as an edition name.
+      platforms: '["mas", "download"]'
+      version: ${{ inputs.version || github.ref_name }}
+      certificates-repo: RISCfuture/certificates
+    secrets:
+      certificates-token: ${{ secrets.CERTIFICATES_TOKEN }}
+      match-password: ${{ secrets.MATCH_PASSWORD }}
+      sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+  publish:
+    name: Publish GitHub release
+    needs: release
+    # Nothing here is Apple-specific: both artifacts arrive already built and notarized.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # Only the downloadable edition produces these; the App Store edition's build went straight to
+      # App Store Connect and leaves nothing to attach here.
+      - name: Download the notarized artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: release-download-${{ inputs.version || github.ref_name }}
+          path: artifacts
+
+      # The package is listed first because it is what a new user should take: an app dragged out of
+      # a disk image is quarantined, and a quarantined Zephyr is one macOS will not run a File
+      # Provider extension for. The disk image stays because the in-app update checker looks for it
+      # by extension and installs it without the Finder ever touching it.
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version || github.ref_name }}
+        run: |
+          set -o pipefail
+          pkg=$(find artifacts -name '*.pkg' -print -quit)
+          dmg=$(find artifacts -name '*.dmg' -print -quit)
+          for asset in "$pkg" "$dmg"; do
+            if [ -z "$asset" ]; then
+              echo "::error::The release artifacts are missing an installer package or a disk image."
+              exit 1
+            fi
+          done
+
+          # A release for the tag can already exist — this job re-run after a later failure, or
+          # a release cut by hand. `gh release create` refuses a duplicate outright, which leaves
+          # a built and notarized pair of artifacts with nowhere to go, so an existing release
+          # takes the assets instead of stopping the run.
+          if gh release view "$VERSION" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$VERSION" \
+              --repo "$GITHUB_REPOSITORY" \
+              --clobber \
+              "$pkg" "$dmg"
+          else
+            gh release create "$VERSION" \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "Zephyr $VERSION" \
+              --generate-notes \
+              "$pkg" "$dmg"
+          fi

@@ -1,0 +1,126 @@
+<!doctype html><html><head><meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Open Graph card source — Zephyr</title>
+<!--
+  The source of assets/og.png. Open it at exactly 1200x630 and screenshot the
+  viewport; everything it draws comes from the site's own hero, frozen at the
+  first frame of the wind loop.
+-->
+<style>
+@font-face{font-family:"Schibsted Grotesk";src:url(fonts/schibsted-grotesk.woff2) format("woff2-variations");font-weight:400 900}
+@font-face{font-family:"Hanken Grotesk";src:url(fonts/hanken-grotesk.woff2) format("woff2-variations");font-weight:300 800}
+*{box-sizing:border-box}
+body{margin:0;width:1200px;height:630px;overflow:hidden;
+  background:linear-gradient(112deg,#002a92 0%,#0b57e8 52%,#2b98fd 100%);
+  font-family:"Hanken Grotesk",sans-serif;color:#fff;position:relative;isolation:isolate}
+.weather{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;
+  align-items:center;gap:32px;height:100%;padding:64px 72px}
+.mark{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.mark img{width:44px;height:44px;border-radius:11px}
+.mark span{font-family:"Schibsted Grotesk";font-weight:800;font-size:34px;letter-spacing:-.03em}
+h1{font-family:"Schibsted Grotesk";font-weight:800;font-size:62px;line-height:1.02;
+  letter-spacing:-.035em;margin:0 0 22px;max-width:14ch}
+p{margin:0 0 24px;font-size:23px;line-height:1.45;color:rgba(255,255,255,.88);max-width:27ch}
+.fine{font-weight:600;font-size:16px;letter-spacing:.04em;color:rgba(255,255,255,.78);margin:0}
+.art{display:block;width:100%;max-width:420px;margin-inline:auto}
+</style></head><body>
+<svg
+            class="weather"
+            viewBox="0 0 1200 700"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <path id="wind-high" d="M-8.0,230.9C10.0,224.6 64.2,248.4 100.3,255.3C136.4,262.2 172.5,268.5 208.6,272.4C244.7,276.3 280.8,278.6 316.9,278.6C353.0,278.7 389.0,276.6 425.1,272.9C461.2,269.1 497.3,263.0 533.4,256.2C569.5,249.4 605.6,240.5 641.7,232.0C677.8,223.5 713.9,213.6 750.0,205.2C786.1,196.7 822.2,187.9 858.3,181.1C894.4,174.4 930.5,168.4 966.6,164.8C1002.7,161.1 1038.8,159.2 1074.9,159.4C1111.0,159.6 1147.0,162.0 1183.1,166.0C1219.2,170.0 1255.3,176.4 1291.4,183.4C1327.5,190.4 1363.6,199.4 1399.7,208.0C1435.8,216.5 1490.0,220.0 1508.0,234.8C1526.0,249.6 1526.0,290.4 1508.0,296.6C1490.0,302.8 1435.8,280.2 1399.7,271.9C1363.6,263.6 1327.5,254.3 1291.4,246.6C1255.3,238.9 1219.2,231.3 1183.1,225.8C1147.0,220.3 1111.0,215.9 1074.9,213.8C1038.8,211.6 1002.7,211.3 966.6,212.9C930.5,214.5 894.4,218.3 858.3,223.4C822.2,228.4 786.1,235.6 750.0,243.1C713.9,250.5 677.8,259.7 641.7,268.0C605.6,276.4 569.5,285.6 533.4,293.2C497.3,300.7 461.2,308.2 425.1,313.4C389.0,318.7 353.0,322.8 316.9,324.7C280.8,326.6 244.7,326.6 208.6,324.7C172.5,322.8 136.4,318.7 100.3,313.5C64.2,308.2 10.0,307.0 -8.0,293.2C-26.0,279.4 -26.0,237.2 -8.0,230.9Z" />
+            </defs>
+            <g class="gust-track" fill="#fff" opacity="0.1" style="--gust-period: 1500px">
+              <use href="#wind-high" x="-1500" />
+              <use href="#wind-high" x="0" />
+              <use href="#wind-high" x="1500" />
+            </g>
+            <defs>
+              <path id="wind-low" d="M-8.0,473.2C14.8,455.1 83.2,451.8 128.9,441.1C174.5,430.3 220.1,418.5 265.7,408.7C311.3,399.0 357.0,389.4 402.6,382.7C448.2,375.9 493.8,370.6 539.4,368.1C585.0,365.7 630.7,365.7 676.3,368.1C721.9,370.5 767.5,375.8 813.1,382.5C858.8,389.3 904.4,398.8 950.0,408.5C995.6,418.2 1041.2,430.1 1086.9,440.9C1132.5,451.6 1178.1,463.4 1223.7,473.0C1269.3,482.6 1315.0,492.0 1360.6,498.6C1406.2,505.1 1451.8,510.1 1497.4,512.3C1543.0,514.4 1588.7,514.1 1634.3,511.5C1679.9,508.8 1725.5,503.2 1771.1,496.2C1816.8,489.3 1885.2,461.2 1908.0,469.7C1930.8,478.2 1930.8,531.0 1908.0,547.3C1885.2,563.5 1816.8,562.4 1771.1,567.1C1725.5,571.7 1679.9,574.6 1634.3,575.0C1588.7,575.4 1543.0,573.3 1497.4,569.4C1451.8,565.5 1406.2,558.9 1360.6,551.4C1315.0,544.0 1269.3,534.2 1223.7,524.8C1178.1,515.3 1132.5,504.3 1086.9,494.7C1041.2,485.1 995.6,475.1 950.0,467.3C904.4,459.5 858.8,452.5 813.1,448.1C767.5,443.7 721.9,441.1 676.3,441.0C630.7,440.9 585.0,443.2 539.4,447.4C493.8,451.5 448.2,458.3 402.6,465.9C357.0,473.5 311.3,483.5 265.7,493.0C220.1,502.5 174.5,513.5 128.9,523.0C83.2,532.6 14.8,558.4 -8.0,550.1C-30.8,541.8 -30.8,491.4 -8.0,473.2Z" />
+            </defs>
+            <g class="gust-track gust-track-slow" fill="#fff" opacity="0.065" style="--gust-period: 1900px">
+              <use href="#wind-low" x="-1900" />
+              <use href="#wind-low" x="0" />
+              <use href="#wind-low" x="1900" />
+            </g>
+          </svg>
+<div class="grid">
+  <div>
+    <div class="mark"><img src="zephyr-mark.svg" alt=""><span>Zephyr</span></div>
+    <h1>A Dropbox client that feels like macOS.</h1>
+    <p>Free, open source, and written entirely in Swift.</p>
+    <p class="fine">macOS 26.5 or later &middot; riscfuture.github.io/Zephyr</p>
+  </div>
+  <svg
+              class="art"
+              viewBox="66 62 892 856"
+              role="img"
+              aria-label="Zephyr's mark: three pale panes floating in a stack, with wind crossing them."
+              focusable="false"
+            >
+              <defs>
+                <linearGradient id="h-pane-a" x1="-1" y1="-1" x2="1" y2="1">
+                  <stop offset="0" stop-color="#F5FDFF" />
+                  <stop offset="1" stop-color="#B2E4FF" />
+                </linearGradient>
+                <linearGradient id="h-pane-b" x1="-1" y1="-1" x2="1" y2="1">
+                  <stop offset="0" stop-color="#D2F2FF" />
+                  <stop offset="1" stop-color="#C2F1FF" />
+                </linearGradient>
+                <linearGradient id="h-gust-a" x1="80" y1="0" x2="950" y2="0" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".55" />
+                  <stop offset="1" stop-color="#fff" />
+                </linearGradient>
+                <linearGradient id="h-gust-b" x1="304" y1="0" x2="847" y2="0" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".3" />
+                  <stop offset="1" stop-color="#fff" stop-opacity=".9" />
+                </linearGradient>
+                <radialGradient id="h-glow" cx="0.5" cy="0.5" r="0.5">
+                  <stop offset="0" stop-color="#9BD4FF" stop-opacity=".45" />
+                  <stop offset="1" stop-color="#9BD4FF" stop-opacity="0" />
+                </radialGradient>
+                <filter id="h-lift" x="-25%" y="-15%" width="150%" height="140%">
+                  <feDropShadow dx="0" dy="14" stdDeviation="26" flood-color="#001B57" flood-opacity=".42" />
+                </filter>
+              </defs>
+
+              <ellipse cx="511" cy="490" rx="420" ry="420" fill="url(#h-glow)" />
+
+              <g class="pane-stack" filter="url(#h-lift)">
+                <g class="pane pane-low">
+                  <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511 615)" opacity=".5">
+                    <rect x="-1" y="-1" width="2" height="2" rx=".13" fill="url(#h-pane-b)" />
+                  </g>
+                </g>
+                <g class="pane pane-mid">
+                  <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511 481.5)" opacity=".5">
+                    <rect x="-1" y="-1" width="2" height="2" rx=".13" fill="url(#h-pane-b)" />
+                  </g>
+                </g>
+                <g class="pane pane-top">
+                  <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511 348)" opacity=".92">
+                    <rect x="-1" y="-1" width="2" height="2" rx=".13" fill="url(#h-pane-a)" />
+                  </g>
+                </g>
+              </g>
+
+              <g class="gust">
+                <path
+                  fill="url(#h-gust-a)"
+                  d="M80.5,469.0C112.4,510.2 141.5,532.8 192.1,547.6C329.9,587.9 443.2,473.3 560.2,421.3C657.7,378.0 767.3,367.3 861.9,424.8C897.2,446.2 934.3,481.5 946.0,522.3C948.3,530.1 948.6,538.9 949.5,547.0C917.8,509.4 891.3,495.9 848.2,475.1C838.6,470.5 829.3,465.0 819.2,461.7C803.4,456.7 783.4,454.8 766.9,453.5C699.7,448.3 644.3,458.9 583.3,487.4C472.5,539.2 387.3,626.4 255.4,622.2C203.9,620.6 169.2,607.9 128.5,576.8C120.7,570.9 109.5,562.2 103.3,555.0C84.4,532.8 76.2,497.3 80.5,469.0Z"
+                />
+              </g>
+              <g class="gust gust-low">
+                <path
+                  fill="url(#h-gust-b)"
+                  d="M303.5,670.0C357.6,676.0 403.6,665.2 451.5,639.7C482.5,623.2 511.8,598.9 541.4,579.5C616.6,530.1 694.5,511.0 778.7,551.9C803.7,564.1 837.6,589.8 847.0,616.5C816.9,594.7 782.8,582.6 745.9,577.7C713.6,573.4 670.2,573.7 639.2,584.3C618.9,591.2 598.0,604.7 579.3,615.4C493.1,664.5 403.6,728.6 303.5,670.0Z"
+                />
+              </g>
+            </svg>
+</div>
+</body></html>

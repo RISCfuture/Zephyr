@@ -1,0 +1,131 @@
+{
+  "fill": {
+    "linear-gradient": [
+      "extended-srgb:0.16863,0.59608,0.99216,1.00000",
+      "extended-srgb:0.00000,0.30588,0.92157,1.00000"
+    ]
+  },
+  "groups": [
+    {
+      "layers": [
+        {
+          "image-name": "wind-lower.svg",
+          "name": "Lower Gust",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "image-name": "wind-upper.svg",
+          "name": "Upper Gust",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "name": "Wind",
+      "opacity": 1.0,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.4
+      },
+      "specular": false,
+      "translucency": {
+        "enabled": false,
+        "value": 0.0
+      }
+    },
+    {
+      "layers": [
+        {
+          "image-name": "plane-top.svg",
+          "name": "Top Plane",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "name": "Top Plane",
+      "opacity": 0.9,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.85
+      },
+      "specular": false,
+      "translucency": {
+        "enabled": false,
+        "value": 0.0
+      }
+    },
+    {
+      "layers": [
+        {
+          "image-name": "plane-middle.svg",
+          "name": "Middle Plane",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "name": "Middle Plane",
+      "opacity": 0.5,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.85
+      },
+      "specular": false,
+      "translucency": {
+        "enabled": false,
+        "value": 0.0
+      }
+    },
+    {
+      "layers": [
+        {
+          "image-name": "plane-bottom.svg",
+          "name": "Bottom Plane",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "name": "Bottom Plane",
+      "opacity": 0.5,
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.85
+      },
+      "specular": false,
+      "translucency": {
+        "enabled": false,
+        "value": 0.0
+      }
+    }
+  ],
+  "supported-platforms": {
+    "circles": [
+      "watchOS"
+    ],
+    "squares": "shared"
+  }
+}

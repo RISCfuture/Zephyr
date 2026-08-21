@@ -1,0 +1,113 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Install the zephyr command-line tool</title>
+<meta name="description" content="Put the zephyr tool on your PATH and use your Dropbox from Terminal.">
+<meta name="keywords" content="command line, terminal, cli, zephyr, install, usr local bin, shell, completion, script, sudo, symlink">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="zephyr-cli" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="zephyr-cli"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Install the zephyr command-line tool</h1>
+<p>The downloadable version of Zephyr carries a command-line tool. It reads the same accounts and
+the same index the app does, so it can list a folder nothing has ever downloaded without touching
+the network.</p>
+
+<div class="Task">
+<h2 class="Name">Install it</h2>
+<div class="TaskBody">
+<p>If you installed Zephyr with the installer package and left Command-Line Tool switched on, the
+tool is already on your <code>PATH</code> &#8212; the installer links it while it runs. Open a
+Terminal window and run <code>zephyr --help</code>. Zephyr&#8217;s settings say so too:
+Command-Line Tool reads <em>Installed in /usr/local/bin</em>.</p>
+<p>If you turned that choice off in the installer, or installed Zephyr by dragging it out of a disk
+image, nothing has made the link. macOS doesn&#8217;t let Zephyr put anything on your
+<code>PATH</code> itself, so it shows you the command that does.</p>
+<ol>
+  <li><p>Click Zephyr in the menu bar, then click Settings&#8230;</p></li>
+  <li><p>Scroll to Command-Line Tool, then click Copy.</p></li>
+  <li><p>In Terminal, paste the command and press Return.</p>
+      <p>It links the tool into <code>/usr/local/bin</code>. <code>sudo</code> asks for your
+      password, and the account you are signed in to has to be an administrator.</p></li>
+  <li><p>Open a new Terminal window and run <code>zephyr --help</code>.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Note: </em>The App Store version doesn&#8217;t ship the
+tool, and the pane says so instead. The App Store doesn&#8217;t allow an app to put anything on
+your <code>PATH</code>. To use the tool, install the downloadable version from
+<a href="https://riscfuture.github.io/Zephyr/#download">riscfuture.github.io/Zephyr</a> &#8212; see
+<a href="editions.html#editions" class="xRef AppleTopic">Choose between the two versions of
+Zephyr</a>, which covers switching without losing your Finder location.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Link an account for the tool</h2>
+<div class="TaskBody">
+<p>The tool keeps its credentials in your login keychain, separately from the app&#8217;s. It can
+<em>see</em> an account the app linked, but it can&#8217;t act as one it didn&#8217;t link
+itself.</p>
+<ol>
+  <li><p>In Terminal, run <code>zephyr auth link</code></p>
+      <p>It prints an authorization URL and opens it in your browser.</p></li>
+  <li><p>Approve access on Dropbox&#8217;s page, then copy the authorization code Dropbox shows
+      you.</p></li>
+  <li><p>Switch back to Terminal, paste the code after
+      <em>Enter the authorization code shown by Dropbox:</em>, and press Return.</p></li>
+</ol>
+<p><code>zephyr auth list</code> shows which accounts the tool can authenticate as.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">What it can do</h2>
+<div class="TaskBody">
+<p><code>zephyr --help</code> lists everything. In brief: <code>ls</code>, <code>get</code>,
+<code>put</code>, <code>rm</code>, <code>mkdir</code>, and <code>mv</code> for files;
+<code>revs</code>, <code>restore</code>, and <code>diff</code> for a file&#8217;s earlier versions;
+<code>sharelink</code> for shared links; <code>find</code> to look for an item by name
+anywhere in your Dropbox, including files that are not on this Mac; and
+<code>status</code>, <code>filestatus</code>, and <code>history</code> for
+what Zephyr knows.</p>
+<p>Four more are the Terminal counterparts of settings you would otherwise open the app for:
+<code>bandwidth-limit</code> sets the upload, download, and metered rates; <code>ignored</code>
+lists what you have taken out of syncing; <code>notify</code> snoozes notifications; and
+<code>rebuild-index</code> starts an account&#8217;s index over. <code>log</code> reads
+Zephyr&#8217;s recent log, and <code>gui</code> opens the app.</p>
+<p>Commands act on the only linked account unless you pass <code>--account</code>.
+<code>bandwidth-limit</code>, <code>notify</code>, <code>log</code>, and <code>gui</code> take no
+<code>--account</code> at all, because none of them belongs to one account. Twelve commands
+also take <code>--json</code>.</p>
+<div class="Alert"><p class="Note"><em>Note: </em><code>watch</code> is a diagnostic command rather
+than a way to keep an account current. Zephyr itself is what watches Dropbox for changes &#8212; see
+<a href="settings-general.html#settings-general" class="xRef AppleTopic">Keep Zephyr running in the
+background</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Add shell completion</h2>
+<div class="TaskBody">
+<p><code>zephyr --generate-completion-script</code> writes a completion script for
+<code>zsh</code>, <code>bash</code>, or <code>fish</code>. For zsh:</p>
+<ol>
+  <li><p>Run <code>mkdir -p ~/.zsh/completions</code></p></li>
+  <li><p>Run <code>zephyr --generate-completion-script zsh &gt; ~/.zsh/completions/_zephyr</code></p></li>
+  <li><p>Add <code>fpath=(~/.zsh/completions $fpath)</code> to <code>~/.zshrc</code>,
+      <em>above</em> the <code>compinit</code> line, then open a new Terminal window.</p></li>
+</ol>
+<p>Dropbox paths complete out of Zephyr&#8217;s index, one folder per Tab, so a folder nothing has
+downloaded completes exactly like one that&#8217;s already here.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="cli-install.html#cli-install" class="xRef AppleTopic">If the command-line tool won&#8217;t install</a>
+<a href="automate-shortcuts.html#automate-shortcuts" class="xRef AppleTopic">Use Zephyr in a shortcut</a>
+<a href="editions.html#editions" class="xRef AppleTopic">Choose between the two versions of Zephyr</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Use more than one Dropbox account</a>
+</div>
+</body>
+</html>

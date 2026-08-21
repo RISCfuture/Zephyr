@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Links the bundled command-line tool onto the PATH.
+#
+# Zephyr cannot do this for itself. Writing into /usr/local/bin goes through an authorization right
+# the App Sandbox hands out only to a build entitled for privileged file operations, and it is
+# withheld silently — so the app's own settings can offer nothing but a command to paste into
+# Terminal. An installer script already runs as root, which makes this the one place the link can be
+# made without asking anyone to open Terminal at all.
+#
+# This is the whole of its own component package, carrying no payload, so that anyone who does not
+# want a `zephyr` on their PATH can clear one checkbox and still install the app. Settings keeps
+# offering the command afterwards, so the choice is not final.
+#
+# Nothing here may fail the install. The tool is a convenience; the app is what was asked for.
+
+set -uo pipefail
+
+# Where the tool will be once the target volume is the boot volume. The link's destination is
+# written unprefixed on purpose: a link into another volume's /usr/local/bin that named this Mac's
+# /Volumes path would break the moment that volume was booted.
+readonly TOOL="/Applications/Zephyr.app/Contents/Helpers/zephyr-cli"
+readonly LINK_NAME="zephyr"
+
+# $3 is the volume being installed onto, "/" for the running system. Trimming the trailing slash
+# keeps the concatenations below from producing a doubled one.
+target_volume="${3:-/}"
+target_volume="${target_volume%/}"
+
+bin_directory="${target_volume}/usr/local/bin"
+
+[ -x "${target_volume}${TOOL}" ] || exit 0
+
+mkdir -p "${bin_directory}" && ln -sf "${TOOL}" "${bin_directory}/${LINK_NAME}"
+
+exit 0

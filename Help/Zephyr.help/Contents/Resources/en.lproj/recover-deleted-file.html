@@ -1,0 +1,84 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>If you deleted something you needed</title>
+<meta name="description" content="What a delete does to your Dropbox, what Zephyr can get back, and what it can't.">
+<meta name="keywords" content="deleted, delete, trash, recover, undelete, restore, gone, missing file, removed">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="recover-deleted-file" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="recover-deleted-file"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>If you deleted something you needed</h1>
+<p>Deleting an item in your Dropbox deletes it on Dropbox and on every device signed in to the
+account, and Zephyr keeps no trash of its own to take it back out of.</p>
+
+<div class="Task">
+<h2 class="Name">What a delete does</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>The item goes from Dropbox as well as from this Mac, within seconds, and from your other
+      devices as they catch up.</p></li>
+  <li><p>Your Dropbox in Finder has no Trash of its own. Dropbox offers Zephyr no way to keep one,
+      so Zephyr doesn&#8217;t pretend to.</p></li>
+  <li><p>Nothing appears in Sync Issues. A delete that reached Dropbox worked; it is
+      only the wrong thing to have wanted.</p></li>
+</ul>
+<p>Zephyr has no way to bring a deleted item back. Whether Dropbox itself still holds a copy is a
+question for Dropbox, on Dropbox&#8217;s own website.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">If the file is still there but wrong</h2>
+<div class="TaskBody">
+<p>A file that was written over rather than deleted is a different matter: Dropbox kept what it said
+before, and you can put an earlier version back without leaving Finder.</p>
+<ol>
+  <li><p>In Finder, Control-click the file.</p></li>
+  <li><p>Choose Show Previous Versions&#8230;</p></li>
+</ol>
+<p>See <a href="file-versions.html#file-versions" class="xRef AppleTopic">Go back to an earlier
+version of a file</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Find out what was deleted, and when</h2>
+<div class="TaskBody">
+<p>Zephyr keeps a week of what it synced, which is enough to say what went and in which direction
+&#8212; it isn&#8217;t a copy of anything, but it will tell you whether the delete came from this
+Mac or arrived from somewhere else.</p>
+<ol>
+  <li><p>In Terminal, run <code>zephyr history</code></p></li>
+  <li><p>Read the CHANGE column for <em>removed</em>, and the DIRECTION column for
+      <em>up</em> &#8212; this Mac sent it &#8212; or <em>down</em>, meaning another device
+      did.</p></li>
+</ol>
+<p>The command comes with the downloadable version of Zephyr &#8212; see
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Install the zephyr command-line
+tool</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Take something out of Dropbox without deleting it</h2>
+<div class="TaskBody">
+<p>If what you wanted was to stop something syncing rather than to lose it, there is a command that
+keeps your copy: Delete from Dropbox, Keep on This Mac downloads the item first
+and only then removes Dropbox&#8217;s copy. See
+<a href="stop-syncing-item.html#stop-syncing-item" class="xRef AppleTopic">Stop syncing a file or
+folder</a>.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="file-versions.html#file-versions" class="xRef AppleTopic">Go back to an earlier version of a file</a>
+<a href="stop-syncing-item.html#stop-syncing-item" class="xRef AppleTopic">Stop syncing a file or folder</a>
+<a href="open-and-download.html#open-and-download" class="xRef AppleTopic">Open a file, and free up space again</a>
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">If the same file was changed in two places</a>
+</div>
+</body>
+</html>

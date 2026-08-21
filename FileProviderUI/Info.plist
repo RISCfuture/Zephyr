@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionFileProviderActions</key>
+		<array>
+			<dict>
+				<key>NSExtensionFileProviderActionActivationRule</key>
+				<string>fileproviderItems.@count == 1 AND SUBQUERY( fileproviderItems, $item, $item.userInfo.isFile == YES AND $item.userInfo.ignored == NO ).@count == 1</string>
+				<key>NSExtensionFileProviderActionIdentifier</key>
+				<string>codes.tim.Zephyr.showVersions</string>
+				<key>NSExtensionFileProviderActionName</key>
+				<string>Show Previous Versions…</string>
+			</dict>
+		</array>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.fileprovider-actionsui</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>$(PRODUCT_MODULE_NAME).VersionsViewController</string>
+	</dict>
+</dict>
+</plist>

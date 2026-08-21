@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Zephyr">
+  <title>Zephyr</title>
+  <defs>
+    <linearGradient id="z-sky" x1="512" y1="0" x2="512" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2B98FD"/>
+      <stop offset="1" stop-color="#004EEB"/>
+    </linearGradient>
+    <linearGradient id="z-pane-a" x1="-1" y1="-1" x2="1" y2="1" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F5FDFF"/><stop offset="1" stop-color="#B2E4FF"/>
+    </linearGradient>
+    <linearGradient id="z-pane-b" x1="-1" y1="-1" x2="1" y2="1" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#D2F2FF"/><stop offset="1" stop-color="#C2F1FF"/>
+    </linearGradient>
+    <linearGradient id="z-gust-a" x1="80" y1="0" x2="950" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="z-gust-b" x1="304" y1="0" x2="847" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity=".36"/><stop offset="1" stop-color="#fff" stop-opacity=".95"/>
+    </linearGradient>
+    <filter id="z-lift" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="10" stdDeviation="18" flood-color="#00246B" flood-opacity=".38"/>
+    </filter>
+    <clipPath id="z-plate"><rect width="1024" height="1024" rx="228"/></clipPath>
+  </defs>
+
+  <rect width="1024" height="1024" rx="228" fill="url(#z-sky)"/>
+  <g clip-path="url(#z-plate)">
+    <g filter="url(#z-lift)">
+      <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511 615)" opacity=".5">
+        <rect x="-1" y="-1" width="2" height="2" rx=".13" fill="url(#z-pane-b)"/>
+      </g>
+      <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511 481.5)" opacity=".5">
+        <rect x="-1" y="-1" width="2" height="2" rx=".13" fill="url(#z-pane-b)"/>
+      </g>
+      <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511 348)" opacity=".9">
+        <rect x="-1" y="-1" width="2" height="2" rx=".13" fill="url(#z-pane-a)"/>
+      </g>
+    </g>
+    <g opacity=".95">
+      <path fill="url(#z-gust-a)" d="M80.5,469.0C112.4,510.2 141.5,532.8 192.1,547.6C329.9,587.9 443.2,473.3 560.2,421.3C657.7,378.0 767.3,367.3 861.9,424.8C897.2,446.2 934.3,481.5 946.0,522.3C948.3,530.1 948.6,538.9 949.5,547.0C917.8,509.4 891.3,495.9 848.2,475.1C838.6,470.5 829.3,465.0 819.2,461.7C803.4,456.7 783.4,454.8 766.9,453.5C699.7,448.3 644.3,458.9 583.3,487.4C472.5,539.2 387.3,626.4 255.4,622.2C203.9,620.6 169.2,607.9 128.5,576.8C120.7,570.9 109.5,562.2 103.3,555.0C84.4,532.8 76.2,497.3 80.5,469.0Z"/>
+      <path fill="url(#z-gust-b)" d="M303.5,670.0C357.6,676.0 403.6,665.2 451.5,639.7C482.5,623.2 511.8,598.9 541.4,579.5C616.6,530.1 694.5,511.0 778.7,551.9C803.7,564.1 837.6,589.8 847.0,616.5C816.9,594.7 782.8,582.6 745.9,577.7C713.6,573.4 670.2,573.7 639.2,584.3C618.9,591.2 598.0,604.7 579.3,615.4C493.1,664.5 403.6,728.6 303.5,670.0Z"/>
+    </g>
+  </g>
+</svg>

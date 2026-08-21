@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Find out what Zephyr is built on</title>
+<meta name="description" content="The open-source work Zephyr is built on, and where to read the licenses in full.">
+<meta name="keywords" content="credits, licenses, open source, mit, apache, acknowledgements, maestral, grdb, attribution">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="credits" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="credits"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Find out what Zephyr is built on</h1>
+<p>Zephyr is open source under the MIT License. The components it is built on carry their own
+terms, and the ones that require a notice are named here.</p>
+
+<div class="Task">
+<h2 class="Name">Prior art</h2>
+<div class="TaskBody">
+<p>Zephyr is a reimplementation of <a href="https://github.com/samschott/maestral">Maestral</a> by
+Sam Schott, the open-source Python Dropbox client &#8212; MIT. No Maestral code is used or
+distributed. What Zephyr carries over is Maestral&#8217;s judgment: the set of filenames never
+synced, the length of history kept, and the shape of its change-feed handling. It is the reason this
+project was tractable.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Apache-2.0 notices</h2>
+<div class="TaskBody">
+<p>The Apache License 2.0 attaches a notice obligation on binary distribution, so these are called
+out separately:</p>
+<ul>
+  <li><p><strong>swift-argument-parser</strong>, <strong>swift-async-algorithms</strong>, and
+      <strong>swift-collections</strong> &#8212; Copyright the Swift project authors. Apache-2.0
+      with the Swift Runtime Library Exception.</p></li>
+  <li><p><strong>swift-log</strong> &#8212; Copyright 2018&#8211;2019 The SwiftLog Project.
+      Apache-2.0, with no exception. It contains a derivation of the lock implementation from
+      SwiftNIO, also Apache-2.0.</p></li>
+</ul>
+<p>The full text of the Apache License, Version 2.0 is at
+<a href="https://www.apache.org/licenses/LICENSE-2.0">apache.org/licenses/LICENSE-2.0</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Swift packages</h2>
+<div class="TaskBody">
+<p>Zephyr&#8217;s direct dependencies:</p>
+<ul>
+  <li><p><a href="https://github.com/groue/GRDB.swift">GRDB.swift</a> by Gwendal Rou&#233; &#8212;
+      MIT. The SQLite layer under the per-account sync index.</p></li>
+  <li><p><a href="https://github.com/groue/Semaphore">Semaphore</a> by Gwendal Rou&#233; &#8212;
+      MIT.</p></li>
+  <li><p><a href="https://github.com/apple/swift-argument-parser">swift-argument-parser</a>
+      &#8212; Apache-2.0. Behind the <code>zephyr</code> command-line tool&#8217;s
+      arguments.</p></li>
+  <li><p><a href="https://github.com/apple/swift-async-algorithms">swift-async-algorithms</a>
+      &#8212; Apache-2.0.</p></li>
+  <li><p><a href="https://github.com/RISCfuture/GitHubUpdateChecker">GitHubUpdateChecker</a>
+      &#8212; MIT.</p></li>
+  <li><p><a href="https://github.com/getsentry/sentry-cocoa">sentry-cocoa</a> &#8212; MIT.
+      Crash reporting.</p></li>
+</ul>
+<p>And pulled in through those:
+<a href="https://github.com/gonzalezreal/swift-markdown-ui">swift-markdown-ui</a> and
+<a href="https://github.com/gonzalezreal/NetworkImage">NetworkImage</a> by Guillermo Gonzalez
+&#8212; MIT.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Read them in full</h2>
+<div class="TaskBody">
+<p>The complete list, with every notice, is in <em>CREDITS.md</em> in Zephyr&#8217;s source
+repository. Click Zephyr in the menu bar, click Settings&#8230;, then click
+Zephyr on the Web under About.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="about-zephyr.html#about-zephyr" class="xRef AppleTopic">Find Zephyr&#8217;s version and privacy policy</a>
+<a href="privacy-and-data.html#privacy-and-data" class="xRef AppleTopic">What Zephyr sends, and what it doesn&#8217;t</a>
+</div>
+</body>
+</html>

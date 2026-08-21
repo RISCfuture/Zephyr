@@ -1,0 +1,81 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Turn on Zephyr in Finder</title>
+<meta name="description" content="Switch on Zephyr's file provider in System Settings so a linked account's files appear in Finder.">
+<meta name="keywords" content="finder, enable, file provider, extension, login items, system settings, sidebar, turn on, switch on">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="enable-finder" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="enable-finder"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Turn on Zephyr in Finder</h1>
+<p>macOS asks you, not Zephyr, whether an app may put files in Finder. Until you switch Zephyr on
+under File Providers, a linked account syncs but never appears.</p>
+
+<div class="Task">
+<h2 class="Name">Before you begin</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Install Zephyr rather than dragging it out of a downloaded disk image. macOS runs a
+      downloaded app from a temporary copy of its own and won&#8217;t register a file provider for
+      one, so Zephyr never reaches the File Providers list at all. See
+      <a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">If your
+      Dropbox doesn&#8217;t appear in Finder</a>.</p></li>
+  <li><p>Link a Dropbox account first. Zephyr only appears in the File Providers list once there
+      is an account to show, so the switch you&#8217;re looking for isn&#8217;t there yet if you
+      haven&#8217;t linked one. See
+      <a href="link-account.html#link-account" class="xRef AppleTopic">Link your Dropbox
+      account</a>.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Switch Zephyr on</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Choose Apple menu &gt; System Settings, click General in
+      the sidebar, click Login Items &amp; Extensions, then click
+      File Providers.</p>
+      <p><a href="x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.fileprovider-nonui" class="URL">Open
+      File Providers for me</a></p></li>
+  <li><p>Turn on Zephyr.</p></li>
+  <li><p>Open a new Finder window. Your Dropbox appears in the sidebar under
+      Locations. If it isn&#8217;t there, Finder may be hiding cloud locations &#8212; see
+      <a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">If your
+      Dropbox doesn&#8217;t appear in Finder</a>.</p></li>
+</ol>
+<figure>
+  <picture>
+    <source srcset="system/system-settings-file-providers-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="system/system-settings-file-providers.webp" width="470" height="465" alt="The File Providers sheet in System Settings, listing every app that may put files in Finder, with Zephyr&#8217;s switch turned on.">
+  </picture>
+  <figcaption>Zephyr appears here once an account is linked. The switch is the whole of it.</figcaption>
+</figure>
+<div class="Alert"><p class="Note"><em>Note: </em>Zephyr watches for this and stops asking as soon
+as you&#8217;ve done it. If the warning is still showing, click the Zephyr icon in the menu bar
+&#8212; the check runs again each time the panel opens.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Keep Zephyr running</h2>
+<div class="TaskBody">
+<p>Zephyr is what watches Dropbox for changes, so Finder only learns about a change made on another
+device while Zephyr is running. Letting it open at login is what keeps that true without you
+thinking about it &#8212; see
+<a href="settings-general.html#settings-general" class="xRef AppleTopic">Keep Zephyr running in the
+background</a>.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">If your Dropbox doesn&#8217;t appear in Finder</a>
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Where your Dropbox files are kept</a>
+<a href="withheld-approval.html#withheld-approval" class="xRef AppleTopic">If Zephyr is waiting for your permission</a>
+</div>
+</body>
+</html>

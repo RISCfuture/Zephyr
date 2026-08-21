@@ -1,0 +1,20 @@
+project: Zephyr.xcodeproj
+# The schemes that run tests are here so that usage *from* tests counts as usage — without them a
+# helper exercised only by the suite looks dead. `report_exclude` below still keeps findings inside
+# the test targets themselves out of the report.
+schemes:
+  - Zephyr (MAS)
+  - Zephyr (download)
+  - libZephyr
+  - zephyr-cli
+retain_public: false
+retain_swift_ui_previews: true
+# The Dropbox API models decode the wire format in full, including fields no caller reads yet:
+# `FileMetadata.modifiedBy` and `.isDownloadable`, and `isShared` on both `FileMetadata` and
+# `FolderMetadata`. Keeping them costs nothing and losing them costs fidelity — re-adding a field
+# later means revisiting the hand-written `init(from:)` and its `CodingKeys`.
+retain_assign_only_properties: true
+report_exclude:
+  - "**/libZephyrTests/**"
+  - "**/ZephyrTests/**"
+  - "**/ZephyrUITests/**"

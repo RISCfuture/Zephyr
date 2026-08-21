@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="plane-bottom" gradientUnits="userSpaceOnUse" x1="-1" y1="-1" x2="1" y2="1">
+      <stop offset="0" stop-color="#D2F2FF"/>
+      <stop offset="1" stop-color="#C2F1FF"/>
+    </linearGradient>
+  </defs>
+  <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511.0 615.0)">
+    <rect x="-1" y="-1" width="2" height="2" rx="0.13" ry="0.13" fill="url(#plane-bottom)"/>
+  </g>
+</svg>

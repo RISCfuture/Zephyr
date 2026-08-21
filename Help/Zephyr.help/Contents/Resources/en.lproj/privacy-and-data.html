@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>What Zephyr sends, and what it doesn’t</title>
+<meta name="description" content="Where your files and credentials go, what the local index holds, what a crash report carries, and the update check Zephyr makes.">
+<meta name="keywords" content="privacy, data, security, keychain, token, index, scopes, oauth, telemetry, tracking, what is sent, crash report, sentry, diagnostics">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="privacy-and-data" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="privacy-and-data"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>What Zephyr sends, and what it doesn’t</h1>
+<p>Zephyr moves your files between your Mac and Dropbox. That is almost the whole of what it sends
+anywhere, and there is no Zephyr server for any of it to go to. The rest is a crash report and an
+update check, both described below.</p>
+
+<div class="Task">
+<h2 class="Name">Your files</h2>
+<div class="TaskBody">
+<p>File contents travel directly between your Mac and Dropbox over encrypted connections, and pass
+through nothing in between. Zephyr downloads a file when something opens it, and uploads one when
+you create or change it.</p>
+<p>Once your files are with Dropbox, Dropbox&#8217;s own privacy policy governs what happens to
+them &#8212; worth reading alongside this.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Your Dropbox credentials</h2>
+<div class="TaskBody">
+<p>You type your Dropbox password on Dropbox&#8217;s website, never in Zephyr. What Dropbox hands
+back is a refresh token, which Zephyr keeps in the macOS Keychain and sends only to Dropbox.</p>
+<p>Zephyr asks Dropbox for six kinds of access and no others: reading your account&#8217;s basic
+profile and usage; reading the names, sizes, and timestamps of your files; downloading file
+contents; creating and changing files; listing shared links; and creating and revoking them. Dropbox
+shows you the list when you link the account. Zephyr asks for no team, contacts, or Paper access,
+and can see no account other than the one you link.</p>
+<p>You can withdraw access at any time, from Dropbox&#8217;s own connected-apps settings or by
+unlinking the account in Zephyr.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">The index on your Mac</h2>
+<div class="TaskBody">
+<p>So Finder can list your Dropbox without downloading it, Zephyr keeps a database describing your
+account: each item&#8217;s name, path, size, timestamps, content hash, and whether you excluded it,
+plus about a week of recent sync history and notes about anything that failed.</p>
+<p>It never leaves your Mac. It is not uploaded anywhere and not readable by anyone else. Unlinking
+the account removes it.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Crash reports</h2>
+<div class="TaskBody">
+<p>When Zephyr stops working &#8212; the app, the part of it the Finder runs, the window that
+lists a file&#8217;s earlier versions, the Share extension, the widget, or the <code>zephyr</code>
+command &#8212; it reports the fault to Sentry, an
+error-monitoring service, so it can be found and fixed. A report says which of those was running,
+what version it was, what kind of Mac it was on, and where in Zephyr&#8217;s own code things went
+wrong. From the app and the part the Finder runs, it also sends a sample of how long Zephyr&#8217;s
+own work took, so slow spots can be found.</p>
+<p>It carries nothing of yours. File names, folder names, and Dropbox paths are stripped out of
+every message in the report before it is sent, as are email addresses and anything resembling a
+credential. Zephyr also tells Sentry not to attach your IP address or your Mac&#8217;s name, and
+there is no Zephyr account for a report to be attached to. What ties one report to another is a
+random number Zephyr made up on this Mac; removing Zephyr&#8217;s data throws it away.</p>
+<p>There is no setting for this yet. Reports from development builds are never sent at all.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Checking for updates</h2>
+<div class="TaskBody">
+<p>The downloadable version checks GitHub for new releases. The request is unauthenticated and says
+nothing about you, your account, or your files. Set Check automatically to
+Never in Zephyr&#8217;s settings to stop it &#8212; see
+<a href="settings-updates.html#settings-updates" class="xRef AppleTopic">Check for Zephyr
+updates</a>. The App Store version doesn&#8217;t make it at all.</p>
+<p>There is no advertising identifier, no cross-app tracking, and nothing sold or shared with
+anyone.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Diagnostic logging</h2>
+<div class="TaskBody">
+<p>Zephyr writes messages to the macOS unified log. They stay on your Mac; nothing from them is
+uploaded, to Sentry or anywhere else.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>Unified log data is included in a sysdiagnose. If
+you generate one and send it to Apple, or attach one to a bug report, that log data goes where you
+send it. Look before you share. The same goes for a diagnostic report &#8212; see
+<a href="diagnostics.html#diagnostics" class="xRef AppleTopic">Collect a diagnostic
+report</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Read the full policy</h2>
+<div class="TaskBody">
+<p>The policy is at
+<a href="https://riscfuture.github.io/Zephyr/privacy.html">riscfuture.github.io/Zephyr/privacy.html</a>.
+Zephyr links it too: click Zephyr in the menu bar, click Settings&#8230;, then click
+Privacy Policy under About.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="about-zephyr.html#about-zephyr" class="xRef AppleTopic">Find Zephyr&#8217;s version and privacy policy</a>
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Where your Dropbox files are kept</a>
+<a href="link-account.html#link-account" class="xRef AppleTopic">Link your Dropbox account</a>
+</div>
+</body>
+</html>

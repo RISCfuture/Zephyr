@@ -1,0 +1,126 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Link your Dropbox account</title>
+<meta name="description" content="Connect a Dropbox account to Zephyr so its files appear in Finder.">
+<meta name="keywords" content="link, account, dropbox, sign in, authorize, oauth, connect, add account, authorization code">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="link-account" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="link-account"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Link your Dropbox account</h1>
+<p>Zephyr shows a Dropbox account&#8217;s files in Finder once you link the account. Linking opens
+Dropbox&#8217;s own page, where you approve the access Zephyr asks for; approving sends you
+straight back.</p>
+
+<div class="Task">
+<h2 class="Name">Before you begin</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Install Zephyr rather than dragging it out of a downloaded disk image. Linking works
+      wherever Zephyr is, but macOS runs a downloaded app from a temporary copy of its own and
+      won&#8217;t put a linked account in Finder for one. See
+      <a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">If your
+      Dropbox doesn&#8217;t appear in Finder</a>.</p></li>
+  <li><p>Have your Dropbox password to hand. You approve access on Dropbox&#8217;s own website,
+      not in Zephyr &#8212; Zephyr never sees your password.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Link an account</h2>
+<div class="TaskBody">
+<figure>
+  <picture>
+    <source srcset="images/accounts-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/accounts.webp" width="688" height="480" alt="The Zephyr window listing two linked Dropbox accounts by name and email address, with their file and folder counts on the right and the Link Dropbox Account button in the toolbar.">
+  </picture>
+  <figcaption>Linked accounts, with Link Dropbox Account&#8230; at the top right.</figcaption>
+</figure>
+<ol>
+  <li><p>Click Zephyr in the menu bar, then click Manage Accounts&#8230;</p></li>
+  <li><p>Click Link Dropbox Account&#8230; <span class="NoBreak">(+)</span> in the
+      toolbar.</p>
+      <p>You can also choose Account &#9656; Link Dropbox
+      Account&#8230;, or press <kbd>&#8984;L</kbd>.</p></li>
+  <li><p>Click Connect Dropbox Account&#8230;</p>
+      <p>Dropbox&#8217;s authorization page opens in a window of its own. Sign in if you
+      aren&#8217;t already, then approve the access Zephyr asks for. The window closes itself once
+      you have.</p></li>
+</ol>
+<p>The account appears in the list, and Zephyr starts building an index of what&#8217;s in it. The
+first index of a large Dropbox takes a while; you don&#8217;t have to wait for it to finish before
+using your files.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>Closing the authorization window without
+approving cancels the link and changes nothing. Click Connect Dropbox Account&#8230; again to
+start over.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">If Dropbox can&#8217;t send you back to Zephyr</h2>
+<div class="TaskBody">
+<p>Dropbox can also hand you a code to carry back yourself. Use this if the authorization window
+won&#8217;t open, or if Dropbox reports a problem returning to Zephyr.</p>
+<ol>
+  <li><p>In the link window, click Enter a code instead.</p></li>
+  <li><p>Click Open Dropbox in Browser, and approve access there as above.</p></li>
+  <li><p>Copy the authorization code Dropbox shows you, switch back to Zephyr, and paste it into
+      the Authorization code field.</p>
+      <div class="Alert"><p class="Note"><em>Note: </em>If you closed the browser page or the code
+      expired, click Open Dropbox in Browser again to get a fresh one.</p></div></li>
+  <li><p>Click Link.</p></li>
+</ol>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Turn Zephyr on in Finder</h2>
+<div class="TaskBody">
+<p>Linking an account isn&#8217;t enough on its own. macOS asks you, not Zephyr, whether a file
+provider may show files in Finder, and it only offers the switch once an account is linked. See
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Turn on Zephyr in Finder</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Open an account, or copy its address</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>In the Zephyr window, Control-click the account.</p></li>
+  <li><p>Choose Open in Finder to reveal that account&#8217;s files, or
+      Copy Email Address to put the address on the clipboard.</p></li>
+</ol>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Unlink an account</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>In the Zephyr window, Control-click the account.</p></li>
+  <li><p>Choose Unlink&#8230;, then confirm.</p></li>
+</ol>
+<p>Unlinking revokes Zephyr&#8217;s access to the account and removes it from Finder. Nothing in
+your Dropbox is deleted.</p>
+</div>
+</div>
+
+<div class="Alert"><p class="Note"><em>Note: </em>The <code>zephyr</code> command-line tool keeps
+its credentials separately from the app, so it can list an account the app linked but can&#8217;t
+act as one. Run <code>zephyr auth link</code> once for the tool, even if the app is already set up.
+See <a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Install the zephyr command-line
+tool</a>.</p></div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Turn on Zephyr in Finder</a>
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Where your Dropbox files are kept</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Use more than one Dropbox account</a>
+<a href="reauthorize.html#reauthorize" class="xRef AppleTopic">If Zephyr can&#8217;t connect to your Dropbox account</a>
+</div>
+</body>
+</html>

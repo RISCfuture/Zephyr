@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Collect a diagnostic report</title>
+<meta name="description" content="Gather what a bug report needs, and see what goes in it before you send it.">
+<meta name="keywords" content="diagnostics, report, bug, troubleshooting, log, collect, support, private data">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="diagnostics" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="diagnostics"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Collect a diagnostic report</h1>
+<p>If something is wrong and the fix isn&#8217;t obvious, a diagnostic report is what turns
+&#8220;it doesn&#8217;t work&#8221; into something that can be looked into.</p>
+
+<div class="Task">
+<h2 class="Name">Collect a report</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Click Zephyr in the menu bar, then click Settings&#8230;</p></li>
+  <li><p>Scroll to Troubleshooting, then click Collect&#8230;
+      beside Diagnostics.</p></li>
+  <li><p>When it finishes, Finder opens with the report selected.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Note: </em>The report names files from your Dropbox. Read it
+before you send it to anyone, and remove anything you&#8217;d rather not share.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">What&#8217;s in it</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Zephyr&#8217;s version, your macOS version, and when the report was collected.</p></li>
+  <li><p>Whether syncing is paused, which notification level is set, all four transfer limits, and
+      anything macOS is withholding.</p></li>
+  <li><p>Each linked account: its identifier, which kind of Dropbox root it has, when you linked it,
+      the state of its Finder location, and its file and folder counts.</p></li>
+  <li><p>Every item that couldn&#8217;t sync, by its full Dropbox path, with the reason.</p></li>
+  <li><p>Every item you have taken out of syncing, by its full Dropbox path.</p></li>
+  <li><p>Zephyr&#8217;s recent log from the process that collected the report.</p></li>
+</ul>
+<p>It does not contain the contents of any file, and it does not contain your Dropbox
+credentials.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Capture more detail</h2>
+<div class="TaskBody">
+<p>Zephyr deliberately keeps your file names out of the system log, so a log captured beside the
+report describes what happened without saying which file it happened to.</p>
+<p>The report itself does name them, which is why it asks you to read it before sending it. There
+is no longer a Terminal command that unredacts the log: macOS dropped the setting, and revealing
+private data now takes a configuration profile installed across the whole Mac.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Send it in</h2>
+<div class="TaskBody">
+<p>Zephyr&#8217;s issue tracker is where reports go. Click Zephyr in the menu bar, click
+Settings&#8230;, then click Report an Issue under
+About.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="sync-issues.html#sync-issues" class="xRef AppleTopic">If a file won&#8217;t sync</a>
+<a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">If your Dropbox doesn&#8217;t appear in Finder</a>
+<a href="privacy-and-data.html#privacy-and-data" class="xRef AppleTopic">What Zephyr sends, and what it doesn&#8217;t</a>
+</div>
+</body>
+</html>

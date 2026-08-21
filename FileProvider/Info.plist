@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIconFile</key>
+	<string>icon</string>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFile</key>
+			<string>icon</string>
+			<key>CFBundleSymbolName</key>
+			<string>zephyr.logomark</string>
+		</dict>
+	</dict>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionFileProviderActions</key>
+		<array>
+			<dict>
+				<key>NSExtensionFileProviderActionIdentifier</key>
+				<string>codes.tim.Zephyr.ignore</string>
+				<key>NSExtensionFileProviderActionName</key>
+				<string>Delete from Dropbox, Keep on This Mac</string>
+				<key>NSExtensionFileProviderActionActivationRule</key>
+				<string>SUBQUERY( fileproviderItems, $item, $item.userInfo.ignored == NO ).@count &gt; 0</string>
+			</dict>
+			<dict>
+				<key>NSExtensionFileProviderActionIdentifier</key>
+				<string>codes.tim.Zephyr.resumeSync</string>
+				<key>NSExtensionFileProviderActionName</key>
+				<string>Put Back on Dropbox and Resume Syncing</string>
+				<key>NSExtensionFileProviderActionActivationRule</key>
+				<string>SUBQUERY( fileproviderItems, $item, $item.userInfo.ignored == YES ).@count &gt; 0</string>
+			</dict>
+		</array>
+		<key>NSFileProviderDecorations</key>
+		<array>
+			<dict>
+				<key>Identifier</key>
+				<string>codes.tim.Zephyr.ignored</string>
+				<key>Category</key>
+				<string>Badge</string>
+				<key>BadgeImageType</key>
+				<string>com.apple.icon-decoration.badge.private-folder</string>
+				<key>Label</key>
+				<string>Not on Dropbox — this Mac only</string>
+			</dict>
+		</array>
+		<key>NSExtensionFileProviderDocumentGroup</key>
+		<string>group.codes.tim.Zephyr</string>
+		<key>NSExtensionFileProviderSupportsEnumeration</key>
+		<true/>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.fileprovider-nonui</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>FileProviderExtension</string>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,88 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Go back to an earlier version of a file</title>
+<meta name="description" content="See the versions Dropbox kept of a file, and put one back.">
+<meta name="keywords" content="version, versions, history, revision, revisions, restore, previous version, undo, roll back, recover, earlier">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="file-versions" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="file-versions"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Go back to an earlier version of a file</h1>
+<p>Dropbox keeps the earlier versions of a file for a while after you change it. If you saved
+something you didn&#8217;t mean to save, or an app wrote over a file badly, you can put an earlier
+version back without leaving Finder.</p>
+
+<div class="Task">
+<h2 class="Name">See what Dropbox kept</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>In Finder, Control-click the file.</p></li>
+  <li><p>Choose Show Previous Versions&#8230;</p></li>
+</ol>
+<figure>
+  <picture>
+    <source srcset="system/finder-menu-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="system/finder-menu.webp" width="370" height="475" alt="A Finder contextual menu for Quarterly Report.pdf, ending with Quick Actions and then Zephyr&#8217;s two commands, Show Previous Versions&#8230; and Delete from Dropbox, Keep on This Mac.">
+  </picture>
+  <figcaption>Zephyr&#8217;s commands sit at the foot of the menu, below Quick Actions.</figcaption>
+</figure>
+<p>Each version is listed by the date Dropbox recorded it and how big the file was then, newest
+first. The one your Mac has now is marked <em>Current</em>.</p>
+<figure>
+  <picture>
+    <source srcset="images/file-versions-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="images/file-versions.webp" width="644" height="556" alt="The Show Previous Versions window, listing four dated versions of Quarterly Report.pdf with their sizes, the newest marked Current and the one below it selected, above Cancel and Restore&#8230; buttons.">
+  </picture>
+  <figcaption>The file&#8217;s path across the top, then everything Dropbox still holds.</figcaption>
+</figure>
+
+<div class="Alert"><p class="Note"><em>Note: </em>The command is only offered when exactly one
+item is selected, and only for a file &#8212; not for a folder, not for two files at once, and not
+for an item you have stopped syncing. With anything else selected it simply isn&#8217;t in the
+menu.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Put a version back</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Select the version you want. The newest one that isn&#8217;t the current version is
+      already selected when the window opens.</p></li>
+  <li><p>Click Restore&#8230;, then click Restore to confirm.</p></li>
+</ol>
+<p>The file goes back to how it was at that version, on Dropbox and on every device signed in to
+the same account. Finder catches up a moment later, once the change comes back round.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>This is the one thing here you can&#8217;t undo
+by doing it again: what the file says now is replaced. The version you replaced is itself kept as
+an earlier version, so you can go back to it the same way.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">If there&#8217;s nothing to show</h2>
+<div class="TaskBody">
+<p>A file Dropbox has no earlier version of &#8212; one you have never changed since adding it
+&#8212; reads <em>Dropbox has kept no earlier version of this file.</em>, and the button at the
+bottom is Close rather than Cancel.</p>
+<p>Versions follow a file through being renamed and moved, so a file you renamed still shows what
+it was before.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>The window shows at most ten versions, and
+there is no way to page past them. How far back Dropbox keeps them depends on your Dropbox plan, but
+a file saved often enough will have used up all ten within the day. <code>zephyr revs</code> reaches
+further back &#8212; see <a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Install the
+zephyr command-line tool</a>.</p></div>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="open-and-download.html#open-and-download" class="xRef AppleTopic">Open a file, and free up space again</a>
+<a href="automate-shortcuts.html#automate-shortcuts" class="xRef AppleTopic">Use Zephyr in a shortcut</a>
+<a href="recover-deleted-file.html#recover-deleted-file" class="xRef AppleTopic">If you deleted something you needed</a>
+</div>
+</body>
+</html>

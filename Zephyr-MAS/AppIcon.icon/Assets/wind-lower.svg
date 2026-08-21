@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="wind-lower" gradientUnits="userSpaceOnUse" x1="304" y1="0" x2="847" y2="0">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.36"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.95"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#wind-lower)" d="M303.5,670.0C357.6,676.0 403.6,665.2 451.5,639.7C482.5,623.2 511.8,598.9 541.4,579.5C616.6,530.1 694.5,511.0 778.7,551.9C803.7,564.1 837.6,589.8 847.0,616.5C816.9,594.7 782.8,582.6 745.9,577.7C713.6,573.4 670.2,573.7 639.2,584.3C618.9,591.2 598.0,604.7 579.3,615.4C493.1,664.5 403.6,728.6 303.5,670.0Z"/>
+</svg>

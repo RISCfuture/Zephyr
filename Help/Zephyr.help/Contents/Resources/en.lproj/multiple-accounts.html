@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Use more than one Dropbox account</title>
+<meta name="description" content="Link several Dropbox accounts and tell them apart in Finder and in Zephyr.">
+<meta name="keywords" content="multiple accounts, second account, work, personal, several, more than one, switch">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="multiple-accounts" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="multiple-accounts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Use more than one Dropbox account</h1>
+<p>Zephyr syncs every account you link at the same time. Each one gets its own place in the Finder
+sidebar and its own index.</p>
+
+<div class="Task">
+<h2 class="Name">Link another account</h2>
+<div class="TaskBody">
+<p>Linking a second account works exactly like the first &#8212; see
+<a href="link-account.html#link-account" class="xRef AppleTopic">Link your Dropbox account</a>. You
+sign in to Dropbox in your browser once per account.</p>
+<p>After linking, switch Zephyr on for the new account under
+File Providers if macOS asks; see
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Turn on Zephyr in Finder</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Telling them apart</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>In Finder:</em> each account appears in the sidebar as <em>Zephyr</em> followed by
+      that account&#8217;s email address, so the address is what tells two of them apart.</p></li>
+  <li><p><em>In the menu bar:</em> the panel lists every account with its own status line and
+      counts. Clicking one opens that account in Finder.</p></li>
+  <li><p><em>In settings:</em> Not Syncing is per-account, and names each account above its own
+      controls when more than one is linked. Bandwidth is not: the transfer limits belong to this
+      Mac, and every account shares them.</p></li>
+</ul>
+<p>The menu-bar icon reads the busiest account, so one account uploading shows as activity even
+while the others are idle.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Working with the command-line tool</h2>
+<div class="TaskBody">
+<p><code>zephyr</code> acts on the only linked account unless you pass <code>--account</code>, so
+with several linked you&#8217;ll want to name one. <code>zephyr auth list</code> shows the
+identifiers to use, and shell completion offers them.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="link-account.html#link-account" class="xRef AppleTopic">Link your Dropbox account</a>
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limit how much bandwidth Zephyr uses</a>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Install the zephyr command-line tool</a>
+</div>
+</body>
+</html>

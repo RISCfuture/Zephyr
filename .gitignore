@@ -1,0 +1,42 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcresult
+
+# Build settings holding API credentials; Config/Secrets.example.xcconfig is the tracked template
+Config/Secrets.xcconfig
+
+# SwiftLint's cache of the remote parent config
+.swiftlint/RemoteConfigCache
+
+# fastlane: local secrets and run output. Archives and disk images land in build/, ignored above.
+fastlane/.env
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/test_output
+*.dmg
+
+# App Store screenshots, staged for `deliver` by the screenshots lane. Regenerated from the UI test
+# harness; only the site's copies under docs/assets/screenshots are committed.
+fastlane/screenshots/
+
+# Decrypted App Store Connect API key, written here by the certificates repo's bin/api-key.
+asc_api_key.json
+*.p8
+
+# sentry-cli's config is committed: it names the organization and project alone, which both the
+# release lanes and the app targets' upload build phase read. The auth token is not kept in it —
+# sentry-cli takes that from SENTRY_AUTH_TOKEN — so there is nothing here to ignore.
+
+# macOS
+.DS_Store
+
+# Scratch: captured console output and coverage traces
+log.txt
+*.profraw
+*.profdata
+
+# Help book search indexes: built into the app bundle, but a hand-run hiutil leaves one here
+Help/**/*.cshelpindex

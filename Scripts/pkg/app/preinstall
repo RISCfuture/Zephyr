@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# Asks a running Zephyr to quit before the payload is written over it.
+#
+# Zephyr is three processes, not one: the menu bar app, the widget, and — hosted by fileproviderd —
+# the File Provider extension. Replacing the bundle underneath a live extension leaves fileproviderd
+# holding a path that no longer resolves, and the domain stops answering until something restarts it.
+#
+# Nothing here may fail the install: a user who cannot be asked to quit, or an app that ignores the
+# request, still gets the new build. Hence no `set -e`, and an unconditional success at the end.
+
+set -uo pipefail
+
+readonly BUNDLE_ID="codes.tim.Zephyr"
+readonly PROCESS_NAME="Zephyr"
+readonly QUIT_TIMEOUT_TENTHS=100
+
+# The installer runs as root, which has no session to send an Apple event from. `launchctl asuser`
+# moves the request into the console user's session, which is the one running Zephyr.
+ask_console_user_to_quit() {
+  local console_user uid
+  console_user=$(stat -f %Su /dev/console 2>/dev/null) || return 0
+  [ -n "${console_user}" ] && [ "${console_user}" != "root" ] || return 0
+
+  uid=$(id -u "${console_user}" 2>/dev/null) || return 0
+  launchctl asuser "${uid}" sudo -u "${console_user}" \
+    osascript -e "quit app id \"${BUNDLE_ID}\"" >/dev/null 2>&1 || true
+}
+
+zephyr_is_running() {
+  pgrep -x "${PROCESS_NAME}" >/dev/null 2>&1
+}
+
+wait_for_quit() {
+  local waited=0
+  while [ "${waited}" -lt "${QUIT_TIMEOUT_TENTHS}" ]; do
+    zephyr_is_running || return 0
+    sleep 0.1
+    waited=$((waited + 1))
+  done
+  return 1
+}
+
+ask_console_user_to_quit
+wait_for_quit || pkill -x "${PROCESS_NAME}" >/dev/null 2>&1 || true
+
+exit 0

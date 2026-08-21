@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>If you don’t see Zephyr’s notifications</title>
+<meta name="description" content="Check macOS's permission, Zephyr's own level, and whether a snooze is running.">
+<meta name="keywords" content="notifications, denied, not showing, allow, snooze, focus, do not disturb, silent">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="notifications-denied" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="notifications-denied"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>If you don’t see Zephyr’s notifications</h1>
+<p>Three separate things can silence Zephyr, and they&#8217;re worth ruling out in this order.</p>
+
+<div class="Task">
+<h2 class="Name">Check that macOS allows them</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Choose Apple menu &gt; System Settings, then click
+      Notifications.</p>
+      <p><a href="x-apple.systempreferences:com.apple.Notifications-Settings.extension" class="URL">Open
+      Notifications for me</a></p></li>
+  <li><p>Find Zephyr, then turn on Allow notifications.</p></li>
+</ol>
+<p>If you refused Zephyr&#8217;s first prompt, this is the only place to change that answer &#8212;
+macOS won&#8217;t show the prompt a second time, and Zephyr can&#8217;t make it.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Check Zephyr&#8217;s own level</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Click Zephyr in the menu bar, then click Settings&#8230;</p></li>
+  <li><p>Under Notifications, check Notify about.</p></li>
+</ol>
+<p>Set to Errors only, an ordinary file change won&#8217;t notify. Set to
+None, nothing will. See
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Choose which
+notifications Zephyr shows</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Check for a snooze</h2>
+<div class="TaskBody">
+<p>Click Zephyr in the menu bar. If a snooze is running, the row says Snoozed until
+and the time it ends. Click Resume to end it now.</p>
+<p>Nothing is lost to a snooze: what it silenced notifies once it ends.</p>
+</div>
+</div>
+
+<div class="Alert"><p class="Note"><em>Note: </em>A macOS Focus can hold notifications back from
+every app at once. Check the Focus in Control Center before concluding that Zephyr is at
+fault.</p></div>
+
+<div class="LinkUniversal"><strong>See also</strong>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Choose which notifications Zephyr shows</a>
+<a href="withheld-approval.html#withheld-approval" class="xRef AppleTopic">If Zephyr is waiting for your permission</a>
+</div>
+</body>
+</html>

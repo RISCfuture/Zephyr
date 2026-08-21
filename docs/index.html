@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Zephyr — A Dropbox client for the Mac, written in Swift</title>
+    <meta
+      name="description"
+      content="Zephyr is a free, open-source Dropbox client for macOS written entirely in Swift. Your accounts live in the Finder sidebar, files arrive when you open them, and it plugs into the share sheet, the menu bar, a widget, and a full command-line tool."
+    />
+    <link rel="canonical" href="https://riscfuture.github.io/Zephyr/" />
+    <meta name="author" content="Tim Morgan" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#080f1b" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/svg+xml" href="assets/zephyr-mark.svg" />
+    <link rel="apple-touch-icon" href="assets/zephyr-mark.svg" />
+    <link
+      rel="preload"
+      href="assets/fonts/schibsted-grotesk.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="assets/fonts/hanken-grotesk.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Zephyr" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://riscfuture.github.io/Zephyr/" />
+    <meta property="og:title" content="Zephyr — A Dropbox client for the Mac, written in Swift" />
+    <meta
+      property="og:description"
+      content="A free, open-source Dropbox client for macOS. Your accounts live in the Finder sidebar, files arrive when you open them, and nothing sits on your disk until it has to."
+    />
+    <meta property="og:image" content="https://riscfuture.github.io/Zephyr/assets/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Zephyr: a Dropbox client for the Mac, written in Swift."
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Zephyr — A Dropbox client for the Mac, written in Swift" />
+    <meta
+      name="twitter:description"
+      content="A free, open-source Dropbox client for macOS. Your accounts live in the Finder sidebar, files arrive when you open them, and nothing sits on your disk until it has to."
+    />
+    <meta name="twitter:image" content="https://riscfuture.github.io/Zephyr/assets/og.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://riscfuture.github.io/Zephyr/#website",
+            "url": "https://riscfuture.github.io/Zephyr/",
+            "name": "Zephyr",
+            "inLanguage": "en-US",
+            "publisher": { "@id": "https://riscfuture.github.io/Zephyr/#author" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://riscfuture.github.io/Zephyr/#author",
+            "name": "Tim Morgan",
+            "url": "https://github.com/RISCfuture"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://riscfuture.github.io/Zephyr/#app",
+            "name": "Zephyr",
+            "url": "https://riscfuture.github.io/Zephyr/",
+            "description": "Zephyr is a free, open-source Dropbox client for macOS written entirely in Swift. Linked accounts appear in the Finder sidebar, file contents are downloaded on demand, and the app integrates with the share sheet, the menu bar, notifications, a desktop widget, and a command-line tool.",
+            "applicationCategory": "UtilitiesApplication",
+            "applicationSubCategory": "File sync client",
+            "operatingSystem": "macOS 26 or later",
+            "softwareRequirements": "macOS 26 or later",
+            "author": { "@id": "https://riscfuture.github.io/Zephyr/#author" },
+            "license": "https://github.com/RISCfuture/Zephyr/blob/main/LICENSE",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD",
+              "url": "https://github.com/RISCfuture/Zephyr/releases/latest"
+            },
+            "downloadUrl": "https://github.com/RISCfuture/Zephyr/releases/latest",
+            "featureList": [
+              "Linked Dropbox accounts appear in the Finder sidebar, with file contents downloaded on demand",
+              "Written entirely in Swift, with one framework behind the app, the extensions, and the CLI",
+              "Two-way sync against Dropbox's change feed, with remote edits arriving in seconds",
+              "As many Dropbox accounts as you like, each with its own Finder location and its own index",
+              "Upload, download, and metered-network bandwidth limits, shared by every account on the Mac",
+              "Finder context-menu actions backed by com.dropbox.ignored, shared with the official Dropbox client",
+              "Every transfer verified against Dropbox's content hash, with chunked uploads that resume",
+              "Finder thumbnails for image files that have never been downloaded",
+              "Revision browsing and restore from the Finder, a shortcut, or the command line",
+              "Shortcuts actions for pausing, snoozing, status, upload, share links, and restore, three of them in Spotlight and Siri",
+              "Menu-bar status, four notification levels, a desktop widget, and a Control Center pause switch",
+              "A Share extension for uploading from any app's share sheet",
+              "The zephyr command-line tool, with shell completion driven by the sync index"
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://riscfuture.github.io/Zephyr/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Is Zephyr made by Dropbox?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Zephyr is an independent, open-source client built against Dropbox's public HTTP API. It is not affiliated with, endorsed by, or sponsored by Dropbox, Inc."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How is Zephyr different from the official Dropbox client?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Zephyr is a native Mac app written entirely in Swift, built on Apple's replicated File Provider model. There's no Dropbox folder on your disk to reconcile and nothing crawling it: macOS owns the file tree, and Zephyr answers its questions from an index of your account's remote state. It's a reimplementation of Maestral, the open-source Python Dropbox client, on that model — and where Maestral asks you to rebuild after Dropbox resets its change cursor, Zephyr re-lists the account on its own."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Where do my files actually live?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "In your Dropbox, and in macOS's File Provider storage once something opens them. Zephyr keeps no mirrored folder: macOS owns the file tree, and the extension answers its questions from a local index of your account's remote state."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What does Zephyr send anywhere?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Your files and credentials go only between your Mac and Dropbox. Zephyr also sends crash reports, and a sample of its own performance, to Sentry so the developer can find and fix bugs; that data describes the app, not your files, with file names and Dropbox paths stripped out. It counts nothing about what you do with Zephyr, and there is currently no setting to switch it off. The only other request is the direct download's update check against GitHub's public releases API; the Mac App Store build leaves updating to the App Store."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I use Zephyr alongside the official Dropbox client?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Zephyr reads and writes the same com.dropbox.ignored extended attribute the official client uses to mark items as excluded from syncing, so an item ignored in one is ignored in the other. Running both against the same account at the same time is not something Zephyr has been designed around."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="#top">
+          <img src="assets/zephyr-mark.svg" width="27" height="27" alt="" />
+          <span>Zephyr</span>
+        </a>
+        <nav class="site-nav" aria-label="Sections">
+          <a href="#features">Features</a>
+          <a href="#macos">Integration</a>
+          <a href="#cli">Command line</a>
+          <a href="#setup">Setup</a>
+          <a href="#get-it">Download</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+        <a class="btn btn-primary btn-sm" href="https://github.com/RISCfuture/Zephyr/releases/latest"
+          >Download</a
+        >
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ────────────────────────────  Hero  ──────────────────────────── -->
+      <!--
+        The signature: the app icon at page scale. Same gradient, same three
+        panes, same two gusts — the panes drift, and the wind crosses the whole
+        panel and runs off both edges.
+      -->
+      <section class="wrap hero" id="top">
+        <div class="hero-panel">
+          <svg
+            class="hero-weather"
+            viewBox="0 0 1200 700"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <path id="wind-high" d="M-8.0,230.9C10.0,224.6 64.2,248.4 100.3,255.3C136.4,262.2 172.5,268.5 208.6,272.4C244.7,276.3 280.8,278.6 316.9,278.6C353.0,278.7 389.0,276.6 425.1,272.9C461.2,269.1 497.3,263.0 533.4,256.2C569.5,249.4 605.6,240.5 641.7,232.0C677.8,223.5 713.9,213.6 750.0,205.2C786.1,196.7 822.2,187.9 858.3,181.1C894.4,174.4 930.5,168.4 966.6,164.8C1002.7,161.1 1038.8,159.2 1074.9,159.4C1111.0,159.6 1147.0,162.0 1183.1,166.0C1219.2,170.0 1255.3,176.4 1291.4,183.4C1327.5,190.4 1363.6,199.4 1399.7,208.0C1435.8,216.5 1490.0,220.0 1508.0,234.8C1526.0,249.6 1526.0,290.4 1508.0,296.6C1490.0,302.8 1435.8,280.2 1399.7,271.9C1363.6,263.6 1327.5,254.3 1291.4,246.6C1255.3,238.9 1219.2,231.3 1183.1,225.8C1147.0,220.3 1111.0,215.9 1074.9,213.8C1038.8,211.6 1002.7,211.3 966.6,212.9C930.5,214.5 894.4,218.3 858.3,223.4C822.2,228.4 786.1,235.6 750.0,243.1C713.9,250.5 677.8,259.7 641.7,268.0C605.6,276.4 569.5,285.6 533.4,293.2C497.3,300.7 461.2,308.2 425.1,313.4C389.0,318.7 353.0,322.8 316.9,324.7C280.8,326.6 244.7,326.6 208.6,324.7C172.5,322.8 136.4,318.7 100.3,313.5C64.2,308.2 10.0,307.0 -8.0,293.2C-26.0,279.4 -26.0,237.2 -8.0,230.9Z" />
+            </defs>
+            <g class="gust-track" fill="#fff" opacity="0.1" style="--gust-period: 1500px">
+              <use href="#wind-high" x="-1500" />
+              <use href="#wind-high" x="0" />
+              <use href="#wind-high" x="1500" />
+            </g>
+            <defs>
+              <path id="wind-low" d="M-8.0,473.2C14.8,455.1 83.2,451.8 128.9,441.1C174.5,430.3 220.1,418.5 265.7,408.7C311.3,399.0 357.0,389.4 402.6,382.7C448.2,375.9 493.8,370.6 539.4,368.1C585.0,365.7 630.7,365.7 676.3,368.1C721.9,370.5 767.5,375.8 813.1,382.5C858.8,389.3 904.4,398.8 950.0,408.5C995.6,418.2 1041.2,430.1 1086.9,440.9C1132.5,451.6 1178.1,463.4 1223.7,473.0C1269.3,482.6 1315.0,492.0 1360.6,498.6C1406.2,505.1 1451.8,510.1 1497.4,512.3C1543.0,514.4 1588.7,514.1 1634.3,511.5C1679.9,508.8 1725.5,503.2 1771.1,496.2C1816.8,489.3 1885.2,461.2 1908.0,469.7C1930.8,478.2 1930.8,531.0 1908.0,547.3C1885.2,563.5 1816.8,562.4 1771.1,567.1C1725.5,571.7 1679.9,574.6 1634.3,575.0C1588.7,575.4 1543.0,573.3 1497.4,569.4C1451.8,565.5 1406.2,558.9 1360.6,551.4C1315.0,544.0 1269.3,534.2 1223.7,524.8C1178.1,515.3 1132.5,504.3 1086.9,494.7C1041.2,485.1 995.6,475.1 950.0,467.3C904.4,459.5 858.8,452.5 813.1,448.1C767.5,443.7 721.9,441.1 676.3,441.0C630.7,440.9 585.0,443.2 539.4,447.4C493.8,451.5 448.2,458.3 402.6,465.9C357.0,473.5 311.3,483.5 265.7,493.0C220.1,502.5 174.5,513.5 128.9,523.0C83.2,532.6 14.8,558.4 -8.0,550.1C-30.8,541.8 -30.8,491.4 -8.0,473.2Z" />
+            </defs>
+            <g class="gust-track gust-track-slow" fill="#fff" opacity="0.065" style="--gust-period: 1900px">
+              <use href="#wind-low" x="-1900" />
+              <use href="#wind-low" x="0" />
+              <use href="#wind-low" x="1900" />
+            </g>
+          </svg>
+
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <h1>A Dropbox client that feels like macOS.</h1>
+              <p class="hero-lede">
+                Zephyr is a Dropbox client written entirely in Swift. Your accounts sit in the
+                Finder sidebar, files arrive the moment you open one, and the rest of the Mac —
+                share sheet, menu bar, widget, command line — is already wired up.
+              </p>
+              <div class="cta-row">
+                <a
+                  class="btn btn-onblue"
+                  href="https://github.com/RISCfuture/Zephyr/releases/latest"
+                  >Download for macOS</a
+                >
+                <a class="btn btn-ghost" href="#features">See what it does</a>
+              </div>
+              <p class="fine hero-fine">
+                Free and open source (MIT) · macOS 26 or later · Not affiliated with Dropbox
+              </p>
+            </div>
+
+            <svg
+              class="hero-art"
+              viewBox="66 62 892 856"
+              role="img"
+              aria-label="Zephyr's mark: three pale panes floating in a stack, with wind crossing them."
+              focusable="false"
+            >
+              <defs>
+                <linearGradient id="h-pane-a" x1="-1" y1="-1" x2="1" y2="1">
+                  <stop offset="0" stop-color="#F5FDFF" />
+                  <stop offset="1" stop-color="#B2E4FF" />
+                </linearGradient>
+                <linearGradient id="h-pane-b" x1="-1" y1="-1" x2="1" y2="1">
+                  <stop offset="0" stop-color="#D2F2FF" />
+                  <stop offset="1" stop-color="#C2F1FF" />
+                </linearGradient>
+                <linearGradient id="h-gust-a" x1="80" y1="0" x2="950" y2="0" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".55" />
+                  <stop offset="1" stop-color="#fff" />
+                </linearGradient>
+                <linearGradient id="h-gust-b" x1="304" y1="0" x2="847" y2="0" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".3" />
+                  <stop offset="1" stop-color="#fff" stop-opacity=".9" />
+                </linearGradient>
+                <radialGradient id="h-glow" cx="0.5" cy="0.5" r="0.5">
+                  <stop offset="0" stop-color="#9BD4FF" stop-opacity=".45" />
+                  <stop offset="1" stop-color="#9BD4FF" stop-opacity="0" />
+                </radialGradient>
+                <filter id="h-lift" x="-25%" y="-15%" width="150%" height="140%">
+                  <feDropShadow dx="0" dy="14" stdDeviation="26" flood-color="#001B57" flood-opacity=".42" />
+                </filter>
+              </defs>
+
+              <ellipse cx="511" cy="490" rx="420" ry="420" fill="url(#h-glow)" />
+
+              <g class="pane-stack" filter="url(#h-lift)">
+                <g class="pane pane-low">
+                  <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511 615)" opacity=".5">
+                    <rect x="-1" y="-1" width="2" height="2" rx=".13" fill="url(#h-pane-b)" />
+                  </g>
+                </g>
+                <g class="pane pane-mid">
+                  <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511 481.5)" opacity=".5">
+                    <rect x="-1" y="-1" width="2" height="2" rx=".13" fill="url(#h-pane-b)" />
+                  </g>
+                </g>
+                <g class="pane pane-top">
+                  <g transform="matrix(157.7568 85.7656 -157.7568 85.7656 511 348)" opacity=".92">
+                    <rect x="-1" y="-1" width="2" height="2" rx=".13" fill="url(#h-pane-a)" />
+                  </g>
+                </g>
+              </g>
+
+              <g class="gust">
+                <path
+                  fill="url(#h-gust-a)"
+                  d="M80.5,469.0C112.4,510.2 141.5,532.8 192.1,547.6C329.9,587.9 443.2,473.3 560.2,421.3C657.7,378.0 767.3,367.3 861.9,424.8C897.2,446.2 934.3,481.5 946.0,522.3C948.3,530.1 948.6,538.9 949.5,547.0C917.8,509.4 891.3,495.9 848.2,475.1C838.6,470.5 829.3,465.0 819.2,461.7C803.4,456.7 783.4,454.8 766.9,453.5C699.7,448.3 644.3,458.9 583.3,487.4C472.5,539.2 387.3,626.4 255.4,622.2C203.9,620.6 169.2,607.9 128.5,576.8C120.7,570.9 109.5,562.2 103.3,555.0C84.4,532.8 76.2,497.3 80.5,469.0Z"
+                />
+              </g>
+              <g class="gust gust-low">
+                <path
+                  fill="url(#h-gust-b)"
+                  d="M303.5,670.0C357.6,676.0 403.6,665.2 451.5,639.7C482.5,623.2 511.8,598.9 541.4,579.5C616.6,530.1 694.5,511.0 778.7,551.9C803.7,564.1 837.6,589.8 847.0,616.5C816.9,594.7 782.8,582.6 745.9,577.7C713.6,573.4 670.2,573.7 639.2,584.3C618.9,591.2 598.0,604.7 579.3,615.4C493.1,664.5 403.6,728.6 303.5,670.0Z"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────────────────  Claims  ─────────────────────────── -->
+      <section class="wrap band band-tight">
+        <ul class="claims">
+          <li>
+            <h2>Written in Swift</h2>
+            <p>
+              One framework does the syncing. The menu-bar app, the Finder extension, the share
+              sheet, the widget, and the command-line tool are all thin shells over it — no
+              interpreter to install, and one menu-bar app doing the listening.
+            </p>
+          </li>
+          <li>
+            <h2>Files on demand</h2>
+            <p>
+              Zephyr is built on Apple's replicated File Provider, so macOS owns the file tree. A
+              terabyte account costs you no local space until you open something in it.
+            </p>
+          </li>
+          <li>
+            <h2>One-time setup</h2>
+            <p>
+              Sign in on Dropbox's own site, then switch Zephyr on in System Settings — macOS keeps
+              every file provider off until you do. After that there's no Zephyr folder to go find
+              and no settings to work through before it does its job.
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ────────────────────────  Integration  ───────────────────────── -->
+      <section class="wrap band" id="features">
+        <h2>Features</h2>
+        <p class="section-lede">
+          Every one of these is in the app today. Settings belong to the Mac rather than to one
+          account: link a second Dropbox and it shares the same limits, the same notification
+          level, and the same snooze.
+        </p>
+
+        <div class="topic">
+          <figure class="shot shot-accounts">
+            <picture>
+              <source
+                srcset="assets/screenshots/accounts-dark.webp"
+                media="(prefers-color-scheme: dark)" />
+              <img
+                src="assets/screenshots/accounts.webp"
+                width="1376"
+                height="960"
+                loading="lazy"
+                decoding="async"
+                alt="The Zephyr window listing two linked Dropbox accounts, each with its email address and its file and folder counts." />
+            </picture>
+          </figure>
+          <div class="topic-text">
+            <h3>Every account at once</h3>
+            <p>
+              Personal, work, a client&#8217;s — each linked account gets its own place in the
+              Finder sidebar and its own index. No signing out to switch.
+            </p>
+            <p>
+              The window that lists them says what each account holds, marks what it is doing, and
+              counts anything that couldn&#8217;t sync. It is also where you link one, unlink one,
+              or hand an account a fresh index when you want it rebuilt from scratch.
+            </p>
+          </div>
+        </div>
+
+        <ul class="features">
+          <li>
+            <h3>Two-way sync</h3>
+            <p>
+              Zephyr follows Dropbox's change feed on a long poll, so a file edited on another
+              machine turns up in your Finder in seconds. What you save goes back the same way.
+            </p>
+          </li>
+          <li>
+            <h3>Verified transfers</h3>
+            <p>
+              Zephyr implements Dropbox's content-hash algorithm and checks each file against it
+              in both directions. A transfer that doesn't match doesn't count.
+            </p>
+          </li>
+          <li>
+            <h3>Uploads that resume</h3>
+            <p>
+              Anything over 4 MiB goes up in chunks, and every chunk Dropbox acknowledges is
+              written down. Quit mid-upload, or lose power, and the next attempt carries on from
+              there instead of starting the file again.
+            </p>
+          </li>
+          <li>
+            <h3>Previews without downloads</h3>
+            <p>
+              Finder shows real image thumbnails for files that have never been on this Mac,
+              rendered by Dropbox &#8212; JPEG, PNG, GIF, TIFF, WebP and BMP, up to 20 MB.
+            </p>
+          </li>
+          <li>
+            <h3>Bandwidth limits</h3>
+            <p>
+              Upload and download ceilings — ten steps from 250 kB/s to 100 MB/s, or unlimited —
+              plus a separate, tighter cap for metered networks. Set them in Settings, or name any
+              rate you like with <code>zephyr&nbsp;bandwidth-limit</code>. A new limit applies to
+              the transfer already running.
+            </p>
+          </li>
+          <li>
+            <h3>Excluded items</h3>
+            <p>
+              Two Finder actions take an item off Dropbox while keeping it on this Mac, and put it
+              back when you want it syncing again. Zephyr marks them with
+              <code>com.dropbox.ignored</code>, the same extended attribute the official client
+              uses, so something you exclude in one stays excluded in the other.
+            </p>
+          </li>
+          <li>
+            <h3>Revisions and restore</h3>
+            <p>
+              Browse what Dropbox has kept of a file and put an older one back &#8212; by
+              right-clicking it in Finder, from a shortcut, or from the command line. Comparing two
+              revisions is <code>zephyr&nbsp;diff</code>. Renames and moves are followed, so a
+              file&#8217;s history doesn&#8217;t stop at its current name.
+            </p>
+          </li>
+          <li>
+            <h3>Shared links</h3>
+            <p>
+              A shortcut gets the link to any file or folder, making one if it doesn&#8217;t have
+              one yet. <code>zephyr&nbsp;sharelink</code> also lists what is already out there,
+              revokes what you&#8217;re done with, and — on a Dropbox plan that allows them — sets
+              a password, an expiry, or who is allowed to open it.
+            </p>
+          </li>
+          <li>
+            <h3>Names that never travel</h3>
+            <p>
+              <code>.DS_Store</code>, <code>desktop.ini</code>, <code>Icon\r</code> and the lock
+              files apps leave behind are held back in both directions, so a shared folder
+              doesn&#8217;t fill up with one Mac&#8217;s bookkeeping.
+            </p>
+          </li>
+        </ul>
+
+        <div class="topic">
+          <div class="topic-text">
+            <h3>When something can&#8217;t sync</h3>
+            <p>
+              A file Dropbox refuses gets a row of its own naming what went wrong, a way to it in
+              Finder, and a way to stop being told. What did sync is kept too — seven days of what
+              moved and when, in the app or from <code>zephyr&nbsp;history</code>.
+            </p>
+            <p>
+              Two machines editing one file is not one of those failures: Zephyr never writes over
+              a revision it didn&#8217;t start from, so Dropbox keeps both copies, names the second
+              one, and Zephyr picks it up as a file in its own right.
+            </p>
+            <p>
+              And when Dropbox resets a delta cursor, Zephyr re-lists the account and carries on,
+              keeping your Finder tags, favorites and exclusions. The cursor is committed alongside
+              the changes it reflects, so a crash can&#8217;t leave the index claiming state it
+              doesn&#8217;t have.
+            </p>
+          </div>
+          <figure class="shot shot-issues">
+            <picture>
+              <source
+                srcset="assets/screenshots/sync-issues-dark.webp"
+                media="(prefers-color-scheme: dark)" />
+              <img
+                src="assets/screenshots/sync-issues.webp"
+                width="1376"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+                alt="The Sync Issues window listing two files that could not sync, each with the reason and Show and Dismiss buttons." />
+            </picture>
+          </figure>
+        </div>
+
+        <div class="topic">
+          <figure class="shot shot-settings">
+            <picture>
+              <source
+                srcset="assets/screenshots/settings-dark.webp"
+                media="(prefers-color-scheme: dark)" />
+              <img
+                src="assets/screenshots/settings.webp"
+                width="1176"
+                height="1456"
+                loading="lazy"
+                decoding="async"
+                alt="Zephyr&#8217;s Settings window: Launch at login switched on, Notify about set to All file changes, unlimited upload and download limits, a collapsed Metered Networks section, and an empty Not Syncing list." />
+            </picture>
+          </figure>
+          <div class="topic-text">
+            <h3>One window of settings, and not much in it</h3>
+            <p>
+              Open at login, so Finder hears about changes made elsewhere. Choose how much you want
+              to be told and snooze it when you don&#8217;t. Set the two ceilings, and, under
+              Metered Networks, a tighter one for a hotspot — with indexing held back too, unless
+              you say otherwise, so a laptop tethered to a phone doesn&#8217;t walk your whole
+              Dropbox unasked.
+            </p>
+            <p>
+              <strong>Not Syncing</strong> lists everything you&#8217;ve taken off Dropbox, with a
+              <strong>Resume</strong> beside each. Troubleshooting collects a diagnostics report for
+              a bug report — and tells you plainly that it names your files, so you can read it
+              first. Every section has a <strong>?</strong> that opens the page about it in
+              Zephyr&#8217;s help book.
+            </p>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ──────────────────────────  Features  ────────────────────────── -->
+      <section class="wrap band" id="macos">
+        <h2>Built into macOS</h2>
+        <p class="section-lede">
+          Zephyr's own windows are ones you can largely ignore. The interface you'll actually use
+          is the one already on your Mac.
+        </p>
+
+        <div class="integration">
+          <div class="integration-figure">
+            <div class="finder">
+              <div class="finder-bar">
+                <i></i><i></i><i></i>
+                <span>Projects</span>
+              </div>
+              <div class="finder-body">
+                <div class="finder-side">
+                  <p class="finder-group">Favorites</p>
+                  <ul>
+                    <li>
+                      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h2.7l1.2 1.6h5.1A1.5 1.5 0 0 1 14 7.1v5.4a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 12.5z"/></svg>
+                      Documents
+                    </li>
+                    <li>
+                      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M8 3v8m0 0 3-3m-3 3-3-3M3 13h10"/></svg>
+                      Downloads
+                    </li>
+                  </ul>
+                  <p class="finder-group">Locations</p>
+                  <ul>
+                    <li class="is-selected is-zephyr">
+                      <img src="assets/zephyr-mark.svg" width="15" height="15" alt="" />
+                      Zephyr (you@example.com)
+                    </li>
+                    <li class="is-zephyr">
+                      <img src="assets/zephyr-mark.svg" width="15" height="15" alt="" />
+                      Zephyr (you@example.org)
+                    </li>
+                  </ul>
+                </div>
+                <div class="finder-files">
+                  <div>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h2.7l1.2 1.6h5.1A1.5 1.5 0 0 1 14 7.1v5.4a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 12.5z"/></svg>
+                    <b>Archive</b><em>—</em>
+                  </div>
+                  <div>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4.6 12.5h6.9a2.7 2.7 0 0 0 .3-5.4 3.7 3.7 0 0 0-7.1-.6 2.9 2.9 0 0 0-.1 6z"/></svg>
+                    <b>budget.numbers</b><em>118 kB</em>
+                  </div>
+                  <div>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4.6 12.5h6.9a2.7 2.7 0 0 0 .3-5.4 3.7 3.7 0 0 0-7.1-.6 2.9 2.9 0 0 0-.1 6z"/></svg>
+                    <b>proposal.pdf</b><em>4.2 MB</em>
+                  </div>
+                  <div>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4.6 12.5h6.9a2.7 2.7 0 0 0 .3-5.4 3.7 3.7 0 0 0-7.1-.6 2.9 2.9 0 0 0-.1 6z"/></svg>
+                    <b>site-backup.zip</b><em>1.8 GB</em>
+                  </div>
+                  <div>
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4.6 12.5h6.9a2.7 2.7 0 0 0 .3-5.4 3.7 3.7 0 0 0-7.1-.6 2.9 2.9 0 0 0-.1 6z"/></svg>
+                    <b>notes.md</b><em>6 kB</em>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="finder-note">
+              Nothing here is on your Mac until you open it. Browsing, renaming, moving, and
+              dragging things in cost no download at all, and macOS decides when to let a
+              downloaded file go again.
+            </p>
+          </div>
+
+          <div class="surfaces-carousel" data-surfaces-carousel>
+            <ul class="surfaces" tabindex="0" aria-label="Where Zephyr appears in macOS">
+              <li>
+                <svg class="surface-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="3"/><path d="M9 4v16"/></svg>
+                <div>
+                  <h3>Finder sidebar</h3>
+                  <p>
+                    Every linked account sits under Locations, named for the address it belongs to.
+                    Browse the whole tree, rename, move, and drag things in, before a single byte has
+                    been downloaded — and image files show real previews without one.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <svg class="surface-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 9h8M8 12.5h8M8 16h5"/></svg>
+                <div>
+                  <h3>Finder context menu</h3>
+                  <p>
+                    <strong>Show Previous Versions&#8230;</strong> on a file,
+                    <strong>Delete from Dropbox, Keep on This Mac</strong> on anything you want off
+                    Dropbox but kept here, and <strong>Put Back on Dropbox and Resume Syncing</strong>
+                    to undo that — without leaving the window.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <svg class="surface-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 15.5V3.5m0 0L8.2 7.3M12 3.5l3.8 3.8M4.5 13.5v5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5"/></svg>
+                <div>
+                  <h3>Share sheet</h3>
+                  <p>
+                    <strong>Zephyr</strong> is one of the destinations in every macOS Share menu. Send
+                    up to twenty files at once, pick the account and the folder, and it uploads.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <svg class="surface-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="3.5" width="12" height="12" rx="3"/><rect x="8.5" y="8.5" width="12" height="12" rx="3"/></svg>
+                <div>
+                  <h3>Shortcuts and Siri</h3>
+                  <p>
+                    Six actions in the Shortcuts app: pause or resume syncing, snooze notifications,
+                    read sync status, upload a file, get a share link, restore a file. Three of them
+                    answer in Spotlight and to Siri with nothing to set up.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <svg class="surface-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 15.5V11m4 4.5V8.5m4 7V13"/></svg>
+                <div>
+                  <h3>Desktop widget</h3>
+                  <p>
+                    File counts and outstanding sync issues, per account, without opening anything.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <svg class="surface-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="4.5" width="18" height="6" rx="3"/><circle cx="15" cy="7.5" r="1.5"/><rect x="3" y="13.5" width="18" height="6" rx="3"/><circle cx="9" cy="16.5" r="1.5"/></svg>
+                <div>
+                  <h3>Control Center</h3>
+                  <p>
+                    A <strong>Syncing</strong> switch alongside Wi-Fi and Sound. It asks macOS
+                    directly rather than the app, so it reads correctly and pauses every account
+                    whether or not Zephyr is open.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <svg class="surface-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 10a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10Z"/><path d="M10 18.5a2.2 2.2 0 0 0 4 0"/></svg>
+                <div>
+                  <h3>Notifications</h3>
+                  <p>
+                    Native alerts at the level you choose — every file change, sync issues, errors
+                    only, or none at all. A change one collaborator made says who made it, and every
+                    alert carries a <strong>Show</strong> button that reveals the file. Snooze them
+                    for half an hour, an hour, or eight.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="topic">
+          <figure class="shot shot-panel">
+            <picture>
+              <source
+                srcset="assets/screenshots/menu-bar-panel-dark.webp"
+                media="(prefers-color-scheme: dark)" />
+              <img
+                src="assets/screenshots/menu-bar-panel.webp"
+                width="896"
+                height="960"
+                loading="lazy"
+                decoding="async"
+                alt="Zephyr&#8217;s menu-bar panel, listing two accounts with their file and folder counts and the commands Manage Accounts, Settings, Pause Syncing, Snooze Notifications, and Quit Zephyr." />
+            </picture>
+          </figure>
+          <div class="topic-text">
+            <h3>In the menu bar</h3>
+            <p>
+              The Zephyr mark sits in the menu bar badged with what every account is doing right
+              now, and drawn in amber when something couldn&#8217;t sync. Click it and you get the
+              same thing in words: how much each account holds, what it is doing, and anything that
+              went wrong.
+            </p>
+            <p>
+              From there it is one click to a folder in Finder, to Settings, to pausing every
+              account, or to snoozing notifications while you work. If macOS is still holding back
+              an approval Zephyr needs, the panel says so at the top and takes you to the right
+              System Settings pane.
+            </p>
+          </div>
+        </div>
+
+        <div class="topic">
+          <figure class="shot shot-menu">
+            <picture>
+              <source
+                srcset="assets/system/finder-menu-dark.webp"
+                media="(prefers-color-scheme: dark)" />
+              <img
+                src="assets/system/finder-menu.webp"
+                width="740"
+                height="950"
+                loading="lazy"
+                decoding="async"
+                alt="A Finder contextual menu for Quarterly Report.pdf, ending with Quick Actions and then Zephyr&#8217;s own commands, Show Previous Versions&#8230; and Delete from Dropbox, Keep on This Mac." />
+            </picture>
+          </figure>
+          <div class="topic-text">
+            <h3>In Finder&#8217;s own menu</h3>
+            <p>
+              Control-click anything in your Dropbox and Zephyr&#8217;s commands are already there,
+              at the foot of the menu macOS built &#8212; not in a submenu of their own, and not
+              behind an app you have to go and open first.
+            </p>
+            <p>
+              They come and go with what you have selected. <strong>Show Previous
+              Versions&#8230;</strong> is offered for one file and not for a folder or a
+              selection; <strong>Delete from Dropbox, Keep on This Mac</strong> for anything you
+              want off Dropbox but kept here.
+            </p>
+          </div>
+        </div>
+
+        <div class="topic">
+          <div class="topic-text">
+            <h3>Every version, from the context menu</h3>
+            <p>
+              Control-click a file and <strong>Show Previous Versions&#8230;</strong> lists what
+              Dropbox still holds of it &#8212; each one by the date it was recorded and how big
+              the file was then, with the one the file is at right now marked
+              <strong>Current</strong>.
+            </p>
+            <p>
+              Choose one, confirm, and it goes back. No browser, no download folder, and no
+              hunting for the file again afterwards. History is kept by Dropbox&#8217;s own file
+              identifier, so renaming or moving a file doesn&#8217;t end it.
+            </p>
+          </div>
+          <figure class="shot shot-versions">
+            <picture>
+              <source
+                srcset="assets/screenshots/file-versions-dark.webp"
+                media="(prefers-color-scheme: dark)" />
+              <img
+                src="assets/screenshots/file-versions.webp"
+                width="1288"
+                height="1112"
+                loading="lazy"
+                decoding="async"
+                alt="Zephyr&#8217;s Show Previous Versions window, listing four dated versions of Quarterly Report.pdf with their sizes, the newest marked Current, above Cancel and Restore buttons." />
+            </picture>
+          </figure>
+        </div>
+
+        <div class="topic">
+          <figure class="shot shot-share">
+            <picture>
+              <source
+                srcset="assets/screenshots/share-upload-dark.webp"
+                media="(prefers-color-scheme: dark)" />
+              <img
+                src="assets/screenshots/share-upload.webp"
+                width="1248"
+                height="992"
+                loading="lazy"
+                decoding="async"
+                alt="Zephyr&#8217;s share window, listing two text files with their sizes, an Account menu, a Save to menu reading Dropbox, and Cancel and Save buttons." />
+            </picture>
+          </figure>
+          <div class="topic-text">
+            <h3>A destination in every Share menu</h3>
+            <p>
+              Wherever macOS offers a Share button, Zephyr is one of the places a file can go. You
+              get a Quick Look at what is being sent, which account it goes to, and which folder it
+              lands in &#8212; up to twenty files at a time.
+            </p>
+            <p>
+              The destination menu opens on the folders you used last, with a filterable browser
+              behind <strong>Other Folder&#8230;</strong> that draws on what Zephyr has already
+              indexed, so it fills in at once however large the account is. Uploads are added, never
+              written over: a name already in use gets a new one from Dropbox.
+            </p>
+          </div>
+        </div>
+
+        <div class="topic">
+          <div class="topic-text">
+            <h3>On the desktop, without opening anything</h3>
+            <p>
+              The Sync Status widget carries each account&#8217;s file and folder counts, when it
+              last changed, and anything that couldn&#8217;t sync. The small size leads with one
+              account&#8217;s file count; the medium size lists up to three.
+            </p>
+            <p>
+              Control Center gets a switch of its own, so pausing every account is one click from
+              the menu bar whether or not Zephyr&#8217;s panel is open. The switch asks macOS what
+              the answer is, so it stays right even with the app closed.
+            </p>
+          </div>
+          <figure class="shot shot-widget">
+            <picture>
+              <source
+                srcset="assets/screenshots/widget-medium-dark.webp"
+                media="(prefers-color-scheme: dark)" />
+              <img
+                src="assets/screenshots/widget-medium.webp"
+                width="1080"
+                height="756"
+                loading="lazy"
+                decoding="async"
+                alt="The medium Zephyr desktop widget, listing two accounts with how long ago each was updated and its file and folder counts." />
+            </picture>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ────────────────────────  Command line  ──────────────────────── -->
+      <section class="wrap band" id="cli">
+        <div class="cli">
+          <div class="cli-copy">
+            <h2>Full-featured command line</h2>
+            <p class="section-lede">
+              The <code>zephyr</code> tool rides inside the direct download, and the installer's
+              optional Command-Line Tool component puts it on your <code>PATH</code>. Tab-completing
+              a path is answered from the sync index, so folders nothing has ever downloaded
+              complete exactly like folders that are fully local — and completion never touches the
+              network.
+            </p>
+            <p class="section-lede">
+              It also reaches things the Finder can't. <code>zephyr&nbsp;find</code> searches the
+              whole account by name, kind, size, or age straight from that index, turning up files
+              that have never been on this Mac — the one search Finder can't run inside a file
+              provider's folder. Twenty-two subcommands in all, twelve of them with
+              <code>--json</code> for something else to read.
+            </p>
+            <a class="btn btn-primary" href="https://github.com/RISCfuture/Zephyr#command-line-tool"
+              >Read the command reference</a
+            >
+          </div>
+
+          <div class="terminal">
+            <div class="terminal-bar">
+              <i></i><i></i><i></i>
+              <span>zephyr</span>
+            </div>
+            <pre><code><span class="prompt">$</span> zephyr ls /Projects
+<span class="out">/Projects/Archive/
+/Projects/budget.numbers
+/Projects/proposal.pdf</span>
+
+<span class="prompt">$</span> zephyr restore /Projects/budget.numbers
+<span class="out">Revisions of /Projects/budget.numbers, newest first:
+1)  Aug 21, 2026 at 4:12 PM  118 kB  0198cd1e
+2)  Aug 20, 2026 at 9:03 AM  117 kB  0198cc07
+3)  Aug 18, 2026 at 1:47 PM  115 kB  0198c944</span>
+<span class="out">Restore which revision? [1–3, or q to cancel]</span> 2
+<span class="out">Restored budget.numbers to rev 0198cc07.</span></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────────────────────  Setup  ─────────────────────────── -->
+      <section class="wrap band" id="setup">
+        <h2>Set up once</h2>
+        <p class="section-lede">
+          Zephyr asks macOS for three things, and none of them happens without you.
+        </p>
+
+        <div class="topic">
+          <figure class="shot shot-setup">
+            <!--
+              An animation of all seven pages, and a still of the first for a reader who has asked
+              for reduced motion — an APNG cannot be paused, so the still is the only way to honour
+              that. First match wins, so the motion-sensitive sources come first.
+            -->
+            <picture>
+              <source
+                srcset="assets/screenshots/setup-dark.webp"
+                media="(prefers-reduced-motion: reduce) and (prefers-color-scheme: dark)" />
+              <source
+                srcset="assets/screenshots/setup.webp"
+                media="(prefers-reduced-motion: reduce)" />
+              <source
+                srcset="assets/screenshots/setup-dark.png"
+                media="(prefers-color-scheme: dark)" />
+              <img
+                src="assets/screenshots/setup.png"
+                width="1416"
+                height="1260"
+                loading="lazy"
+                decoding="async"
+                alt="Zephyr&#8217;s setup window playing through its seven pages: a welcome, what Zephyr needs, the linked account, the Finder extension, notifications, opening at login, and a closing page." />
+            </picture>
+          </figure>
+          <div class="topic-text">
+            <p>
+              The Finder extension, because macOS keeps every file provider switched off until you
+              turn it on. Notifications, so Zephyr can say when your files change and when
+              something couldn&#8217;t sync. And opening at login, which is what keeps Finder
+              hearing about changes made elsewhere within seconds.
+            </p>
+            <p>
+              Setup explains each one before it asks for it, and signs you in through Dropbox
+              itself, so your password never reaches Zephyr. Then you don&#8217;t see it again —
+              everything it asked is in Settings afterwards.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────  Download  ─────────────────────────── -->
+      <section class="wrap band" id="get-it">
+        <div class="get">
+          <svg
+            class="hero-weather"
+            viewBox="0 0 1200 630"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <path id="wind-cta" d="M-8.0,344.7C12.4,335.9 73.7,354.0 114.6,355.5C155.4,357.1 196.3,356.4 237.1,353.8C278.0,351.2 318.9,346.0 359.7,339.8C400.6,333.6 441.4,325.0 482.3,316.4C523.1,307.8 564.0,297.4 604.9,288.2C645.7,279.0 686.6,269.0 727.4,261.0C768.3,253.0 809.1,245.4 850.0,240.3C890.9,235.1 931.7,231.4 972.6,230.2C1013.4,228.9 1054.3,229.9 1095.1,232.7C1136.0,235.6 1176.9,241.0 1217.7,247.5C1258.6,253.9 1299.4,262.7 1340.3,271.4C1381.1,280.1 1422.0,290.5 1462.9,299.7C1503.7,308.9 1544.6,318.7 1585.4,326.6C1626.3,334.4 1687.6,333.0 1708.0,346.7C1728.4,360.5 1728.4,401.3 1708.0,409.4C1687.6,417.4 1626.3,401.3 1585.4,395.0C1544.6,388.8 1503.7,380.3 1462.9,371.8C1422.0,363.4 1381.1,353.3 1340.3,344.4C1299.4,335.5 1258.6,325.9 1217.7,318.3C1176.9,310.7 1136.0,303.6 1095.1,298.8C1054.3,294.1 1013.4,290.8 972.6,289.8C931.7,288.9 890.9,290.2 850.0,293.2C809.1,296.3 768.3,301.8 727.4,308.2C686.6,314.7 645.7,323.4 604.9,331.9C564.0,340.4 523.1,350.5 482.3,359.4C441.4,368.3 400.6,377.8 359.7,385.2C318.9,392.7 278.0,399.6 237.1,404.1C196.3,408.6 155.4,411.6 114.6,412.3C73.7,413.0 12.4,419.4 -8.0,408.1C-28.4,396.9 -28.4,353.4 -8.0,344.7Z" />
+            </defs>
+            <g class="gust-track gust-track-cta" fill="#fff" opacity="0.1" style="--gust-period: 1700px">
+              <use href="#wind-cta" x="-1700" />
+              <use href="#wind-cta" x="0" />
+              <use href="#wind-cta" x="1700" />
+            </g>
+          </svg>
+          <div class="get-inner">
+            <h2>Download Zephyr</h2>
+            <p>
+              The build here is signed and notarized by Apple, carries the <code>zephyr</code>
+              command-line tool — which a sandboxed App Store app can't install — and updates
+              itself on a schedule you pick. The Mac App Store edition trades the command line for
+              the App Store's own updates. Everything else is the same app, down to the bundle
+              identifier, so install one edition or the other rather than both.
+            </p>
+            <p>
+              Each release carries an installer package and a disk image. <strong>Take the
+              <code>.pkg</code></strong>. An app dragged out of a disk image is quarantined, macOS
+              runs a quarantined app from a throwaway copy of its own making, and it will not run a
+              file provider from there at all — so a dragged Zephyr can never put a Dropbox in your
+              sidebar, however long you leave it trying. The installer writes the app where it
+              belongs, and offers to put <code>zephyr</code> on your <code>PATH</code> while
+              it's there.
+            </p>
+            <div class="cta-row">
+              <a class="btn btn-onblue" href="https://github.com/RISCfuture/Zephyr/releases/latest"
+                >Download for macOS</a
+              >
+              <a class="btn btn-ghost" href="https://github.com/RISCfuture/Zephyr">View source</a>
+              <div class="cta-aside">
+                <a href="https://apps.apple.com/us/app/zephyr-dropbox-client/id6804861752"
+                  >View on the Mac App Store</a
+                >
+              </div>
+            </div>
+            <p class="fine">
+              Free and open source (MIT) · macOS 26 or later · Not affiliated with Dropbox
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─────────────────────────────  FAQ  ──────────────────────────── -->
+      <section class="wrap band band-tinted" id="faq">
+        <div class="faq-layout">
+          <div class="faq-heading">
+            <h2>Questions</h2>
+          </div>
+          <dl class="faq">
+            <dt>Is this made by Dropbox?</dt>
+            <dd>
+              No. Zephyr is an independent, open-source client built against Dropbox's public HTTP
+              API, and is not affiliated with, endorsed by, or sponsored by Dropbox, Inc.
+            </dd>
+
+            <dt>How is it different from the official client?</dt>
+            <dd>
+              Zephyr is a native Mac app written entirely in Swift, built on Apple's replicated
+              File Provider model. There's no Dropbox folder on your disk to reconcile and nothing
+              crawling it: macOS owns the file tree, and Zephyr answers its questions from an
+              index of your account's remote state. It's a reimplementation of
+              <a href="https://github.com/samschott/maestral">Maestral</a>, the open-source Python
+              Dropbox client, on that model — and where Maestral asks you to rebuild after Dropbox
+              resets its change cursor, Zephyr re-lists the account on its own.
+            </dd>
+
+            <dt>Where do my files actually live?</dt>
+            <dd>
+              In your Dropbox — and in macOS's File Provider storage once something opens them.
+              Zephyr keeps no mirrored folder of its own. The index it does keep holds paths,
+              sizes, content hashes, and revision ids, and it never leaves your Mac.
+            </dd>
+
+            <dt>What does Zephyr send anywhere?</dt>
+            <dd>
+              Your files and your credentials go only between your Mac and Dropbox — there is no
+              Zephyr server, and nothing about the contents of your account reaches the developer.
+              Zephyr does send crash reports, and a sample of its own performance, to
+              <a href="https://sentry.io">Sentry</a>, so bugs can be found and fixed; that data
+              describes the app — versions, stack traces, how long its own work took — with file
+              names and Dropbox paths stripped out of it. It counts nothing about what you do with
+              Zephyr. There's no setting to switch it off today. The only
+              other request is the direct download's update check against GitHub's public
+              releases API; the App Store build leaves that to the App Store. The
+              <a href="privacy.html">privacy policy</a> lists every field.
+            </dd>
+
+            <dt>Can I use it alongside the official client?</dt>
+            <dd>
+              Zephyr reads and writes the same <code>com.dropbox.ignored</code> extended attribute
+              the official client uses to mark items as excluded, so an item ignored in one is
+              ignored in the other. Pointing both at the same account at once, though, isn't
+              something Zephyr has been designed around.
+            </dd>
+
+            <dt>Do I have to leave it running?</dt>
+            <dd>
+              To hear about remote changes promptly, yes — the app hosts the change watcher, so
+              the Finder learns about remote edits within seconds only while Zephyr is alive.
+              That's what the login item is for, and it's part of first-run setup.
+            </dd>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <div class="footer-top">
+          <a class="wordmark" href="#top">
+            <img src="assets/zephyr-mark.svg" width="27" height="27" alt="" />
+            <span>Zephyr</span>
+          </a>
+          <p class="footer-links">
+            <a href="https://github.com/RISCfuture/Zephyr/releases/latest">Download</a>
+            <a href="https://github.com/RISCfuture/Zephyr">Source</a>
+            <a href="https://github.com/RISCfuture/Zephyr/issues">Report an issue</a>
+            <a href="privacy.html">Privacy</a>
+          </p>
+        </div>
+        <p class="attribution">
+          Zephyr is not affiliated with, endorsed by, or sponsored by Dropbox, Inc. It is an
+          independent client built against Dropbox's public HTTP API. Dropbox is a trademark of
+          Dropbox, Inc.
+        </p>
+        <p class="copyright">© 2026 Tim Morgan · MIT License</p>
+      </div>
+    </footer>
+    <script>
+      /*
+       The surfaces carousel.
+
+       The markup is a plain horizontally scrolling list, and stays one if this never runs: every
+       card is still reachable by trackpad, shift-wheel, or keyboard. What this adds is the dots,
+       a drag for people on a mouse, and an advance that starts on its own once the section is
+       actually on screen — and gets out of the way the moment the reader touches it.
+      */
+      (() => {
+        const carousel = document.querySelector("[data-surfaces-carousel]");
+        const track = carousel?.querySelector(".surfaces");
+        const slides = track ? Array.from(track.children) : [];
+        if (slides.length < 2) return;
+
+        const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const BEFORE_FIRST = 3000;
+        const BETWEEN = 5000;
+        const AFTER_TOUCHING = 8000;
+
+        const dots = document.createElement("div");
+        dots.className = "surfaces-dots";
+        const buttons = slides.map((slide, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "surfaces-dot";
+          button.setAttribute(
+            "aria-label",
+            slide.querySelector("h3")?.textContent.trim() ?? `Card ${index + 1}`
+          );
+          button.addEventListener("click", () => {
+            hold();
+            show(index);
+          });
+          dots.append(button);
+          return button;
+        });
+        carousel.append(dots);
+
+        let current = -1;
+        const mark = (index) => {
+          if (index === current) return;
+          current = index;
+          buttons.forEach((button, n) =>
+            button.setAttribute("aria-current", n === index ? "true" : "false")
+          );
+        };
+
+        const offsetOf = (slide) => slide.offsetLeft - track.offsetLeft;
+        const nearest = () =>
+          slides.reduce(
+            (best, slide, index) =>
+              Math.abs(offsetOf(slide) - track.scrollLeft) <
+              Math.abs(offsetOf(slides[best]) - track.scrollLeft)
+                ? index
+                : best,
+            0
+          );
+        const show = (index) =>
+          track.scrollTo({
+            left: offsetOf(slides[index]),
+            behavior: still.matches ? "auto" : "smooth"
+          });
+
+        let onScreen = false;
+        let hovered = false;
+        let held = false;
+        let ticker = null;
+        let release = null;
+
+        const wanted = () =>
+          onScreen && !hovered && !held && !document.hidden && !still.matches;
+        const stop = () => {
+          clearInterval(ticker);
+          ticker = null;
+        };
+        const play = () => {
+          stop();
+          if (!wanted()) return;
+          ticker = setInterval(() => show((current + 1) % slides.length), BETWEEN);
+        };
+        // The reader did something deliberate: leave it alone for a while afterwards.
+        const hold = () => {
+          held = true;
+          stop();
+          clearTimeout(release);
+          release = setTimeout(() => {
+            held = false;
+            play();
+          }, AFTER_TOUCHING);
+        };
+
+        let settle = null;
+        track.addEventListener(
+          "scroll",
+          () => {
+            clearTimeout(settle);
+            settle = setTimeout(() => mark(nearest()), 80);
+          },
+          { passive: true }
+        );
+
+        carousel.addEventListener("pointerenter", () => {
+          hovered = true;
+          stop();
+        });
+        carousel.addEventListener("pointerleave", () => {
+          hovered = false;
+          play();
+        });
+        carousel.addEventListener("focusin", () => {
+          hovered = true;
+          stop();
+        });
+        carousel.addEventListener("focusout", () => {
+          hovered = false;
+          play();
+        });
+        track.addEventListener("wheel", hold, { passive: true });
+        document.addEventListener("visibilitychange", play);
+
+        track.addEventListener("keydown", (event) => {
+          const step =
+            event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+          if (!step) return;
+          event.preventDefault();
+          hold();
+          show(Math.min(slides.length - 1, Math.max(0, current + step)));
+        });
+
+        // Dragging, for a mouse. Touch and trackpad already scroll this themselves, and taking
+        // their events over would only take the momentum away.
+        let from = 0;
+        let scrolledTo = 0;
+        let dragging = false;
+        track.addEventListener("pointerdown", (event) => {
+          if (event.pointerType !== "mouse" || event.button !== 0) return;
+          dragging = true;
+          from = event.clientX;
+          scrolledTo = track.scrollLeft;
+          track.classList.add("is-dragging");
+          track.setPointerCapture(event.pointerId);
+          hold();
+        });
+        track.addEventListener("pointermove", (event) => {
+          if (dragging) track.scrollLeft = scrolledTo - (event.clientX - from);
+        });
+        const drop = (event) => {
+          if (!dragging) return;
+          dragging = false;
+          track.classList.remove("is-dragging");
+          if (track.hasPointerCapture(event.pointerId)) {
+            track.releasePointerCapture(event.pointerId);
+          }
+          show(nearest());
+        };
+        track.addEventListener("pointerup", drop);
+        track.addEventListener("pointercancel", drop);
+
+        let started = false;
+        new IntersectionObserver(
+          ([entry]) => {
+            onScreen = entry.isIntersecting;
+            if (!onScreen) return stop();
+            if (started) return play();
+            started = true;
+            setTimeout(play, BEFORE_FIRST);
+          },
+          { threshold: 0.4 }
+        ).observe(carousel);
+
+        mark(0);
+      })();
+    </script>
+  </body>
+</html>

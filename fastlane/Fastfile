@@ -1,0 +1,894 @@
+# frozen_string_literal: true
+
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+require "fileutils"
+require "json"
+require "shellwords"
+require "tmpdir"
+require "xcodeproj"
+
+# Xcode 26 writes a multi-line build-phase script as a list of lines, a format xcodeproj 1.28.1
+# rejects: it type-checks `shellScript` as a String and raises on an Array. gym parses the project to
+# enumerate its build configurations, so without this an archive dies before xcodebuild is ever
+# reached — and this project has such a phase, Sign Embedded Command-Line Tool. Joining the lines
+# back together yields exactly the script the attribute expects. Remove this once xcodeproj
+# understands the newer format.
+module JoinsMultiLineShellScripts
+  def shell_script=(value)
+    super(value.is_a?(Array) ? value.join("\n") : value)
+  end
+end
+Xcodeproj::Project::Object::PBXShellScriptBuildPhase.prepend(JoinsMultiLineShellScripts)
+
+default_platform :mac
+
+APP_NAME = "Zephyr"
+XCODEPROJ = "Zephyr.xcodeproj"
+
+# `sh` runs its command from the fastlane directory while gym resolves paths from the project root,
+# so anything touching the working tree is built from here rather than written relative to either.
+REPO_ROOT = File.expand_path("..", __dir__)
+
+# Where the archive, the disk image, and the dSYMs land, so a CI run can collect them as artifacts.
+# Relative, because that is what gym expects; use OUTPUT_PATH for anything reading the directory
+# back.
+OUTPUT_DIRECTORY = "build"
+OUTPUT_PATH = File.join(REPO_ROOT, OUTPUT_DIRECTORY)
+
+# Zephyr ships two editions from one project. They share a bundle identifier, their four
+# extensions, and every line of their interface; they differ only in how they are signed and in what
+# the store forbids. The App Store edition is signed for the store and uploaded to App Store
+# Connect. The downloadable edition is signed with Developer ID, notarized, attached to a GitHub
+# release as an installer package and a disk image, and is the only one that embeds the `zephyr`
+# command-line tool or checks for its own updates.
+#
+# Sharing one identifier means one App ID carrying two kinds of profile, which is why `match_type`
+# is per-edition while APP_IDENTIFIERS below is not.
+APP_IDENTIFIER = "codes.tim.Zephyr"
+
+EDITIONS = {
+  "mas" => { scheme: "Zephyr (MAS)", export_method: "app-store",
+             # A Mac App Store submission ships as a .pkg, which the Apple Distribution certificate
+             # cannot sign — that takes the separate Mac Installer Distribution certificate.
+             match_type: "appstore", additional_cert_types: ["mac_installer_distribution"] },
+  "download" => { scheme: "Zephyr (download)", export_method: "developer-id",
+                  # The release ships an installer package as well as a disk image, and a product
+                  # archive is signed with the separate Developer ID Installer certificate — the
+                  # Developer ID Application certificate signs code, not an archive of it.
+                  match_type: "developer_id", additional_cert_types: ["developer_id_installer"] }
+}.freeze
+
+def edition(name)
+  EDITIONS.fetch(name) do
+    UI.user_error!("Unknown edition #{name.inspect}. Zephyr ships #{EDITIONS.keys.join(', ')}.")
+  end
+end
+
+# Every bundle in the app that carries entitlements, and so needs a provisioning profile of its own.
+# The app group and keychain access group in each of these five cannot be satisfied by a bare
+# signature of either kind; a profile has to authorize them, and both editions export all five
+# bundles. `zephyr-cli` is a plain Mach-O with no bundle, and libZephyr.framework and
+# ZephyrCommon.framework are signed with the app's identity, so none of them appears here.
+APP_IDENTIFIERS = [
+  APP_IDENTIFIER,
+  "codes.tim.Zephyr.FileProvider",
+  "codes.tim.Zephyr.FileProviderUI",
+  "codes.tim.Zephyr.ShareExtension",
+  "codes.tim.Zephyr.Widget"
+].freeze
+
+# Where the screenshot lane builds. Outside the working tree on purpose — see the lane.
+SCREENSHOT_DERIVED_DATA = File.expand_path("~/Library/Developer/Xcode/DerivedData/Zephyr-screenshots")
+
+# The marketing site, and where it keeps the app's own screenshots. The images directory is owned
+# outright by Scripts/export-screenshots.sh, which empties it before writing: nothing that is not a
+# generated capture may be kept in it. The pages are read as well as written beside — they are what
+# says a capture is still wanted, and at what size.
+SITE_PATH = File.join(REPO_ROOT, "docs")
+SITE_SCREENSHOTS_PATH = File.join(SITE_PATH, "assets", "screenshots")
+
+# The Apple Help book's one localization, and the images its pages embed. The images are owned by
+# the same export script and emptied the same way, which is why the book's own icon lives one
+# directory up at Contents/Resources/help-icon.png and is reached as "../help-icon.png": nothing
+# that is not a generated capture may be kept in here.
+HELP_PAGES_PATH = File.join(REPO_ROOT, "Help", "Zephyr.help", "Contents", "Resources", "en.lproj")
+HELP_SCREENSHOTS_PATH = File.join(HELP_PAGES_PATH, "images")
+
+# How a page points at the images beside it. A capture is recognized in a page's markup by this
+# prefix, so the site's other artwork — the icon, the badges, the App Store lockup — is never
+# mistaken for a capture that the suite is supposed to be taking.
+SITE_IMAGE_PREFIX = "assets/screenshots/"
+HELP_IMAGE_PREFIX = "images/"
+
+# Where the App Store listing's screenshots are staged. `deliver` reads one directory per locale
+# from here, and Zephyr is localized into English alone.
+APP_STORE_SCREENSHOTS_PATH = File.join(REPO_ROOT, "fastlane", "screenshots")
+APP_STORE_SCREENSHOTS_LOCALE = "en-US"
+
+# Every still the suite takes, by slug. The export script files whatever the test run happened
+# to attach; this list is what is *required*, which is the check that matters — a capture that
+# quietly stopped happening, because an accessibility identifier moved or a test method was renamed,
+# otherwise leaves last month's image in place and nothing fails.
+#
+# Each slug is written twice, `<slug>.webp` and `<slug>-dark.webp`. The site adapts to both
+# appearances, so a light-only capture is the one element on a dark page that fails to adapt — more
+# conspicuously wrong than a page that does not adapt at all. Doubling the set costs nothing once
+# the captures are automated, which is most of the argument for this lane existing.
+#
+# `settings` and `settings-bandwidth` are one window framed twice. The site shows the whole of it,
+# where the point is the breadth of what Zephyr lets you decide. A help page explaining one control
+# wants that control legible instead, and Settings is tall enough that the entire window, scaled into
+# the column a help window gives it, becomes a picture of a window rather than of the setting the
+# paragraph beside it describes — so the second framing holds the Bandwidth section alone, and the
+# help book embeds that.
+#
+# The last five are surfaces the app itself never puts on screen: two sheets belonging to app
+# extensions, and the widget's three layouts. The suite hosts each in a window of its own — see
+# ZephyrUITests/ScreenshotUITests.swift — because Finder, the share sheet, and WidgetKit can be
+# neither launched by a UI test nor staged against a plain backdrop nor pinned to an appearance.
+SCREENSHOTS = %w[
+  menu-bar-panel accounts sync-issues settings settings-bandwidth
+  file-versions share-upload widget-small widget-medium widget-unlinked
+].freeze
+
+# The captures the suite takes as a sequence of pages rather than as one image. The export files
+# each as `<slug>.png`, an APNG the site plays, plus a `<slug>.webp` of its first page for a reader
+# who has asked for reduced motion — so both are checked for below.
+ANIMATED_SCREENSHOTS = %w[setup].freeze
+
+# The subset the App Store listing shows, in the order it shows them — the export numbers the files
+# accordingly, because App Store Connect orders a screenshot set by file name. Sync issues are left
+# out: a listing's first impression should not be a window full of things that went wrong.
+#
+# Settings is here and not on the site, which shows the other four. The captures are of the App
+# Store edition, because that is the app the UI test target hosts, and Settings is the one window
+# where the two editions differ — this one says the store keeps Zephyr up to date and that the
+# command-line tool comes with the download. That is exactly right for the listing and exactly
+# wrong for a page whose download button points at the other edition.
+APP_STORE_SCREENSHOTS = %w[menu-bar-panel accounts setup settings].freeze
+
+# Signing credentials live in a private repository, everything in it encrypted under one
+# MATCH_PASSWORD: the signing certificates (managed by _match_) and the App Store Connect API key
+# (decrypted by that repository's own `bin/api-key`). Neither is ever written to this working tree.
+# CI checks the repository out and sets CERTIFICATES_REPO; a local run falls back to a clone
+# alongside the other repositories.
+DEFAULT_CERTIFICATES_REPO = File.expand_path("~/Repositories/certificates")
+
+def certificates_repo
+  path = ENV.fetch("CERTIFICATES_REPO", DEFAULT_CERTIFICATES_REPO)
+  return path if Dir.exist?(path)
+
+  UI.user_error!("No signing credentials at #{path} — clone the certificates repository there, " \
+                 "or point CERTIFICATES_REPO at an existing checkout.")
+end
+
+# Which Sentry project a release uploads its debug symbols to, read from the committed .sentryclirc
+# that the app targets' "Upload Debug Symbols to Sentry" build phase relies on, so the two cannot
+# drift. sentry-cli would read that file itself, but only from its own working directory, and `sh`
+# does not run from the repository root — so the values are read here and passed on the command line,
+# where no working directory can affect them.
+def sentry_defaults
+  path = File.join(REPO_ROOT, ".sentryclirc")
+  File.read(path).scan(/^\s*(org|project)\s*=\s*(\S+)\s*$/).to_h
+rescue Errno::ENOENT
+  {}
+end
+
+# The Developer ID Application identity _match_ installed, read back from the keychain rather than
+# written out here, so renewing the certificate never means editing this file. Backticks rather than
+# `sh` because this runs while building an argument list, and the listing is noise in the log.
+def developer_id_identity
+  identity = `security find-identity -v -p codesigning`[/"(Developer ID Application:[^"]+)"/, 1]
+  if identity.nil?
+    UI.user_error!("No Developer ID Application identity in the keychain — ensure_signing has to " \
+                   "run before anything can be signed with it.")
+  end
+  identity
+end
+
+# The identity a product archive is signed with, which is not the one the app is signed with: an
+# installer certificate signs an archive of code rather than code itself. That is also why it is
+# looked up without `-p codesigning` — that policy filters an installer certificate out of the
+# results, and asking for it there is a reliable way to conclude the certificate does not exist.
+def developer_id_installer_identity
+  identity = `security find-identity -v`[/"(Developer ID Installer:[^"]+)"/, 1]
+  if identity.nil?
+    UI.user_error!("No Developer ID Installer identity in the keychain — ensure_signing has to " \
+                   "run before a package can be signed with it.")
+  end
+  identity
+end
+
+# gym never hands App Store Connect credentials to xcodebuild, so `-allowProvisioningUpdates` on its
+# own has no account to authenticate with and automatic signing cannot fetch a distribution profile.
+# xcodebuild takes the key directly through its own flags. They want a path, so the key is written to
+# a private temp file that goes away when the process exits — it never lands in the working tree.
+def provisioning_authentication_args
+  key = Fastlane::Actions.lane_context[Fastlane::Actions::SharedValues::APP_STORE_CONNECT_API_KEY]
+  UI.user_error!("ensure_api_key has to run before an archive can be signed.") if key.nil?
+
+  directory = Dir.mktmpdir("asc-api-key")
+  at_exit { FileUtils.remove_entry(directory, true) }
+  path = File.join(directory, "AuthKey_#{key[:key_id]}.p8")
+  File.write(path, key[:key])
+  FileUtils.chmod(0o600, path)
+
+  "-authenticationKeyPath #{path.shellescape} " \
+    "-authenticationKeyID #{key[:key_id].shellescape} " \
+    "-authenticationKeyIssuerID #{key[:issuer_id].shellescape}"
+end
+
+# The app gym exported, which is what gets notarized, packaged, and read for its version.
+def exported_app
+  app = Dir[File.join(OUTPUT_PATH, "*.app")].first
+  UI.user_error!("The export produced no .app in #{OUTPUT_PATH}.") if app.nil?
+  app
+end
+
+# The marketing version of the app that was actually built. The project file is not the authority: a
+# release stamps its version through xcargs and deliberately leaves the checked-in MARKETING_VERSION
+# alone, so reading the project would name every disk image after whatever was last committed.
+def exported_app_version(app)
+  plist = File.join(app, "Contents", "Info.plist")
+  `/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" #{plist.shellescape}`.strip
+end
+
+# The number of commits reaching HEAD. The checked-in CURRENT_PROJECT_VERSION drifts behind whatever
+# was last released, and asking App Store Connect for its last build number would answer for the
+# store edition alone — but the commit count only ever grows, needs no service to remember it, any
+# checkout of a given commit reproduces it, and it numbers both editions alike, so a user comparing
+# them sees the same build behind the same version.
+def commit_count
+  deepen_shallow_checkout
+  count = `git -C #{REPO_ROOT.shellescape} rev-list --count HEAD`.strip.to_i
+  if count.zero?
+    UI.user_error!("git counted no commits in #{REPO_ROOT}, so there is no build number.")
+  end
+  count
+end
+
+# `actions/checkout` clones a single commit deep unless asked otherwise, and the reusable release
+# workflow does not ask. A shallow clone counts one commit however long the history really is, so
+# without this every CI release would stamp build 1 and App Store Connect would never see it rise.
+def deepen_shallow_checkout
+  return unless `git -C #{REPO_ROOT.shellescape} rev-parse --is-shallow-repository`.strip == "true"
+
+  sh("git", "-C", REPO_ROOT, "fetch", "--unshallow", "--quiet")
+end
+
+platform :mac do
+  desc "Build the App Store edition and upload it to App Store Connect"
+  lane :release do |options|
+    archive_edition(edition_name: "mas", version: options[:version], build: options[:build])
+    upload_store_build
+    collect_debug_symbols
+  end
+
+  desc "Build the App Store edition and upload it to TestFlight"
+  lane :beta do |options|
+    archive_edition(edition_name: "mas", version: options[:version], build: options[:build])
+    upload_to_testflight(app_identifier: APP_IDENTIFIER)
+    collect_debug_symbols
+  end
+
+  desc "Archive, notarize, and package the downloadable edition for release"
+  lane :download_release do |options|
+    archive_edition(edition_name: "download", version: options[:version], build: options[:build])
+    notarize_and_package
+    collect_debug_symbols
+  end
+
+  desc "Archive one edition and ship it (CI)"
+  lane :ci_release do |options|
+    # The reusable release workflow invokes this lane once per entry in its `platforms` input and
+    # passes the name through as `platform:` — which is the edition here. Version and build are
+    # mandatory: the tag and the commit count, not the project file, are the authority on a CI
+    # release.
+    name = options.fetch(:platform)
+    archive_edition(edition_name: name,
+                    version:      options.fetch(:version),
+                    build:        options.fetch(:build))
+
+    case name
+      when "mas" then upload_store_build
+      when "download" then notarize_and_package
+      else UI.user_error!("Unknown edition #{name.inspect}.")
+    end
+
+    collect_debug_symbols
+  end
+
+  desc "Resolve the next build number and write it where CI can read it"
+  lane :ci_next_build_number do
+    next_build_number = commit_count
+    UI.success("Next build number: #{next_build_number}")
+
+    # Only CI needs the value in a file to hand to the next job; a local run just wants to see it.
+    build_number_file = ENV.fetch("BUILD_NUMBER_FILE", nil)
+    File.write(build_number_file, next_build_number) if build_number_file
+  end
+
+  desc "Regenerate the site's and the App Store listing's screenshots from the UI test harness"
+  lane :screenshots do
+    # These images are a build product of the app, not artifacts someone captured once and then had
+    # to remember to recapture — but that only holds while the machine taking them is pinned. A
+    # hosted runner draws to a virtual display that is not 2×, so a CI regeneration would write a
+    # half-size, softly-scaled set over a good one, and nothing about the result would look wrong
+    # until it was published. The suite asserts the rest of the machine's capture conditions itself
+    # and skips when they fail; this is the one that has to be refused before the app is launched.
+    UI.user_error!("Screenshots have to be captured on a developer's 2× display, not on CI.") if is_ci
+
+    # Deliberately no ensure_signing or ensure_api_key. The sample-account launch never reaches the
+    # keychain, a domain, or the network, and a development identity — which any machine that can
+    # build this project already holds — signs a test build perfectly well. Demanding MATCH_PASSWORD
+    # and a certificates checkout is a lot of ceremony to impose on "retake the pictures".
+    #
+    # xcodebuild neither overwrites nor merges a result bundle: an existing one at this path, or even
+    # a plain file there, is a hard failure raised before any testing happens.
+    result_bundle = File.join(OUTPUT_PATH, "screenshots.xcresult")
+    FileUtils.rm_rf(result_bundle)
+
+    # Its own derived data, and deliberately not under build/ with everything else. Both app targets
+    # emit Zephyr.app, so sharing derived data with the developer's Xcode session would replace
+    # whatever they last built out from under them; and notarize_and_package globs OUTPUT_PATH/*.app
+    # without recursing, so a build directly in build/ would leave a test build of the app exactly
+    # where the release lane looks for the exported one. Keeping it out of the working tree matters
+    # for a third reason: macOS asks before letting a program reach Desktop, Documents, or Downloads,
+    # and a checkout in one of those puts the XCUITest runner there too. The runner's own prompt is
+    # the one prompt XCUITest cannot dismiss for itself, so it stops the run dead. Nothing here is a
+    # build artifact worth collecting, so it costs nothing to build somewhere unprotected.
+    #
+    # The "Zephyr UITests" scheme rather than "Zephyr (MAS)", which carries ZephyrTests as well.
+    # That target names its host by TEST_HOST path rather than TEST_TARGET_NAME, and both editions
+    # produce a Zephyr.app for the path to match, so building it drags the downloadable edition into
+    # the same derived data and the two collide over every product they share.
+    #
+    # -resultBundlePath rather than fishing the bundle out of the derived data afterwards: the ones
+    # xcodebuild leaves in Logs/Test/ are timestamped, accumulate, and give the export script no way
+    # to tell this run's captures from last run's.
+    # -project, because `sh` runs from the fastlane directory and xcodebuild looks for something to
+    # build in its own working directory — it has no notion of the project root gym resolves against.
+    sh("xcodebuild", "test",
+       "-project", File.join(REPO_ROOT, XCODEPROJ),
+       "-scheme", "Zephyr UITests",
+       "-destination", "platform=macOS,arch=arm64",
+       "-derivedDataPath", SCREENSHOT_DERIVED_DATA,
+       "-resultBundlePath", result_bundle,
+       "-only-testing:ZephyrUITests/ScreenshotUITests")
+
+    # A skip is the failure mode this lane exists to catch, and it is the one xcodebuild reports as
+    # success. Display scale, accent colour, and the four accessibility settings that no per-process
+    # override can reach are asserted inside the suite as XCTSkipUnless, so a machine that cannot
+    # take a faithful capture yields a green run with nothing attached to it. Left unchecked the lane
+    # would sail past that and hand the export script an empty bundle, which owns both image
+    # directories.
+    summary = JSON.parse(sh("xcrun", "xcresulttool", "get", "test-results", "summary",
+                            "--path", result_bundle, "--compact", log: false))
+    unless summary["result"] == "Passed" && summary["skippedTests"].to_i.zero?
+      UI.user_error!("The screenshot suite finished #{summary['result']} with " \
+                     "#{summary['skippedTests']} skipped. A skip names the capture precondition " \
+                     "this Mac fails; open #{result_bundle} to read it.")
+    end
+
+    sh(File.join(REPO_ROOT, "Scripts", "export-screenshots.sh"), result_bundle,
+       SITE_SCREENSHOTS_PATH, app_store_locale_path,
+       HELP_SCREENSHOTS_PATH, *APP_STORE_SCREENSHOTS)
+
+    verify_screenshots
+
+    published = (SCREENSHOTS.count + ANIMATED_SCREENSHOTS.count * 2) * 2
+    UI.success("Wrote #{published} images to #{SITE_SCREENSHOTS_PATH} and the stills again to " \
+               "#{HELP_SCREENSHOTS_PATH} — commit them with the page changes. " \
+               "#{APP_STORE_SCREENSHOTS.count} are staged for the store; " \
+               "`fastlane mac upload_app_store_screenshots` sends them.")
+  end
+
+  desc "Replace the App Store listing's screenshots with the captured set"
+  lane :upload_app_store_screenshots do
+    verify_screenshots
+    ensure_api_key
+
+    # Screenshots alone: the binary is the release lanes' business, and the listing's text is
+    # written by Scripts/push-app-store-metadata.rb from the markdown that holds it.
+    # `overwrite_screenshots` clears the version's existing set before this run's is sent, which is
+    # what keeps one run from stacking another copy of the same four images onto the last run's.
+    upload_to_app_store(
+      app_identifier:             APP_IDENTIFIER,
+      platform:                   "osx",
+      skip_binary_upload:         true,
+      skip_metadata:              true,
+      skip_screenshots:           false,
+      screenshots_path:           APP_STORE_SCREENSHOTS_PATH,
+      overwrite_screenshots:      true,
+      submit_for_review:          false,
+      run_precheck_before_submit: false,
+      force:                      true
+    )
+
+    prune_duplicate_screenshots
+  end
+
+  # Deletes the second copy of every screenshot, which `upload_to_app_store` leaves behind roughly
+  # every other run.
+  #
+  # It is not `overwrite_screenshots` failing. Deliver uploads the set, then reads the version back
+  # to confirm each image arrived — and App Store Connect accepts an upload before it finishes
+  # processing it, so a read taken immediately after can report an image it already holds as
+  # "missing on App Store Connect". Deliver believes the read, calls the attempt failed, and retries
+  # the whole set. The second attempt's read comes late enough to succeed, so the run ends green
+  # having uploaded everything twice, and the listing carries eight screenshots where four were
+  # staged. Nothing in the log says so: the failure is announced, the retry is announced, and the
+  # success is announced.
+  #
+  # Retrying is right in general — an upload really can fail — so this does not try to talk deliver
+  # out of it. It reconciles afterwards instead, which is also correct when the set was already
+  # clean. Ordering survives: App Store Connect sorts a set by file name, the copies are identical,
+  # and the one kept is whichever the sort reaches first.
+  private_lane :prune_duplicate_screenshots do
+    version = editable_store_version
+    removed = 0
+
+    version.get_app_store_version_localizations.each do |localization|
+      localization.get_app_screenshot_sets.each do |set|
+        kept = Set.new
+        set.app_screenshots.sort_by(&:file_name).each do |screenshot|
+          next if kept.add?(screenshot.file_name)
+
+          screenshot.delete!
+          removed += 1
+        end
+      end
+    end
+
+    UI.important("Removed #{removed} duplicate screenshots left by the upload's retry.") if
+      removed.positive?
+  end
+
+  # The macOS version whose listing is still editable, for the spaceship calls that reach past what
+  # the deliver action exposes. `ensure_api_key` has to have run: it is what leaves a token behind
+  # for `Spaceship::ConnectAPI` to use.
+  def editable_store_version
+    app = Spaceship::ConnectAPI::App.find(APP_IDENTIFIER) ||
+          UI.user_error!("No app with the bundle identifier #{APP_IDENTIFIER} on this account.")
+    app.get_edit_app_store_version(platform: Spaceship::ConnectAPI::Platform::MAC_OS) ||
+      UI.user_error!("No editable macOS version, so there is no screenshot set to reconcile.")
+  end
+
+  # Fails unless every published set is complete, agrees with itself, and agrees with the pages that
+  # embed it. The export maps whatever the run attached and owns all three directories outright; this
+  # is what says the run attached everything, that no half of an appearance pair is the odd size out,
+  # that nothing is being published for nobody, and that every page states the size its capture
+  # actually has.
+  #
+  # All four failures are silent ones. A published set can be complete, current, and wrong in each of
+  # these ways without a single page looking broken to whoever last opened it in the appearance they
+  # happen to run in.
+  private_lane :verify_screenshots do
+    verify_captures_published
+    verify_appearances_match
+    verify_captures_embedded
+    verify_declared_sizes
+  end
+
+  # Every image the lane requires, by the directory holding it and named in its light form — the dark
+  # twin is derived rather than listed, because a capture present in one appearance and absent in the
+  # other is a defect rather than a set of its own.
+  #
+  # The site plays an animation and offers a still of its first page to a reader who has asked for
+  # reduced motion, so for those slugs it holds a `.png` as well as a `.webp`. The help book takes the
+  # stills alone: a looping animation is the one thing a help page must not carry, so `setup.webp`
+  # belongs in the book and `setup.png` does not.
+  def published_captures
+    stills = (SCREENSHOTS + ANIMATED_SCREENSHOTS).map { |slug| "#{slug}.webp" }
+    {
+      SITE_SCREENSHOTS_PATH => stills + ANIMATED_SCREENSHOTS.map { |slug| "#{slug}.png" },
+      HELP_SCREENSHOTS_PATH => stills
+    }
+  end
+
+  # The dark-appearance twin of a capture, which is how the other half of every pair is filed.
+  def dark_twin(file)
+    file.sub(/(\.\w+)\z/, '-dark\1')
+  end
+
+  def app_store_locale_path
+    File.join(APP_STORE_SCREENSHOTS_PATH, APP_STORE_SCREENSHOTS_LOCALE)
+  end
+
+  # A capture that quietly stopped happening leaves the last good one in place, so absence is checked
+  # first and is the only one of the four that needs no file read to find.
+  def verify_captures_published
+    missing = required_capture_paths.reject { |path| File.exist?(path) } + unstaged_store_captures
+    return if missing.empty?
+
+    UI.user_error!("No capture was published as: #{repo_paths(missing)}. Pages on the site and in " \
+                   "the help book embed these by name, so a missing one is a broken image rather " \
+                   "than a page with one fewer picture. Rerun `fastlane mac screenshots`; if the " \
+                   "run keeps skipping one, the name it is filed under is the name the suite " \
+                   "attaches it under in ZephyrUITests/ScreenshotUITests.swift.")
+  end
+
+  # Every file the lane requires, in both appearances, as a path to look for.
+  def required_capture_paths
+    published_captures.flat_map do |directory, files|
+      appearances = files.flat_map { |file| [file, dark_twin(file)] }
+      appearances.map { |file| File.join(directory, file) }
+    end
+  end
+
+  # The store's copies are numbered by listing position, so the slug is all there is to match on —
+  # and a missing one is named with the number left as NN, since a file that was never written has
+  # no position to report.
+  def unstaged_store_captures
+    unstaged = APP_STORE_SCREENSHOTS.reject { |slug| staged_for_store?(slug) }
+    unstaged.map { |slug| File.join(app_store_locale_path, "NN-#{slug}.png") }
+  end
+
+  def staged_for_store?(slug)
+    Dir[File.join(app_store_locale_path, "*-#{slug}.png")].any?
+  end
+
+  # A page embeds an appearance pair as one <picture>: it writes a single width and height and swaps
+  # only the file underneath, so the browser draws the dark capture at the light one's size. A pair
+  # that disagrees is therefore stretched in one appearance and only one, which is why it survives
+  # every look at the page that is not taken in the dark.
+  def verify_appearances_match
+    mismatched = published_captures.flat_map do |directory, files|
+      files.filter_map do |file|
+        light = image_dimensions(File.join(directory, file))
+        dark = image_dimensions(File.join(directory, dark_twin(file)))
+        next if light == dark
+
+        "#{repo_path(File.join(directory, file))} is #{light.join('×')} " \
+          "against #{dark.join('×')} dark"
+      end
+    end
+    return if mismatched.empty?
+
+    UI.user_error!("A capture and its dark twin are different sizes: #{mismatched.join('; ')}. The " \
+                   "suite sizes the window it captures, so a difference means the two appearances " \
+                   "were staged from different windows — reconcile them in " \
+                   "ZephyrUITests/ScreenshotUITests.swift and recapture the set.")
+  end
+
+  # Every capture is taken to illustrate something. One that no page embeds is served from the site
+  # and shipped inside every app bundle for nothing, and since the suite goes on taking it there is
+  # nothing to notice: a current, matched, faithful picture of a window nobody is ever shown.
+  #
+  # Only the light name is looked for. A page names the dark twin in the <source> that pairs with its
+  # <img> and never on its own, so a pair stands or falls together.
+  def verify_captures_embedded
+    pages = (site_pages + help_pages).map { |page| File.read(page) }
+    orphans = published_captures.values.flatten.uniq.reject do |file|
+      pages.any? { |markup| markup.include?("/#{file}") }
+    end
+    return if orphans.empty?
+
+    UI.user_error!("No page embeds #{orphans.join(', ')}. Either a page in docs/ or in the help " \
+                   "book has to embed it, or the slug should come out of SCREENSHOTS and the suite " \
+                   "should stop taking it — an unembedded capture still costs the download every " \
+                   "byte of itself, twice.")
+  end
+
+  # A page declares the size it embeds a capture at so a browser can reserve the space before the
+  # image arrives. That declaration is a claim about a file the page cannot see, and a capture that
+  # came back a different size leaves the claim standing — the page then reserves a box the image
+  # does not fill and reflows around it, or scales the capture away from the sharpness it was taken
+  # for.
+  def verify_declared_sizes
+    wrong = site_size_mismatches + help_size_mismatches
+    return if wrong.empty?
+
+    UI.user_error!("A page declares a size its capture does not have: #{wrong.join('; ')}. Correct " \
+                   "the width and height on the page — the capture is the measurement, since it is " \
+                   "the window that decides how big it is.")
+  end
+
+  # The site states a capture's pixels as they are and leaves the width to its own layout, so the
+  # spare pixels of a 2× capture are what make it sharp on a display able to show them.
+  def site_size_mismatches
+    size_mismatches(site_pages, SITE_IMAGE_PREFIX, SITE_SCREENSHOTS_PATH, &:itself)
+  end
+
+  # A help page halves them instead, which is what draws a 2× capture at the size of the window it
+  # was taken of. The halves are rounded, because a capture is as likely to be an odd number of
+  # pixels tall as an even one.
+  def help_size_mismatches
+    size_mismatches(help_pages, HELP_IMAGE_PREFIX, HELP_SCREENSHOTS_PATH) do |pixels|
+      pixels.map { |length| (length / 2.0).round }
+    end
+  end
+
+  # One description per page whose declared size disagrees with the file it embeds. The block is
+  # given a capture's size in pixels and answers with what a page of this kind ought to declare.
+  def size_mismatches(pages, prefix, directory)
+    pages.flat_map do |page|
+      embedded_captures(page, prefix).filter_map do |file, declared|
+        expected = yield(image_dimensions(File.join(directory, file)))
+        next if declared == expected
+
+        "#{repo_path(page)} declares #{file} #{declared.join('×')}, not #{expected.join('×')}"
+      end
+    end
+  end
+
+  # Every capture a page embeds, as its file name and the size the page declares for it. An <img>
+  # that leaves a number out is reported rather than passed over: a page reserving no space at all is
+  # the same defect measured from the other end.
+  def embedded_captures(page, prefix)
+    File.read(page).scan(/<img\b[^>]*>/m).filter_map do |tag|
+      file = tag[/\bsrc="#{Regexp.escape(prefix)}([^"]+)"/, 1]
+      next unless file
+
+      [file, [tag[/\bwidth="(\d+)"/, 1].to_i, tag[/\bheight="(\d+)"/, 1].to_i]]
+    end
+  end
+
+  # The pages that embed a capture, found by glob because neither consumer keeps a manifest of its
+  # own: the site is a static directory, and the help book is localized into English alone.
+  def site_pages
+    Dir[File.join(SITE_PATH, "**", "*.html")]
+  end
+
+  def help_pages
+    Dir[File.join(HELP_PAGES_PATH, "*.html")]
+  end
+
+  # A capture's size in pixels, read with the ImageMagick the export script already converts through,
+  # so this asks nothing of a machine that could not have produced the images in the first place.
+  # Backticks rather than `sh`, which announces every command it runs: this runs twice per published
+  # image, and a page of identify calls is noise around whatever the checks have to say.
+  #
+  # The [0] subscript takes the first page alone. An APNG holds several, and identify would otherwise
+  # print a size for each of them with nothing in between to tell them apart.
+  def image_dimensions(path)
+    width, height = `magick identify -format "%w %h" #{"#{path}[0]".shellescape}`.split.map(&:to_i)
+    if width.nil? || height.nil?
+      UI.user_error!("Nothing readable as an image at #{repo_path(path)}, which a page embeds or " \
+                     "the lane requires. Rerun `fastlane mac screenshots` to write the set again.")
+    end
+    [width, height]
+  end
+
+  # Paths as they are written in this repository. A check that names a file the reader then has to go
+  # and find is half a check, and most of an absolute path here is the reader's own home directory.
+  def repo_path(path)
+    path.delete_prefix("#{REPO_ROOT}/")
+  end
+
+  def repo_paths(paths)
+    paths.map { |path| repo_path(path) }.join(", ")
+  end
+
+  # Archives one edition. `version` and `build` are optional: a local run without them keeps whatever
+  # the project already carries.
+  private_lane :archive_edition do |options|
+    config = edition(options.fetch(:edition_name))
+
+    setup_ci # No-op off CI; elsewhere it keeps match out of the login keychain.
+    ensure_signing(match_type:            config.fetch(:match_type),
+                   additional_cert_types: config.fetch(:additional_cert_types))
+
+    # Passing the version on the command line rather than writing it into the project keeps a release
+    # from leaving a commit behind, and stamps every target in the archive alike.
+    #
+    # The archive signs automatically, exactly as it does in Xcode: `-allowProvisioningUpdates` plus
+    # the API key lets it resolve a profile, and the certificate comes from the certificates
+    # repository. The export cannot do the same — cloud signing is refused for distribution — so it
+    # consumes the stored match profiles instead, which build_app puts into its export options from
+    # match's mapping. Hence automatic signing here and managed profiles there.
+    stamps = []
+    stamps << "MARKETING_VERSION=#{options[:version]}" if options[:version]
+    stamps << "CURRENT_PROJECT_VERSION=#{options[:build]}" if options[:build]
+
+    build_app(
+      scheme:           config.fetch(:scheme),
+      destination:      "generic/platform=macOS",
+      export_method:    config.fetch(:export_method),
+      output_directory: OUTPUT_DIRECTORY,
+      xcargs:           "#{stamps.join(' ')} -allowProvisioningUpdates " \
+                        "#{provisioning_authentication_args}".strip
+    )
+  end
+
+  # Uploads the archived App Store build. The listing's text is maintained by hand in App Store
+  # Connect and its screenshots come from the `screenshots` lane, so a release carries neither; the
+  # build waits there to be attached to a version and submitted.
+  private_lane :upload_store_build do
+    upload_to_app_store(
+      app_identifier:             APP_IDENTIFIER,
+      platform:                   "osx",
+      skip_metadata:              true,
+      skip_screenshots:           true,
+      submit_for_review:          false,
+      run_precheck_before_submit: false
+    )
+  end
+
+  # Notarizes the exported app and wraps it in the two things the GitHub release ships.
+  #
+  # Both, because they are for different moments. A new user gets the installer package: the Finder
+  # stamps com.apple.quarantine onto an app dragged out of a mounted disk image, macOS runs a
+  # quarantined app from an App Translocation mount, and it will not run a File Provider extension
+  # for a translocated process — so a dragged Zephyr is a Zephyr that can never appear in Finder.
+  # An existing user gets the disk image, because that is what the in-app update checker looks for
+  # first and what it knows how to install unattended; nothing it does involves the Finder, so
+  # nothing it installs is quarantined.
+  private_lane :notarize_and_package do
+    app_path = exported_app
+    version = exported_app_version(app_path)
+
+    # `notarize` staples the ticket onto the app once Apple accepts it, so the copy inside each
+    # package validates offline.
+    notarize(package:   app_path,
+             api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+             print_log: true)
+
+    dmg = package_disk_image(app_path: app_path, version: version)
+    pkg = package_installer(app_path: app_path, version: version)
+    UI.success("Packaged #{pkg} and #{dmg}")
+  end
+
+  # Builds, signs, and notarizes the disk image.
+  #
+  # The image needs notarizing in its own right. It reaches users as a browser download, so it
+  # arrives carrying a quarantine flag, and Gatekeeper judges the image at the moment it is opened —
+  # before anyone reaches the app inside. An unsigned image fails that check and is refused as
+  # unverified, however impeccably the app within it is signed. Notarizing the app is still what
+  # lets it run once extracted; these are two separate gates.
+  private_lane :package_disk_image do |options|
+    dmg = sh(File.join(REPO_ROOT, "Scripts", "make-dmg.sh"),
+             options.fetch(:app_path), options.fetch(:version), OUTPUT_PATH).strip
+
+    sh("codesign", "--force", "--timestamp", "--sign", developer_id_identity, dmg)
+    notarize(package:   dmg,
+             api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+             print_log: true)
+    dmg
+  end
+
+  # Builds, signs, and notarizes the installer package.
+  #
+  # `productsign` cannot sign a package onto itself, so the signature is written beside the archive
+  # and moved over it — leaving one path, the one make-pkg.sh named and the release attaches.
+  private_lane :package_installer do |options|
+    pkg = sh(File.join(REPO_ROOT, "Scripts", "make-pkg.sh"),
+             options.fetch(:app_path), options.fetch(:version), OUTPUT_PATH).strip
+
+    signed = "#{pkg}.signed"
+    FileUtils.rm_f(signed)
+    sh("productsign", "--sign", developer_id_installer_identity, pkg, signed)
+    FileUtils.mv(signed, pkg)
+
+    notarize(package:   pkg,
+             api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
+             print_log: true)
+    pkg
+  end
+
+  # Loads the App Store Connect API key. The store upload, notarization, and provisioning all
+  # authenticate with the same key. `--stdout` keeps the decrypted key in memory
+  # rather than leaving a plaintext .p8 in the working tree, and `log: false` stops fastlane echoing
+  # it into the build log.
+  private_lane :ensure_api_key do
+    if ENV["MATCH_PASSWORD"].to_s.empty?
+      UI.user_error!("MATCH_PASSWORD is not set. Put it in fastlane/.env (git-ignored, loaded " \
+                     "automatically; see fastlane/.env.example) or export it before this lane.")
+    end
+
+    key = JSON.parse(sh(File.join(certificates_repo, "bin", "api-key"), "--stdout", log: false))
+    app_store_connect_api_key(
+      key_id:      key["key_id"],
+      issuer_id:   key["issuer_id"],
+      key_content: key["key"]
+    )
+  end
+
+  # Everything an archive needs to be signed and accepted.
+  #
+  # Two certificates, because an archive and its export sign differently: `xcodebuild archive` uses a
+  # development identity, just as Xcode does locally, and `exportArchive` re-signs the payload for
+  # distribution. Keeping the development certificate here means a runner installs it instead of
+  # minting a throwaway one every release — a team holds only a few, and automatic signing will
+  # exhaust the quota.
+  #
+  # Skipping profiles on that first call keeps it to the certificate: the archive gets its profile
+  # from `-allowProvisioningUpdates`. It must come first, because match records a profile mapping
+  # whether or not it synced any — the development call maps the app to nil, so the Developer ID call
+  # has to be the one that wins.
+  #
+  # That second call names all five entitlement-bearing bundles, and it has to: gym builds its export
+  # options from match's mapping, and turns a nil entry into an empty value that `exportArchive`
+  # rejects outright ("Expected to decode String but found a data value instead"). The app and its
+  # four extensions are each exported, so each must resolve to a real profile name and none may be
+  # left unsynced.
+  private_lane :ensure_signing do |options|
+    ensure_api_key
+    match(type:                       "development",
+          app_identifier:             APP_IDENTIFIER,
+          readonly:                   true,
+          skip_provisioning_profiles: true)
+    match(type:                  options.fetch(:match_type),
+          platform:              "macos",
+          app_identifier:        APP_IDENTIFIERS,
+          readonly:              true,
+          additional_cert_types: options.fetch(:additional_cert_types))
+  end
+
+  # Keeps the archive's dSYMs as a build artifact, zipped where the release workflow collects
+  # `build/*.dSYM.zip`, and hands the same symbols to Sentry so its crash reports symbolicate. The
+  # artifact is kept as well as uploaded: Sentry retains an event for ninety days, and a report a
+  # user sends in by hand years from now can still be read against the exact build they ran.
+  #
+  # The archive's dSYMs directory is the source, not DSYM_OUTPUT_PATH. build_app derives that path
+  # from the export and only knows how to do so for an .ipa or a .pkg; this export is a bare .app, so
+  # the value stays nil. The archive directory needs no such guess, and holds every dSYM the build
+  # produced: the app, the four extensions, both frameworks, and — for the downloadable edition —
+  # the CLI.
+  private_lane :collect_debug_symbols do
+    dsym_path = File.join(lane_context[SharedValues::XCODEBUILD_ARCHIVE].to_s, "dSYMs")
+    unless Dir.exist?(dsym_path)
+      UI.important("The archive carries no dSYMs, so there is nothing to keep.")
+      next
+    end
+
+    name = "#{APP_NAME}-#{exported_app_version(exported_app)}.dSYM.zip"
+    archive_path = File.join(OUTPUT_PATH, name)
+    FileUtils.rm_f(archive_path)
+    zip(path: dsym_path, output_path: archive_path, verbose: false)
+
+    upload_debug_symbols(dsym_path: dsym_path)
+  end
+
+  # Uploads dSYMs and source context to Sentry, so a crash in a shipped build arrives symbolicated
+  # and with the failing lines beside it. Each app target has a build phase that does this too, but
+  # only when sentry-cli happens to be installed on the archiving machine; doing it here is what
+  # makes symbolication a property of the release rather than of whoever built it.
+  #
+  # By the time this runs the binary is already shipped, so nothing here may fail the release. A
+  # missing token or a rejected upload costs symbolication and nothing else, and
+  # `sentry-cli debug-files upload` can be re-run by hand afterwards.
+  #
+  # sentry-cli is invoked directly rather than through an action: the built-in
+  # `upload_symbols_to_sentry` is deprecated to a hard error, and Sentry's replacement plugin is not
+  # installed.
+  private_lane :upload_debug_symbols do |options|
+    dsym_path = options.fetch(:dsym_path)
+
+    token = ENV.fetch("SENTRY_AUTH_TOKEN", nil)
+    if token.nil? || token.empty?
+      UI.important("SENTRY_AUTH_TOKEN is not set; skipping the Sentry upload of #{dsym_path}.")
+      next
+    end
+
+    defaults = sentry_defaults
+    org, project = defaults.values_at("org", "project")
+    if org.nil? || project.nil?
+      UI.important("No .sentryclirc naming an organization and project; skipping the Sentry " \
+                   "upload of #{dsym_path}.")
+      next
+    end
+
+    begin
+      sh("sentry-cli", "debug-files", "upload",
+         "--org", org,
+         "--project", project,
+         "--include-sources",
+         dsym_path)
+    rescue StandardError => error
+      UI.error("Sentry rejected the dSYM upload: #{error.message}")
+      UI.important("The build itself shipped fine; re-run sentry-cli once the token is valid.")
+    end
+  end
+end
