@@ -40,7 +40,8 @@ XCODEPROJ = "Zephyr.xcodeproj"
 # so anything touching the working tree is built from here rather than written relative to either.
 REPO_ROOT = File.expand_path("..", __dir__)
 
-# Where the archive, the disk image, and the dSYMs land, so a CI run can collect them as artifacts.
+# Where the archive, the installer package, and the dSYMs land, so a CI run can collect them as
+# artifacts.
 # Relative, because that is what gym expects; use OUTPUT_PATH for anything reading the directory
 # back.
 OUTPUT_DIRECTORY = "build"
@@ -50,8 +51,8 @@ OUTPUT_PATH = File.join(REPO_ROOT, OUTPUT_DIRECTORY)
 # extensions, and every line of their interface; they differ only in how they are signed and in what
 # the store forbids. The App Store edition is signed for the store and uploaded to App Store
 # Connect. The downloadable edition is signed with Developer ID, notarized, attached to a GitHub
-# release as an installer package and a disk image, and is the only one that embeds the `zephyr`
-# command-line tool or checks for its own updates.
+# release as an installer package, and is the only one that embeds the `zephyr` command-line tool
+# or checks for its own updates.
 #
 # Sharing one identifier means one App ID carrying two kinds of profile, which is why `match_type`
 # is per-edition while APP_IDENTIFIERS below is not.
@@ -63,8 +64,8 @@ EDITIONS = {
              # cannot sign — that takes the separate Mac Installer Distribution certificate.
              match_type: "appstore", additional_cert_types: ["mac_installer_distribution"] },
   "download" => { scheme: "Zephyr (download)", export_method: "developer-id",
-                  # The release ships an installer package as well as a disk image, and a product
-                  # archive is signed with the separate Developer ID Installer certificate — the
+                  # The release ships an installer package, and a product archive is signed with
+                  # the separate Developer ID Installer certificate — the
                   # Developer ID Application certificate signs code, not an archive of it.
                   match_type: "developer_id", additional_cert_types: ["developer_id_installer"] }
 }.freeze
@@ -238,7 +239,7 @@ end
 
 # The marketing version of the app that was actually built. The project file is not the authority: a
 # release stamps its version through xcargs and deliberately leaves the checked-in MARKETING_VERSION
-# alone, so reading the project would name every disk image after whatever was last committed.
+# alone, so reading the project would name every package after whatever was last committed.
 def exported_app_version(app)
   plist = File.join(app, "Contents", "Info.plist")
   `/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" #{plist.shellescape}`.strip
@@ -716,46 +717,26 @@ platform :mac do
     )
   end
 
-  # Notarizes the exported app and wraps it in the two things the GitHub release ships.
+  # Notarizes the exported app and wraps it in the installer package the GitHub release ships.
   #
-  # Both, because they are for different moments. A new user gets the installer package: the Finder
-  # stamps com.apple.quarantine onto an app dragged out of a mounted disk image, macOS runs a
-  # quarantined app from an App Translocation mount, and it will not run a File Provider extension
-  # for a translocated process — so a dragged Zephyr is a Zephyr that can never appear in Finder.
-  # An existing user gets the disk image, because that is what the in-app update checker looks for
-  # first and what it knows how to install unattended; nothing it does involves the Finder, so
-  # nothing it installs is quarantined.
+  # One artifact, because only one of them installs a working Zephyr. The Finder stamps
+  # com.apple.quarantine onto an app dragged out of a mounted disk image, macOS runs a quarantined
+  # app from an App Translocation mount, and it will not run a File Provider extension for a
+  # translocated process — so a dragged Zephyr is a Zephyr that can never appear in Finder. The
+  # update checker hands the user whichever asset the release carries, which is the other reason
+  # there is only one: it cannot offer the wrong one if the wrong one is not there.
   private_lane :notarize_and_package do
     app_path = exported_app
     version = exported_app_version(app_path)
 
-    # `notarize` staples the ticket onto the app once Apple accepts it, so the copy inside each
+    # `notarize` staples the ticket onto the app once Apple accepts it, so the copy inside the
     # package validates offline.
     notarize(package:   app_path,
              api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
              print_log: true)
 
-    dmg = package_disk_image(app_path: app_path, version: version)
     pkg = package_installer(app_path: app_path, version: version)
-    UI.success("Packaged #{pkg} and #{dmg}")
-  end
-
-  # Builds, signs, and notarizes the disk image.
-  #
-  # The image needs notarizing in its own right. It reaches users as a browser download, so it
-  # arrives carrying a quarantine flag, and Gatekeeper judges the image at the moment it is opened —
-  # before anyone reaches the app inside. An unsigned image fails that check and is refused as
-  # unverified, however impeccably the app within it is signed. Notarizing the app is still what
-  # lets it run once extracted; these are two separate gates.
-  private_lane :package_disk_image do |options|
-    dmg = sh(File.join(REPO_ROOT, "Scripts", "make-dmg.sh"),
-             options.fetch(:app_path), options.fetch(:version), OUTPUT_PATH).strip
-
-    sh("codesign", "--force", "--timestamp", "--sign", developer_id_identity, dmg)
-    notarize(package:   dmg,
-             api_key:   lane_context[SharedValues::APP_STORE_CONNECT_API_KEY],
-             print_log: true)
-    dmg
+    UI.success("Packaged #{pkg}")
   end
 
   # Builds, signs, and notarizes the installer package.

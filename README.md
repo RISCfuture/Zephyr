@@ -140,13 +140,14 @@ manual rebuild when Dropbox resets a delta cursor, and Zephyr rebuilds automatic
 
 Install one edition, not both — see [Editions](#editions).
 
-**From GitHub.** Every release publishes a notarized installer package and a disk image.
-Take the `.pkg`. A copy dragged out of a `.dmg` carries a quarantine flag, macOS then
-runs it from a throwaway App Translocation mount, and it refuses to run a File Provider
-extension for a translocated process at all — so a dragged Zephyr can never put a
-Dropbox in Finder, however long it is left to try. The package writes the app straight
-into `/Applications` and the flag is never applied. The `.dmg` exists because the
-downloadable edition's updater knows how to install one unattended.
+**From GitHub.** Every release publishes exactly one artifact: a notarized installer
+package. There is no disk image, and that is deliberate. A copy dragged out of a `.dmg`
+carries a quarantine flag, macOS then runs it from a throwaway App Translocation mount,
+and it refuses to run a File Provider extension for a translocated process at all — so a
+dragged Zephyr can never put a Dropbox in Finder, however long it is left to try. The
+package writes the app straight into `/Applications` and the flag is never applied. The
+update checker offers whichever asset a release carries, so carrying only this one is
+also what keeps it from ever handing you the other.
 
 The package has one optional component, **Command-Line Tool**, which links the bundled
 `zephyr-cli` into `/usr/local/bin` as `zephyr`. Clearing the checkbox installs the app
@@ -753,9 +754,8 @@ running the app on a real Mac.
 
 Pushing a version tag builds both editions. The App Store build is uploaded to App Store
 Connect, where attaching it to a version and submitting it for review is still manual.
-The downloadable build is notarized, packaged as both an installer package and a disk
-image, and both are published as a GitHub release — the `.pkg` is the artifact a new
-user should take, and the `.dmg` is there because the updater installs from one; see
+The downloadable build is notarized, packaged as an installer package, and published as
+a GitHub release. That package is the release's only asset, for the reason given under
 [Installing](#installing). Tags carry no `v` prefix — the downloadable edition's update
 checker compares release tags against `CFBundleShortVersionString`, so `1.2` is the tag
 for version 1.2. The release workflow doesn't re-run the tests; tag a commit CI has

@@ -1,8 +1,8 @@
 name: Release
 
 # Pushing a version tag builds both editions: the App Store build is uploaded to App Store Connect,
-# and the downloadable build is notarized, packaged as an installer package and a disk image, and
-# published as a GitHub release. Nothing here re-runs the tests: tag a commit CI has already
+# and the downloadable build is notarized, packaged as an installer package, and published as a
+# GitHub release. Nothing here re-runs the tests: tag a commit CI has already
 # passed.
 #
 # The App Store upload only puts a build on App Store Connect. Attaching it to a version and
@@ -54,10 +54,10 @@ jobs:
           name: release-download-${{ inputs.version || github.ref_name }}
           path: artifacts
 
-      # The package is listed first because it is what a new user should take: an app dragged out of
-      # a disk image is quarantined, and a quarantined Zephyr is one macOS will not run a File
-      # Provider extension for. The disk image stays because the in-app update checker looks for it
-      # by extension and installs it without the Finder ever touching it.
+      # One asset, and deliberately so. The update checker hands the user whichever asset the
+      # release carries, and only this one installs a Zephyr that works: an app dragged out of a
+      # disk image is quarantined, and a quarantined Zephyr is one macOS will not run a File
+      # Provider extension for.
       - name: Create the release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -65,13 +65,10 @@ jobs:
         run: |
           set -o pipefail
           pkg=$(find artifacts -name '*.pkg' -print -quit)
-          dmg=$(find artifacts -name '*.dmg' -print -quit)
-          for asset in "$pkg" "$dmg"; do
-            if [ -z "$asset" ]; then
-              echo "::error::The release artifacts are missing an installer package or a disk image."
-              exit 1
-            fi
-          done
+          if [ -z "$pkg" ]; then
+            echo "::error::The release artifacts are missing an installer package."
+            exit 1
+          fi
 
           # A release for the tag can already exist — this job re-run after a later failure, or
           # a release cut by hand. `gh release create` refuses a duplicate outright, which leaves
@@ -81,11 +78,11 @@ jobs:
             gh release upload "$VERSION" \
               --repo "$GITHUB_REPOSITORY" \
               --clobber \
-              "$pkg" "$dmg"
+              "$pkg"
           else
             gh release create "$VERSION" \
               --repo "$GITHUB_REPOSITORY" \
               --title "Zephyr $VERSION" \
               --generate-notes \
-              "$pkg" "$dmg"
+              "$pkg"
           fi
