@@ -1,6 +1,10 @@
 #!/bin/bash
 #
-# Asks a running Zephyr to quit before the payload is written over it.
+# Asks a running Zephyr to quit before the payload is written over it, and records whether Zephyr
+# was already installed.
+#
+# Both jobs have to happen here because this script runs before the install has changed anything,
+# and it is the only one that does.
 #
 # Zephyr is three processes, not one: the menu bar app, the widget, and — hosted by fileproviderd —
 # the File Provider extension. Replacing the bundle underneath a live extension leaves fileproviderd
@@ -14,6 +18,16 @@ set -uo pipefail
 readonly BUNDLE_ID="codes.tim.Zephyr"
 readonly PROCESS_NAME="Zephyr"
 readonly QUIT_TIMEOUT_TENTHS=100
+
+# Must match the identifier make-pkg.sh files the app component's receipt under.
+readonly APP_COMPONENT_IDENTIFIER="codes.tim.Zephyr.installer"
+
+# A rendezvous point with this package's other script, which runs on the booted system rather than
+# on the volume being installed onto.
+readonly UPGRADE_MARKER="/tmp/codes.tim.Zephyr.upgrade"
+
+# $3 is the volume being installed onto, "/" for the running system.
+readonly TARGET_VOLUME="${3:-/}"
 
 # The installer runs as root, which has no session to send an Apple event from. `launchctl asuser`
 # moves the request into the console user's session, which is the one running Zephyr.
@@ -41,7 +55,19 @@ wait_for_quit() {
   return 1
 }
 
+# Whether Zephyr was already installed, recorded now because this is the last moment it can be told.
+# The command-line tool's script is what needs the answer, and it runs after the app component has
+# written its receipt for the install in progress — by which point every install looks like an
+# upgrade.
+record_whether_zephyr_was_already_installed() {
+  rm -f "${UPGRADE_MARKER}"
+  pkgutil --volume "${TARGET_VOLUME}" --pkg-info "${APP_COMPONENT_IDENTIFIER}" >/dev/null 2>&1 &&
+    touch "${UPGRADE_MARKER}"
+}
+
 ask_console_user_to_quit
 wait_for_quit || pkill -x "${PROCESS_NAME}" >/dev/null 2>&1 || true
+
+record_whether_zephyr_was_already_installed
 
 exit 0

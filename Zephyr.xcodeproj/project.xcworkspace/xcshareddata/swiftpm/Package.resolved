@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/RISCfuture/GitHubUpdateChecker",
       "state" : {
-        "revision" : "d7cca07d31daea5c4b80a6f46c8db9f26ace6dfb",
-        "version" : "2.0.1"
+        "revision" : "02f7a29050646bb726922728b196c1b68d1bb3b3",
+        "version" : "2.1.0"
       }
     },
     {

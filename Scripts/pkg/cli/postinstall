@@ -12,6 +12,12 @@
 # want a `zephyr` on their PATH can clear one checkbox and still install the app. Settings keeps
 # offering the command afterwards, so the choice is not final.
 #
+# On an upgrade the checkbox is not consulted: someone who cleared it before, or who unlinked the
+# tool by hand afterwards, did not ask for it back every time Zephyr updates. Only a first install
+# acts on the choice. The app component's `preinstall` is what leaves the marker that says which
+# this is, because by the time this script runs the receipt that would have said the same thing has
+# already been rewritten for the install in progress.
+#
 # Nothing here may fail the install. The tool is a convenience; the app is what was asked for.
 
 set -uo pipefail
@@ -22,6 +28,9 @@ set -uo pipefail
 readonly TOOL="/Applications/Zephyr.app/Contents/Helpers/zephyr-cli"
 readonly LINK_NAME="zephyr"
 
+# Left by the app component's preinstall, on the booted system rather than the target volume.
+readonly UPGRADE_MARKER="/tmp/codes.tim.Zephyr.upgrade"
+
 # $3 is the volume being installed onto, "/" for the running system. Trimming the trailing slash
 # keeps the concatenations below from producing a doubled one.
 target_volume="${3:-/}"
@@ -29,8 +38,28 @@ target_volume="${target_volume%/}"
 
 bin_directory="${target_volume}/usr/local/bin"
 
+is_upgrade() {
+  [ -f "${UPGRADE_MARKER}" ]
+}
+
+tool_is_linked() {
+  [ -L "${bin_directory}/${LINK_NAME}" ]
+}
+
+link_tool() {
+  mkdir -p "${bin_directory}" && ln -sf "${TOOL}" "${bin_directory}/${LINK_NAME}"
+}
+
+# The marker has served its purpose either way, and a leftover would make the next install look
+# like an upgrade to a script that had not asked.
+trap 'rm -f "${UPGRADE_MARKER}"' EXIT
+
 [ -x "${target_volume}${TOOL}" ] || exit 0
 
-mkdir -p "${bin_directory}" && ln -sf "${TOOL}" "${bin_directory}/${LINK_NAME}"
+if is_upgrade && ! tool_is_linked; then
+  exit 0
+fi
+
+link_tool
 
 exit 0
