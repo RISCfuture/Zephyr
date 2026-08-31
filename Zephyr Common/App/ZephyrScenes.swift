@@ -189,10 +189,20 @@ private struct MenuBarMark: View {
 
   let model: AppModel
 
+  @Environment(\.colorScheme)
+  private var colorScheme
+
   var body: some View {
     let activity = model.activity(asOf: model.activitySampleDate)
-    Image(nsImage: ZephyrMark.image(activity, style: .menuBar, size: Self.size))
-      .accessibilityLabel(Text("Zephyr, \(activity.summary)", bundle: #bundle))
+    Image(
+      nsImage: ZephyrMark.image(
+        activity,
+        style: .menuBar,
+        size: Self.size,
+        colorScheme: colorScheme
+      )
+    )
+    .accessibilityLabel(Text("Zephyr, \(activity.summary)", bundle: #bundle))
   }
 }
 

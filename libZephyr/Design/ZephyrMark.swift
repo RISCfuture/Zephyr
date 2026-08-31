@@ -28,8 +28,11 @@ public struct ZephyrMark: View {
   private let style: ZephyrMarkStyle
   private let size: CGFloat
 
+  @Environment(\.colorScheme)
+  private var colorScheme
+
   public var body: some View {
-    Image(nsImage: Self.image(activity, style: style, size: size))
+    Image(nsImage: Self.image(activity, style: style, size: size, colorScheme: colorScheme))
       .accessibilityLabel(Self.label(activity))
   }
 
@@ -59,11 +62,17 @@ public extension ZephyrMark {
    inverts it for the wallpaper behind it and dims it while Zephyr isn't the
    active app. One reporting issues is drawn in caution amber instead, which is
    the whole point of it.
+
+   `colorScheme` decides which half of each dynamic color the drawing gets.
+   SwiftUI rasterizes an `NSImage` outside any window's appearance, so it is
+   the only thing that tells `labelColor` and ``ZephyrPalette`` whether they
+   are being drawn onto a light surface or a dark one.
    */
   static func image(
     _ activity: SyncActivity?,
     style: ZephyrMarkStyle = .branded,
-    size: CGFloat
+    size: CGFloat,
+    colorScheme: ColorScheme
   ) -> NSImage {
     let mark = Self.symbol(Self.markSymbolName, in: #bundle, size: size, weight: .regular)
     let badge = activity.flatMap {
@@ -78,8 +87,13 @@ public extension ZephyrMark {
 
     let palette = Self.palette(style, activity)
     let canvas = Self.canvas(mark: mark, badge: badge)
+    let appearance = Self.appearance(for: colorScheme)
     let image = NSImage(size: canvas, flipped: false) { _ in
-      Self.draw(mark: mark, badge: badge, palette: palette, in: canvas, size: size)
+      var drawn = false
+      appearance.performAsCurrentDrawingAppearance {
+        drawn = Self.draw(mark: mark, badge: badge, palette: palette, in: canvas, size: size)
+      }
+      return drawn
     }
     image.isTemplate = palette == nil
     image.accessibilityDescription = Self.label(activity)
@@ -144,6 +158,11 @@ private extension ZephyrMark {
     }
   }
 
+  /// The appearance the mark's dynamic colors resolve against while it draws.
+  static func appearance(for colorScheme: ColorScheme) -> NSAppearance {
+    NSAppearance(named: colorScheme == .dark ? .darkAqua : .aqua) ?? .currentDrawing()
+  }
+
   static func symbol(_ name: String, in bundle: Bundle?, size: CGFloat, weight: NSFont.Weight)
     -> NSImage?
   {
@@ -161,8 +180,7 @@ private extension ZephyrMark {
   }
 
   /// Draws the mark, bites the badge's clearance out of it, then drops the
-  /// badge into the hole. Colors resolve here rather than at build time so the
-  /// image follows the appearance it is drawn into.
+  /// badge into the hole.
   static func draw(
     mark: NSImage,
     badge: NSImage?,
@@ -208,26 +226,39 @@ private extension ZephyrMark {
   }
 }
 
-#Preview("Zephyr mark") {
-  let readings: [(String, SyncActivity)] = [
+/// Every reading the mark can carry, at every size and style it is drawn at.
+private struct ZephyrMarkGallery: View {
+  private static let readings: [(String, SyncActivity)] = [
     ("Syncing", SyncActivity(latestChange: Date(), hasIssues: false)),
     ("Up to date", .idle),
     ("Sync issues", SyncActivity(latestChange: nil, hasIssues: true))
   ]
-  return VStack(alignment: .leading, spacing: 20) {
-    ForEach(readings, id: \.0) { name, activity in
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 20) {
+      ForEach(Self.readings, id: \.0) { name, activity in
+        HStack(spacing: 20) {
+          ZephyrMark(activity, size: 56)
+          ZephyrMark(activity, size: 20)
+          ZephyrMark(activity, style: .menuBar, size: 18)
+          Text(name)
+        }
+      }
       HStack(spacing: 20) {
-        ZephyrMark(activity, size: 56)
-        ZephyrMark(activity, size: 20)
-        ZephyrMark(activity, style: .menuBar, size: 18)
-        Text(name)
+        ZephyrMark(size: 56)
+        ZephyrMark(size: 20)
+        Text("No reading")
       }
     }
-    HStack(spacing: 20) {
-      ZephyrMark(size: 56)
-      ZephyrMark(size: 20)
-      Text("No reading")
-    }
+    .padding(40)
   }
-  .padding(40)
+}
+
+#Preview("Zephyr mark") {
+  ZephyrMarkGallery()
+}
+
+#Preview("Zephyr mark, dark") {
+  ZephyrMarkGallery()
+    .preferredColorScheme(.dark)
 }
