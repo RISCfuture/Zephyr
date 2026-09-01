@@ -57,15 +57,29 @@ jobs:
       - name: Enable macros
         run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
 
+      - name: Record toolchain version
+        id: toolchain
+        run: echo "xcode=$(xcodebuild -version | tr '\n' '-')" >> "$GITHUB_OUTPUT"
+
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v6
         with:
-          path: |
-            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages/checkouts
-            ~/Library/Caches/org.swift.swiftpm
+          path: ~/Library/Caches/org.swift.swiftpm
           key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
             spm-${{ runner.os }}-
+
+      # Cloning the dependencies is cheap; compiling them is not, so the build products are cached
+      # too. The key is exact-match — no restore-keys — because objects built against a different
+      # dependency graph or toolchain must never be reused. Only Build and SourcePackages are kept:
+      # the index store is regenerated each run rather than restored stale.
+      - name: Cache Xcode build products
+        uses: actions/cache@v6
+        with:
+          path: |
+            ${{ runner.temp }}/dd-unit/Build
+            ${{ runner.temp }}/dd-unit/SourcePackages
+          key: derived-unit-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       - name: Run unit tests
         run: |
@@ -106,15 +120,29 @@ jobs:
       - name: Enable macros
         run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
 
+      - name: Record toolchain version
+        id: toolchain
+        run: echo "xcode=$(xcodebuild -version | tr '\n' '-')" >> "$GITHUB_OUTPUT"
+
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v6
         with:
-          path: |
-            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages/checkouts
-            ~/Library/Caches/org.swift.swiftpm
+          path: ~/Library/Caches/org.swift.swiftpm
           key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
             spm-${{ runner.os }}-
+
+      # Cloning the dependencies is cheap; compiling them is not, so the build products are cached
+      # too. The key is exact-match — no restore-keys — because objects built against a different
+      # dependency graph or toolchain must never be reused. Only Build and SourcePackages are kept:
+      # the index store is regenerated each run rather than restored stale.
+      - name: Cache Xcode build products
+        uses: actions/cache@v6
+        with:
+          path: |
+            ${{ runner.temp }}/dd-build/Build
+            ${{ runner.temp }}/dd-build/SourcePackages
+          key: derived-build-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       # Both editions emit Zephyr.app, so the second build replaces the first in the shared derived
       # data. That is only a compile check, and each still compiles its own sources.
@@ -148,6 +176,30 @@ jobs:
 
       - name: Enable macros
         run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
+      - name: Record toolchain version
+        id: toolchain
+        run: echo "xcode=$(xcodebuild -version | tr '\n' '-')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v6
+        with:
+          path: ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      # Cloning the dependencies is cheap; compiling them is not, so the build products are cached
+      # too. The key is exact-match — no restore-keys — because objects built against a different
+      # dependency graph or toolchain must never be reused. Only Build and SourcePackages are kept:
+      # the index store is regenerated each run rather than restored stale.
+      - name: Cache Xcode build products
+        uses: actions/cache@v6
+        with:
+          path: |
+            ${{ runner.temp }}/dd-ui/Build
+            ${{ runner.temp }}/dd-ui/SourcePackages
+          key: derived-ui-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       # XCUITEST_TIMEOUT_MULTIPLIER stretches XCUITestKit's waits so the slower CI hardware doesn't
       # trip element lookups that pass locally. The waits are read by the test code, which runs in
@@ -192,15 +244,29 @@ jobs:
       - name: Enable macros
         run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
 
+      - name: Record toolchain version
+        id: toolchain
+        run: echo "xcode=$(xcodebuild -version | tr '\n' '-')" >> "$GITHUB_OUTPUT"
+
       - name: Cache SwiftPM dependencies
         uses: actions/cache@v6
         with:
-          path: |
-            ~/Library/Developer/Xcode/DerivedData/**/SourcePackages/checkouts
-            ~/Library/Caches/org.swift.swiftpm
+          path: ~/Library/Caches/org.swift.swiftpm
           key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
             spm-${{ runner.os }}-
+
+      # Cloning the dependencies is cheap; compiling them is not, so the build products are cached
+      # too. The key is exact-match — no restore-keys — because objects built against a different
+      # dependency graph or toolchain must never be reused. Only Build and SourcePackages are kept:
+      # the index store is regenerated each run rather than restored stale.
+      - name: Cache Xcode build products
+        uses: actions/cache@v6
+        with:
+          path: |
+            ${{ runner.temp }}/dd-docs/Build
+            ${{ runner.temp }}/dd-docs/SourcePackages
+          key: derived-docbuild-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       # One derived-data directory for all three schemes: the app and the tool both build on the
       # framework, so a shared one compiles it once. The archives are throwaway — nothing publishes

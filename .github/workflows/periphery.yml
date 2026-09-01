@@ -30,6 +30,31 @@ jobs:
       - name: Enable macros
         run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
 
+      - name: Record toolchain version
+        id: toolchain
+        run: echo "xcode=$(xcodebuild -version | tr '\n' '-')" >> "$GITHUB_OUTPUT"
+
+      - name: Cache SwiftPM dependencies
+        uses: actions/cache@v6
+        with:
+          path: ~/Library/Caches/org.swift.swiftpm
+          key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            spm-${{ runner.os }}-
+
+      # Cloning the dependencies is cheap; compiling them is not, so the build products are cached
+      # too. The key is exact-match — no restore-keys — because objects built against a different
+      # dependency graph or toolchain must never be reused. Index.noindex is deliberately left out:
+      # a unit file outlives the source it was built from, and Periphery would read the strays as
+      # live declarations.
+      - name: Cache Xcode build products
+        uses: actions/cache@v6
+        with:
+          path: |
+            ${{ runner.temp }}/peri-dd/Build
+            ${{ runner.temp }}/peri-dd/SourcePackages
+          key: derived-periphery-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+
       - name: Install Periphery
         run: brew install periphery
 
