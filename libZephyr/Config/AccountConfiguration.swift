@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// The kind of namespace an account's path-based calls resolve against.
 public enum AccountRootType: String, Sendable, Equatable, Codable {

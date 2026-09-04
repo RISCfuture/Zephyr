@@ -1,7 +1,7 @@
-import FileProvider
-import Foundation
+public import FileProvider
+public import Foundation
 import System
-import UniformTypeIdentifiers
+public import UniformTypeIdentifiers
 
 /**
  The File Provider representation of one indexed Dropbox item.

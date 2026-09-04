@@ -1,5 +1,5 @@
-import Foundation
-import GRDB
+public import Foundation
+public import GRDB
 
 /// The kind of item an index row describes.
 public enum IndexItemType: Int, Sendable, Codable, Equatable {

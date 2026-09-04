@@ -1,4 +1,4 @@
-import os
+public import os
 
 /**
  The unified-logging loggers used throughout Zephyr, all under the

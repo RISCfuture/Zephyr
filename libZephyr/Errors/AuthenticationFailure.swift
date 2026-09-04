@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  An OAuth or credential-storage failure.

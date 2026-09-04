@@ -1,5 +1,5 @@
 import AppKit
-import SwiftUI
+public import SwiftUI
 
 /**
  How a ``ZephyrMark`` is colored: menu-bar marks stay monochrome so they read

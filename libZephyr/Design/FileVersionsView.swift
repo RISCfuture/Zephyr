@@ -1,4 +1,4 @@
-import SwiftUI
+public import SwiftUI
 
 /**
  The version-history sheet: a band naming Zephyr, the file being looked at, the

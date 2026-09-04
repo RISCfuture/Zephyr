@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  The sync summary the app publishes for the widget: one JSON file in the

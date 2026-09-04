@@ -1,4 +1,4 @@
-import SwiftUI
+public import SwiftUI
 
 /**
  The gaps Zephyr draws when the platform default is the wrong one.
