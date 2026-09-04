@@ -1,4 +1,4 @@
-@preconcurrency import FileProvider
+@preconcurrency public import FileProvider
 import Foundation
 
 /**

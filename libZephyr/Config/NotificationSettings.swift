@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  Which sync events warrant a notification.

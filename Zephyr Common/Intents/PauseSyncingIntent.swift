@@ -1,4 +1,4 @@
-import AppIntents
+public import AppIntents
 import Foundation
 import libZephyr
 

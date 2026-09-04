@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  The share sheet's side of the flow: what the system handed the extension, and

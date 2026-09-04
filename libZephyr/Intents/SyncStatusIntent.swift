@@ -1,4 +1,4 @@
-import AppIntents
+public import AppIntents
 import Foundation
 
 /// Reports what Zephyr's index says about an account, without asking Dropbox.

@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// The options for creating a shared link.
 public struct SharedLinkSettings: Sendable, Equatable {

@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  Resolves where Zephyr keeps its shared state: the app-group container that the

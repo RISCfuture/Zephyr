@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  The `com.dropbox.ignored` extended-attribute convention shared with the

@@ -1,4 +1,4 @@
-import FileProvider
+public import FileProvider
 import Foundation
 import os
 

@@ -1,4 +1,4 @@
-import SwiftUI
+public import SwiftUI
 
 /**
  A path shown the way the Finder shows one: its components divided by chevrons,

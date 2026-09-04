@@ -1,4 +1,4 @@
-import SwiftUI
+public import SwiftUI
 
 /**
  The share sheet: a band naming Zephyr, a band previewing what is being sent,

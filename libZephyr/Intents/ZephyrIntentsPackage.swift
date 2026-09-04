@@ -1,4 +1,4 @@
-import AppIntents
+public import AppIntents
 
 /**
  The App Intents `libZephyr` defines.

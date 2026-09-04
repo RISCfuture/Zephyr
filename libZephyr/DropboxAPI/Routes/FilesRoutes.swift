@@ -1,5 +1,5 @@
-import CoreGraphics
-import Foundation
+public import CoreGraphics
+public import Foundation
 import os
 
 /// Which revisions `files/list_revisions` groups together.

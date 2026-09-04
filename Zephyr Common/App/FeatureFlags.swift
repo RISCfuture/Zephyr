@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  What this build of Zephyr is allowed to do.

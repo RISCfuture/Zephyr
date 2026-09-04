@@ -1,5 +1,5 @@
 import AppKit
-import SwiftUI
+public import SwiftUI
 
 /**
  Zephyr's palette, drawn from the aviation weather charts the app is named

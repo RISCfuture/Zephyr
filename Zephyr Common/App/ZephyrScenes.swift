@@ -1,6 +1,6 @@
 import AppKit
 import FileProvider
-import SwiftUI
+public import SwiftUI
 import libZephyr
 
 /**
