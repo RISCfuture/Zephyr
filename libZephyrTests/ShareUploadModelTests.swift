@@ -4,8 +4,8 @@ import Testing
 @testable import libZephyr
 
 @MainActor
-@Suite("Share upload flow")
-struct ShareUploadModelTests {
+@Suite
+struct `Share upload flow` {
   private static func makeModel(
     sharing urls: [URL],
     service: StubShareUploadService,
@@ -16,8 +16,8 @@ struct ShareUploadModelTests {
     return (model, context)
   }
 
-  @Test("Loading stages every shared file and offers the linked accounts")
-  func loadStagesFilesAndAccounts() async throws {
+  @Test
+  func `Loading stages every shared file and offers the linked accounts`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt", "Budget.csv"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let personal = try shareAccount("Personal")
@@ -41,8 +41,8 @@ struct ShareUploadModelTests {
     }
   }
 
-  @Test("A shared folder is skipped by name rather than failing the whole share")
-  func foldersAreSkipped() async throws {
+  @Test
+  func `A shared folder is skipped by name rather than failing the whole share`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let nested = directory.appendingPathComponent("Trip Photos")
@@ -59,8 +59,8 @@ struct ShareUploadModelTests {
     #expect(model.skippedNames == ["Trip Photos"])
   }
 
-  @Test("An account layer that can't answer stops the flow with its reason")
-  func accountFailureIsReported() async throws {
+  @Test
+  func `An account layer that can't answer stops the flow with its reason`() async throws {
     let (model, _) = Self.makeModel(
       sharing: [],
       service: StubShareUploadService(accountsFailure: EngineFailure.notLinked)
@@ -76,8 +76,8 @@ struct ShareUploadModelTests {
     #expect(message.isEmpty == false)
   }
 
-  @Test("Uploading sends every file into the chosen folder and dismisses the sheet")
-  func uploadSendsEveryFileAndCompletes() async throws {
+  @Test
+  func `Uploading sends every file into the chosen folder and dismisses the sheet`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt", "Budget.csv"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let personal = try shareAccount("Personal")
@@ -105,8 +105,8 @@ struct ShareUploadModelTests {
     #expect(model.files.allSatisfy { !FileManager.default.fileExists(atPath: $0.path) })
   }
 
-  @Test("A share with no folder chosen goes to the account root")
-  func rootIsTheStartingDestination() async throws {
+  @Test
+  func `A share with no folder chosen goes to the account root`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let service = StubShareUploadService(accounts: [try shareAccount("Personal")])
@@ -119,8 +119,10 @@ struct ShareUploadModelTests {
     #expect(service.requests.map(\.path.displayPath) == ["/Notes.txt"])
   }
 
-  @Test("A failed upload leaves the sheet open with the reason, not silently dismissed")
-  func uploadFailureKeepsTheSheetOpen() async throws {
+  @Test
+  func `A failed upload leaves the sheet open with the reason, not silently dismissed`()
+    async throws
+  {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let service = StubShareUploadService(
@@ -139,8 +141,8 @@ struct ShareUploadModelTests {
     #expect(context.completionCount == 0)
   }
 
-  @Test("Cancelling abandons the request and clears the staged copies")
-  func cancelClearsStaging() async throws {
+  @Test
+  func `Cancelling abandons the request and clears the staged copies`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let (model, context) = Self.makeModel(
@@ -159,8 +161,8 @@ struct ShareUploadModelTests {
     #expect(urls.allSatisfy { FileManager.default.fileExists(atPath: $0.path) })
   }
 
-  @Test("Nothing can be uploaded before an account and a file are both in hand")
-  func uploadIsGatedOnAnAccountAndAFile() async throws {
+  @Test
+  func `Nothing can be uploaded before an account and a file are both in hand`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt"])
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -178,8 +180,8 @@ struct ShareUploadModelTests {
 }
 
 @MainActor
-@Suite("Share destination")
-struct ShareDestinationTests {
+@Suite
+struct `Share destination` {
   private func makeModel(
     service: StubShareUploadService,
     defaults: UserDefaults? = nil
@@ -191,8 +193,8 @@ struct ShareDestinationTests {
     )
   }
 
-  @Test("A folder made elsewhere shows up without waiting for the index")
-  func refreshAddsWhatTheIndexHasNotSeen() async throws {
+  @Test
+  func `A folder made elsewhere shows up without waiting for the index`() async throws {
     let service = StubShareUploadService(
       accounts: [try shareAccount("Personal")],
       indexed: try folders("/Camera Uploads", "/Receipts"),
@@ -207,8 +209,8 @@ struct ShareDestinationTests {
     #expect(model.folders.map(\.displayPath) == ["/Brand New", "/Camera Uploads", "/Receipts"])
   }
 
-  @Test("A refresh that can't reach Dropbox leaves the indexed folders standing")
-  func aFailedRefreshChangesNothing() async throws {
+  @Test
+  func `A refresh that can't reach Dropbox leaves the indexed folders standing`() async throws {
     let service = StubShareUploadService(
       accounts: [try shareAccount("Personal")],
       indexed: try folders("/Camera Uploads", "/Receipts"),
@@ -222,8 +224,8 @@ struct ShareDestinationTests {
     #expect(model.folders.map(\.displayPath) == ["/Camera Uploads", "/Receipts"])
   }
 
-  @Test("The browser filters on any part of a folder's path, ignoring case")
-  func browserFilters() async throws {
+  @Test
+  func `The browser filters on any part of a folder's path, ignoring case`() async throws {
     let service = StubShareUploadService(
       accounts: [try shareAccount("Personal")],
       indexed: try folders("/Camera Uploads", "/Receipts", "/Receipts/2026", "/Scans")
@@ -243,8 +245,8 @@ struct ShareDestinationTests {
     #expect(model.matchingFolders.map(\.displayPath) == ["/Receipts/2026"])
   }
 
-  @Test("Choosing a folder sets the destination and closes the browser")
-  func choosingLeavesTheBrowser() async throws {
+  @Test
+  func `Choosing a folder sets the destination and closes the browser`() async throws {
     let model = makeModel(
       service: StubShareUploadService(
         accounts: [try shareAccount("Personal")],
@@ -259,8 +261,8 @@ struct ShareDestinationTests {
     #expect(model.destination.displayPath == "/Receipts")
   }
 
-  @Test("Backing out of the browser keeps the destination it opened on")
-  func cancellingTheBrowserKeepsTheDestination() async throws {
+  @Test
+  func `Backing out of the browser keeps the destination it opened on`() async throws {
     let model = makeModel(
       service: StubShareUploadService(accounts: [try shareAccount("Personal")])
     )
@@ -273,8 +275,8 @@ struct ShareDestinationTests {
     #expect(model.destination.displayPath == "/Receipts")
   }
 
-  @Test("The folders a share went to are what the next share offers, newest first")
-  func recentFoldersAreRemembered() async throws {
+  @Test
+  func `The folders a share went to are what the next share offers, newest first`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let personal = try shareAccount("Personal")
@@ -303,8 +305,8 @@ struct ShareDestinationTests {
     }
   }
 
-  @Test("Only the newest few folders are remembered")
-  func recentFoldersAreCapped() async throws {
+  @Test
+  func `Only the newest few folders are remembered`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let personal = try shareAccount("Personal")
@@ -333,8 +335,8 @@ struct ShareDestinationTests {
     }
   }
 
-  @Test("A remembered folder that no longer parses is dropped rather than offered")
-  func unparseableRecentFoldersAreDropped() async throws {
+  @Test
+  func `A remembered folder that no longer parses is dropped rather than offered`() async throws {
     try await withTemporaryDefaults { defaults in
       let personal = try shareAccount("Personal")
       defaults.set(
@@ -351,8 +353,8 @@ struct ShareDestinationTests {
     }
   }
 
-  @Test("The destination menu always offers the account root and the current folder")
-  func menuAlwaysOffersRootAndCurrent() async throws {
+  @Test
+  func `The destination menu always offers the account root and the current folder`() async throws {
     let model = makeModel(
       service: StubShareUploadService(accounts: [try shareAccount("Personal")])
     )
@@ -364,8 +366,8 @@ struct ShareDestinationTests {
     #expect(offered.contains("/"))
   }
 
-  @Test("Switching accounts leaves the other Dropbox's folder behind")
-  func switchingAccountsDropsTheDestination() async throws {
+  @Test
+  func `Switching accounts leaves the other Dropbox's folder behind`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Invoice.pdf"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let personal = try shareAccount("Personal")
@@ -395,8 +397,8 @@ struct ShareDestinationTests {
     }
   }
 
-  @Test("Each account remembers the folders its own shares went to")
-  func rememberedFoldersAreKeptPerAccount() async throws {
+  @Test
+  func `Each account remembers the folders its own shares went to`() async throws {
     let (directory, urls) = try makeSharedFiles(named: ["Notes.txt"])
     defer { try? FileManager.default.removeItem(at: directory) }
     let personal = try shareAccount("Personal")

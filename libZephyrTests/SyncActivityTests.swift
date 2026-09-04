@@ -27,7 +27,7 @@ struct SyncActivityTests {
   /// An account nobody can reach reads as offline however much it was doing
   /// when the connection went, because none of it is moving.
   @Test
-  func unreachableOutranksABacklog() {
+  func `unreachable outranks a backlog`() {
     let offline = activity(offlineSince: Self.now, pendingUploads: 12)
     #expect(offline.state == .offline(isProlonged: false))
   }
@@ -35,7 +35,7 @@ struct SyncActivityTests {
   /// Issues outlast an outage and still want the user, so they keep the
   /// reading — and with it the caution the menu-bar mark flies.
   @Test
-  func issuesOutrankBeingUnreachable() {
+  func `issues outrank being unreachable`() {
     #expect(activity(offlineSince: Self.now, hasIssues: true).state == .issues)
   }
 
@@ -43,7 +43,7 @@ struct SyncActivityTests {
   /// nothing will ever carry, so it keeps the reading. Reading it as anything
   /// else is how an account that cannot sync at all comes to fly up to date.
   @Test
-  func unfinishedSetupOutranksAnOutageAndABacklog() {
+  func `unfinished setup outranks an outage and a backlog`() {
     let unset = activity(offlineSince: Self.now, pendingUploads: 12, canSync: false)
     #expect(unset.state == .needsSetup)
     #expect(activity(offlineSince: nil, canSync: false).state == .needsSetup)
@@ -51,14 +51,14 @@ struct SyncActivityTests {
 
   /// Issues survive finishing setup, so they outrank it in turn.
   @Test
-  func issuesOutrankUnfinishedSetup() {
+  func `issues outrank unfinished setup`() {
     #expect(activity(offlineSince: nil, hasIssues: true, canSync: false).state == .issues)
   }
 
   /// A blip and an outage are the same state wearing different words: the
   /// wait is only worth naming as trouble once it has lasted.
   @Test
-  func anOutageIsProlongedOnlyAfterFiveMinutes() {
+  func `an outage is prolonged only after five minutes`() {
     #expect(
       activity(offlineSince: Self.now.addingTimeInterval(-Self.prolongedOutageSec + 1))
         .state == .offline(isProlonged: false)

@@ -22,7 +22,7 @@ struct AccountFailureTests {
   /// enough to make it the account's failure: it is reported as a state
   /// instead, and never as something the user has to fix.
   @Test
-  func aLostConnectionNeverBecomesAnAccountFailure() {
+  func `a lost connection never becomes an account failure`() {
     let lost = EngineFailure.connection(detail: "The network connection was lost.")
     #expect(failure(lost, failedPolls: 1) == nil)
     #expect(failure(lost, failedPolls: 10) == nil)
@@ -32,7 +32,7 @@ struct AccountFailureTests {
   /// waiting to be sure would leave the user staring at a Dropbox that
   /// silently stopped.
   @Test
-  func aRevokedTokenStopsTheAccountAtOnce() throws {
+  func `a revoked token stops the account at once`() throws {
     let revoked = try #require(failure(AuthenticationFailure.tokenRevoked, failedPolls: 1))
     #expect(revoked.isResolvedByRelinking)
   }
@@ -42,7 +42,7 @@ struct AccountFailureTests {
   /// it could not make says no more about the account by that door than by the
   /// other one.
   @Test
-  func aLostConnectionIsNoAccountFailureFromTheCredentialCheckEither() {
+  func `a lost connection is no account failure from the credential check either`() {
     let lost = EngineFailure.connection(detail: "The network connection was lost.")
     #expect(AppModel.AccountFailure(lost) == nil)
   }
@@ -50,7 +50,7 @@ struct AccountFailureTests {
   /// An error from no tier is weather until it keeps happening: three polls
   /// in a row failing is the account's trouble, one is not.
   @Test
-  func anUnclassifiedErrorHasToKeepHappening() {
+  func `an unclassified error has to keep happening`() {
     #expect(failure(UnclassifiedFailure(), failedPolls: 1) == nil)
     #expect(failure(UnclassifiedFailure(), failedPolls: 2) == nil)
     #expect(failure(UnclassifiedFailure(), failedPolls: 3) != nil)

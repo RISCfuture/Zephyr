@@ -115,10 +115,12 @@ private func authorized(_ id: String, email: String) throws -> FullAccount {
 private let personalID = "dbid:AAH4f99T0taONIb-personal"
 private let workID = "dbid:AAH4f99T0taONIb-work"
 
-@Suite("Account registry teardown")
-struct AccountRegistryTeardownTests {
-  @Test("Unregistering takes one account's whole directory and leaves the others standing")
-  func unregisterRemovesOnlyItsOwnState() async throws {
+@Suite
+struct `Account registry teardown` {
+  @Test
+  func `Unregistering takes one account's whole directory and leaves the others standing`()
+    async throws
+  {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let personal = try account(personalID, email: "franz@example.com")
@@ -144,8 +146,8 @@ struct AccountRegistryTeardownTests {
     )
   }
 
-  @Test("Unregistering an account that is not registered changes nothing")
-  func unregisterIsIdempotent() async throws {
+  @Test
+  func `Unregistering an account that is not registered changes nothing`() async throws {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let personal = try account(personalID, email: "franz@example.com")
@@ -159,8 +161,10 @@ struct AccountRegistryTeardownTests {
     #expect(try await fixture.registry.linkedAccounts().isEmpty)
   }
 
-  @Test("Registering an account that is already registered keeps its index and one entry")
-  func registeringTwiceIsNotADuplicate() async throws {
+  @Test
+  func `Registering an account that is already registered keeps its index and one entry`()
+    async throws
+  {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let personal = try account(personalID, email: "franz@example.com")
@@ -183,10 +187,12 @@ struct AccountRegistryTeardownTests {
   }
 }
 
-@Suite("Which accounts can be authenticated")
-struct AuthenticatableAccountsTests {
-  @Test("A keychain that can't be read fails the question rather than answering “no token”")
-  func aKeychainFailureIsNotAnAbsentToken() async throws {
+@Suite
+struct `Which accounts can be authenticated` {
+  @Test
+  func `A keychain that can't be read fails the question rather than answering “no token”`()
+    async throws
+  {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let personal = try account(personalID, email: "franz@example.com")
@@ -203,8 +209,8 @@ struct AuthenticatableAccountsTests {
     #expect(try await manager.linkedAccounts() == [personal.accountID])
   }
 
-  @Test("An account with no stored token is simply one this process can't act as")
-  func anAbsentTokenLeavesTheAccountLinked() async throws {
+  @Test
+  func `An account with no stored token is simply one this process can't act as`() async throws {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let personal = try account(personalID, email: "franz@example.com")
@@ -220,10 +226,10 @@ struct AuthenticatableAccountsTests {
   }
 }
 
-@Suite("Which account may complete a link")
-struct LinkIntentTests {
-  @Test("Adding an account refuses the one already linked, naming it")
-  func addingRefusesAnAccountAlreadyLinked() async throws {
+@Suite
+struct `Which account may complete a link` {
+  @Test
+  func `Adding an account refuses the one already linked, naming it`() async throws {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let personal = try account(personalID, email: "franz@example.com")
@@ -246,8 +252,9 @@ struct LinkIntentTests {
     )
   }
 
-  @Test("An account the app linked is still one the CLI's own keychain may authorize")
-  func aRegisteredAccountWithNoLocalTokenIsNotADuplicate() async throws {
+  @Test
+  func `An account the app linked is still one the CLI's own keychain may authorize`() async throws
+  {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let personal = try account(personalID, email: "franz@example.com")
@@ -262,8 +269,8 @@ struct LinkIntentTests {
     )
   }
 
-  @Test("A repair refuses any account but the one it is repairing, naming both")
-  func repairingRefusesAnotherAccount() async throws {
+  @Test
+  func `A repair refuses any account but the one it is repairing, naming both`() async throws {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let personal = try account(personalID, email: "franz@example.com")
@@ -293,8 +300,9 @@ struct LinkIntentTests {
     )
   }
 
-  @Test("A repair of an account whose configuration won't load names it by identifier")
-  func repairingNamesAnUnreadableAccountByIdentifier() async throws {
+  @Test
+  func `A repair of an account whose configuration won't load names it by identifier`() async throws
+  {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let work = try AccountIdentifier(validating: workID)
@@ -315,8 +323,8 @@ struct LinkIntentTests {
     }
   }
 
-  @Test("A link with no account in mind takes whichever one approves")
-  func anyAccountAcceptsALinkedAccount() async throws {
+  @Test
+  func `A link with no account in mind takes whichever one approves`() async throws {
     let fixture = try AccountFixture.make()
     defer { fixture.tearDown() }
     let personal = try account(personalID, email: "franz@example.com")

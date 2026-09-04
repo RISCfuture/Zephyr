@@ -4,8 +4,8 @@ import WidgetKit
 
 @testable import libZephyr
 
-@Suite("Widget timeline provider")
-struct SyncStatusTimelineTests {
+@Suite
+struct `Widget timeline provider` {
   private let environment: ZephyrEnvironment
   private let provider: SyncStatusTimelineProvider
 
@@ -33,22 +33,22 @@ struct SyncStatusTimelineTests {
     .write(to: environment)
   }
 
-  @Test("The entry reads whatever the app last published")
-  func entryReadsTheContainer() throws {
+  @Test
+  func `The entry reads whatever the app last published`() throws {
     try publish(accountNamed: "Personal Dropbox")
     let entry = provider.currentEntry()
     #expect(entry.snapshot?.accounts.first?.displayName == "Personal Dropbox")
   }
 
-  @Test("A republished snapshot is what the next entry carries")
-  func entryFollowsRepublishing() throws {
+  @Test
+  func `A republished snapshot is what the next entry carries`() throws {
     try publish(accountNamed: "Personal Dropbox")
     try publish(accountNamed: "Work Dropbox")
     #expect(provider.currentEntry().snapshot?.accounts.first?.displayName == "Work Dropbox")
   }
 
-  @Test("Before the app has published, the entry carries nothing rather than a sample")
-  func entryIsEmptyBeforeAnythingIsPublished() {
+  @Test
+  func `Before the app has published, the entry carries nothing rather than a sample`() {
     #expect(provider.currentEntry().snapshot == nil)
   }
 }

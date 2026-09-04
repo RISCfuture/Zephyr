@@ -50,7 +50,7 @@ struct DropboxClientTests {
   /// the notification kept for syncing that has genuinely stopped — on a
   /// request that was never answered either way.
   @Test
-  func aCancelledRequestReadsAsCancelledRatherThanAsALostConnection() async throws {
+  func `a cancelled request reads as cancelled rather than as a lost connection`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     await transport.enqueueFailure(.cancelled)
@@ -63,7 +63,7 @@ struct DropboxClientTests {
   /// A network that went away is a connection failure, and is retried before
   /// it is called one — the branch a cancellation must not fall into.
   @Test
-  func aLostNetworkStillReadsAsAConnectionFailure() async throws {
+  func `a lost network still reads as a connection failure`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     for _ in 0..<8 { await transport.enqueueFailure(.notConnectedToInternet) }
@@ -81,7 +81,7 @@ struct DropboxClientTests {
   /// refusal saved, and would end at a sync issue naming a connection that
   /// was never lost.
   @Test
-  func aRefusalOverWhatThePathCostsIsDeferredRatherThanRetried() async throws {
+  func `a refusal over what the path costs is deferred rather than retried`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     await transport.enqueueFailure(
@@ -103,7 +103,7 @@ struct DropboxClientTests {
   }
 
   @Test
-  func rpcSendsAuthorizedJSONRequestAndDecodesResult() async throws {
+  func `RPC sends authorized JSON request and decodes result`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     await transport.enqueueJSON(Self.accountJSON)
@@ -126,7 +126,7 @@ struct DropboxClientTests {
   }
 
   @Test
-  func withPathRootSendsPathRootHeaderOnlyOnDerivedClient() async throws {
+  func `with path root sends path root header only on derived client`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     await transport.enqueueJSON(Self.fileMetadataJSON)
@@ -150,7 +150,7 @@ struct DropboxClientTests {
   }
 
   @Test
-  func longpollNeedsNoTokenProviderAndSendsNoAuthorization() async throws {
+  func `longpoll needs no token provider and sends no authorization`() async throws {
     let transport = MockTransport()
     let client = DropboxClient(transport: transport, tokenProvider: nil)
       .withPathRoot(PathRoot(namespaceID: try NamespaceIdentifier(validating: "564666")))
@@ -170,7 +170,7 @@ struct DropboxClientTests {
   }
 
   @Test
-  func metadataReturnsNilWhenNothingExistsAtPath() async throws {
+  func `metadata returns nil when nothing exists at path`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     await transport.enqueueJSON(Self.notFoundJSON, status: 409)
@@ -183,7 +183,7 @@ struct DropboxClientTests {
   }
 
   @Test
-  func retriesRateLimitedRequestAfterServerBackoff() async throws {
+  func `retries rate limited request after server backoff`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     await transport.enqueue(MockTransport.Exchange(status: 429, headers: ["Retry-After": "0"]))
@@ -197,7 +197,7 @@ struct DropboxClientTests {
   }
 
   @Test
-  func retriesServerErrorAndRecovers() async throws {
+  func `retries server error and recovers`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     await transport.enqueue(MockTransport.Exchange(status: 500))
@@ -211,7 +211,7 @@ struct DropboxClientTests {
   }
 
   @Test
-  func concurrentTokenRequestsShareOneRefresh() async throws {
+  func `concurrent token requests share one refresh`() async throws {
     let transport = MockTransport()
     let provider = AccessTokenProvider(
       refreshToken: "refresh-token",
@@ -237,7 +237,7 @@ struct DropboxClientTests {
   }
 
   @Test
-  func refreshRejectedWithInvalidGrantSurfacesAsInvalidGrant() async throws {
+  func `refresh rejected with invalid grant surfaces as invalid grant`() async throws {
     let transport = MockTransport()
     let provider = AccessTokenProvider(
       refreshToken: "revoked",

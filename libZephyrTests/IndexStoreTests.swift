@@ -7,7 +7,7 @@ import Testing
 @Suite
 struct IndexStoreTests {
   @Test
-  func appliesPageAtomicallyAndAdvancesCursor() async throws {
+  func `applies page atomically and advances cursor`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -29,7 +29,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func refusesAnIndexMigratedByANewerBuild() throws {
+  func `refuses an index migrated by a newer build`() throws {
     let (_, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     let url = directory.appendingPathComponent("index.sqlite")
@@ -52,7 +52,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func updatesPathOnMoveAndBumpsMetaGeneration() async throws {
+  func `updates path on move and bumps meta generation`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -76,7 +76,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func replacingAnItemAtAPathEvictsTheOldRow() async throws {
+  func `replacing an item at a path evicts the old row`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -98,7 +98,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func deleteSubtreeRemovesDescendantsButNotSimilarSiblings() async throws {
+  func `delete subtree removes descendants but not similar siblings`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -123,7 +123,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func replacingAFolderWithAFileRemovesTheWholeSubtree() async throws {
+  func `replacing a folder with a file removes the whole subtree`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     let subtree = ["id:docs1", "id:file1", "id:sub01", "id:deep1"]
@@ -155,7 +155,9 @@ struct IndexStoreTests {
   }
 
   @Test
-  func aFolderHeldOpenByAnIgnoredChildRenamesAsideWhenAFileTakesItsPath() async throws {
+  func `a folder held open by an ignored child renames aside when a file takes its path`()
+    async throws
+  {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -200,7 +202,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func deleteSubtreeHandlesLikeWildcardsInPaths() async throws {
+  func `delete subtree handles like wildcards in paths`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -224,7 +226,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func readOnlyStoreRefusesWrites() async throws {
+  func `read only store refuses writes`() async throws {
     let (writable, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await writable.applyDeltaPage([], history: [], advancingCursorTo: try cursor("c1"))
@@ -240,7 +242,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func resetSyncStateClearsEverything() async throws {
+  func `reset sync state clears everything`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -262,7 +264,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func resetSyncStateKeepsIgnoredItemsAndEveryItemsLocalAttributes() async throws {
+  func `reset sync state keeps ignored items and every item's local attributes`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -308,7 +310,7 @@ struct IndexStoreTests {
   // MARK: Sync errors
 
   @Test
-  func aPathLeavingTheIndexTakesItsSyncErrorWithIt() async throws {
+  func `a path leaving the index takes its sync error with it`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -338,7 +340,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func pathStatusAnswersForItemsFoldersAndUnknownPaths() async throws {
+  func `path status answers for items, folders, and unknown paths`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -385,7 +387,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func baseRevisionLookupIsKeyedToTheItemAsWellAsItsContent() async throws {
+  func `base revision lookup is keyed to the item as well as its content`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     let hash = try ContentHash(validating: String(repeating: "ab", count: 32))
@@ -431,7 +433,7 @@ struct IndexStoreTests {
   // MARK: Ignored items
 
   @Test
-  func settingIgnoredOnAFolderPropagatesToTheSubtree() async throws {
+  func `setting ignored on a folder propagates to the subtree`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -478,7 +480,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func tombstonesSpareIgnoredItemsAndTheirAncestorFolders() async throws {
+  func `tombstones spare ignored items and their ancestor folders`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -510,7 +512,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func remoteChangesToIgnoredItemsAreSuppressedAndEvicteesRenameAside() async throws {
+  func `remote changes to ignored items are suppressed and evictees rename aside`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     let originalHash = String(repeating: "ab", count: 32)
@@ -567,7 +569,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func anIndexPredatingTheEngineErrorTableStillReportsItsStatus() async throws {
+  func `an index predating the engine error table still reports its status`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     // Only a read-write open migrates, so the app and the command line can
@@ -580,7 +582,7 @@ struct IndexStoreTests {
   }
 
   @Test
-  func aCancelledReadStaysACancellation() async throws {
+  func `a cancelled read stays a cancellation`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -603,7 +605,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func classifiesEntriesAndBridgesTombstones() throws {
+  func `classifies entries and bridges tombstones`() throws {
     let entries = try decode(
       [ItemMetadata].self,
       """
@@ -644,7 +646,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func cachedAccountNamesOmitTheUnknownAndTheStale() async throws {
+  func `cached account names omit the unknown and the stale`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -665,7 +667,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func attributesADownwardChangeToTheAccountThatMadeIt() throws {
+  func `attributes a downward change to the account that made it`() throws {
     let entries = try decode(
       [ItemMetadata].self,
       """
@@ -683,7 +685,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func skipsEntriesWithoutPaths() throws {
+  func `skips entries without paths`() throws {
     let entries = try decode(
       [ItemMetadata].self,
       """
@@ -699,7 +701,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func symlinkFilesRecordAsSymlinks() throws {
+  func `symlink files record as symlinks`() throws {
     let entries = try decode(
       [ItemMetadata].self,
       """
@@ -721,7 +723,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func findsItemsByTheirOwnNameRatherThanTheirPath() async throws {
+  func `finds items by their own name rather than their path`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -744,7 +746,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func matchesNamesWithoutRegardToCaseOrUnicodeForm() async throws {
+  func `matches names without regard to case or unicode form`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -765,7 +767,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func treatsWildcardCharactersInASearchLiterally() async throws {
+  func `treats wildcard characters in a search literally`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -784,7 +786,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func leavesExcludedItemsOutOfSearchAndStopsAtTheLimit() async throws {
+  func `leaves excluded items out of search and stops at the limit`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -802,7 +804,7 @@ struct DeltaInterpreterTests {
   }
 
   @Test
-  func readsAnAccountsSyncStatusFromTheIndex() async throws {
+  func `reads an account's sync status from the index`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 

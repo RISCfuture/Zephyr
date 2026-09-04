@@ -21,7 +21,7 @@ import Testing
 @Suite(.serialized, .enabled(if: LinkedDropbox.refreshToken != nil))
 struct LinkedEndToEndTests {
   @Test
-  func remoteFileLifecycle() async throws {
+  func `remote file lifecycle`() async throws {
     try await LinkedDropbox.withTestFolder { client, folder in
       let scratch = try LinkedDropbox.makeScratchDirectory()
       defer { try? FileManager.default.removeItem(at: scratch) }
@@ -79,7 +79,7 @@ struct LinkedEndToEndTests {
   }
 
   @Test
-  func deltaFeedDeliversRemoteChanges() async throws {
+  func `delta feed delivers remote changes`() async throws {
     try await LinkedDropbox.withTestFolder { client, folder in
       let cursor = try await client.latestCursor(for: folder)
 
