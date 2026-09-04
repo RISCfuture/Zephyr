@@ -3,12 +3,12 @@ import Testing
 
 @testable import libZephyr
 
-@Suite("Bulk work pressure")
-struct BulkWorkPressureTests {
+@Suite
+struct `Bulk work pressure` {
   private static let cheapPath = NetworkConditions()
 
   @Test
-  func aCheapCoolMacOnMainsPowerAsksForNothing() {
+  func `a cheap cool mac on mains power asks for nothing`() {
     let pressure = BulkWorkPressure(
       conditions: Self.cheapPath,
       isLowPowerModeEnabled: false,
@@ -22,7 +22,7 @@ struct BulkWorkPressureTests {
   /// Low Data Mode was switched on deliberately; an expensive path is the
   /// system's guess. The first outranks the second.
   @Test
-  func lowDataModeAsksForMoreThanAPathThatMerelyLooksExpensive() {
+  func `low data mode asks for more than a path that merely looks expensive`() {
     let expensive = BulkWorkPressure(
       conditions: NetworkConditions(isExpensive: true),
       isLowPowerModeEnabled: false,
@@ -40,7 +40,7 @@ struct BulkWorkPressureTests {
   /// Three mild reasons to slow down are still one mild reason: the firmest
   /// signal decides rather than the signals adding up.
   @Test
-  func theFirmestSignalDecidesRatherThanTheSignalsAddingUp() {
+  func `the firmest signal decides rather than the signals adding up`() {
     let stacked = BulkWorkPressure(
       conditions: NetworkConditions(isExpensive: true),
       isLowPowerModeEnabled: true,
@@ -65,7 +65,7 @@ struct BulkWorkPressureTests {
   /// failure would only delay noticing it, and delay the catch-up that
   /// follows the route coming back.
   @Test
-  func anUnreachablePathAsksForNothing() {
+  func `an unreachable path asks for nothing`() {
     let pressure = BulkWorkPressure(
       conditions: NetworkConditions(isSatisfied: false),
       isLowPowerModeEnabled: false,

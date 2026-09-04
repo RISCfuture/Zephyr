@@ -26,19 +26,19 @@ struct ContentHashTests {
   }
 
   @Test
-  func emptyInputFinalizesToSHA256OfNothing() {
+  func `empty input finalizes to SHA256 of nothing`() {
     #expect(DropboxContentHasher().finalize().rawValue == Self.emptyInputHash)
   }
 
   @Test
-  func partialBlockIsDoubleSHA256() {
+  func `partial block is double SHA256`() {
     let data = Self.patternedData(count: Self.smallInputSize)
     let expected = Self.hex(SHA256.hash(data: Data(SHA256.hash(data: data))))
     #expect(Self.oneShotHash(of: data).rawValue == expected)
   }
 
   @Test
-  func inputSpanningTwoBlocksMatchesManualComputation() {
+  func `input spanning two blocks matches manual computation`() {
     let firstBlockDigest = SHA256.hash(data: Self.twoBlockData.prefix(Self.blockSize))
     let secondBlockDigest = SHA256.hash(data: Self.twoBlockData.suffix(1))
     let expected = Self.hex(SHA256.hash(data: Data(firstBlockDigest) + Data(secondBlockDigest)))
@@ -46,7 +46,7 @@ struct ContentHashTests {
   }
 
   @Test
-  func updatesSplitAtAwkwardOffsetsMatchOneShot() {
+  func `updates split at awkward offsets match one shot`() {
     var chunked = DropboxContentHasher()
     chunked.update(Self.twoBlockData.prefix(1))
     chunked.update(Self.twoBlockData.dropFirst(1).prefix(Self.blockSize - 1))
@@ -55,7 +55,7 @@ struct ContentHashTests {
   }
 
   @Test
-  func fileHashMatchesInMemoryHash() throws {
+  func `file hash matches in memory hash`() throws {
     let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     try Self.twoBlockData.write(to: url)
     defer { try? FileManager.default.removeItem(at: url) }

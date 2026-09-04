@@ -83,7 +83,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func changesAppliesOnePageAndReportsUpdatedRemovedAndAnchor() async throws {
+  func `changes applies one page and reports updated removed and anchor`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -116,7 +116,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func remoteMoveInOnePageIsAnUpdateNotARemoval() async throws {
+  func `remote move in one page is an update not a removal`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -168,7 +168,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func unknownAnchorGenerationThrowsSyncAnchorExpired() async throws {
+  func `unknown anchor generation throws sync anchor expired`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     let (_, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
@@ -180,7 +180,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func fetchContentsRejectsStaleRequestedVersion() async throws {
+  func `fetch contents rejects stale requested version`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -203,7 +203,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func domainItemsPagesByRowIDWatermarkUntilExhausted() async throws {
+  func `domain items pages by row ID watermark until exhausted`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     let ids = (1...5).map { "id:f000\($0)" }
@@ -230,7 +230,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func theWorkingSetNarrowsToWhatTheSystemHoldsOnceItReportsIt() async throws {
+  func `the working set narrows to what the system holds once it reports it`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     var tagged = try fileRecord(id: "id:tagg01", path: "/Deep/tagged.txt")
@@ -276,7 +276,7 @@ struct ProviderAdapterTests {
   // MARK: Change replay
 
   @Test
-  func changesFromAnOlderAnchorReplayRecordedPagesWithoutServerCalls() async throws {
+  func `changes from an older anchor replay recorded pages without server calls`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -329,7 +329,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func changePageNamingAnUnknownParentFetchesAndIndexesIt() async throws {
+  func `change page naming an unknown parent fetches and indexes it`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -359,7 +359,7 @@ struct ProviderAdapterTests {
   // MARK: Local writes
 
   @Test
-  func createFileUploadsWithAddAndIndexesTheServerResult() async throws {
+  func `create file uploads with add and indexes the server result`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -402,7 +402,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func excludedNamesAreRefusedWhereverOneCanBeCreated() async throws {
+  func `excluded names are refused wherever one can be created`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -440,7 +440,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func aChangePageNeverIndexesANameTheDomainMustNotCarry() async throws {
+  func `a change page never indexes a name the domain must not carry`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -493,7 +493,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func modifyContentsCommitsOverTheRevisionTheBaseVersionBelongedTo() async throws {
+  func `modify contents commits over the revision the base version belonged to`() async throws {
     let indexedRev = "015d1a1f3f2e5c0000000012a7650"
     let indexedHash = String(repeating: "ab", count: 32)
     let olderRev = "015d1a1f3f2e5c0000000012a7000"
@@ -588,7 +588,9 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func anAutorenamedUploadIsIndexedApartAndTheCallersItemIsStillAnswered() async throws {
+  func `an autorenamed upload is indexed apart and the caller's item is still answered`()
+    async throws
+  {
     let indexedRev = "015d1a1f3f2e5c0000000012a7650"
     let indexedHash = String(repeating: "ab", count: 32)
     let olderRev = "015d1a1f3f2e5c0000000012a7000"
@@ -673,7 +675,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func aFailedWriteRecordsASyncErrorAndTheNextCleanWriteClearsIt() async throws {
+  func `a failed write records a sync error and the next clean write clears it`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -732,7 +734,9 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func aRevokedTokenStopsTheAccountRatherThanCountingAsAnItemThatCouldntSync() async throws {
+  func `a revoked token stops the account rather than counting as an item that couldn't sync`()
+    async throws
+  {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -790,7 +794,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func movingAFolderRewritesTheIndexedSubtree() async throws {
+  func `moving a folder rewrites the indexed subtree`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -833,7 +837,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func deleteIsRevisionGuardedAndAConflictKeepsTheItem() async throws {
+  func `delete is revision guarded and a conflict keeps the item`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -878,7 +882,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func aRefusedDownloadRecordsASyncErrorAtTheItemsPath() async throws {
+  func `a refused download records a sync error at the item's path`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -925,7 +929,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func localAttributesPersistEchoAndSurviveRemoteUpserts() async throws {
+  func `local attributes persist echo and survive remote upserts`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -955,7 +959,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func createFolderAdoptsTheExistingFolderOnConflict() async throws {
+  func `create folder adopts the existing folder on conflict`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     let (transport, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
@@ -983,7 +987,7 @@ struct ProviderAdapterTests {
   // MARK: Ignored items
 
   @Test
-  func ignoringADatalessItemSavesItsBytesBeforeDeletingTheDropboxCopy() async throws {
+  func `ignoring a dataless item saves its bytes before deleting the Dropbox copy`() async throws {
     let rev = "015d1a1f3f2e5c0000000012a7650"
     let body = Data("the only copy".utf8)
     let (store, directory) = try makeStore()
@@ -1067,7 +1071,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func aFailedDownloadAbandonsTheIgnoreWithTheDropboxCopyIntact() async throws {
+  func `a failed download abandons the ignore with the Dropbox copy intact`() async throws {
     let rev = "015d1a1f3f2e5c0000000012a7650"
     let body = Data("first child".utf8)
     let (store, directory) = try makeStore()
@@ -1131,7 +1135,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func modifyContentsWhileIgnoredStashesAShadowInsteadOfUploading() async throws {
+  func `modify contents while ignored stashes a shadow instead of uploading`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -1170,7 +1174,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func resumeSyncRestoresARemotelyMissingFileFromItsRevision() async throws {
+  func `resume sync restores a remotely missing file from its revision`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -1209,7 +1213,7 @@ struct ProviderAdapterTests {
   }
 
   @Test
-  func resumeSyncUploadsContentsEditedWhileIgnored() async throws {
+  func `resume sync uploads contents edited while ignored`() async throws {
     let indexedRev = "015d1a1f3f2e5c0000000012a7650"
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }

@@ -32,7 +32,7 @@ struct RetryPolicyTests {
   }
 
   @Test
-  func rateLimitedHonorsRetryAfterFallsBackToFiveSecondsAndCapsAtTwentyTries() {
+  func `rate limited honors retry after falls back to five seconds and caps at twenty tries`() {
     #expect(
       decision(for: .rateLimited(retryAfter: .seconds(42)), attempt: 0)
         == .retry(after: .seconds(42))
@@ -46,7 +46,7 @@ struct RetryPolicyTests {
   }
 
   @Test
-  func serverErrorBacksOffExponentiallyWithJitterAndCapsAtFourTries() {
+  func `server error backs off exponentially with jitter and caps at four tries`() {
     var generator = SplitMix64(seed: 0x5EED)
     var reference = SplitMix64(seed: 0x5EED)
     for attempt: UInt in 0...3 {
@@ -58,7 +58,7 @@ struct RetryPolicyTests {
   }
 
   @Test
-  func dataCorruptionBacksOffExponentiallyWithJitterAndCapsAtFourTries() {
+  func `data corruption backs off exponentially with jitter and caps at four tries`() {
     var generator = SplitMix64(seed: 0x5EED)
     var reference = SplitMix64(seed: 0x5EED)
     for attempt: UInt in 0...3 {
@@ -70,7 +70,7 @@ struct RetryPolicyTests {
   }
 
   @Test
-  func listFolderTimeoutRetriesAfterThreeSecondsAndCapsAtThreeTries() {
+  func `list folder timeout retries after three seconds and caps at three tries`() {
     for attempt: UInt in 0...2 {
       #expect(decision(for: .listFolderTimeout, attempt: attempt) == .retry(after: .seconds(3)))
     }
@@ -78,7 +78,7 @@ struct RetryPolicyTests {
   }
 
   @Test
-  func connectionLostBacksOffExponentiallyWithJitterAndCapsAtFourTries() {
+  func `connection lost backs off exponentially with jitter and caps at four tries`() {
     var generator = SplitMix64(seed: 0xC0FFEE)
     var reference = SplitMix64(seed: 0xC0FFEE)
     for attempt: UInt in 0...3 {

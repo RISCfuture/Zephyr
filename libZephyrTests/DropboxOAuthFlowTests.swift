@@ -36,7 +36,7 @@ struct DropboxOAuthFlowTests {
   }
 
   @Test
-  func authorizationURLAdvertisesTheChallengeAndTheCallbackStyle() throws {
+  func `authorization URL advertises the challenge and the callback style`() throws {
     let outOfBand = makeFlow(redirect: .outOfBand, transport: MockTransport())
     let customScheme = makeFlow(redirect: .customScheme, transport: MockTransport())
 
@@ -65,7 +65,7 @@ struct DropboxOAuthFlowTests {
   }
 
   @Test
-  func exchangingAPastedCodeProvesThePKCEVerifierAndReturnsTheLink() async throws {
+  func `exchanging a pasted code proves the PKCE verifier and returns the link`() async throws {
     let transport = MockTransport()
     let flow = makeFlow(redirect: .outOfBand, transport: transport)
     await transport.enqueueJSON(Self.tokenResponseJSON)
@@ -94,7 +94,7 @@ struct DropboxOAuthFlowTests {
   }
 
   @Test
-  func aCallbackCarryingTheFlowsStateExchangesWithTheRedirectURI() async throws {
+  func `a callback carrying the flow's state exchanges with the redirect URI`() async throws {
     let transport = MockTransport()
     let flow = makeFlow(redirect: .customScheme, transport: transport)
     await transport.enqueueJSON(Self.tokenResponseJSON)
@@ -113,7 +113,7 @@ struct DropboxOAuthFlowTests {
   }
 
   @Test(arguments: ["", "&state=someone-elses-state"])
-  func aCallbackFailingItsStateCheckNeverReachesTheTokenEndpoint(
+  func `a callback failing its state check never reaches the token endpoint`(
     _ stateQuery: String
   ) async throws {
     let transport = MockTransport()
@@ -135,7 +135,7 @@ struct DropboxOAuthFlowTests {
   }
 
   @Test
-  func aRefusedAuthorizationSurfacesWhyRatherThanAMissingCode() async throws {
+  func `a refused authorization surfaces why rather than a missing code`() async throws {
     let transport = MockTransport()
     let flow = makeFlow(redirect: .customScheme, transport: transport)
     let declined = try #require(
@@ -173,7 +173,7 @@ struct DropboxOAuthFlowTests {
   }
 
   @Test
-  func aTokenResponseWithoutARefreshTokenIsMalformed() async throws {
+  func `a token response without a refresh token is malformed`() async throws {
     let transport = MockTransport()
     let flow = makeFlow(redirect: .outOfBand, transport: transport)
     // A short-lived-token app registration answers an exchange without the

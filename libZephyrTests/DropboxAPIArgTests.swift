@@ -15,38 +15,38 @@ struct DropboxAPIArgTests {
   }
 
   @Test
-  func sortsKeysAndPassesASCIIThrough() throws {
+  func `sorts keys and passes ASCII through`() throws {
     let argument = UploadArgument(path: "/test.txt", mode: "add")
     let header = try DropboxAPIArgumentEncoder.headerValue(for: argument)
     #expect(header == #"{"mode":"add","path":"\/test.txt"}"#)
   }
 
   @Test
-  func escapesLatinSupplementScalar() throws {
+  func `escapes latin supplement scalar`() throws {
     let header = try DropboxAPIArgumentEncoder.headerValue(for: LabeledArgument(label: "caf\u{E9}"))
     #expect(header == #"{"label":"caf\u00E9"}"#)
   }
 
   @Test
-  func escapesBasicMultilingualPlaneScalar() throws {
+  func `escapes basic multilingual plane scalar`() throws {
     let header = try DropboxAPIArgumentEncoder.headerValue(for: LabeledArgument(label: "→"))
     #expect(header == #"{"label":"\u2192"}"#)
   }
 
   @Test
-  func escapesAstralScalarAsSurrogatePair() throws {
+  func `escapes astral scalar as surrogate pair`() throws {
     let header = try DropboxAPIArgumentEncoder.headerValue(for: LabeledArgument(label: "𝔘"))
     #expect(header == #"{"label":"\uD835\uDD18"}"#)
   }
 
   @Test
-  func preservesCombiningSequencesWithoutNormalizing() throws {
+  func `preserves combining sequences without normalizing`() throws {
     let header = try DropboxAPIArgumentEncoder.headerValue(for: LabeledArgument(label: "e\u{0301}"))
     #expect(header == #"{"label":"e\u0301"}"#)
   }
 
   @Test
-  func producesOnlyASCII() throws {
+  func `produces only ASCII`() throws {
     let header = try DropboxAPIArgumentEncoder.headerValue(
       for: LabeledArgument(label: "naïve → 𝔘nicode")
     )
@@ -55,7 +55,7 @@ struct DropboxAPIArgTests {
   }
 
   @Test
-  func aNamespaceSpecifierAddressesTheNamespaceRootAndPathsWithinIt() throws {
+  func `a namespace specifier addresses the namespace root and paths within it`() throws {
     let namespaceID = try NamespaceIdentifier(validating: "7684224")
     let homework = try DropboxPath(validating: "/Homework")
     #expect(PathSpecifier.namespaceRoot(namespaceID).wireValue == "ns:7684224")
@@ -65,13 +65,13 @@ struct DropboxAPIArgTests {
   }
 
   @Test
-  func unsetSharedLinkSettingsAreOmittedSoDropboxsDefaultsStand() throws {
+  func `unset shared link settings are omitted so Dropbox's defaults stand`() throws {
     let json = try Self.encoded(SharedLinkSettingsArgument(SharedLinkSettings()))
     #expect(json == "{}")
   }
 
   @Test
-  func setSharedLinkSettingsSendBareTagStrings() throws {
+  func `set shared link settings send bare tag strings`() throws {
     let json = try Self.encoded(
       SharedLinkSettingsArgument(
         SharedLinkSettings(

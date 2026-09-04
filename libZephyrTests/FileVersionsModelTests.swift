@@ -5,8 +5,8 @@ import Testing
 @testable import libZephyr
 
 @MainActor
-@Suite("File version history")
-struct FileVersionsModelTests {
+@Suite
+struct `File version history` {
   private static let domain = versionsDomainIdentifier
 
   private static func makeModel(
@@ -32,8 +32,8 @@ struct FileVersionsModelTests {
 
   // MARK: - What Finder hands over
 
-  @Test("The domain identifier names the account holding the file")
-  func domainIdentifierNamesTheAccount() throws {
+  @Test
+  func `The domain identifier names the account holding the file`() throws {
     let request = try FileVersionsRequest(
       domainIdentifier: Self.domain,
       itemIdentifiers: [systemItemIdentifier]
@@ -43,21 +43,18 @@ struct FileVersionsModelTests {
     #expect(request.identifier == systemItemIdentifier)
   }
 
-  @Test(
-    "An action on anything but one file is refused",
-    arguments: [
-      [] as [NSFileProviderItemIdentifier],
-      [systemItemIdentifier, NSFileProviderItemIdentifier("__fp/fs/docID(4267)")]
-    ]
-  )
-  func onlyOneFileAtATime(items: [NSFileProviderItemIdentifier]) {
+  @Test(arguments: [
+    [] as [NSFileProviderItemIdentifier],
+    [systemItemIdentifier, NSFileProviderItemIdentifier("__fp/fs/docID(4267)")]
+  ])
+  func `An action on anything but one file is refused`(items: [NSFileProviderItemIdentifier]) {
     #expect(throws: FileVersionsFailure.notOneFile) {
       try FileVersionsRequest(domainIdentifier: Self.domain, itemIdentifiers: items)
     }
   }
 
-  @Test("An action arriving without a recognisable domain is refused")
-  func unrecognisedDomainIsRefused() {
+  @Test
+  func `An action arriving without a recognisable domain is refused`() {
     #expect(throws: FileVersionsFailure.noAccount) {
       try FileVersionsRequest(domainIdentifier: nil, itemIdentifiers: [systemItemIdentifier])
     }
@@ -68,8 +65,8 @@ struct FileVersionsModelTests {
 
   // MARK: - Listing
 
-  @Test("Revisions are listed newest first, with the file's own marked current")
-  func revisionsAreListedWithTheCurrentOneMarked() async throws {
+  @Test
+  func `Revisions are listed newest first, with the file's own marked current`() async throws {
     let entry = try fileRecord(
       id: "id:a4ayc_80_OEAAAAAAAAAXw",
       path: "/Homework/Prime_Numbers.txt",
@@ -94,8 +91,8 @@ struct FileVersionsModelTests {
     #expect(model.revisions.first?.size == Measurement(value: 7212, unit: .bytes))
   }
 
-  @Test("The revision the file is already at cannot be restored over itself")
-  func restoringTheCurrentRevisionIsRefused() async throws {
+  @Test
+  func `The revision the file is already at cannot be restored over itself`() async throws {
     let entry = try fileRecord(
       id: "id:a4ayc_80_OEAAAAAAAAAXw",
       path: "/Homework/Prime_Numbers.txt",
@@ -121,8 +118,8 @@ struct FileVersionsModelTests {
     #expect(!model.canRestore)
   }
 
-  @Test("A file Dropbox kept no earlier version of is an empty sheet, not a failure")
-  func noRevisionsIsEmptyRatherThanFailed() async throws {
+  @Test
+  func `A file Dropbox kept no earlier version of is an empty sheet, not a failure`() async throws {
     let entry = try fileRecord(id: "id:a4ayc_80_OEAAAAAAAAAXw", path: "/Homework/Notes.txt")
     let (model, _) = Self.makeModel(service: StubFileVersionsService(entry: entry))
 
@@ -135,8 +132,8 @@ struct FileVersionsModelTests {
 
   // MARK: - Restoring
 
-  @Test("Restoring puts the chosen revision back at the file's own path")
-  func restoreUsesTheIndexedPath() async throws {
+  @Test
+  func `Restoring puts the chosen revision back at the file's own path`() async throws {
     let entry = try fileRecord(
       id: "id:a4ayc_80_OEAAAAAAAAAXw",
       path: "/Homework/Prime_Numbers.txt",
@@ -172,8 +169,8 @@ struct FileVersionsModelTests {
 
   // MARK: - Failures
 
-  @Test("A file that cannot be resolved says so rather than showing an empty list")
-  func unresolvableFileFails() async {
+  @Test
+  func `A file that cannot be resolved says so rather than showing an empty list`() async {
     let resolver = StubFileVersionsTargetResolver(failure: FileVersionsFailure.fileUnavailable)
     let (model, _) = Self.makeModel(service: StubFileVersionsService(), resolver: resolver)
 
@@ -187,8 +184,9 @@ struct FileVersionsModelTests {
     )
   }
 
-  @Test("A refusal from Dropbox is reported in the reader's words, recovery included")
-  func dropboxRefusalIsDescribed() async throws {
+  @Test
+  func `A refusal from Dropbox is reported in the reader's words, recovery included`() async throws
+  {
     let entry = try fileRecord(id: "id:a4ayc_80_OEAAAAAAAAAXw", path: "/Homework/Notes.txt")
     let failure = ItemSyncFailure.insufficientPermissions(path: "/Homework/Notes.txt", detail: nil)
     let (model, _) = Self.makeModel(
@@ -200,8 +198,8 @@ struct FileVersionsModelTests {
     #expect(model.phase == .failed(ErrorSentence.describe(failure, includingRecovery: true)))
   }
 
-  @Test("The authentication error the system reports is shown in the sheet")
-  func systemReportedErrorIsShown() {
+  @Test
+  func `The authentication error the system reports is shown in the sheet`() {
     let (model, _) = Self.makeModel(service: StubFileVersionsService())
 
     model.show(AuthenticationFailure.tokenRevoked)
