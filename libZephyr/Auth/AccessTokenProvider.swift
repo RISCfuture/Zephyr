@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  Holds the account's refresh token and vends valid short-lived access tokens,

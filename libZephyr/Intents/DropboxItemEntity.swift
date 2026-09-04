@@ -1,4 +1,4 @@
-import AppIntents
+public import AppIntents
 import Foundation
 
 /// A file or folder in a Dropbox account, as a shortcut names one.

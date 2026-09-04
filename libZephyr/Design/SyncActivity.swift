@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  What an account's sync is doing — the reading ``ZephyrMark`` badges itself

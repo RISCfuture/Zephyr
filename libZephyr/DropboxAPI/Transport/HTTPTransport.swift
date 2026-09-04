@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  The HTTP layer beneath ``DropboxClient``, abstracted so tests can substitute

@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  How often Zephyr looks for a new release on its own.

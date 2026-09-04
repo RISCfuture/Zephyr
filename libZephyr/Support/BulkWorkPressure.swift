@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  How hard Zephyr's own background work should be holding back.

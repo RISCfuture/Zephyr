@@ -1,5 +1,5 @@
-import SwiftUI
-import WidgetKit
+public import SwiftUI
+public import WidgetKit
 
 /**
  Serves the snapshot the app publishes to the shared container.

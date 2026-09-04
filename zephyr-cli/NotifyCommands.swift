@@ -1,6 +1,6 @@
-import ArgumentParser
+public import ArgumentParser
 import Foundation
-import libZephyr
+public import libZephyr
 
 // `NotificationLevel` is Zephyr's, `ExpressibleByArgument` is ArgumentParser's,
 // and this tool is the only place the two meet.

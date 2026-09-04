@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 import os
 
 /// The subscription tier of a Dropbox account.

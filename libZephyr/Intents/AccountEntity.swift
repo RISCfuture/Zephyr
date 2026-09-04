@@ -1,4 +1,4 @@
-import AppIntents
+public import AppIntents
 import Foundation
 
 /// A linked Dropbox account, as a shortcut names one.

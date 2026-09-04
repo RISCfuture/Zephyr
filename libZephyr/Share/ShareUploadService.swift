@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  What the share flow needs from the account layer: the accounts it may upload

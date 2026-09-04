@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  A recoverable failure while syncing a single item.

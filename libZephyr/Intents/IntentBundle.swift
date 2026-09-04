@@ -1,5 +1,5 @@
 import AppIntents
-import Foundation
+public import Foundation
 
 /// Anchors bundle lookup for this framework's App Intents metadata.
 private final class BundleAnchor {}

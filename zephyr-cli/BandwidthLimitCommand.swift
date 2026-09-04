@@ -20,7 +20,7 @@ struct BandwidthLimitCommand: AsyncParsableCommand {
   /// One direction's shared implementation: print when no value is given, set otherwise.
   fileprivate static func showOrSet(
     limitMBps: Double?,
-    direction: WritableKeyPath<BandwidthSettings, UInt64> & Sendable,
+    direction: any WritableKeyPath<BandwidthSettings, UInt64> & Sendable,
     label: String
   ) async {
     await CLI.run {

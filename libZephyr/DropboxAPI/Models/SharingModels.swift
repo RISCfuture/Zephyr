@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// What a shared link lets its audience do.
 public enum LinkAccessLevel: String, Sendable, Equatable, Decodable {

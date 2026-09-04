@@ -1,5 +1,5 @@
-import CoreGraphics
-import FileProvider
+public import CoreGraphics
+public import FileProvider
 import Foundation
 import os
 

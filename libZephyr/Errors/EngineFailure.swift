@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /**
  A failure that stops the sync engine until it is resolved.

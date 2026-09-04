@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// Something a shortcut asked Zephyr to do, and Zephyr could not.
 public enum ScriptingFailure: Error, Equatable {
