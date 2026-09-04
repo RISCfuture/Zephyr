@@ -2459,7 +2459,7 @@
 			repositoryURL = "https://github.com/RISCfuture/GitHubUpdateChecker";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.1;
+				minimumVersion = 2.1.0;
 			};
 		};
 		01EFFB023038B00000829701 /* XCRemoteSwiftPackageReference "XCUITestKit" */ = {
