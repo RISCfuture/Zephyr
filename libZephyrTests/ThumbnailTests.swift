@@ -50,7 +50,7 @@ struct ThumbnailTests {
   /// and one that arrives larger only costs bytes — so the bucket has to
   /// cover the request in both axes, not merely come closest to it.
   @Test
-  func aRequestedSizePicksTheSmallestBucketCoveringIt() {
+  func `a requested size picks the smallest bucket covering it`() {
     #expect(ThumbnailSize.covering(CGSize(width: 32, height: 32)) == .w32h32)
     #expect(ThumbnailSize.covering(CGSize(width: 33, height: 33)) == .w64h64)
     #expect(ThumbnailSize.covering(CGSize(width: 300, height: 300)) == .w480h320)
@@ -64,7 +64,7 @@ struct ThumbnailTests {
   // MARK: The route
 
   @Test
-  func theBatchAsksByRevisionAndDecodesTheRenderedBytes() async throws {
+  func `the batch asks by revision and decodes the rendered bytes`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     let bytes = Self.rendered("jpeg-bytes")
@@ -95,7 +95,7 @@ struct ThumbnailTests {
   /// One unreadable image must not cost a folder its thumbnails, so a
   /// per-entry failure decodes alongside its neighbours rather than throwing.
   @Test
-  func aThumbnailDropboxDeclinesLeavesTheRestOfTheBatchIntact() async throws {
+  func `a thumbnail Dropbox declines leaves the rest of the batch intact`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     let first = Self.rendered("first")
@@ -114,7 +114,7 @@ struct ThumbnailTests {
   /// The entries come back positionally, so a reply of the wrong length would
   /// silently pair every thumbnail with the wrong file.
   @Test
-  func aReplyOfTheWrongLengthIsRefused() async throws {
+  func `a reply of the wrong length is refused`() async throws {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
     await transport.enqueueJSON(Self.batchJSON([Self.rendered("only-one")]))
@@ -134,7 +134,7 @@ struct ThumbnailTests {
   /// that from Dropbox costs a round trip per item; the index already knows
   /// the name and the size, so the answer is free.
   @Test
-  func unrenderableItemsAreAnsweredWithoutAskingDropbox() async throws {
+  func `unrenderable items are answered without asking Dropbox`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyLocalChange([
@@ -164,7 +164,7 @@ struct ThumbnailTests {
   /// too — so honoring it literally would spend a full-resolution render on
   /// every thumbnail.
   @Test
-  func theSystemsCeilingDoesNotBuyAFullResolutionRender() async throws {
+  func `the system's ceiling does not buy a full resolution render`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyLocalChange([.upsert(try fileRecord(id: "id:photo", path: "/Photo.jpg"))])
@@ -186,7 +186,7 @@ struct ThumbnailTests {
   /// Dropbox renders 25 files per call, and Finder hands over a window's
   /// worth at once.
   @Test
-  func moreThanTwentyFiveImagesArePagedIntoSeparateBatches() async throws {
+  func `more than twenty five images are paged into separate batches`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     var identifiers: [NSFileProviderItemIdentifier] = []

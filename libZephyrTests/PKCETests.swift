@@ -26,13 +26,13 @@ struct PKCETests {
     Set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~")
 
   @Test
-  func matchesRFC7636AppendixBVector() throws {
+  func `matches RFC7636 appendix B vector`() throws {
     let verifier = try PKCEVerifier(validating: "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk")
     #expect(verifier.challenge == "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM")
   }
 
   @Test
-  func generatesWellFormedVerifiers() {
+  func `generates well formed verifiers`() {
     var generator = SplitMix64(seed: 0x5EED_1DEA)
     for _ in 0..<32 {
       let verifier = PKCEVerifier(using: &generator)
@@ -46,7 +46,7 @@ struct PKCETests {
     String(repeating: "a", count: 129),
     String(repeating: "a", count: 42) + "+"
   ])
-  func rejectsMalformedVerifier(_ candidate: String) {
+  func `rejects malformed verifier`(_ candidate: String) {
     #expect(throws: PKCEValidationFailure(value: candidate)) {
       try PKCEVerifier(validating: candidate)
     }

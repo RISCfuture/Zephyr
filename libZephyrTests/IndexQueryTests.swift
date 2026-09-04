@@ -7,7 +7,7 @@ import Testing
 @Suite
 struct IndexQueryTests {
   @Test
-  func searchesOnlyBeneathTheFolderItWasGiven() async throws {
+  func `searches only beneath the folder it was given`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -38,7 +38,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func rootAsASubtreeSearchesTheWholeAccount() async throws {
+  func `root as a subtree searches the whole account`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -58,7 +58,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func answersWithTheBestMatchFirst() async throws {
+  func `answers with the best match first`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -87,7 +87,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func aBetterMatchOutranksAnEarlierOneEvenPastTheLimit() async throws {
+  func `a better match outranks an earlier one even past the limit`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -108,7 +108,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func withoutTextToMatchResultsComeBackInPathOrder() async throws {
+  func `without text to match results come back in path order`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -126,7 +126,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func restrictsToTheKindsOfItemAsked() async throws {
+  func `restricts to the kinds of item asked`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -146,7 +146,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func aSizeBoundLeavesOutFoldersBecauseTheyHaveNoSize() async throws {
+  func `a size bound leaves out folders because they have no size`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -173,7 +173,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func restrictsToARangeOfModificationDates() async throws {
+  func `restricts to a range of modification dates`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -203,7 +203,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func excludedItemsTakePartOnlyWhenAsked() async throws {
+  func `excluded items take part only when asked`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -223,7 +223,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func aQueryWithNothingToMatchOnAnswersWithNothing() async throws {
+  func `a query with nothing to match on answers with nothing`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -240,7 +240,7 @@ struct IndexQueryTests {
   }
 
   @Test
-  func answersEveryShapeOfSearchFromAnIndex() async throws {
+  func `answers every shape of search from an index`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
 

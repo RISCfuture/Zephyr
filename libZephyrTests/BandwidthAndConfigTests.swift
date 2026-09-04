@@ -3,12 +3,12 @@ import Testing
 
 @testable import libZephyr
 
-@Suite("Bandwidth throttle pacing")
-struct BandwidthThrottleTests {
+@Suite
+struct `Bandwidth throttle pacing` {
   private let clock = ContinuousClock()
 
   @Test
-  func anIdleThrottlePassesTheFirstChunkImmediatelyAndPacesTheNext() {
+  func `an idle throttle passes the first chunk immediately and paces the next`() {
     let now = clock.now
     let first = BandwidthThrottle.reserve(
       byteCount: 1_000_000,
@@ -30,7 +30,7 @@ struct BandwidthThrottleTests {
   }
 
   @Test
-  func aLimitOfZeroPacesNothing() async throws {
+  func `a limit of zero paces nothing`() async throws {
     let throttle = BandwidthThrottle(bytesPerSecond: 0)
     #expect(await throttle.isPacing == false)
     let elapsed = try await clock.measure { try await throttle.acquire(10_000_000) }
@@ -41,7 +41,7 @@ struct BandwidthThrottleTests {
   }
 
   @Test
-  func adoptingARateDropsTheWaitTheRateItReplacedHadScheduled() async throws {
+  func `adopting a rate drops the wait the rate it replaced had scheduled`() async throws {
     let throttle = BandwidthThrottle(bytesPerSecond: 1)
     // Four bytes at one byte a second reserves the next four seconds.
     try await throttle.acquire(4)
@@ -56,7 +56,7 @@ struct BandwidthThrottleTests {
   /// The cap the network asks for and the limit the user set are separate
   /// dials: whichever is lower decides, and neither erases the other.
   @Test
-  func aCeilingBeatsAnUnlimitedConfiguredRate() async {
+  func `a ceiling beats an unlimited configured rate`() async {
     let throttle = BandwidthThrottle(bytesPerSecond: 0)
     #expect(await throttle.isPacing == false)
 
@@ -68,7 +68,7 @@ struct BandwidthThrottleTests {
   }
 
   @Test
-  func aConfiguredRateBelowTheCeilingStillWins() async {
+  func `a configured rate below the ceiling still wins`() async {
     let throttle = BandwidthThrottle(bytesPerSecond: 500, ceiling: 1_000)
     #expect(await throttle.bytesPerSecond == 500)
   }
@@ -76,7 +76,7 @@ struct BandwidthThrottleTests {
   /// Leaving Low Data Mode has to restore what the user set, not whatever
   /// rate was last in force under the cap.
   @Test
-  func liftingACeilingRestoresTheConfiguredRate() async {
+  func `lifting a ceiling restores the configured rate`() async {
     let throttle = BandwidthThrottle(bytesPerSecond: 5_000, ceiling: 1_000)
     #expect(await throttle.bytesPerSecond == 1_000)
 
@@ -85,7 +85,7 @@ struct BandwidthThrottleTests {
   }
 
   @Test
-  func aLongIdleGapGrantsNoBurstCredit() {
+  func `a long idle gap grants no burst credit`() {
     let now = clock.now
     let stale = now - .seconds(60)
     let slot = BandwidthThrottle.reserve(
@@ -99,8 +99,8 @@ struct BandwidthThrottleTests {
   }
 }
 
-@Suite("Account configuration")
-struct AccountConfigurationTests {
+@Suite
+struct `Account configuration` {
   // 2026-08-21T00:00:00Z, whole seconds so an ISO 8601 round trip is lossless.
   private static let linkedAt = Date(timeIntervalSince1970: 1_755_734_400)
 
@@ -119,7 +119,7 @@ struct AccountConfigurationTests {
   }
 
   @Test
-  func aConfigurationStoredByAnEarlierBuildDecodesWithDefaults() throws {
+  func `a configuration stored by an earlier build decodes with defaults`() throws {
     let configuration = try Self.decode(
       Data(
         """
@@ -148,7 +148,7 @@ struct AccountConfigurationTests {
   }
 
   @Test
-  func aTeamRootRoundTripsAndGivesWayToAPersonalOne() throws {
+  func `a team root round trips and gives way to a personal one`() throws {
     var configuration = AccountConfiguration(
       accountID: try Self.account(),
       email: "franz@acme.com",
@@ -179,8 +179,8 @@ struct AccountConfigurationTests {
   }
 }
 
-@Suite("Transfer limits")
-struct BandwidthSettingsTests {
+@Suite
+struct `Transfer limits` {
   /// An environment of its own, so a test never reads or writes the limits
   /// this Mac actually syncs at.
   private static func makeEnvironment() throws -> (ZephyrEnvironment, URL) {
@@ -190,8 +190,8 @@ struct BandwidthSettingsTests {
     return (ZephyrEnvironment(baseDirectory: directory), directory)
   }
 
-  @Test("Limits nobody has set read as the defaults")
-  func unsetLimitsReadAsDefaults() throws {
+  @Test
+  func `Limits nobody has set read as the defaults`() throws {
     let (environment, directory) = try Self.makeEnvironment()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -204,8 +204,8 @@ struct BandwidthSettingsTests {
     #expect(settings.syncsOnExpensiveNetworks == false)
   }
 
-  @Test("Limits round-trip through the shared container")
-  func limitsRoundTrip() throws {
+  @Test
+  func `Limits round-trip through the shared container`() throws {
     let (environment, directory) = try Self.makeEnvironment()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -223,8 +223,8 @@ struct BandwidthSettingsTests {
     #expect(reloaded.meteredLimitBps == 0)
   }
 
-  @Test("A file an earlier build wrote decodes with defaults for what it lacks")
-  func aPartialFileDecodesWithDefaults() throws {
+  @Test
+  func `A file an earlier build wrote decodes with defaults for what it lacks`() throws {
     let (environment, directory) = try Self.makeEnvironment()
     defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -239,8 +239,8 @@ struct BandwidthSettingsTests {
     #expect(settings.meteredLimitBps == BandwidthSettings.defaultMeteredLimitBps)
   }
 
-  @Test("Unreadable limits read as the defaults rather than stopping syncing")
-  func unreadableLimitsFallBackToDefaults() throws {
+  @Test
+  func `Unreadable limits read as the defaults rather than stopping syncing`() throws {
     let (environment, directory) = try Self.makeEnvironment()
     defer { try? FileManager.default.removeItem(at: directory) }
 

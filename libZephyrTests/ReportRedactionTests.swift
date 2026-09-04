@@ -4,23 +4,20 @@ import Testing
 
 @testable import libZephyr
 
-@Suite("Redacting a crash report")
-struct ReportRedactionTests {
+@Suite
+struct `Redacting a crash report` {
   private let placeholder = ReportRedaction.placeholder
 
-  @Test(
-    "removes what a report must not carry",
-    arguments: [
-      "Couldn't read /Users/tim/Dropbox/Taxes 2025.pdf: no such file",
-      "~/Library/Group Containers/group.codes.tim.Zephyr is gone",
-      "file:///Users/tim/Dropbox/a%20b.txt could not be opened",
-      "Upload rejected for /Quarterly Reports/Q3.numbers",
-      "Couldn\u{2019}t read Receipts \u{203A} 2026 \u{203A} Ledger.numbers",
-      "Account tim@example.com is unlinked",
-      "Refreshing with sl.ABCDEFGHIJKLMNOPQRSTUVWXYZ012345 failed"
-    ]
-  )
-  func stripsPathsAddressesAndTokens(_ message: String) {
+  @Test(arguments: [
+    "Couldn't read /Users/tim/Dropbox/Taxes 2025.pdf: no such file",
+    "~/Library/Group Containers/group.codes.tim.Zephyr is gone",
+    "file:///Users/tim/Dropbox/a%20b.txt could not be opened",
+    "Upload rejected for /Quarterly Reports/Q3.numbers",
+    "Couldn\u{2019}t read Receipts \u{203A} 2026 \u{203A} Ledger.numbers",
+    "Account tim@example.com is unlinked",
+    "Refreshing with sl.ABCDEFGHIJKLMNOPQRSTUVWXYZ012345 failed"
+  ])
+  func `removes what a report must not carry`(_ message: String) {
     let redacted = ReportRedaction.redacted(message)
     #expect(redacted.contains(placeholder))
     for leak in [
@@ -31,26 +28,23 @@ struct ReportRedactionTests {
     }
   }
 
-  @Test(
-    "leaves alone what a report is triaged from",
-    arguments: [
-      "POST https://api.dropboxapi.com/2/files/upload_session/append_v2 failed with 429",
-      "Retrying 3 of 5 after 1.5s",
-      "The item is a folder and/or a symlink; N/A"
-    ]
-  )
-  func keepsRoutesCountsAndPlainProse(_ message: String) {
+  @Test(arguments: [
+    "POST https://api.dropboxapi.com/2/files/upload_session/append_v2 failed with 429",
+    "Retrying 3 of 5 after 1.5s",
+    "The item is a folder and/or a symlink; N/A"
+  ])
+  func `leaves alone what a report is triaged from`(_ message: String) {
     #expect(ReportRedaction.redacted(message) == message)
   }
 
-  @Test("takes a path to the end of its line and no further")
-  func stopsAtTheLineEnd() {
+  @Test
+  func `takes a path to the end of its line and no further`() {
     let redacted = ReportRedaction.redacted("Trapped in /Taxes/2025.pdf\nwhile enumerating")
     #expect(redacted == "Trapped in \(placeholder)\nwhile enumerating")
   }
 
-  @Test("reaches every string an event carries")
-  func redactsAcrossAnEvent() {
+  @Test
+  func `reaches every string an event carries`() {
     let event = Event()
     event.message = SentryMessage(formatted: "Failed on /Taxes/2025.pdf")
     let exception = Exception(value: "No such file: /Taxes/2025.pdf", type: "ItemSyncFailure")
@@ -66,8 +60,8 @@ struct ReportRedactionTests {
     #expect(redacted.extra?["attempt"] as? Int == 2)
   }
 
-  @Test("reaches a breadcrumb's message and its data")
-  func redactsAcrossABreadcrumb() {
+  @Test
+  func `reaches a breadcrumb's message and its data`() {
     let breadcrumb = Breadcrumb(level: .info, category: "transfers")
     breadcrumb.message = "Uploading /Taxes/2025.pdf"
     breadcrumb.setData(value: "/Taxes", key: "folder")

@@ -97,7 +97,7 @@ struct NotificationManagerTests {
   }
 
   @Test
-  func theFirstDigestForAnAccountOnlyRecordsWatermarks() throws {
+  func `the first digest for an account only records watermarks`() throws {
     try withManager { manager, log, _ in
       let account = try makeAccount()
       manager.digest(
@@ -140,7 +140,7 @@ struct NotificationManagerTests {
   }
 
   @Test
-  func changesSummarizeIntoOneNotificationWhileEachIssueNotifiesSeparately() throws {
+  func `changes summarize into one notification while each issue notifies separately`() throws {
     try withManager { manager, log, _ in
       let account = try makeAccount()
       manager.digest(account: account, history: [], errors: [], failure: nil)
@@ -180,7 +180,7 @@ struct NotificationManagerTests {
   }
 
   @Test
-  func twoAccountsFailingOnTheSamePathEachGetTheirOwnBanner() throws {
+  func `two accounts failing on the same path each get their own banner`() throws {
     try withManager { manager, log, _ in
       let personal = try makeAccount()
       let work = try AccountIdentifier(validating: "dbid:AAH4f99T0taONIb-work")
@@ -220,7 +220,7 @@ struct NotificationManagerTests {
   }
 
   @Test
-  func aSnoozeHoldsADigestAndReleasesItWhenTheWindowCloses() throws {
+  func `a snooze holds a digest and releases it when the window closes`() throws {
     try withManager { manager, log, environment in
       let account = try makeAccount()
       let failure = try #require(AppModel.AccountFailure(AuthenticationFailure.tokenRevoked))
@@ -266,7 +266,7 @@ struct NotificationManagerTests {
   }
 
   @Test
-  func theLevelSilencesEverythingLessSevereThanItself() throws {
+  func `the level silences everything less severe than itself`() throws {
     try withManager { manager, log, environment in
       let account = try makeAccount()
       try setLevel(.syncIssues, in: environment)
@@ -296,7 +296,7 @@ struct NotificationManagerTests {
   }
 
   @Test
-  func aLoneChangeIsDescribedByWhatActuallyHappenedToIt() throws {
+  func `a lone change is described by what actually happened to it`() throws {
     try withManager { manager, log, _ in
       let account = try makeAccount()
       manager.digest(account: account, history: [], errors: [], failure: nil)
@@ -323,7 +323,7 @@ struct NotificationManagerTests {
   }
 
   @Test
-  func changesOneCollaboratorMadeAreAttributedToThemAndMixedOnesAreNot() throws {
+  func `changes one collaborator made are attributed to them and mixed ones are not`() throws {
     try withManager { manager, log, _ in
       let account = try makeAccount()
       let scully = try AccountIdentifier(validating: "dbid:AAH4f99T0taONIc")
@@ -385,7 +385,7 @@ struct NotificationManagerTests {
   }
 
   @Test
-  func theErrorsLevelDeliversWhatStoppedTheAccountAndNothingBelowIt() throws {
+  func `the errors level delivers what stopped the account and nothing below it`() throws {
     try withManager { manager, log, environment in
       let account = try makeAccount()
       try setLevel(.errors, in: environment)
@@ -412,7 +412,7 @@ struct NotificationManagerTests {
   }
 
   @Test
-  func aFailureNotifiesOnceAndSaysSoAgainOnlyAfterTheAccountRecovers() throws {
+  func `a failure notifies once and says so again only after the account recovers`() throws {
     try withManager { manager, log, _ in
       let account = try makeAccount()
       let failure = try #require(AppModel.AccountFailure(AuthenticationFailure.tokenRevoked))

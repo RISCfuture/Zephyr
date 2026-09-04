@@ -39,13 +39,13 @@ struct ProviderItemTests {
   }
 
   @Test
-  func metadataVersionEncodesGenerationAsLittleEndian() throws {
+  func `metadata version encodes generation as little endian`() throws {
     let item = item(for: try record(metaGeneration: 0x0102_0304_0506_0708))
     #expect(item.itemVersion.metadataVersion == Data([8, 7, 6, 5, 4, 3, 2, 1]))
   }
 
   @Test
-  func contentVersionUsesHashForFilesAndConstantForFolders() throws {
+  func `content version uses hash for files and constant for folders`() throws {
     let hash = String(repeating: "cd", count: 32)
     let file = item(for: try record(hash: hash))
     #expect(file.itemVersion.contentVersion == Data(hash.utf8))
@@ -57,7 +57,7 @@ struct ProviderItemTests {
   }
 
   @Test
-  func symlinksExposeTargetAndSymbolicLinkType() throws {
+  func `symlinks expose target and symbolic link type`() throws {
     let link = item(
       for: try record(path: "/link", itemType: .symlink, symlinkTarget: "../real.txt")
     )

@@ -3,8 +3,8 @@ import Testing
 
 @testable import libZephyr
 
-@Suite("Widget status snapshot")
-struct SyncStatusSnapshotTests {
+@Suite
+struct `Widget status snapshot` {
   private let environment: ZephyrEnvironment
 
   init() {
@@ -43,8 +43,8 @@ struct SyncStatusSnapshotTests {
     }
   }
 
-  @Test("A published snapshot survives the trip through the shared container")
-  func roundTrip() throws {
+  @Test
+  func `A published snapshot survives the trip through the shared container`() throws {
     let snapshot = SyncStatusSnapshot(
       accounts: [Self.status(errorCount: 2, issues: Self.issues(2), failure: "Token revoked.")],
       capturedAt: Date(timeIntervalSince1970: 1_700_000_500)
@@ -53,8 +53,8 @@ struct SyncStatusSnapshotTests {
     #expect(SyncStatusSnapshot.load(from: environment) == snapshot)
   }
 
-  @Test("An account whose every item is failing carries only the newest issues")
-  func issuesAreCapped() throws {
+  @Test
+  func `An account whose every item is failing carries only the newest issues`() throws {
     let overflowing = Int(SyncStatusSnapshot.AccountStatus.maximumCarriedIssues) + 40
     let status = Self.status(errorCount: UInt(overflowing), issues: Self.issues(overflowing))
     #expect(status.syncIssues.count == Int(SyncStatusSnapshot.AccountStatus.maximumCarriedIssues))
@@ -70,13 +70,13 @@ struct SyncStatusSnapshotTests {
     #expect(reloaded.accounts[0].syncIssues.first?.path == "/File-0.txt")
   }
 
-  @Test("A snapshot that was never published reads as nothing, not as an empty account")
-  func missingFileLoadsAsNil() {
+  @Test
+  func `A snapshot that was never published reads as nothing, not as an empty account`() {
     #expect(SyncStatusSnapshot.load(from: environment) == nil)
   }
 
-  @Test("A truncated snapshot reads as nothing rather than throwing")
-  func corruptFileLoadsAsNil() throws {
+  @Test
+  func `A truncated snapshot reads as nothing rather than throwing`() throws {
     try FileManager.default.createDirectory(
       at: environment.baseDirectory,
       withIntermediateDirectories: true
@@ -86,15 +86,15 @@ struct SyncStatusSnapshotTests {
     #expect(SyncStatusSnapshot.load(from: environment) == nil)
   }
 
-  @Test("Publishing over a previous snapshot replaces it whole")
-  func republishingReplaces() throws {
+  @Test
+  func `Publishing over a previous snapshot replaces it whole`() throws {
     try SyncStatusSnapshot(accounts: [Self.status(), Self.status()]).write(to: environment)
     try SyncStatusSnapshot(accounts: [Self.status()]).write(to: environment)
     #expect(SyncStatusSnapshot.load(from: environment)?.accounts.count == 1)
   }
 
-  @Test("An account wants attention for a whole-account failure, not just failed files")
-  func attentionCoversAccountWideFailures() {
+  @Test
+  func `An account wants attention for a whole-account failure, not just failed files`() {
     #expect(Self.status().needsAttention == false)
     #expect(Self.status(errorCount: 1).needsAttention)
     #expect(Self.status(failure: "Token revoked.").needsAttention)

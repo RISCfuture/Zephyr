@@ -3,8 +3,8 @@ import Testing
 
 @testable import libZephyr
 
-@Suite("Change signals")
-struct ChangeSignalTests {
+@Suite
+struct `Change signals` {
   /// How long a post that is already on its way is given to arrive.
   private static let deliveryTimeout = Duration.seconds(2)
 
@@ -39,31 +39,31 @@ struct ChangeSignalTests {
     }
   }
 
-  @Test("A post wakes a watcher of the same account")
-  func aPostWakesAWatcherOfTheSameAccount() async throws {
+  @Test
+  func `A post wakes a watcher of the same account`() async throws {
     let signal = ChangeSignal.index(try Self.unsharedAccount())
     let commits = signal.signals()
     signal.post()
     #expect(await Self.signalArrives(on: commits))
   }
 
-  @Test("A post about one account leaves another account's watcher alone")
-  func aPostAboutOneAccountLeavesAnotherAccountsWatcherAlone() async throws {
+  @Test
+  func `A post about one account leaves another account's watcher alone`() async throws {
     let commits = ChangeSignal.index(try Self.unsharedAccount()).signals()
     ChangeSignal.index(try Self.unsharedAccount()).post()
     #expect(await Self.signalArrives(on: commits, within: Self.silenceTimeout) == false)
   }
 
-  @Test("A watcher of one file is deaf to a post about another")
-  func aWatcherOfOneFileIsDeafToAPostAboutAnother() async throws {
+  @Test
+  func `A watcher of one file is deaf to a post about another`() async throws {
     let account = try Self.unsharedAccount()
     let configuration = ChangeSignal.configuration(account).signals()
     ChangeSignal.index(account).post()
     #expect(await Self.signalArrives(on: configuration, within: Self.silenceTimeout) == false)
   }
 
-  @Test("A run of posts is reported far fewer times than it is posted")
-  func aRunOfPostsIsReportedFarFewerTimesThanItIsPosted() async throws {
+  @Test
+  func `A run of posts is reported far fewer times than it is posted`() async throws {
     let signal = ChangeSignal.index(try Self.unsharedAccount())
     let posts = 20
     let reports = signal.coalescedSignals(within: .milliseconds(500))

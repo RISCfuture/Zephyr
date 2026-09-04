@@ -20,7 +20,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func notFoundLookupMapsToNotFoundAtRequestPath() throws {
+  func `not found lookup maps to not found at request path`() throws {
     let json = """
       {
         "error_summary": "path/not_found/..",
@@ -36,7 +36,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func uploadWriteConflictsMapToFileAndFolderConflicts() throws {
+  func `upload write conflicts map to file and folder conflicts`() throws {
     func conflictJSON(_ kind: String) -> String {
       """
       {
@@ -68,7 +68,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func insufficientSpaceMapsToInsufficientSpace() throws {
+  func `insufficient space maps to insufficient space`() throws {
     let json = """
       {
         "error_summary": "path/insufficient_space/..",
@@ -84,7 +84,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test(arguments: ["malformed_path", "disallowed_name"])
-  func relocationPathProblemMapsToInvalidPath(tag: String) throws {
+  func `relocation path problem maps to invalid path`(tag: String) throws {
     let json = """
       {
         "error_summary": "to/\(tag)/..",
@@ -100,7 +100,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func cursorResetMapsToEngineCursorReset() throws {
+  func `cursor reset maps to engine cursor reset`() throws {
     let json = """
       {"error_summary": "reset/..", "error": {".tag": "reset"}}
       """
@@ -112,7 +112,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func incorrectOffsetMapsToSignalCarryingCorrectOffset() throws {
+  func `incorrect offset maps to signal carrying correct offset`() throws {
     let flat = """
       {
         "error_summary": "incorrect_offset/..",
@@ -136,7 +136,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func contentHashMismatchMapsToDataCorruption() throws {
+  func `content hash mismatch maps to data corruption`() throws {
     let json = """
       {"error_summary": "content_hash_mismatch/..", "error": {".tag": "content_hash_mismatch"}}
       """
@@ -149,7 +149,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func tooManyWriteOperationsMapsToRateLimitedSignal() throws {
+  func `too many write operations maps to rate limited signal`() throws {
     let json = """
       {
         "error_summary": "path/too_many_write_operations/..",
@@ -161,7 +161,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func expiredAccessTokenMapsToTokenExpired() throws {
+  func `expired access token maps to token expired`() throws {
     let json = """
       {"error_summary": "expired_access_token/..", "error": {".tag": "expired_access_token"}}
       """
@@ -173,7 +173,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func missingScopeMapsToMissingScopeWithRequiredScope() throws {
+  func `missing scope maps to missing scope with required scope`() throws {
     let json = """
       {
         "error_summary": "missing_scope/..",
@@ -189,7 +189,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func invalidAccessTokenMapsToTokenRevoked() throws {
+  func `invalid access token maps to token revoked`() throws {
     let json = """
       {"error_summary": "invalid_access_token/..", "error": {".tag": "invalid_access_token"}}
       """
@@ -201,7 +201,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func unprocessableEntityMapsToPathRootChanged() throws {
+  func `unprocessable entity maps to path root changed`() throws {
     let json = """
       {"error_summary": "invalid_root/..", "error": {".tag": "invalid_root"}}
       """
@@ -217,7 +217,7 @@ struct DropboxErrorMapperTests {
   /// that namespace is the only thing that gets the account unwedged short of
   /// relinking — so it has to survive the walk down to the nested union.
   @Test
-  func pathRootChangeCarriesTheNamespaceDropboxReturned() throws {
+  func `path root change carries the namespace Dropbox returned`() throws {
     func invalidRootJSON(_ rootInfo: String) -> String {
       """
       {
@@ -246,7 +246,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func pathRootPermissionRefusalIsNotAPathRootChange() throws {
+  func `path root permission refusal is not a path root change`() throws {
     let json = """
       {"error_summary": "no_permission/..", "error": {".tag": "no_permission"}}
       """
@@ -259,7 +259,7 @@ struct DropboxErrorMapperTests {
   /// A 400 is Dropbox refusing the arguments, not Zephyr misreading a response;
   /// `unexpectedStatus` would tell the user the client has a protocol bug.
   @Test
-  func badRequestIsReportedAsARejectedRequest() throws {
+  func `bad request is reported as a rejected request`() throws {
     let body = #"Error in call to API function "files/list_folder": bad "path" parameter"#
     let failure = try #require(mapped(400, body) as? WireFormatFailure)
     #expect(failure == .badRequest(route: "files/test", detail: body))
@@ -292,7 +292,7 @@ struct DropboxErrorMapperTests {
   /// A Basic account asking for a link password is told what its plan can't do,
   /// rather than being handed the raw union.
   @Test
-  func linkSettingsRefusalNamesThePlanLimit() throws {
+  func `link settings refusal names the plan limit`() throws {
     let json = """
       {
         "error_summary": "settings_error/not_authorized/..",
@@ -337,7 +337,7 @@ struct DropboxErrorMapperTests {
   /// A session that is already closed, or not yet closed, cannot be continued;
   /// the transfer restarts, which is the same arm an expired session takes.
   @Test(arguments: ["closed", "not_closed"])
-  func unusableUploadSessionRestartsTheTransfer(tag: String) throws {
+  func `unusable upload session restarts the transfer`(tag: String) throws {
     let json = """
       {
         "error_summary": "lookup_failed/\(tag)/..",
@@ -353,7 +353,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func rateLimitPrefersRetryAfterHeader() throws {
+  func `rate limit prefers retry after header`() throws {
     let json = """
       {
         "error_summary": "too_many_requests/..",
@@ -367,7 +367,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func rateLimitFallsBackToRetryAfterInBody() throws {
+  func `rate limit falls back to retry after in body`() throws {
     let json = """
       {
         "error_summary": "too_many_requests/..",
@@ -379,7 +379,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func serverErrorMapsToServerErrorSignalWithRequestID() throws {
+  func `server error maps to server error signal with request ID`() throws {
     let headers: [AnyHashable: Any] = ["x-dropbox-request-id": "3f0aa1b2c3d4"]
     let signal = try #require(
       mapped(500, "<html>Internal Server Error</html>", headers: headers) as? ServerErrorSignal
@@ -389,7 +389,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func unknownTagChainMapsToDropboxRouteError() throws {
+  func `unknown tag chain maps to Dropbox route error`() throws {
     let json = """
       {
         "error_summary": "properties_error/template_not_found/..",
@@ -406,7 +406,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func unparseable409BodyMapsToMalformedResponse() throws {
+  func `unparseable 409 body maps to malformed response`() throws {
     let failure = try #require(mapped(409, "<html>Conflict</html>") as? WireFormatFailure)
     guard case .malformedResponse(let failedRoute, _) = failure else {
       Issue.record("Expected malformedResponse, got \(failure)")
@@ -416,7 +416,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func headerLookupsAreCaseInsensitive() throws {
+  func `header lookups are case insensitive`() throws {
     // HTTP/2 lowercases header names on the wire; the raw dictionary is case-sensitive.
     let rateLimited = try #require(
       mapped(429, "{}", headers: ["retry-after": "7"]) as? RateLimitedSignal
@@ -430,7 +430,7 @@ struct DropboxErrorMapperTests {
   }
 
   @Test
-  func uploadSessionLookupNotFoundIsNotPathNotFound() throws {
+  func `upload session lookup not found is not path not found`() throws {
     let json = """
       {
         "error_summary": "lookup_failed/not_found/..",
@@ -455,7 +455,7 @@ struct OSErrorMappingTests {
   /// The status list shows a failure's localized text, so a raw file-system
   /// error has to acquire a taxonomy case before it is recorded.
   @Test
-  func fileSystemErrorsAreRestatedInTheTaxonomy() {
+  func `file system errors are restated in the taxonomy`() {
     let posix = POSIXError(.ENOSPC)
     #expect(
       OSErrorMapping.classified(posix, path: path) as? ItemSyncFailure
@@ -484,7 +484,7 @@ struct OSErrorMappingTests {
   /// Only file-system errors are restated: a Dropbox or engine failure already
   /// describes itself, and rewriting it as a file failure would lose the reason.
   @Test
-  func errorsFromElsewhereArePassedThrough() {
+  func `errors from elsewhere are passed through`() {
     let engine = EngineFailure.connection(detail: "offline")
     #expect(OSErrorMapping.classified(engine, path: path) as? EngineFailure == engine)
 
@@ -498,7 +498,7 @@ struct SyncErrorTierTests {
   /// A cancellation and a held lock stop the engine without saying anything is
   /// wrong with the account, so neither belongs in a fatal status row.
   @Test
-  func onlyLastingConditionsHaltSync() {
+  func `only lasting conditions halt sync`() {
     #expect(EngineFailure.connection(detail: nil).haltsSync)
     #expect(EngineFailure.pathRootChanged(newRoot: nil).haltsSync)
     #expect(!EngineFailure.cancelled.haltsSync)
@@ -509,7 +509,7 @@ struct SyncErrorTierTests {
   /// A lost connection is the one halting condition that comes back on its
   /// own, so it must never be reported the way a revoked token is.
   @Test
-  func onlyLostConnectionsResolveWithoutTheUser() {
+  func `only lost connections resolve without the user`() {
     #expect(EngineFailure.connection(detail: nil).resolvesWithoutUser)
     #expect(!EngineFailure.notLinked.resolvesWithoutUser)
     #expect(!EngineFailure.cursorReset.resolvesWithoutUser)

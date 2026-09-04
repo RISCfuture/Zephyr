@@ -110,7 +110,7 @@ struct TransferTests {
   // MARK: FileUploader
 
   @Test
-  func smallUploadCommitsInOneRequestWithFullArguments() async throws {
+  func `small upload commits in one request with full arguments`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let fileURL = directory.appendingPathComponent("small.bin")
@@ -154,7 +154,7 @@ struct TransferTests {
   }
 
   @Test
-  func largeUploadRunsSessionWithPerChunkCursorsAndHashes() async throws {
+  func `large upload runs session with per chunk cursors and hashes`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let fileURL = directory.appendingPathComponent("big.bin")
@@ -215,7 +215,7 @@ struct TransferTests {
   }
 
   @Test
-  func incorrectOffsetSeeksBackAndResendsFromServerOffset() async throws {
+  func `incorrect offset seeks back and resends from server offset`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let fileURL = directory.appendingPathComponent("big.bin")
@@ -261,7 +261,7 @@ struct TransferTests {
   }
 
   @Test
-  func fileMutationDuringSessionAbortsBeforeNextChunk() async throws {
+  func `file mutation during session aborts before next chunk`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let fileURL = directory.appendingPathComponent("big.bin")
@@ -299,7 +299,7 @@ struct TransferTests {
   // MARK: Resumable upload sessions
 
   @Test
-  func resumesACheckpointedSessionWithoutResendingCommittedChunks() async throws {
+  func `resumes a checkpointed session without resending committed chunks`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let fileURL = directory.appendingPathComponent("big.bin")
@@ -343,7 +343,7 @@ struct TransferTests {
   }
 
   @Test
-  func aCheckpointPastTheSessionWindowStartsOver() async throws {
+  func `a checkpoint past the session window starts over`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let fileURL = directory.appendingPathComponent("big.bin")
@@ -379,7 +379,7 @@ struct TransferTests {
   }
 
   @Test
-  func aCheckpointWhoseContentNoLongerMatchesStartsOver() async throws {
+  func `a checkpoint whose content no longer matches starts over`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let fileURL = directory.appendingPathComponent("big.bin")
@@ -415,7 +415,7 @@ struct TransferTests {
   }
 
   @Test
-  func aCheckpointRecordsOnlyWhatTheServerAcknowledged() async throws {
+  func `a checkpoint records only what the server acknowledged`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let fileURL = directory.appendingPathComponent("big.bin")
@@ -449,7 +449,7 @@ struct TransferTests {
   // MARK: FileDownloader
 
   @Test
-  func downloadVerifiesPlacesAndBackdatesTheFile() async throws {
+  func `download verifies places and backdates the file`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let destination = directory.appendingPathComponent("hello.txt")
@@ -493,7 +493,7 @@ struct TransferTests {
   }
 
   @Test
-  func downloadRetriesWhenContentFailsHashVerification() async throws {
+  func `download retries when content fails hash verification`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let destination = directory.appendingPathComponent("hello.txt")
@@ -528,7 +528,7 @@ struct TransferTests {
   }
 
   @Test
-  func transientChunkCorruptionRetriesTheChunk() async throws {
+  func `transient chunk corruption retries the chunk`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
     let fileURL = directory.appendingPathComponent("big.bin")
@@ -570,7 +570,7 @@ struct TransferTests {
   }
 
   @Test
-  func downloaderRefusesADirectoryDestination() async throws {
+  func `downloader refuses a directory destination`() async throws {
     let directory = try Self.makeTemporaryDirectory()
     defer { try? FileManager.default.removeItem(at: directory) }
 

@@ -55,7 +55,7 @@ struct RemoteIndexerTests {
   }
 
   @Test
-  func resumesAnInterruptedInitialListingFromItsCommittedCursor() async throws {
+  func `resumes an interrupted initial listing from its committed cursor`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     // A cursor without the completion marker is an initial listing that died
@@ -82,7 +82,7 @@ struct RemoteIndexerTests {
   }
 
   @Test
-  func cursorResetDuringTheInitialListingRestartsItFromTheRoot() async throws {
+  func `cursor reset during the initial listing restarts it from the root`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -110,7 +110,7 @@ struct RemoteIndexerTests {
   }
 
   @Test
-  func applyingPendingChangesWithoutACursorRunsTheInitialListing() async throws {
+  func `applying pending changes without a cursor runs the initial listing`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     let (transport, indexer) = await makeIndexer(store: store)
@@ -131,7 +131,7 @@ struct RemoteIndexerTests {
   }
 
   @Test
-  func drainingChangesRecordsAnAnchorTheProviderCanReplayDeletionsFrom() async throws {
+  func `draining changes records an anchor the provider can replay deletions from`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(
@@ -159,7 +159,7 @@ struct RemoteIndexerTests {
   }
 
   @Test
-  func drainsEveryDeltaPageAndAdvancesTheCursorOnce() async throws {
+  func `drains every delta page and advances the cursor once`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage([], history: [], advancingCursorTo: try cursor("page-1"))
@@ -189,7 +189,7 @@ struct RemoteIndexerTests {
   }
 
   @Test
-  func cursorResetWhileDrainingRebuildsTheIndex() async throws {
+  func `cursor reset while draining rebuilds the index`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }
     try await store.applyDeltaPage(

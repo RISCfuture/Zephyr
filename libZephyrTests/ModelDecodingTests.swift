@@ -220,7 +220,7 @@ struct ModelDecodingTests {
   // MARK: - FileMetadata
 
   @Test
-  func fullFileFixtureDecodesEveryField() throws {
+  func `full file fixture decodes every field`() throws {
     let file = try Self.decode(FileMetadata.self, from: Self.fullFileJSON)
     #expect(file.id.rawValue == "id:a4ayc_80_OEAAAAAAAAAXw")
     #expect(file.name == "Prime_Numbers.txt")
@@ -238,7 +238,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func minimalFileDefaultsSharingAndDownloadability() throws {
+  func `minimal file defaults sharing and downloadability`() throws {
     let file = try Self.decode(FileMetadata.self, from: Self.fileJSON())
     #expect(!file.isShared)
     #expect(file.modifiedBy == nil)
@@ -248,7 +248,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func symlinkInfoYieldsSymlinkTarget() throws {
+  func `symlink info yields symlink target`() throws {
     let json = Self.fileJSON(appending: #""symlink_info": {"target": "../foo"}"#)
     let file = try Self.decode(FileMetadata.self, from: json)
     #expect(file.symlinkTarget == "../foo")
@@ -257,7 +257,7 @@ struct ModelDecodingTests {
   // MARK: - FolderMetadata
 
   @Test
-  func folderWithSharedFolderIdentifierIsShared() throws {
+  func `folder with shared folder identifier is shared`() throws {
     let folder = try Self.decode(FolderMetadata.self, from: Self.sharedFolderJSON)
     #expect(folder.id.rawValue == "id:a4ayc_80_OEAAAAAAAAAXz")
     #expect(folder.name == "math")
@@ -267,7 +267,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func folderWithoutSharingKeysIsNotShared() throws {
+  func `folder without sharing keys is not shared`() throws {
     let folder = try Self.decode(FolderMetadata.self, from: Self.plainFolderJSON)
     #expect(!folder.isShared)
   }
@@ -275,7 +275,7 @@ struct ModelDecodingTests {
   // MARK: - ItemMetadata union
 
   @Test
-  func metadataUnionDecodesEachTaggedCase() throws {
+  func `metadata union decodes each tagged case`() throws {
     let json = "[\(Self.fullFileJSON), \(Self.sharedFolderJSON), \(Self.deletedJSON)]"
     let entries = try Self.decode([ItemMetadata].self, from: json)
     try #require(entries.count == 3)
@@ -295,7 +295,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func unknownMetadataTagIsRejected() {
+  func `unknown metadata tag is rejected`() {
     #expect(throws: DecodingError.self) {
       try Self.decode(ItemMetadata.self, from: #"{".tag": "weird", "name": "mystery"}"#)
     }
@@ -304,7 +304,7 @@ struct ModelDecodingTests {
   // MARK: - ListFolderPage
 
   @Test
-  func listFolderPageDecodesEntriesCursorAndPagingFlag() throws {
+  func `list folder page decodes entries cursor and paging flag`() throws {
     let json = """
       {
           "entries": [\(Self.fullFileJSON), \(Self.deletedJSON)],
@@ -319,7 +319,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func aPageSkipsEntriesOfAnUnrecognizedKindAndKeepsTheRest() throws {
+  func `a page skips entries of an unrecognized kind and keeps the rest`() throws {
     let json = """
       {
           "entries": [
@@ -337,7 +337,7 @@ struct ModelDecodingTests {
   // MARK: - FullAccount
 
   @Test
-  func personalAccountDecodesWithUserRootInfo() throws {
+  func `personal account decodes with user root info`() throws {
     let account = try Self.decode(FullAccount.self, from: Self.personalAccountJSON())
     #expect(account.accountID.rawValue == "dbid:AAH4f99T0taONIb-OurWxbNQ6ywGRopQngc")
     #expect(account.displayName == "Franz Ferdinand (Personal)")
@@ -358,7 +358,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func teamAccountDecodesWithTeamRootInfo() throws {
+  func `team account decodes with team root info`() throws {
     let account = try Self.decode(FullAccount.self, from: Self.teamAccountJSON())
     #expect(
       account.team == Team(id: "dbtid:AAFdgehTzw7WlXhZJsbGCLePe8RvQGYDr-I", name: "Acme, Inc.")
@@ -376,7 +376,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func anUnrecognizedRootKindDecodesAsPersonalSoLinkingStillSucceeds() throws {
+  func `an unrecognized root kind decodes as personal so linking still succeeds`() throws {
     let account = try Self.decode(
       FullAccount.self,
       from: Self.teamAccountJSON(rootTag: "enterprise")
@@ -389,7 +389,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func unknownAccountTypeDecodesAsOther() throws {
+  func `unknown account type decodes as other`() throws {
     let account = try Self.decode(
       FullAccount.self,
       from: Self.personalAccountJSON(accountType: "plus_plus")
@@ -400,7 +400,7 @@ struct ModelDecodingTests {
   // MARK: - BasicAccount
 
   @Test
-  func basicAccountTakesTheDisplayFormOfTheName() throws {
+  func `basic account takes the display form of the name`() throws {
     let account = try Self.decode(BasicAccount.self, from: Self.basicAccountJSON)
     #expect(account.accountID.rawValue == "dbid:AAH4f99T0taONIb-OurWxbNQ6ywGRopQngc")
     #expect(account.displayName == "Franz Ferdinand (Acme, Inc.)")
@@ -411,7 +411,7 @@ struct ModelDecodingTests {
   // MARK: - SpaceUsage
 
   @Test
-  func individualAllocationYieldsAllocatedBytes() throws {
+  func `individual allocation yields allocated bytes`() throws {
     let json =
       #"{"used": 314159265, "allocation": {".tag": "individual", "allocated": 10613916672}}"#
     let usage = try Self.decode(SpaceUsage.self, from: json)
@@ -420,13 +420,13 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func teamAllocationWithZeroMemberCapDrawsOnTeamPool() throws {
+  func `team allocation with zero member cap draws on team pool`() throws {
     let usage = try Self.decode(SpaceUsage.self, from: Self.teamSpaceUsageJSON(memberCap: 0))
     #expect(usage.allocated == 4_398_046_511_104)
   }
 
   @Test
-  func teamAllocationWithMemberCapUsesTheCap() throws {
+  func `team allocation with member cap uses the cap`() throws {
     let usage = try Self.decode(
       SpaceUsage.self,
       from: Self.teamSpaceUsageJSON(memberCap: 2_199_023_255_552)
@@ -437,7 +437,7 @@ struct ModelDecodingTests {
   // MARK: - Shared links
 
   @Test
-  func sharedLinkMetadataDecodesLinkPermissions() throws {
+  func `shared link metadata decodes link permissions`() throws {
     let link = try Self.decode(SharedLinkMetadata.self, from: Self.sharedLinkJSON)
     #expect(
       link.url.absoluteString == "https://www.dropbox.com/s/2sn712vy1ovegw8/Prime_Numbers.txt?dl=0"
@@ -453,7 +453,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func linkPermissionsDefaultOmittedFields() throws {
+  func `link permissions default omitted fields`() throws {
     let permissions = try Self.decode(LinkPermissions.self, from: #"{"can_revoke": false}"#)
     #expect(!permissions.canRevoke)
     #expect(permissions.allowDownload)
@@ -463,7 +463,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func listSharedLinksResultDecodesPage() throws {
+  func `list shared links result decodes page`() throws {
     let json = """
       {
           "links": [\(Self.sharedLinkJSON)],
@@ -481,7 +481,7 @@ struct ModelDecodingTests {
   // MARK: - Shared folders
 
   @Test
-  func aCompletedShareYieldsTheSharedFolder() throws {
+  func `a completed share yields the shared folder`() throws {
     let json = """
       {
           ".tag": "complete",
@@ -500,7 +500,7 @@ struct ModelDecodingTests {
   }
 
   @Test
-  func anAsynchronousShareYieldsItsJobIdentifier() throws {
+  func `an asynchronous share yields its job identifier`() throws {
     let json = #"{".tag": "async_job_id", "async_job_id": "34g93hh34h04y384084"}"#
     let launch = try Self.decode(ShareFolderLaunch.self, from: json)
     #expect(launch == .inProgress(jobID: "34g93hh34h04y384084"))
@@ -510,14 +510,14 @@ struct ModelDecodingTests {
   // MARK: - LongpollResult
 
   @Test
-  func longpollResultMapsBackoffToSeconds() throws {
+  func `longpoll result maps backoff to seconds`() throws {
     let result = try Self.decode(LongpollResult.self, from: #"{"changes": true, "backoff": 60}"#)
     #expect(result.changes)
     #expect(result.backoff == .seconds(60))
   }
 
   @Test
-  func longpollResultWithoutBackoffHasNone() throws {
+  func `longpoll result without backoff has none`() throws {
     let result = try Self.decode(LongpollResult.self, from: #"{"changes": false}"#)
     #expect(!result.changes)
     #expect(result.backoff == nil)
@@ -526,21 +526,21 @@ struct ModelDecodingTests {
   // MARK: - Strict validation
 
   @Test
-  func nonHexadecimalRevisionIsRejected() {
+  func `non hexadecimal revision is rejected`() {
     #expect(throws: DecodingError.self) {
       try Self.decode(FileMetadata.self, from: Self.fileJSON(rev: "XYZ NOT HEX"))
     }
   }
 
   @Test
-  func fileIdentifierWithoutPrefixIsRejected() {
+  func `file identifier without prefix is rejected`() {
     #expect(throws: DecodingError.self) {
       try Self.decode(FileMetadata.self, from: Self.fileJSON(id: "a4ayc_80_OEAAAAAAAAAXw"))
     }
   }
 
   @Test
-  func pathLowerWithoutLeadingSlashIsRejected() {
+  func `path lower without leading slash is rejected`() {
     #expect(throws: DecodingError.self) {
       try Self.decode(FileMetadata.self, from: Self.fileJSON(pathLower: "no-leading-slash"))
     }
