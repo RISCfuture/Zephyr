@@ -52,6 +52,16 @@
     static var opensDropbox: Bool { !isEnabled }
 
     /**
+     Whether animation runs as it normally would.
+
+     A capture is taken as two frames that have to match to the byte, so
+     anything still moving fails the run rather than being photographed
+     mid-stride. A staged run holds the motion; everything else about the
+     surface is photographed exactly as it ships.
+     */
+    static var animatesFreely: Bool { !isEnabled }
+
+    /**
      The appearance to pin. An unrecognized value is a mistake in the test, not
      a reason to capture a set in whichever appearance the machine happens to
      be in, so it stops the run.

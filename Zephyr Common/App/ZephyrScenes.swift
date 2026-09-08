@@ -25,14 +25,17 @@ public struct ZephyrScenes: Scene {
     MenuBarExtra {
       MenuBarPanel()
         .environment(model)
+        .holdsStillForCapture()
     } label: {
       MenuBarMark(model: model)
+        .holdsStillForCapture()
     }
     .menuBarExtraStyle(.window)
 
     Window(Text("Zephyr", bundle: #bundle), id: WindowID.accounts) {
       ContentView()
         .environment(model)
+        .holdsStillForCapture()
     }
     .defaultSize(width: 520, height: 360)
     .windowResizability(.contentMinSize)
@@ -69,6 +72,7 @@ public struct ZephyrScenes: Scene {
       Window(Text(verbatim: DesignGallery.windowTitle), id: WindowID.designGallery) {
         if let subject = AppModel.presentedDesignSubject {
           DesignGallery.view(for: subject)
+            .holdsStillForCapture()
         }
       }
       // No window at all, which is the only style whose frame is its content:
@@ -192,17 +196,101 @@ private struct MenuBarMark: View {
   @Environment(\.colorScheme)
   private var colorScheme
 
+  @Environment(\.accessibilityReduceMotion)
+  private var reduceMotion
+
+  @Environment(\.zephyrMarksTurn)
+  private var marksTurn
+
   var body: some View {
     let activity = model.activity(asOf: model.activitySampleDate)
-    Image(
-      nsImage: ZephyrMark.image(
-        activity,
-        style: .menuBar,
-        size: Self.size,
-        colorScheme: colorScheme
+    let label = Text("Zephyr, \(activity.summary)", bundle: #bundle)
+    if activity.state == .syncing, !reduceMotion, marksTurn {
+      TurningMenuBarMark(activity: activity, size: Self.size, label: label)
+    } else {
+      Image(
+        nsImage: ZephyrMark.image(
+          activity,
+          style: .menuBar,
+          size: Self.size,
+          colorScheme: colorScheme
+        )
       )
-    )
-    .accessibilityLabel(Text("Zephyr, \(activity.summary)", bundle: #bundle))
+      .accessibilityLabel(label)
+    }
+  }
+}
+
+/**
+ The status item while a sync is running: the mark's turn played out of frames
+ drawn once, because the label is an image and there is nothing in an image for
+ a view to turn.
+
+ A status item's label renders only what it can hand over as an image, so the
+ turn has to arrive as a change of state — a `TimelineView` here draws nothing
+ at all, and takes the item off the menu bar with it.
+
+ The frames and the clock that walks them live only as long as this view does,
+ which is only as long as the sync: nothing is drawn ahead of a sync, nothing
+ is held after one, and nothing ticks at rest.
+ */
+private struct TurningMenuBarMark: View {
+  let activity: SyncActivity
+  let size: CGFloat
+  let label: Text
+
+  @Environment(\.colorScheme)
+  private var colorScheme
+
+  @State private var filmstrip: ZephyrMarkFilmstrip?
+  @State private var frameDate = Date()
+
+  var body: some View {
+    Image(nsImage: frame(at: frameDate))
+      .accessibilityLabel(label)
+      .onChange(of: colorScheme, initial: true) {
+        filmstrip = ZephyrMarkFilmstrip(
+          activity,
+          style: .menuBar,
+          size: size,
+          colorScheme: colorScheme
+        )
+      }
+      .task { await walkTheTurn() }
+  }
+
+  /// The frame the turn has reached, or the mark drawn straight for the one
+  /// update that precedes the strip, so the status item never blinks empty.
+  private func frame(at date: Date) -> NSImage {
+    filmstrip?.frame(at: date)
+      ?? ZephyrMark.image(activity, style: .menuBar, size: size, colorScheme: colorScheme)
+  }
+
+  /// Moves the label on to the frame the clock has reached, until the sync
+  /// ends and takes this view — and so this task — with it.
+  private func walkTheTurn() async {
+    while !Task.isCancelled {
+      frameDate = Date()
+      try? await Task.sleep(for: .seconds(ZephyrMarkFilmstrip.frameInterval))
+    }
+  }
+}
+
+@MainActor
+private extension View {
+  /**
+   Holds Zephyr's marks still for a staged capture.
+
+   A screenshot is taken as two frames that have to match to the byte, and a
+   badge mid-turn never gives the same frame twice. This can only ever quiet a
+   mark, never start one, and only a staged run asks it to.
+   */
+  func holdsStillForCapture() -> some View {
+    #if DEBUG
+      return environment(\.zephyrMarksTurn, ScreenshotStaging.animatesFreely)
+    #else
+      return self
+    #endif
   }
 }
 
