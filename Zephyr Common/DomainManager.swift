@@ -270,7 +270,19 @@ extension DomainManager {
    zero, so a failure reads as "not known" instead of "nothing to do".
    */
   static func pendingItemCounts() async -> [AccountIdentifier: UInt] {
-    guard let domains = try? await NSFileProviderManager.domains() else { return [:] }
+    let domains: [NSFileProviderDomain]
+    do {
+      domains = try await NSFileProviderManager.domains()
+    } catch {
+      // The marks fall back to guessing activity from the age of the last
+      // change, which reads no differently from an account with nothing to
+      // send — so without this line nothing anywhere says the backlog stopped
+      // being measurable, or why.
+      ZephyrLog.provider.error(
+        "Couldn't list the domains to read the backlog from: \(error, privacy: .private)"
+      )
+      return [:]
+    }
     return await withTaskGroup(of: (account: AccountIdentifier, count: UInt?).self) { group in
       for domain in domains {
         guard let account = account(of: domain),
@@ -287,12 +299,16 @@ extension DomainManager {
   /// How many items one domain has pending, or `nil` when its enumerator
   /// couldn’t be read to the end.
   private static func pendingItemCount(readBy manager: NSFileProviderManager) async -> UInt? {
-    guard
-      let count = try? await PendingSetReader(
-        enumerator: manager.enumeratorForPendingItems()
-      ).itemCount()
-    else { return nil }
-    return UInt(count)
+    do {
+      return UInt(
+        try await PendingSetReader(enumerator: manager.enumeratorForPendingItems()).itemCount()
+      )
+    } catch {
+      ZephyrLog.provider.error(
+        "Couldn't read a domain's pending set: \(error, privacy: .private)"
+      )
+      return nil
+    }
   }
 }
 
