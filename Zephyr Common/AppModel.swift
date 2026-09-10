@@ -471,13 +471,23 @@ final class AppModel {
       isResolvedByRelinking = error is any AuthError
     }
 
-    /// Describes the failure the File Provider extension recorded, which it
-    /// already classified as account-wide before storing it.
-    init(_ record: EngineErrorRecord) {
+    /**
+     Describes the failure the File Provider extension recorded, or fails to
+     build from one that lifts on its own.
+
+     The extension classified the failure as account-wide before storing it,
+     and stored what it decided about the user's part in it alongside the
+     words. That verdict is the whole of what this can go on: a record keeps
+     the error's text and not its type, and a connection lost as the Mac went
+     to sleep is still in the index when it wakes.
+
+     Relinking is offered by the app's own check, which still holds the error
+     itself.
+     */
+    init?(_ record: EngineErrorRecord) {
+      guard !record.resolvesWithoutUser else { return nil }
       title = record.title
       detail = record.detail
-      // The extension stores the error's text, not its type; relinking is
-      // offered by the app's own check, which still holds the error itself.
       isResolvedByRelinking = false
     }
 

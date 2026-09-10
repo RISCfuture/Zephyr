@@ -825,7 +825,9 @@ struct DeltaInterpreterTests {
 
     try await store.markInitialIndexComplete()
     try await store.recordSyncError(try syncError(path: "/Docs/a.txt", title: "Conflict"))
-    try await store.recordEngineError(EngineErrorRecord(title: "Stopped", detail: nil))
+    try await store.recordEngineError(
+      EngineErrorRecord(title: "Stopped", detail: nil, resolvesWithoutUser: false)
+    )
 
     let complete = try await SyncStatus(reading: store)
     #expect(complete.indexState == .complete)

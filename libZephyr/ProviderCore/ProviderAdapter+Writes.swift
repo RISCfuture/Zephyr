@@ -624,6 +624,11 @@ extension ProviderAdapter {
    command line can say what is wrong without reaching the network
    themselves — the extension is the only process that watches Dropbox
    continuously.
+
+   The verdict travels with the words. Only the rendered sentence survives
+   the index, so a reader holding it has no way back to the error's type, and
+   whether the user has any part in the failure is the one thing it most
+   needs to know.
    */
   private func noteAccountWideFailure(_ error: any Error) async {
     ZephyrLog.engine.error(
@@ -633,7 +638,8 @@ extension ProviderAdapter {
     let record = EngineErrorRecord(
       title: localized?.errorDescription
         ?? String(localized: "Syncing stopped.", bundle: #bundle),
-      detail: localized?.failureReason ?? Self.unexpectedDetail(of: error)
+      detail: localized?.failureReason ?? Self.unexpectedDetail(of: error),
+      resolvesWithoutUser: Self.resolvesWithoutUser(error)
     )
     do {
       try await store.recordEngineError(record)

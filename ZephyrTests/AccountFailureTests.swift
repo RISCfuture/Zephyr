@@ -55,4 +55,25 @@ struct AccountFailureTests {
     #expect(failure(UnclassifiedFailure(), failedPolls: 2) == nil)
     #expect(failure(UnclassifiedFailure(), failedPolls: 3) != nil)
   }
+
+  /// The extension's record outlives the outage that caused it: a connection
+  /// lost as the Mac went to sleep is still in the index when it wakes. This
+  /// is the one door where the error's type is gone, so the verdict stored
+  /// beside the words is all that stops it being read back as a stoppage.
+  @Test
+  func `a recorded outage is no account failure when it is read back`() {
+    let outage = EngineErrorRecord(
+      title: "Syncing stopped.",
+      detail: "Cannot connect to Dropbox. The network connection was lost.",
+      resolvesWithoutUser: true
+    )
+    #expect(AppModel.AccountFailure(outage) == nil)
+
+    let revoked = EngineErrorRecord(
+      title: "Dropbox authentication failed.",
+      detail: "Access to Dropbox was revoked.",
+      resolvesWithoutUser: false
+    )
+    #expect(AppModel.AccountFailure(revoked) != nil)
+  }
 }

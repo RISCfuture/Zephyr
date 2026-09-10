@@ -77,8 +77,13 @@ struct StatusCommand: AsyncParsableCommand {
 
   @OptionGroup var accountOptions: AccountOptions
 
-  private static func blocker(_ stopped: EngineErrorRecord) -> StatusReport.Blocker {
-    StatusReport.Blocker(title: stopped.title, detail: stopped.detail)
+  /// The stoppage a report leads with, or `nil` for one nobody has anything
+  /// to do about. A Mac that is off its network is not a blocked account, and
+  /// printing it as one sends the reader looking for a fault that will have
+  /// healed before they find it.
+  private static func blocker(_ stopped: EngineErrorRecord) -> StatusReport.Blocker? {
+    guard !stopped.resolvesWithoutUser else { return nil }
+    return StatusReport.Blocker(title: stopped.title, detail: stopped.detail)
   }
 
   /// Whether the CLI has no credential left for the account — the state a
@@ -182,7 +187,7 @@ struct StatusCommand: AsyncParsableCommand {
     let finished = try await index.didFinishInitialIndex()
     let cursor = try await index.currentCursor()
     let issues = try await index.syncErrors()
-    let stopped = try await index.engineError().map(Self.blocker)
+    let stopped = try await index.engineError().flatMap(Self.blocker)
     let listedIssues = limit.map { Array(issues.prefix(Int($0))) } ?? issues
     return StatusReport(
       account: session.configuration.email,

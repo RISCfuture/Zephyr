@@ -643,12 +643,18 @@ public final class SyncIndexStore: Sendable {
 
    Only a read-write open migrates, so the app and the command line — which
    both read an index the extension owns — can meet a database written
-   before this table existed. Such an index has recorded no account-wide
-   failure, which is exactly `nil`.
+   before this table existed, or before a row in it could say whether the
+   failure lifts on its own. Neither has an account-wide failure this can
+   report: the first recorded none, and the second recorded one that cannot
+   be told from a Mac that was merely asleep. Both are exactly `nil`.
    */
   public func engineError() async throws -> EngineErrorRecord? {
-    try await read { db in
-      guard try db.tableExists(EngineErrorRecord.databaseTableName) else { return nil }
+    let table = EngineErrorRecord.databaseTableName
+    let verdict = EngineErrorRecord.CodingKeys.resolvesWithoutUser.stringValue
+    return try await read { db in
+      guard try db.tableExists(table),
+        try db.columns(in: table).contains(where: { $0.name == verdict })
+      else { return nil }
       return try EngineErrorRecord.fetchOne(db, key: EngineErrorRecord.singletonID)
     }
   }
@@ -996,6 +1002,17 @@ extension SyncIndexStore {
         table.primaryKey("key", .text)
         table.column("value", .text).notNull()
       }
+    }
+    migrator.registerMigration("v2") { db in
+      try db.alter(table: EngineErrorRecord.databaseTableName) { table in
+        table.add(column: "resolves_without_user", .boolean).notNull().defaults(to: false)
+      }
+      // A failure filed before it could say whether the user has any part in
+      // it reads exactly like one that does, so a Mac that lost its network
+      // over a weekend would wake to a stoppage it has to dismiss by hand.
+      // Whatever is still wrong is filed again within the half-minute, by an
+      // extension that now says which kind it is.
+      try db.execute(sql: "DELETE FROM \(EngineErrorRecord.databaseTableName)")
     }
     return migrator
   }

@@ -41,7 +41,12 @@ public struct SyncStatus: Sendable, Equatable {
     files = counts.files
     folders = counts.folders
     syncIssueCount = UInt(try await index.syncErrors().count)
-    accountFailure = try await index.engineError()
+    // A stoppage the user has a part in. An account that has only lost touch
+    // has not stopped in any sense a shortcut should report: the network
+    // comes back without being asked, and by the time anyone hears the answer
+    // it usually has.
+    let stopped = try await index.engineError()
+    accountFailure = stopped?.resolvesWithoutUser == true ? nil : stopped
   }
 
   private init(

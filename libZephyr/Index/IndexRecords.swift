@@ -334,12 +334,32 @@ public struct EngineErrorRecord: Sendable, Codable, Equatable, FetchableRecord, 
 
   public let detail: String?
 
+  /**
+   Whether the failure lifts on its own, as the operation that hit it judged.
+
+   The row keeps rendered words, so the error's type does not survive the
+   crossing from the extension that writes it to the app that reads it — and
+   two strings cannot tell a Mac that went to sleep from an account whose
+   token was revoked. The verdict ``SyncFatalError/resolvesWithoutUser``
+   reached is stored beside the words so that the reader can.
+
+   The initializer takes it without a default, so filing a failure means
+   saying which kind it is.
+   */
+  public let resolvesWithoutUser: Bool
+
   public let occurredAt: Date
 
-  public init(title: String, detail: String?, occurredAt: Date = Date()) {
+  public init(
+    title: String,
+    detail: String?,
+    resolvesWithoutUser: Bool,
+    occurredAt: Date = Date()
+  ) {
     self.id = Self.singletonID
     self.title = title
     self.detail = detail
+    self.resolvesWithoutUser = resolvesWithoutUser
     self.occurredAt = occurredAt
   }
 
@@ -349,6 +369,8 @@ public struct EngineErrorRecord: Sendable, Codable, Equatable, FetchableRecord, 
     case title
 
     case detail
+
+    case resolvesWithoutUser = "resolves_without_user"
 
     case occurredAt = "occurred_at"
   }
