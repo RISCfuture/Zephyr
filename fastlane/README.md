@@ -55,6 +55,22 @@ Archive one edition and ship it (CI)
 
 Resolve the next build number and write it where CI can read it
 
+### mac ci_verify_release_notes
+
+```sh
+[bundle exec] fastlane mac ci_verify_release_notes
+```
+
+Refuse to start a release whose notes are missing, empty, or too long (CI)
+
+### mac ci_finish_release
+
+```sh
+[bundle exec] fastlane mac ci_finish_release
+```
+
+Write the release notes and attach the build to its version (CI)
+
 ### mac screenshots
 
 ```sh
