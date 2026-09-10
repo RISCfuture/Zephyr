@@ -128,7 +128,7 @@ private struct WithheldApprovalRow: View {
   var body: some View {
     HStack(alignment: .firstTextBaseline) {
       Label {
-        Text(approval.summary)
+        Text(approval.explanation)
           .fixedSize(horizontal: false, vertical: true)
       } icon: {
         Image(systemName: "exclamationmark.triangle.fill")

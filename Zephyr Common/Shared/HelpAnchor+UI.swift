@@ -95,6 +95,12 @@ extension HelpAnchor {
           bundle: #bundle,
           comment: "Help button label"
         )
+      case .cannotReachDropbox:
+        String(
+          localized: "Help with a Dropbox Zephyr can’t reach",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .dropboxNotInFinder:
         String(
           localized: "Help with a Dropbox that isn’t in Finder",

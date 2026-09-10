@@ -145,12 +145,10 @@ private extension ZephyrMark {
 
   static func badgeSymbolName(for state: SyncActivity.State) -> String {
     switch state {
-      case .needsSetup: "ellipsis.circle.fill"
       case .syncing: "arrow.trianglehead.2.clockwise.rotate.90.circle.fill"
       case .upToDate: "checkmark.circle.fill"
       case .issues: "xmark.circle.fill"
-      case .waitingForCheaperNetwork: "pause.circle.fill"
-      case .offline: "bolt.horizontal.circle.fill"
+      case .paused: "pause.circle.fill"
     }
   }
 
@@ -173,10 +171,9 @@ private extension ZephyrMark {
     switch state {
       case .syncing: ZephyrPalette.active
       case .issues: ZephyrPalette.caution
-      // None of an outage, a deliberate wait, or an unfinished setup is a
-      // fault, so all are painted like rest rather than like alarm: the badge
-      // says why nothing is moving, without asking.
-      case .offline, .waitingForCheaperNetwork, .upToDate, .needsSetup, nil: ZephyrPalette.idle
+      // A pause is not a fault, so it is painted like rest rather than like
+      // alarm — as is a Mac with nothing left to send.
+      case .paused, .upToDate, nil: ZephyrPalette.idle
     }
   }
 

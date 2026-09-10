@@ -69,6 +69,31 @@ final class AppModel {
     /// than arriving as a token of its own, so nothing can read the argument
     /// after this one as its value.
     private static let showDesignArgumentPrefix = "--uitest-show-design="
+
+    /// What precedes the menu-bar panel arrangement to stage, as
+    /// `--uitest-panel-state=metered`. Written the same way, for the same
+    /// reason.
+    private static let panelStateArgumentPrefix = "--uitest-panel-state="
+
+    /**
+     Which arrangement of the panel this launch was told to stage, or `nil`
+     when it was told to stage none.
+
+     An unrecognized state is a mistake in the test rather than a reason to
+     photograph an ordinary panel and file it under the name of a state it is
+     not in, so it stops the run.
+     */
+    static var stagedPanelState: PanelState? {
+      guard
+        let argument = ProcessInfo.processInfo.arguments
+          .first(where: { $0.hasPrefix(panelStateArgumentPrefix) })
+      else { return nil }
+      let raw = String(argument.dropFirst(panelStateArgumentPrefix.count))
+      guard let state = PanelState(rawValue: raw) else {
+        preconditionFailure("Unrecognized \(panelStateArgumentPrefix)\(raw).")
+      }
+      return state
+    }
   #endif
 
   /// How often the marks re-sample sync activity.
@@ -215,6 +240,32 @@ final class AppModel {
   var withheldApprovals: [SystemApproval] = []
 
   /**
+   What the Mac's network path costs, followed as it changes.
+
+   Read from the path rather than inferred from what an account's syncing ran
+   into, which is the difference between a fact and a symptom: one monitor
+   serves the process and answers now, while a poll that has yet to be refused
+   leaves an account looking like it is syncing over a path nothing can cross.
+   */
+  var networkConditions = NetworkReachability.shared.conditions
+
+  /**
+   Why background syncing is holding back over what the path costs, or `nil`
+   while nothing is.
+
+   The Mac's, not any account's: every account syncs over one path, so a
+   deferral is one fact about this computer however many Dropboxes are linked.
+   Derived rather than stored so that overruling the reading in Settings lifts
+   the wait at once, the way joining a cheaper network does.
+   */
+  var networkCostRefusal: NetworkCostRefusal? {
+    .deferring(
+      on: networkConditions,
+      allowingExpensiveNetworks: bandwidth.syncsOnExpensiveNetworks
+    )
+  }
+
+  /**
    What the accounts window's link sheet is open for, or `nil` when it is
    closed. The Account menu raises it as well as the window's own button.
 
@@ -267,10 +318,11 @@ final class AppModel {
   /// the first check.
   private var lastCredentialCheck: Date?
 
-  /// How many items each account is still waiting to send to Dropbox, as the
-  /// File Provider pending set reports it. An account whose pending set has
-  /// never been read is absent, which reads as "not known" rather than zero.
-  private var pendingUploads: [AccountIdentifier: UInt] = [:]
+  /// How many changes each account is still waiting to send to Dropbox, as
+  /// the File Provider pending set reports it — edits, renames and deletions
+  /// alongside files yet to be sent. An account whose pending set has never
+  /// been read is absent, which reads as "not known" rather than zero.
+  var pendingChanges: [AccountIdentifier: UInt] = [:]
 
   /// One task per linked account, following what the File Provider extension
   /// commits to that account's index.
@@ -285,12 +337,6 @@ final class AppModel {
   /// that has gone on long enough to be worth naming can be told from the
   /// ordinary gap around a sleep.
   private var outagesSince: [AccountIdentifier: Date] = [:]
-
-  /// Why each account is holding back, for the accounts that are. Unlike an
-  /// outage this is not dated: it is a decision Zephyr is making right now,
-  /// not a wait whose length says anything — so what it carries is the
-  /// reason, which the user can act on.
-  private var deferredAccounts: [AccountIdentifier: NetworkCostRefusal] = [:]
 
   init(
     featureFlags: FeatureFlags,
@@ -318,6 +364,7 @@ final class AppModel {
       watchPendingSet()
       watchStoredSettings()
       watchSyncPause()
+      watchNetworkConditions()
     }
   }
 
@@ -359,6 +406,10 @@ final class AppModel {
     } catch {
       alertMessage = Self.alertText(for: error)
     }
+    // Whether an expensive path holds background work back is one of these
+    // settings, so a change to them can lift or impose the wait the widget is
+    // drawing. The watcher won't do it: this model already holds what it saved.
+    publishWidgetSnapshot()
   }
 
   /**
@@ -380,15 +431,9 @@ final class AppModel {
     var accountFailure: AccountFailure?
     /// When the account last lost touch with Dropbox, or `nil` while it can
     /// reach it. Being out of touch is a state and not a failure: it lifts on
-    /// its own, so it reads in the account's activity rather than here.
+    /// its own. It is kept per account only so that the Mac's own outage can
+    /// be told from one account's — the panel reads it nowhere else.
     var offlineSince: Date?
-    /// Why syncing is holding back over what the network costs, or `nil`
-    /// while nothing is. Like an outage, a state rather than a failure — and
-    /// unlike one, it can say why.
-    var networkCostRefusal: NetworkCostRefusal?
-
-    var isWaitingForCheaperNetwork: Bool { networkCostRefusal != nil }
-
     var syncErrorCount: UInt { UInt(syncErrors.count) }
 
     /// Whether anything about this account wants the user's attention.
@@ -520,6 +565,7 @@ extension AppModel {
       if usesSampleAccounts {
         accounts = PreviewHelper.sampleAccounts
         accountStatuses = PreviewHelper.sampleStatuses(for: accounts)
+        Self.stagedPanelState?.stage(self)
         return
       }
     #endif
@@ -726,29 +772,36 @@ extension AppModel {
 // MARK: Sync status
 
 extension AppModel {
-  /// When every account went out of touch, or `nil` unless they all are. One
-  /// account being unreachable while another syncs is that account's story,
-  /// not the Mac's, and the menu-bar mark speaks for the Mac.
+  /// How long the Mac has to have been out of touch before the wait is worth
+  /// a row. Below it, an outage is a lid that just opened or a radio still
+  /// finding its network, and saying so would be alarm.
+  private static let prolongedOutageSec: TimeInterval = 5 * 60
+
+  /// When every account went out of touch, or `nil` unless they all are.
   private var sharedOutageSince: Date? {
     let outages = accountStatuses.values.map(\.offlineSince)
     guard !outages.isEmpty, outages.allSatisfy({ $0 != nil }) else { return nil }
     return outages.compactMap(\.self).max()
   }
 
-  /// Whether every account is holding back over what the network costs. One
-  /// account waiting while another syncs is that account's story, and the
-  /// menu-bar mark speaks for the Mac.
-  private var isEveryAccountWaitingForCheaperNetwork: Bool {
-    !accountStatuses.isEmpty
-      && accountStatuses.values.allSatisfy(\.isWaitingForCheaperNetwork)
-  }
+  /**
+   When the Mac lost touch with Dropbox, once it has been out of touch long
+   enough to be worth saying — or `nil` while any account can reach it, or
+   while the wait is still the ordinary gap around a sleep.
 
-  /// Whether anything is in place to sync with: an account to sync, and a
-  /// Finder that macOS will let Zephyr serve it to. Every other reading
-  /// assumes both, and would otherwise call an account that cannot sync at
-  /// all up to date.
-  private var canSync: Bool {
-    !accounts.isEmpty && !withheldApprovals.contains(.finderExtension)
+   Every account at once, because one account being unreachable while another
+   syncs is that account's story rather than the Mac's.
+
+   Takes the moment to measure from rather than reading the clock, so that a
+   panel left open crosses the threshold when ``activitySampleDate`` next ticks
+   instead of never: a wait that lengthens while nobody looks changes nothing
+   SwiftUI is watching.
+   */
+  func prolongedOutageSince(asOf now: Date = Date()) -> Date? {
+    guard let since = sharedOutageSince,
+      now.timeIntervalSince(since) >= Self.prolongedOutageSec
+    else { return nil }
+    return since
   }
 
   /**
@@ -769,32 +822,45 @@ extension AppModel {
     publishWidgetSnapshot()
   }
 
-  /// One account's sync activity: what it still owes Dropbox, and whether any
-  /// of its items couldn't sync.
+  /**
+   One account's sync activity: what it still owes Dropbox, and whether any of
+   its items couldn't sync.
+
+   It carries nothing that would be true of every account at once. A metered
+   path, an outage, an approval macOS is withholding — none of those is
+   anything this account did, and a row repeating them once per account says
+   a fact about the Mac as many times as there are Dropboxes linked to it.
+   They read in ``activity(asOf:)``, which speaks for the Mac. So this can
+   only ever come back syncing, up to date, or in issues.
+   */
   func activity(for account: AccountIdentifier, asOf now: Date = Date()) -> SyncActivity {
     let status = accountStatuses[account]
     return SyncActivity(
       latestChange: status?.latestChange,
       hasIssues: status?.needsAttention ?? false,
-      pendingUploads: pendingUploads[account],
-      offlineSince: status?.offlineSince,
-      isWaitingForCheaperNetwork: status?.isWaitingForCheaperNetwork ?? false,
-      canSync: canSync,
+      pendingChanges: pendingChanges[account],
       asOf: now
     )
   }
 
-  /// The reading the menu-bar mark flies: everything every account still owes
-  /// Dropbox, and caution whenever any account has something wrong with it.
+  /**
+   The reading the menu-bar mark flies: what the Mac's syncing is doing,
+   everything every account still owes Dropbox, and caution whenever any
+   account has something wrong with it.
+
+   What is standing in syncing's way is not in it. A metered path, a route
+   that has gone, an approval macOS is withholding — each of those is said
+   once, in a row of the panel that can explain itself, and a status line that
+   named one as well would be naming it twice.
+   */
   func activity(asOf now: Date = Date()) -> SyncActivity {
     SyncActivity(
       latestChange: accountStatuses.values.compactMap(\.latestChange).max(),
       hasIssues: !unreadableAccounts.isEmpty
         || accountStatuses.values.contains(where: \.needsAttention),
-      pendingUploads: totalPendingUploads,
-      offlineSince: sharedOutageSince,
-      isWaitingForCheaperNetwork: isEveryAccountWaitingForCheaperNetwork,
-      canSync: canSync,
+      isPaused: isSyncPaused,
+      canReachDropbox: networkCostRefusal == nil && sharedOutageSince == nil,
+      pendingChanges: totalPendingChanges,
       asOf: now
     )
   }
@@ -825,12 +891,13 @@ extension AppModel {
         folders: status?.folders ?? 0,
         syncErrorCount: status?.syncErrorCount ?? 0,
         latestChange: status?.latestChange,
-        pendingUploads: pendingUploads[account.accountID],
+        pendingChanges: pendingChanges[account.accountID],
         syncIssues: (status?.syncErrors ?? []).map(SyncStatusSnapshot.SyncIssue.init),
         accountFailure: status?.accountFailure?.title
       )
     }
-    try? SyncStatusSnapshot(accounts: summaries).write()
+    let snapshot = SyncStatusSnapshot(accounts: summaries, isPaused: isSyncPaused)
+    try? snapshot.write()
     WidgetCenter.shared.reloadTimelines(ofKind: SyncStatusSnapshot.widgetKind)
   }
 
@@ -845,8 +912,7 @@ extension AppModel {
   private func status(of account: AccountIdentifier) async -> AccountStatus {
     var status = AccountStatus(
       accountFailure: verifiedFailures[account],
-      offlineSince: outagesSince[account],
-      networkCostRefusal: deferredAccounts[account]
+      offlineSince: outagesSince[account]
     )
     do {
       guard let store = try await readOnlyIndex(for: account) else { return status }
@@ -979,8 +1045,8 @@ extension AppModel {
 extension AppModel {
   /// Everything every account is waiting to send, or `nil` until at least one
   /// account's pending set has been read.
-  var totalPendingUploads: UInt? {
-    pendingUploads.isEmpty ? nil : pendingUploads.values.reduce(0, +)
+  var totalPendingChanges: UInt? {
+    pendingChanges.isEmpty ? nil : pendingChanges.values.reduce(0, +)
   }
 
   /**
@@ -998,13 +1064,13 @@ extension AppModel {
    */
   private func watchPendingSet() {
     Task { [weak self] in
-      await self?.refreshPendingUploads()
+      await self?.refreshPendingChanges()
       let changes = NotificationCenter.default.notifications(
         named: .fileProviderPendingSetDidChange
       )
       for await _ in changes {
         guard let self else { return }
-        await refreshPendingUploads()
+        await refreshPendingChanges()
       }
     }
   }
@@ -1064,6 +1130,29 @@ extension AppModel {
         let stored = BandwidthSettings.load()
         guard stored != bandwidth else { continue }
         bandwidth = stored
+        // Overruling macOS's reading of an expensive path lifts the wait, and
+        // the widget is drawn from a file rather than from this model.
+        publishWidgetSnapshot()
+      }
+    }
+  }
+
+  /**
+   Follows what the Mac's path costs, so the panel can say why nothing is
+   moving while nothing is moving.
+
+   Without it the reading would be taken once at launch and then stand through
+   every hotspot joined and left. The stream reports a path that merely
+   changed as well as one that improved, which is what a reader wants and a
+   retrying request does not.
+   */
+  private func watchNetworkConditions() {
+    Task { [weak self] in
+      for await conditions in await NetworkReachability.shared.conditionsStream() {
+        guard let self else { return }
+        guard conditions != networkConditions else { continue }
+        networkConditions = conditions
+        publishWidgetSnapshot()
       }
     }
   }
@@ -1084,14 +1173,15 @@ extension AppModel {
         let paused = await DomainConnection.areAllDisconnected()
         guard paused != isSyncPaused else { continue }
         isSyncPaused = paused
+        publishWidgetSnapshot()
       }
     }
   }
 
   /// Re-reads every account's pending set and republishes the marks.
-  private func refreshPendingUploads() async {
+  private func refreshPendingChanges() async {
     guard !usesSampleAccounts else { return }
-    pendingUploads = await DomainManager.pendingItemCounts()
+    pendingChanges = await DomainManager.pendingItemCounts()
     activitySampleDate = Date()
   }
 }
@@ -1177,10 +1267,11 @@ extension AppModel {
     for account: AccountIdentifier,
     _ poll: DomainWatcher.PollFailure
   ) async {
-    if let refusal = poll.networkCostRefusal {
-      await recordDeferral(refusal, for: account)
-      return
-    }
+    // A refusal is recorded nowhere. It is a fact about the Mac's path, which
+    // the model reads from the path itself — and it must not be mistaken for
+    // an outage on the way past, because an account that is holding back is
+    // not an account that has lost touch.
+    guard poll.networkCostRefusal == nil else { return }
     guard !poll.resolvesWithoutUser else {
       await recordOutage(for: account)
       return
@@ -1208,28 +1299,11 @@ extension AppModel {
     await refreshStatuses()
   }
 
-  /**
-   Notes that an account is waiting for a network that costs the user less.
-
-   Nothing is notified, for the same reason an outage isn't and then some:
-   the Mac is doing exactly what it should, the files the user opens still
-   download, and the wait ends by itself the moment the path changes.
-   */
-  private func recordDeferral(
-    _ refusal: NetworkCostRefusal,
-    for account: AccountIdentifier
-  ) async {
-    guard deferredAccounts.updateValue(refusal, forKey: account) != refusal else { return }
-    await refreshStatuses()
-  }
-
   /// Notes that an account is back in touch. A longpoll is unauthenticated,
   /// so this retires the outage and nothing else: whatever the credential
   /// check found wrong stands until it runs again.
   private func recordPollSucceeded(for account: AccountIdentifier) async {
-    let wasOffline = outagesSince.removeValue(forKey: account) != nil
-    let wasDeferred = deferredAccounts.removeValue(forKey: account) != nil
-    guard wasOffline || wasDeferred else { return }
+    guard outagesSince.removeValue(forKey: account) != nil else { return }
     await refreshStatuses()
   }
 

@@ -108,8 +108,13 @@ public struct SyncStatusWidgetBodyView: View {
   public var body: some View {
     if let snapshot = entry.snapshot, !snapshot.accounts.isEmpty {
       switch family {
-        case .systemMedium: SyncStatusMediumView(accounts: snapshot.accounts, asOf: entry.date)
-        default: SyncStatusSmallView(account: snapshot.accounts[0], asOf: entry.date)
+        case .systemMedium: SyncStatusMediumView(snapshot: snapshot, asOf: entry.date)
+        default:
+          SyncStatusSmallView(
+            snapshot: snapshot,
+            account: snapshot.accounts[0],
+            asOf: entry.date
+          )
       }
     } else {
       SyncStatusUnlinkedView()

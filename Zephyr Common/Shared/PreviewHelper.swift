@@ -49,6 +49,14 @@ import libZephyr
       return model
     }
 
+    /// The canned accounts arranged the way ``PanelState`` describes, so a
+    /// preview and a screenshot of the same state are the same picture.
+    static func model(in state: PanelState) -> AppModel {
+      let model = model(accounts: sampleAccounts)
+      state.stage(model)
+      return model
+    }
+
     static func sampleStatuses(
       for accounts: [AccountConfiguration]
     ) -> [AccountIdentifier: AppModel.AccountStatus] {

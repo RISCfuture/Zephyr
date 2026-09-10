@@ -15,13 +15,15 @@ struct MainScreen {
   static func launch(
     sampleAccounts: Bool,
     appearance: Zephyr.Appearance? = nil,
-    windowSizes: [String: CGSize] = [:]
+    windowSizes: [String: CGSize] = [:],
+    panelState: String? = nil
   ) -> Self {
     let screen = Self(
       app: Zephyr.launch(
         sampleAccounts: sampleAccounts,
         appearance: appearance,
-        windowSizes: windowSizes
+        windowSizes: windowSizes,
+        panelState: panelState
       )
     )
     screen.linkButton.assertExists("Accounts window did not appear")

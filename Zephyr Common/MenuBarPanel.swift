@@ -19,16 +19,9 @@ struct MenuBarPanel: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 0) {
-      PanelHeader(
-        activity: model.activity(asOf: model.activitySampleDate),
-        isPaused: model.isSyncPaused
-      )
+      PanelHeader(activity: model.activity(asOf: model.activitySampleDate))
+      PanelConditionsView(asOf: model.activitySampleDate)
       PanelDivider()
-      if !model.withheldApprovals.isEmpty {
-        PanelSection(LocalizedStringResource("Needs Attention", bundle: #bundle)) {
-          WithheldApprovalsView(approvals: model.withheldApprovals)
-        }
-      }
       PanelSection(LocalizedStringResource("Accounts", bundle: #bundle)) {
         if model.accounts.isEmpty {
           NoAccountsNotice()
@@ -152,7 +145,6 @@ private struct PanelHeader: View {
   private static let markSize: CGFloat = 20
 
   let activity: SyncActivity
-  let isPaused: Bool
 
   var body: some View {
     HStack {
@@ -161,36 +153,38 @@ private struct PanelHeader: View {
       Text("Zephyr", bundle: #bundle)
         .font(.headline)
       Spacer()
-      PanelStatusSummaryView(activity: activity, isPaused: isPaused)
+      PanelStatusSummaryView(activity: activity)
     }
     .padding(.horizontal, PanelMetrics.textInset)
     .padding(.top, PanelMetrics.headerTopInset)
   }
 }
 
-/// The reading beside the panel's name: whether syncing is held, what it is
-/// sending, or how it stands. It is set smaller than the name it trails, and
-/// in the caution color while anything needs the user.
+/**
+ The reading beside the panel's name: whether syncing is held, what it is
+ sending, or how it stands. It is set smaller than the name it trails, and in
+ the caution color while anything needs the user.
+
+ It says what the reading says and nothing else. Reaching past the reading for
+ the backlog underneath had it announce a number of changes being sent over a
+ path that was carrying none of them — the one state whose whole purpose is to
+ explain why that number is not moving. The count belongs to an account and is
+ printed against the account it belongs to.
+
+ A pause used to be answered here, beside a mark that went on flying whatever
+ was true before the switch was thrown. It is ranked with the other states now,
+ so the words and the badge agree.
+ */
 private struct PanelStatusSummaryView: View {
   let activity: SyncActivity
-  let isPaused: Bool
 
   @ScaledMetric(relativeTo: .body)
   private var textSize: CGFloat = 11
 
   var body: some View {
-    Group {
-      if isPaused {
-        Text("Paused", bundle: #bundle)
-      } else if let pendingUploads = activity.pendingUploads, pendingUploads > 0 {
-        Text("Uploading \(pendingUploads, format: .number)", bundle: #bundle)
-          .monospacedDigit()
-      } else {
-        Text(activity.summary)
-      }
-    }
-    .font(.system(size: textSize))
-    .foregroundStyle(activity.hasIssues ? ZephyrPalette.caution : .secondary)
+    Text(activity.summary)
+      .font(.system(size: textSize))
+      .foregroundStyle(activity.hasIssues ? ZephyrPalette.caution : .secondary)
   }
 }
 
@@ -226,32 +220,66 @@ private struct PanelSection<Content: View>: View {
   }
 }
 
-/// What macOS is withholding, as rows that open the pane granting it.
-private struct WithheldApprovalsView: View {
-  let approvals: [SystemApproval]
+/**
+ What is standing in syncing's way, said once each and explained.
 
-  @Environment(\.openURL)
-  private var openURL
-  @Environment(\.dismiss)
-  private var dismiss
+ These sit directly under the panel's head because that is what they are about:
+ one Mac, one network, one set of approvals. None of them is a button. A row
+ here states the condition in the words Zephyr already has for it and carries
+ the link every message in this panel carries — the page in the help book about
+ it — because what a reader wants from a line like this is rarely a switch they
+ could have found for themselves. It is to know what it means.
+
+ The head says nothing about any of them. It reads what syncing is doing, which
+ is a different question, and answering both in one line is how the panel came
+ to print a network's cost twice.
+
+ There is no heading over them, either. "Needs Attention" would be a fair name
+ for an approval macOS is withholding and a wrong one for a network that merely
+ costs money, and the two belong together: they are the same kind of fact about
+ the same computer. The tint tells a fault from a condition without a word.
+
+ A pause contributes no row — the reader threw that switch, and Resume Syncing
+ is a few lines down. Nor does a brief outage: a lid that has just opened is not
+ news, and only a wait long enough to be worth naming reaches here. Nor does an
+ approval that is only a preference; see ``SystemApproval/impairsZephyr``.
+ */
+private struct PanelConditionsView: View {
+  @Environment(AppModel.self)
+  private var model
+
+  let asOf: Date
 
   var body: some View {
-    ForEach(approvals) { approval in
-      PanelNotice(
-        Text(approval.actionTitle),
+    ForEach(model.withheldApprovals.filter(\.impairsZephyr)) { approval in
+      PanelMessage(
+        Text(approval.summary),
         systemImage: "exclamationmark.triangle.fill",
         tint: ZephyrPalette.caution,
-        identifier: "menuApprovalButton-\(approval.id)"
-      ) {
-        openURL(approval.settingsURL)
-        dismiss()
-      }
-      .help(Text(approval.summary))
-      HelpTopicButton(
-        anchor: approval.helpAnchor,
-        accessibilityIdentifier: "menuApprovalHelp-\(approval.id)"
+        voice: .machine,
+        help: approval.helpAnchor,
+        identifier: "menuApproval-\(approval.id)"
       )
-      .padding(.horizontal, PanelMetrics.textInset)
+    }
+    if let refusal = model.networkCostRefusal {
+      PanelMessage(
+        Text(refusal.explanation),
+        systemImage: "pause.circle.fill",
+        tint: .secondary,
+        voice: .machine,
+        help: .settingsBandwidth,
+        identifier: "networkCost"
+      )
+    }
+    if model.prolongedOutageSince(asOf: asOf) != nil {
+      PanelMessage(
+        Text("Zephyr can’t reach Dropbox.", bundle: #bundle),
+        systemImage: "bolt.horizontal.circle.fill",
+        tint: .secondary,
+        voice: .machine,
+        help: .cannotReachDropbox,
+        identifier: "outage"
+      )
     }
   }
 }
@@ -260,8 +288,6 @@ private struct WithheldApprovalsView: View {
 private struct AccountsView: View {
   @Environment(AppModel.self)
   private var model
-  @Environment(\.openWindow)
-  private var openWindow
   @Environment(\.dismiss)
   private var dismiss
 
@@ -280,60 +306,63 @@ private struct AccountsView: View {
         )
       }
       .help(Text("Open “\(account.displayName)” in Finder", bundle: #bundle))
-      AccountAttentionView(status: model.accountStatuses[account.accountID])
+      AccountAttentionView(
+        account: account.accountID,
+        status: model.accountStatuses[account.accountID]
+      )
     }
     ForEach(model.unreadableAccounts, id: \.self) { account in
-      PanelNotice(
-        Text("Account settings unreadable", bundle: #bundle),
+      PanelMessage(
+        Text("Zephyr can’t read this account’s settings.", bundle: #bundle),
         systemImage: "exclamationmark.octagon.fill",
         tint: .red,
-        identifier: "unreadableAccountNotice-\(account.rawValue)"
-      ) {
-        presentWindow(WindowID.accounts, opening: openWindow, dismissing: dismiss)
-      }
-      .help(
-        Text(
-          "Zephyr can’t read this account’s settings. Link it again to repair them.",
-          bundle: #bundle
-        )
+        voice: .account,
+        help: .reauthorize,
+        identifier: "unreadableAccount-\(account.rawValue)"
       )
     }
   }
 }
 
-/// What an account needs the user for, under its readout: the failure that
-/// stopped it, then the items that couldn't sync — each its own row, because
-/// a revoked token is not one of the files that failed.
-private struct AccountAttentionView: View {
-  let status: AppModel.AccountStatus?
+/**
+ What an account needs the user for, under its readout: the failure that
+ stopped it, then the items that couldn't sync — each its own row, because a
+ revoked token is not one of the files that failed.
 
-  @Environment(\.openWindow)
-  private var openWindow
-  @Environment(\.dismiss)
-  private var dismiss
+ Both say what happened and link to the page about it, as every message in this
+ panel does. Neither has ever carried that link before, though the same failure
+ in the accounts window has carried one all along; a reader who met a revoked
+ token here was the one reader Zephyr had nothing to offer.
+ */
+private struct AccountAttentionView: View {
+  let account: AccountIdentifier
+  let status: AppModel.AccountStatus?
 
   var body: some View {
     if let failure = status?.accountFailure {
-      PanelNotice(
+      // The title, not the detail. A failure's detail ends in the recovery
+      // suggestion the error carries for every reader it has, `zephyr`
+      // included — so the panel would be telling somebody who is looking at
+      // the panel to run a command in Terminal. What to do about it is what
+      // the help link is for.
+      PanelMessage(
         Text(failure.title),
         systemImage: "exclamationmark.octagon.fill",
         tint: .red,
-        identifier: "accountFailureNotice"
-      ) {
-        presentWindow(WindowID.accounts, opening: openWindow, dismissing: dismiss)
-      }
-      .help(failure.detail ?? failure.title)
+        voice: .account,
+        help: .reauthorize,
+        identifier: "accountFailure-\(account.rawValue)"
+      )
     }
     if let count = status?.syncErrorCount, count > 0 {
-      PanelNotice(
+      PanelMessage(
         Text("\(Int(count)) couldn’t sync", bundle: #bundle).monospacedDigit(),
         systemImage: "exclamationmark.triangle.fill",
         tint: ZephyrPalette.caution,
-        identifier: "syncIssuesButton"
-      ) {
-        presentWindow(WindowID.syncIssues, opening: openWindow, dismissing: dismiss)
-      }
-      .help(Text("See what couldn’t sync", bundle: #bundle))
+        voice: .account,
+        help: .syncIssues,
+        identifier: "syncIssues-\(account.rawValue)"
+      )
     }
   }
 }
@@ -366,19 +395,24 @@ private struct AccountReadoutView: View {
   }
 }
 
-/// The line under an account's name: what it is sending now, or when it last
-/// changed. What went wrong gets its own row rather than this one.
+/**
+ The line under an account's name: what this account is waiting to send, or
+ when it last changed. What went wrong gets its own row rather than this one.
+
+ Only what this account can answer for. Why nothing is moving — a metered path,
+ an outage, an approval macOS is withholding — is one fact about the Mac, and
+ saying it here would say it once per linked Dropbox, under a name that had
+ nothing to do with it.
+ */
 private struct AccountStatusLineView: View {
   let status: AppModel.AccountStatus?
   let activity: SyncActivity
 
   var body: some View {
-    // A deliberate wait outranks the backlog it is holding: none of that
-    // backlog is moving, and this is the one line that can say why.
-    if let refusal = status?.networkCostRefusal {
-      Text(refusal.summary)
-    } else if let pendingUploads = activity.pendingUploads, pendingUploads > 0 {
-      Text("Uploading \(pendingUploads, format: .number)", bundle: #bundle)
+    if let pendingChanges = activity.pendingChanges, pendingChanges > 0 {
+      // Changes rather than uploads: the pending set holds a deletion and a
+      // rename on the same terms as a file that has yet to be sent.
+      Text("\(pendingChanges, format: .number) waiting to send", bundle: #bundle)
         .monospacedDigit()
     } else if let latestChange = status?.latestChange {
       Text("Updated \(latestChange, format: .relative(presentation: .named))", bundle: #bundle)
@@ -690,43 +724,87 @@ private struct PanelActionView<Label: View>: View {
 }
 
 /**
- A panel row that reports something wrong and opens the window that deals with
- it.
+ A panel row that says what is wrong, and points at the page explaining it.
 
- The symbol carries no meaning the title does not, so it is left out of the
+ Not a button. Every row in this panel that reports something says it and links
+ to the help book, and nothing else — a row that opened a window as well would
+ be two affordances in one line, and the reader would have to press it to find
+ out which they were getting.
+
+ The link sits in the label's text column rather than under the whole row, so
+ it starts where the sentence starts. Hung off the row instead, it lined up
+ with the symbol and read as another item in the list rather than as a footnote
+ to the one above it.
+
+ The symbol carries no meaning the sentence does not, so it is left out of the
  accessibility tree rather than read aloud ahead of the sentence it decorates.
+ The sentence wraps rather than eliding: it is the whole of what this row is
+ for, and half of it is worth less than none.
  */
-private struct PanelNotice: View {
+private struct PanelMessage: View {
   private let title: Text
   private let systemImage: String
   private let tint: Color
+  private let voice: Voice
+  private let help: HelpAnchor
   private let identifier: String
-  private let action: () -> Void
 
   var body: some View {
-    PanelActionView(identifier: identifier, action: action) {
-      Label {
+    Label {
+      VStack(alignment: .leading, spacing: Metrics.tight) {
         title
-      } icon: {
-        Image(systemName: systemImage)
-          .accessibilityHidden(true)
+          .foregroundStyle(tint)
+          .fixedSize(horizontal: false, vertical: true)
+        HelpTopicButton(anchor: help, accessibilityIdentifier: "\(identifier)Help")
       }
-      .foregroundStyle(tint)
+    } icon: {
+      Image(systemName: systemImage)
+        .foregroundStyle(tint)
+        .accessibilityHidden(true)
     }
+    .font(voice.font)
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(.horizontal, PanelMetrics.textInset)
+    .padding(.vertical, PanelMetrics.rowInset)
+    .accessibilityIdentifier("\(identifier)Message")
   }
 
   init(
     _ title: Text,
     systemImage: String,
     tint: Color,
-    identifier: String,
-    action: @escaping () -> Void
+    voice: Voice,
+    help: HelpAnchor,
+    identifier: String
   ) {
     self.title = title
     self.systemImage = systemImage
     self.tint = tint
+    self.voice = voice
+    self.help = help
     self.identifier = identifier
-    self.action = action
+  }
+
+  /**
+   How loudly a message speaks, which is a question of whose it is.
+
+   A fact about this Mac is the panel's own to state, and it is set at the
+   panel's own size. A fact about one account belongs to the name above it, and
+   is set smaller so that it reads as part of that account's entry rather than
+   as another thing the panel has to say — which is what stops a run of
+   accounts, each with something to report, from reading as one flat list of
+   troubles nobody owns.
+   */
+  enum Voice {
+    case machine
+    case account
+
+    var font: Font {
+      switch self {
+        case .machine: .body
+        case .account: .caption
+      }
+    }
   }
 }
 
@@ -785,31 +863,41 @@ private struct PanelRowButtonStyle: ButtonStyle {
       .environment(PreviewHelper.model())
   }
 
+  // One preview per arrangement the panel can be in, named as the screenshot
+  // suite names them, so what is reviewed here and what is published are the
+  // same picture of the same staged state.
+  #Preview("On a metered network") {
+    MenuBarPanel().environment(PreviewHelper.model(in: .metered))
+  }
+
+  #Preview("Out of touch") {
+    MenuBarPanel().environment(PreviewHelper.model(in: .unreachable))
+  }
+
+  #Preview("In Low Data Mode") {
+    MenuBarPanel().environment(PreviewHelper.model(in: .lowDataMode))
+  }
+
   #Preview("Withheld approvals") {
-    MenuBarPanel()
-      .environment(
-        PreviewHelper.model(
-          accounts: PreviewHelper.sampleAccounts,
-          withheldApprovals: [.finderExtension, .loginItem]
-        )
-      )
+    MenuBarPanel().environment(PreviewHelper.model(in: .withheldApprovals))
+  }
+
+  #Preview("Stopped account") {
+    MenuBarPanel().environment(PreviewHelper.model(in: .accountFailure))
+  }
+
+  #Preview("Sending") {
+    MenuBarPanel().environment(PreviewHelper.model(in: .sending))
   }
 
   #Preview("Header readings") {
     VStack(alignment: .leading) {
       PanelHeader(
-        activity: SyncActivity(latestChange: Date(timeIntervalSinceNow: -3600), hasIssues: false),
-        isPaused: false
+        activity: SyncActivity(latestChange: Date(timeIntervalSinceNow: -3600), hasIssues: false)
       )
-      PanelHeader(
-        activity: SyncActivity(latestChange: nil, hasIssues: false, pendingUploads: 128),
-        isPaused: false
-      )
-      PanelHeader(
-        activity: SyncActivity(latestChange: nil, hasIssues: true),
-        isPaused: false
-      )
-      PanelHeader(activity: .idle, isPaused: true)
+      PanelHeader(activity: SyncActivity(latestChange: nil, hasIssues: false, pendingChanges: 128))
+      PanelHeader(activity: SyncActivity(latestChange: nil, hasIssues: true))
+      PanelHeader(activity: SyncActivity(latestChange: nil, hasIssues: false, isPaused: true))
     }
     .padding(.vertical, PanelMetrics.panelEdgeInset)
     .frame(width: PanelMetrics.width)

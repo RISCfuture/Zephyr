@@ -13,6 +13,8 @@ import SwiftUI
 struct SyncStatusSmallView: View {
   private static let markSize: CGFloat = 20
 
+  private let snapshot: SyncStatusSnapshot
+
   private let account: SyncStatusSnapshot.AccountStatus
 
   private let asOf: Date
@@ -43,16 +45,21 @@ struct SyncStatusSmallView: View {
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
   }
 
+  /// The mark speaks for the Mac even here, where there is one account to
+  /// speak for: a pause stops this account too, and the gauge would otherwise
+  /// read up to date through it.
   private var activity: SyncActivity {
     SyncActivity(
       latestChange: account.latestChange,
       hasIssues: account.needsAttention,
-      pendingUploads: account.pendingUploads,
+      isPaused: snapshot.isPaused,
+      pendingChanges: account.pendingChanges,
       asOf: asOf
     )
   }
 
-  init(account: SyncStatusSnapshot.AccountStatus, asOf: Date) {
+  init(snapshot: SyncStatusSnapshot, account: SyncStatusSnapshot.AccountStatus, asOf: Date) {
+    self.snapshot = snapshot
     self.account = account
     self.asOf = asOf
   }
@@ -64,9 +71,11 @@ struct SyncStatusMediumView: View {
 
   private static let listedAccountsLimit = 3
 
-  private let accounts: [SyncStatusSnapshot.AccountStatus]
+  private let snapshot: SyncStatusSnapshot
 
   private let asOf: Date
+
+  private var accounts: [SyncStatusSnapshot.AccountStatus] { snapshot.accounts }
 
   var body: some View {
     VStack(alignment: .leading) {
@@ -74,6 +83,11 @@ struct SyncStatusMediumView: View {
         ZephyrMark(overallActivity, size: Self.markSize)
         Text("Zephyr", bundle: #bundle)
           .font(.headline)
+        Spacer(minLength: 0)
+        Text(overallActivity.summary)
+          .font(.caption2)
+          .foregroundStyle(.secondary)
+          .lineLimit(1)
       }
       ForEach(accounts.prefix(Self.listedAccountsLimit)) { account in
         AccountSummaryView(account: account, asOf: asOf)
@@ -83,24 +97,27 @@ struct SyncStatusMediumView: View {
     .frame(maxWidth: .infinity, alignment: .leading)
   }
 
+  /// What the mark flies: what the Mac is doing, which is where a condition
+  /// none of the accounts owns belongs.
   private var overallActivity: SyncActivity {
     SyncActivity(
       latestChange: accounts.compactMap(\.latestChange).max(),
       hasIssues: accounts.contains(where: \.needsAttention),
-      pendingUploads: totalPendingUploads,
+      isPaused: snapshot.isPaused,
+      pendingChanges: totalPendingChanges,
       asOf: asOf
     )
   }
 
   /// Every account's backlog together, or `nil` where no account reported one
   /// — a sum of nothing is not a measurement of zero.
-  private var totalPendingUploads: UInt? {
-    let reported = accounts.compactMap(\.pendingUploads)
+  private var totalPendingChanges: UInt? {
+    let reported = accounts.compactMap(\.pendingChanges)
     return reported.isEmpty ? nil : reported.reduce(0, +)
   }
 
-  init(accounts: [SyncStatusSnapshot.AccountStatus], asOf: Date) {
-    self.accounts = accounts
+  init(snapshot: SyncStatusSnapshot, asOf: Date) {
+    self.snapshot = snapshot
     self.asOf = asOf
   }
 }
@@ -125,11 +142,13 @@ private struct AccountSummaryView: View {
     }
   }
 
+  /// An account's own reading, and only its own: what stops every account at
+  /// once is read off the snapshot beside Zephyr's name, once.
   private var activity: SyncActivity {
     SyncActivity(
       latestChange: account.latestChange,
       hasIssues: account.needsAttention,
-      pendingUploads: account.pendingUploads,
+      pendingChanges: account.pendingChanges,
       asOf: asOf
     )
   }
@@ -169,8 +188,8 @@ private struct ActivityView: View {
       .font(.caption2)
       .foregroundStyle(ZephyrPalette.caution)
       .lineLimit(1)
-    } else if let pendingUploads = account.pendingUploads, pendingUploads > 0 {
-      Text("Uploading \(Int(pendingUploads))", bundle: #bundle)
+    } else if let pendingChanges = account.pendingChanges, pendingChanges > 0 {
+      Text("\(Int(pendingChanges)) waiting to send", bundle: #bundle)
         .font(.caption2)
         .monospacedDigit()
         .foregroundStyle(.secondary)
@@ -247,7 +266,7 @@ private extension SyncStatusSnapshot.AccountStatus {
       folders: 593,
       syncErrorCount: 0,
       latestChange: Date(timeIntervalSinceNow: -540),
-      pendingUploads: 12
+      pendingChanges: 12
     ),
     SyncStatusSnapshot.AccountStatus(
       id: "dbid:preview-work",
@@ -277,6 +296,19 @@ private extension SyncStatusSnapshot.AccountStatus {
   ]
 }
 
+private extension SyncStatusSnapshot {
+  static let previewSample = SyncStatusSnapshot(
+    accounts: SyncStatusSnapshot.AccountStatus.previewSamples
+  )
+
+  /// The same accounts with syncing stopped, which is the one machine-wide
+  /// state a widget still reads.
+  static let previewPausedSample = SyncStatusSnapshot(
+    accounts: SyncStatusSnapshot.AccountStatus.previewSamples,
+    isPaused: true
+  )
+}
+
 private extension View {
   /// Frames a preview at a widget family's real geometry, on a widget-like ground.
   func inWidget(_ size: (width: Double, height: Double)) -> some View {
@@ -289,17 +321,29 @@ private extension View {
 #Preview("Widget renditions") {
   HStack(spacing: 20) {
     SyncStatusSmallView(
+      snapshot: .previewSample,
       account: SyncStatusSnapshot.AccountStatus.previewSamples[0],
       asOf: Date()
     )
     .inWidget(WidgetSize.small)
     SyncStatusUnlinkedView()
       .inWidget(WidgetSize.small)
-    SyncStatusMediumView(
-      accounts: SyncStatusSnapshot.AccountStatus.previewSamples,
+    SyncStatusMediumView(snapshot: .previewSample, asOf: Date())
+      .inWidget(WidgetSize.medium)
+  }
+  .padding()
+}
+
+#Preview("Widget while paused") {
+  HStack(spacing: 20) {
+    SyncStatusSmallView(
+      snapshot: .previewPausedSample,
+      account: SyncStatusSnapshot.AccountStatus.previewSamples[0],
       asOf: Date()
     )
-    .inWidget(WidgetSize.medium)
+    .inWidget(WidgetSize.small)
+    SyncStatusMediumView(snapshot: .previewPausedSample, asOf: Date())
+      .inWidget(WidgetSize.medium)
   }
   .padding()
 }

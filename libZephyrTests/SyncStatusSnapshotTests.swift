@@ -26,7 +26,7 @@ struct `Widget status snapshot` {
       folders: 593,
       syncErrorCount: errorCount,
       latestChange: Date(timeIntervalSince1970: 1_700_000_000),
-      pendingUploads: 12,
+      pendingChanges: 12,
       syncIssues: issues,
       accountFailure: failure
     )
@@ -47,7 +47,8 @@ struct `Widget status snapshot` {
   func `A published snapshot survives the trip through the shared container`() throws {
     let snapshot = SyncStatusSnapshot(
       accounts: [Self.status(errorCount: 2, issues: Self.issues(2), failure: "Token revoked.")],
-      capturedAt: Date(timeIntervalSince1970: 1_700_000_500)
+      capturedAt: Date(timeIntervalSince1970: 1_700_000_500),
+      isPaused: true
     )
     try snapshot.write(to: environment)
     #expect(SyncStatusSnapshot.load(from: environment) == snapshot)

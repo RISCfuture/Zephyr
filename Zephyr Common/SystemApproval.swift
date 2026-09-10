@@ -24,22 +24,48 @@ enum SystemApproval: String, CaseIterable, Identifiable, Sendable {
 
   var id: String { rawValue }
 
-  /// The command that grants it, for a surface with room for a menu item
-  /// rather than a sentence. It ends in an ellipsis because granting it
-  /// happens in System Settings.
-  var actionTitle: LocalizedStringResource {
+  /**
+   Whether Zephyr cannot do its job without it, rather than merely doing it
+   differently from the default.
+
+   Only one of the three is a bar. Without the File Provider extension there is
+   no Dropbox in Finder, which is the whole of what Zephyr is for. The other
+   two are choices about how much Zephyr says and when it runs: notifications
+   silenced still sync, and a Mac that opens Zephyr by hand syncs perfectly
+   well once it is open. Neither is standing in syncing's way, so neither
+   reaches the menu-bar panel, which lists only what is.
+
+   The accounts window still offers all three. A window somebody opened to set
+   Zephyr up is exactly where a preference belongs.
+   */
+  var impairsZephyr: Bool {
+    switch self {
+      case .finderExtension: true
+      case .notifications, .loginItem: false
+    }
+  }
+
+  /**
+   What is switched off, in the fewest words that name it.
+
+   For a surface with a line to spare and no room for the sentence explaining
+   it — the menu-bar panel's row, which says what is wrong and leaves the
+   explaining to the help book. ``explanation`` is the same fact at length,
+   which is what the accounts window has room for.
+   */
+  var summary: LocalizedStringResource {
     switch self {
       case .finderExtension:
-        LocalizedStringResource("Enable Zephyr in Finder…", bundle: #bundle)
+        LocalizedStringResource("File Provider extension is not enabled.", bundle: #bundle)
       case .notifications:
-        LocalizedStringResource("Allow Zephyr’s Notifications…", bundle: #bundle)
+        LocalizedStringResource("Notifications are not allowed.", bundle: #bundle)
       case .loginItem:
-        LocalizedStringResource("Allow Zephyr to Open at Login…", bundle: #bundle)
+        LocalizedStringResource("Open at Login is not enabled.", bundle: #bundle)
     }
   }
 
   /// What stops working without it, in the terms the user meets it in.
-  var summary: LocalizedStringResource {
+  var explanation: LocalizedStringResource {
     switch self {
       case .finderExtension:
         LocalizedStringResource(

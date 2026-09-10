@@ -74,6 +74,9 @@ public enum HelpAnchor: String, Sendable {
   /// A revoked authorization, or Dropbox gone quiet.
   case reauthorize = "reauthorize"
 
+  /// This Mac having been out of touch with Dropbox for a while.
+  case cannotReachDropbox = "cannot-reach-dropbox"
+
   /// A linked account that never reaches the Finder sidebar.
   case dropboxNotInFinder = "dropbox-not-in-finder"
 

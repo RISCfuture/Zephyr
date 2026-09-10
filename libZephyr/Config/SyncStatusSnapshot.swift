@@ -3,6 +3,10 @@ public import Foundation
 /**
  The sync summary the app publishes for the widget: one JSON file in the
  shared container, refreshed whenever the app recomputes account statuses.
+
+ Whether the user has stopped syncing is held here rather than on each account,
+ because it is one switch for the whole Mac. An account carries only what an
+ account can answer for.
  */
 public struct SyncStatusSnapshot: Sendable, Equatable, Codable {
 
@@ -12,9 +16,17 @@ public struct SyncStatusSnapshot: Sendable, Equatable, Codable {
   public var accounts: [AccountStatus]
   public var capturedAt: Date
 
-  public init(accounts: [AccountStatus], capturedAt: Date = Date()) {
+  /// Whether the user has stopped every transfer.
+  public var isPaused: Bool
+
+  public init(
+    accounts: [AccountStatus],
+    capturedAt: Date = Date(),
+    isPaused: Bool = false
+  ) {
     self.accounts = accounts
     self.capturedAt = capturedAt
+    self.isPaused = isPaused
   }
 
   /// Where the snapshot lives in the shared container.
@@ -66,10 +78,11 @@ public struct SyncStatusSnapshot: Sendable, Equatable, Codable {
     /// When the account last saw sync activity.
     public let latestChange: Date?
     /**
-     How many items the system is still waiting to push to Dropbox, or `nil`
-     where the app hadn't read the pending set when it published.
+     How many changes the system is still waiting to push to Dropbox, or `nil`
+     where the app hadn't read the pending set when it published. A deletion
+     and a rename each count as one, so nothing here is necessarily an upload.
      */
-    public let pendingUploads: UInt?
+    public let pendingChanges: UInt?
     /// The newest issues, at most ``maximumCarriedIssues`` of them.
     public let syncIssues: [SyncIssue]
     /**
@@ -93,7 +106,7 @@ public struct SyncStatusSnapshot: Sendable, Equatable, Codable {
       folders: UInt,
       syncErrorCount: UInt,
       latestChange: Date?,
-      pendingUploads: UInt? = nil,
+      pendingChanges: UInt? = nil,
       syncIssues: [SyncIssue] = [],
       accountFailure: String? = nil
     ) {
@@ -103,7 +116,7 @@ public struct SyncStatusSnapshot: Sendable, Equatable, Codable {
       self.folders = folders
       self.syncErrorCount = syncErrorCount
       self.latestChange = latestChange
-      self.pendingUploads = pendingUploads
+      self.pendingChanges = pendingChanges
       self.syncIssues = Array(syncIssues.prefix(Int(Self.maximumCarriedIssues)))
       self.accountFailure = accountFailure
     }

@@ -141,7 +141,7 @@ extension EngineFailure: LocalizedError {
  still only a reading, which is why it holds back bulk work and never holds
  back a file somebody asked for.
  */
-public enum NetworkCostRefusal: Sendable, Equatable {
+public enum NetworkCostRefusal: String, Sendable, Equatable, Codable {
   /// The path costs money or battery, as far as macOS can tell.
   case expensive
   /// The path is in Low Data Mode.
@@ -158,17 +158,27 @@ public enum NetworkCostRefusal: Sendable, Equatable {
   }
 
   /**
-   The same reason in the words a status line has room for.
+   Why background work would hold back on `conditions`, or `nil` where nothing
+   would hold it back.
 
-   A line under an account's name shares its row with the account's counts,
-   which leaves it about half the panel: a sentence there is a sentence
-   with its end cut off, and the state it belongs to is already named
-   above it.
+   This answers from the path alone, for a reader that needs to know before a
+   request is made — the menu-bar panel says why nothing is moving while
+   nothing is moving, which is exactly when no request is in flight to be
+   refused. It states the same rule the bulk transport's sessions are built
+   from, and has to keep stating it: Low Data Mode is an instruction and is
+   refused unconditionally, while an expensive path is a reading the user may
+   overrule. See ``HTTPTransport/Traffic/bulk(_:)``.
+
+   - Parameters:
+     - conditions: What the Mac's path is and what it costs.
+     - allowsExpensiveNetworks: Whether the user has overruled macOS's reading
+       of an expensive path — `BandwidthSettings/syncsOnExpensiveNetworks`.
    */
-  public var summary: String {
-    switch self {
-      case .expensive: String(localized: "This network costs to use", bundle: #bundle)
-      case .constrained: String(localized: "Low Data Mode is on", bundle: #bundle)
-    }
+  public static func deferring(
+    on conditions: NetworkConditions,
+    allowingExpensiveNetworks allowsExpensiveNetworks: Bool
+  ) -> Self? {
+    if conditions.isConstrained { return .constrained }
+    return conditions.isExpensive && !allowsExpensiveNetworks ? .expensive : nil
   }
 }

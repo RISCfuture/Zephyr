@@ -19,11 +19,15 @@ enum Zephyr {
      for any of it.
    - Parameter windowSizes: Content sizes to pin windows to, by title, for
      captures that must not depend on where a window was last dragged to.
+   - Parameter panelState: How to arrange the menu-bar panel, or `nil` to leave
+     the canned accounts as they are. Only meaningful alongside
+     `sampleAccounts`, which is what the arrangement is staged on.
    */
   static func launch(
     sampleAccounts: Bool,
     appearance: Appearance? = nil,
-    windowSizes: [String: CGSize] = [:]
+    windowSizes: [String: CGSize] = [:],
+    panelState: String? = nil
   ) -> XCUIApplication {
     let app = configure(appearance: appearance, windowSizes: windowSizes)
     // Zephyr's own switches go last. The argument domain reads the token after
@@ -34,6 +38,9 @@ enum Zephyr {
     app.launchArguments.append("--uitest-skip-setup")
     if sampleAccounts {
       app.launchArguments.append("--uitest-sample-accounts")
+    }
+    if let panelState {
+      app.launchArguments.append("--uitest-panel-state=\(panelState)")
     }
     app.launchAndWaitUntilReady(readyElement: { $0.buttons["linkAccountButton"] })
     bringToFront(app)

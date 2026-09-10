@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <title>Check what Zephyr is doing</title>
 <meta name="description" content="Read sync status, open an account in Finder, and reach Zephyr's controls from the menu bar.">
-<meta name="keywords" content="menu bar, status, panel, icon, uploading, up to date, accounts, quit, settings">
+<meta name="keywords" content="menu bar, status, panel, icon, sending, up to date, paused, accounts, quit, settings">
 <meta name="color-scheme" content="light dark">
 <meta name="robots" content="anchors">
 <link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
@@ -26,24 +26,36 @@ clicking it opens the panel that holds everything else.</p>
   </picture>
   <figcaption>One row per account, with the panel&#8217;s actions beneath.</figcaption>
 </figure>
+<p>The panel says things about this Mac at the top and things about one account further
+down, and never says the same thing in both places.</p>
 <ul>
-  <li><p><em>The top line</em> is the busiest thing happening across all your accounts, or
-      that syncing is paused: <em>Up to date</em>, <em>Syncing</em>, <em>Uploading</em>,
-      <em>Sync issues</em>, <em>Offline</em>, or <em>Can&#8217;t reach Dropbox</em>.</p></li>
-  <li><p><em>Waiting for a cheaper network</em> means this Mac is on a connection that costs you
-      something and Zephyr is holding back the work nobody asked for. Files you open still
-      download. See <a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limit
-      how much bandwidth Zephyr uses</a>.</p></li>
-  <li><p><em>Needs Attention</em> appears only when macOS is withholding something Zephyr needs.
-      Each row opens the System Settings pane that grants it.</p></li>
-  <li><p><em>Accounts</em> lists each linked account with what it&#8217;s doing and how many files
-      and folders it holds. Click an account to open it in Finder.</p></li>
+  <li><p><em>The top line</em> is what syncing is doing on this Mac as a whole, and only that:
+      <em>Up to date</em>, <em>Syncing</em>, <em>Sending</em>, <em>Sync issues</em>, or
+      <em>Paused</em>.</p></li>
+  <li><p><em>The messages just under it</em> appear only when something is standing in
+      syncing&#8217;s way, and say what that is: a network that costs you to use, a Dropbox
+      Zephyr hasn&#8217;t been able to reach for a while, or Zephyr switched off in Finder.
+      Each carries a Get help with this. link to the page about it. None of
+      them is a button.</p>
+      <p>Notifications and opening at login are left out. Both are choices about how Zephyr
+      behaves rather than things in syncing&#8217;s way, and the Zephyr window lists them
+      with the Finder extension.</p></li>
+  <li><p><em>Accounts</em> lists each linked account with what that account is doing and how many
+      files and folders it holds. Click an account to open it in Finder.</p></li>
+  <li><p><em>The line under an account&#8217;s name</em> is that account&#8217;s alone:
+      <em>&#8230; waiting to send</em> counts the changes it still owes Dropbox &#8212; edits,
+      renames and deletions as well as new files &#8212; and otherwise it says when the account
+      last changed.</p></li>
   <li><p><em>A warning under an account</em> is either a problem with the account itself or a
-      count of items that couldn&#8217;t sync. Clicking it opens the window that explains
-      which.</p></li>
+      count of items that couldn&#8217;t sync, and carries its own
+      Get help with this. link.</p></li>
 </ul>
-<p>The icon itself changes with the busiest account, so you can tell at a glance whether anything
-is moving without opening the panel.</p>
+<p>The icon itself carries the same reading as the top line, so you can tell at a glance whether
+anything is moving without opening the panel.</p>
+<div class="Alert"><p class="Note"><em>Note: </em>A network that costs you something holds back
+only the work nobody asked for. Files you open still download. See
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limit how much
+bandwidth Zephyr uses</a>.</p></div>
 </div>
 </div>
 
@@ -71,6 +83,7 @@ leaves it open. Press <kbd>Escape</kbd> to close the panel.</p>
 <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pause syncing</a>
 <a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Choose which notifications Zephyr shows</a>
 <a href="sync-issues.html#sync-issues" class="xRef AppleTopic">If a file won&#8217;t sync</a>
+<a href="cannot-reach-dropbox.html#cannot-reach-dropbox" class="xRef AppleTopic">If Zephyr can&#8217;t reach Dropbox</a>
 <a href="add-widget.html#add-widget" class="xRef AppleTopic">Add the Zephyr widget to your desktop</a>
 </div>
 </body>

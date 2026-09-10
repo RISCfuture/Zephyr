@@ -6,66 +6,56 @@ import Testing
 @Suite
 struct SyncActivityTests {
   private static let now = Date(timeIntervalSince1970: 1_800_000_000)
-  private static let prolongedOutageSec: TimeInterval = 5 * 60
 
   private func activity(
-    offlineSince: Date?,
     hasIssues: Bool = false,
-    pendingUploads: UInt? = nil,
-    canSync: Bool = true
+    isPaused: Bool = false,
+    canReachDropbox: Bool = true,
+    pendingChanges: UInt? = nil
   ) -> SyncActivity {
     SyncActivity(
       latestChange: nil,
       hasIssues: hasIssues,
-      pendingUploads: pendingUploads,
-      offlineSince: offlineSince,
-      canSync: canSync,
+      isPaused: isPaused,
+      canReachDropbox: canReachDropbox,
+      pendingChanges: pendingChanges,
       asOf: Self.now
     )
   }
 
-  /// An account nobody can reach reads as offline however much it was doing
-  /// when the connection went, because none of it is moving.
+  /// Nothing a backlog describes is happening while syncing is stopped, so the
+  /// pause takes the reading — and with it the badge, which otherwise went on
+  /// flying whatever was true when the switch was thrown.
   @Test
-  func `unreachable outranks a backlog`() {
-    let offline = activity(offlineSince: Self.now, pendingUploads: 12)
-    #expect(offline.state == .offline(isProlonged: false))
+  func `a pause outranks a backlog`() {
+    #expect(activity(isPaused: true, pendingChanges: 128).state == .paused)
   }
 
-  /// Issues outlast an outage and still want the user, so they keep the
-  /// reading — and with it the caution the menu-bar mark flies.
+  /// Issues outlast a pause and still want the user once syncing resumes, so
+  /// they keep the reading — and with it the caution the mark flies.
   @Test
-  func `issues outrank being unreachable`() {
-    #expect(activity(offlineSince: Self.now, hasIssues: true).state == .issues)
+  func `issues outrank a pause`() {
+    #expect(activity(hasIssues: true, isPaused: true).state == .issues)
   }
 
-  /// Nothing set up to sync with outlasts an outage and outlasts a backlog
-  /// nothing will ever carry, so it keeps the reading. Reading it as anything
-  /// else is how an account that cannot sync at all comes to fly up to date.
+  /// A measured backlog is named for the one direction it describes; a reading
+  /// with nothing measured can only say that something is happening.
   @Test
-  func `unfinished setup outranks an outage and a backlog`() {
-    let unset = activity(offlineSince: Self.now, pendingUploads: 12, canSync: false)
-    #expect(unset.state == .needsSetup)
-    #expect(activity(offlineSince: nil, canSync: false).state == .needsSetup)
+  func `a measured backlog is named as sending`() {
+    #expect(activity(pendingChanges: 128).summary == activity(pendingChanges: 12).summary)
+    #expect(activity(pendingChanges: 128).summary != activity(pendingChanges: 0).summary)
+    #expect(activity(pendingChanges: 0).state == .upToDate)
   }
 
-  /// Issues survive finishing setup, so they outrank it in turn.
+  /// "Sending" claims bytes are moving. A backlog on a path that will not
+  /// carry it is still a backlog, and saying so is as far as the truth goes —
+  /// which is what kept the panel from announcing a transfer over a network
+  /// that was carrying none of it.
   @Test
-  func `issues outrank unfinished setup`() {
-    #expect(activity(offlineSince: nil, hasIssues: true, canSync: false).state == .issues)
-  }
-
-  /// A blip and an outage are the same state wearing different words: the
-  /// wait is only worth naming as trouble once it has lasted.
-  @Test
-  func `an outage is prolonged only after five minutes`() {
-    #expect(
-      activity(offlineSince: Self.now.addingTimeInterval(-Self.prolongedOutageSec + 1))
-        .state == .offline(isProlonged: false)
-    )
-    #expect(
-      activity(offlineSince: Self.now.addingTimeInterval(-Self.prolongedOutageSec))
-        .state == .offline(isProlonged: true)
-    )
+  func `a backlog nothing is carrying does not read as sending`() {
+    let held = activity(canReachDropbox: false, pendingChanges: 128)
+    let moving = activity(pendingChanges: 128)
+    #expect(held.state == moving.state)
+    #expect(held.summary != moving.summary)
   }
 }
