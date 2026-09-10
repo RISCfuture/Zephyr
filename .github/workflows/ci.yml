@@ -1,4 +1,4 @@
-name: Tests
+name: CI
 
 # What CI can and cannot prove about the File Provider.
 #
@@ -231,7 +231,7 @@ jobs:
   # emits an empty archive — that is expected, not a misconfiguration to go fix. What their builds
   # buy is the compiler's verdict on every doc comment in the app and the tool: a symbol link or a
   # `- Parameter` name that has drifted from the code is caught here.
-  docbuild:
+  docs:
     name: Documentation
     runs-on: macos-26
     timeout-minutes: 45
@@ -266,7 +266,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-docs/Build
             ${{ runner.temp }}/dd-docs/SourcePackages
-          key: derived-docbuild-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-docs-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       # One derived-data directory for all three schemes: the app and the tool both build on the
       # framework, so a shared one compiles it once. The archives are throwaway — nothing publishes

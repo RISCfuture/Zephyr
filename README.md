@@ -1,6 +1,6 @@
 # Zephyr
 
-[![Tests](https://github.com/RISCfuture/Zephyr/actions/workflows/test.yml/badge.svg)](https://github.com/RISCfuture/Zephyr/actions/workflows/test.yml)
+[![CI](https://github.com/RISCfuture/Zephyr/actions/workflows/ci.yml/badge.svg)](https://github.com/RISCfuture/Zephyr/actions/workflows/ci.yml)
 [![Linters](https://github.com/RISCfuture/Zephyr/actions/workflows/lint.yml/badge.svg)](https://github.com/RISCfuture/Zephyr/actions/workflows/lint.yml)
 [![Periphery](https://github.com/RISCfuture/Zephyr/actions/workflows/periphery.yml/badge.svg)](https://github.com/RISCfuture/Zephyr/actions/workflows/periphery.yml)
 [![Platform](https://img.shields.io/badge/platform-macOS-lightgrey.svg)](https://developer.apple.com/)
