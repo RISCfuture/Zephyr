@@ -1325,6 +1325,10 @@ svg {
   margin: 0 0 1rem;
   padding-left: 1.15rem;
 }
+.doc-body ol {
+  margin: 0 0 1rem;
+  padding-left: 1.35rem;
+}
 
 .doc-body li {
   margin-bottom: 0.45rem;
