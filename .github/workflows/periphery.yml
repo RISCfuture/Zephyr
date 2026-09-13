@@ -14,6 +14,9 @@ jobs:
   periphery:
     name: Run Periphery
     runs-on: macos-26
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
     timeout-minutes: 90
     steps:
       - uses: maxim-lobanov/setup-xcode@v1
@@ -56,7 +59,7 @@ jobs:
           key: derived-periphery-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       - name: Install Periphery
-        run: brew install periphery
+        run: brew install periphery-pro/tap/periphery-cli
 
       # Three schemes cover every target: the extensions are dependencies of both editions, the CLI
       # of the downloadable one alone, and each edition has an entry point the other does not — so
@@ -94,6 +97,8 @@ jobs:
           done
 
       - name: Run Periphery
+        env:
+          PERIPHERY_TOKEN: ${{ secrets.PERIPHERY_TOKEN }}
         run: |
           periphery scan --strict --skip-build \
             --index-store-path "$RUNNER_TEMP/peri-dd/Index.noindex/DataStore"
