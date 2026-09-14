@@ -40,3 +40,8 @@ log.txt
 
 # Help book search indexes: built into the app bundle, but a hand-run hiutil leaves one here
 Help/**/*.cshelpindex
+
+# The website's Worker toolchain. wrangler is the only dependency, and .wrangler holds its local
+# state and asset-upload cache.
+node_modules/
+.wrangler/

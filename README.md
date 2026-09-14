@@ -790,7 +790,7 @@ symbolication a property of the release.
 ## Privacy
 
 Zephyr moves your files to and from Dropbox, so what it sends and what it keeps is worth
-reading: the [privacy policy](https://riscfuture.github.io/Zephyr/privacy.html) covers the
+reading: the [privacy policy](https://zephyrmac.app/privacy) covers the
 OAuth scopes it requests, where the refresh token is stored, what the local sync index
 holds, the update check, and the crash reports described above. There is no advertising
 identifier and no cross-app tracking.

@@ -11,11 +11,11 @@ public import Foundation
  */
 public struct FeatureFlags: Sendable {
   /// The project's site.
-  public static let websiteURL = URL(string: "https://riscfuture.github.io/Zephyr/")!
+  public static let websiteURL = URL(string: "https://zephyrmac.app/")!
 
   /// What Zephyr sends and what it keeps — the only account of it the running
   /// app gives.
-  public static let privacyURL = URL(string: "https://riscfuture.github.io/Zephyr/privacy.html")!
+  public static let privacyURL = URL(string: "https://zephyrmac.app/privacy")!
 
   /// Where to report a problem.
   public static let issuesURL = URL(string: "https://github.com/RISCfuture/Zephyr/issues")!

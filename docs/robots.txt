@@ -1,0 +1,6 @@
+# The og card's source document is not published; .assetsignore keeps it out of
+# the bundle. Nothing here is off limits.
+User-agent: *
+Allow: /
+
+Sitemap: https://zephyrmac.app/sitemap.xml

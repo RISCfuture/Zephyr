@@ -1,0 +1,6 @@
+# Read by GitHub Pages, which serves this folder only to redirect it to the apex.
+CNAME
+.nojekyll
+
+# The scaffold og.png is rendered from. Not a page, and not linked from one.
+assets/og-source.html

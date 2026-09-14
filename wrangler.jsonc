@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "zephyrmac-app",
+  "account_id": "9edca68dc3e37bad6304e4bc0da34eca",
+  "compatibility_date": "2026-09-14",
+  // The site is reachable only through its custom domain, so the workers.dev
+  // hostname stays off and cannot serve a copy that bypasses the zone's
+  // security-header ruleset.
+  "workers_dev": false,
+  // `www` is not a Custom Domain: it is a proxied placeholder record plus a
+  // zone Redirect Rule that 301s to the apex before the request reaches here.
+  "routes": [{ "pattern": "zephyrmac.app", "custom_domain": true }],
+  "assets": {
+    // Served straight from the source tree. The site is hand-written HTML with
+    // no build step, so unlike the other sites there is no `dist` to point at.
+    "directory": "./docs",
+    // `/support` serves `support.html`. The Worker answers a request for the
+    // `.html` path with a 307; a zone Redirect Rule catches those first and
+    // makes it a 301, which is what a permanent move off GitHub Pages needs.
+    "html_handling": "auto-trailing-slash",
+    // The site is three static pages, not a client-side router, so an unknown
+    // path is a real 404 rather than a fall back to `index.html`.
+    "not_found_handling": "404-page",
+  },
+  "observability": {
+    "enabled": true,
+  },
+}

@@ -1,0 +1,52 @@
+/*
+ * The not-found page.
+ *
+ * Tokens, type, header, and footer all come from style.css; this file adds only
+ * what is particular to the page. It stays separate rather than inline because
+ * the zone's CSP grants 'unsafe-inline' to `style-src-attr` alone.
+ */
+
+.gone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: min(68vh, 34rem);
+  padding-block: 5rem;
+  text-align: center;
+}
+
+/*
+ * The numeral is the page's weather: the icon's own gradient, clipped to the
+ * glyph, at the largest size the viewport will take.
+ */
+.gone-code {
+  margin-bottom: 0.5rem;
+  font-family: var(--display);
+  font-size: clamp(6rem, 22vw, 13rem);
+  font-weight: 800;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--sky), var(--deep));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.gone h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.gone-lede {
+  max-width: 44ch;
+  margin-bottom: 2.25rem;
+  color: var(--ink-soft);
+  font-size: 1.125rem;
+}
+
+.gone-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}

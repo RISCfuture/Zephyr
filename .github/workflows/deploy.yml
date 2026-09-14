@@ -1,0 +1,46 @@
+name: Deploy site to Cloudflare Workers
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # The other sites deploy on a green CI run. This one does not: CI here is the app's Swift build,
+  # which takes far longer than the site and goes red for reasons the site has no part in. Gating
+  # on it would leave a one-line copy fix waiting on an unrelated test failure. The site has no
+  # build step and no tests of its own, so there is nothing for CI to vouch for.
+  push:
+    branches: [main]
+    paths:
+      - docs/**
+      - wrangler.jsonc
+      - package.json
+      - pnpm-lock.yaml
+      - .github/workflows/deploy.yml
+
+permissions:
+  contents: read
+
+# Allow one concurrent deployment, and never cancel one in flight
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          cache: pnpm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Deploy to Cloudflare Workers
+        run: pnpm exec wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

@@ -1,0 +1,8 @@
+allowBuilds:
+  # wrangler bundles with esbuild's prebuilt binary; it never needs a source build.
+  esbuild: false
+  # Miniflare pulls in sharp only for the Images binding, which this site does not use.
+  sharp: false
+  workerd: true
+onlyBuiltDependencies:
+  - workerd
