@@ -428,9 +428,6 @@ svg {
   margin-bottom: 1.25rem;
 }
 
-/* A quieter alternative to the primary download. Taking the full basis puts it on its own line
-   under the buttons, where it reads as a footnote to them rather than a third choice; the wrapper
-   keeps the click target on the words rather than the whole width. */
 .cta-aside {
   flex-basis: 100%;
   font-size: 0.875rem;
@@ -448,6 +445,9 @@ svg {
   text-decoration-color: currentcolor;
 }
 
+/* A quieter alternative to the primary download. Taking the full basis puts it on its own line
+   under the buttons, where it reads as a footnote to them rather than a third choice; the wrapper
+   keeps the click target on the words rather than the whole width. */
 /* ──────────────────────────────  Hero  ────────────────────────────── */
 
 .hero {
@@ -575,10 +575,6 @@ svg {
 /* A second band, further off and slower, so the two never repeat in step. */
 .gust-track-slow {
   --gust-duration: 200s;
-}
-
-.gust-track-cta {
-  --gust-duration: 156s;
 }
 
 /* The mark's own gusts only breathe; they are part of the icon, not the sky. */
@@ -1129,57 +1125,53 @@ svg {
   color: #8fd0ff;
 }
 
-/* ────────────────────────────  Get it  ────────────────────────────── */
+/* ──────────────────────────  Install routes  ─────────────────────── */
 
-.get {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--r-xl);
-  padding: clamp(2.25rem, 4.5vw, 3.5rem);
-  background: linear-gradient(112deg, #002a92 0%, #0b57e8 68%, #2b98fd 120%);
-  box-shadow: var(--shadow-panel);
-  color: #ffffff;
-  isolation: isolate;
+/*
+ * One install route per row: its description on the left, the thing you act on
+ * to its right. The three differ by a sentence rather than by a table of
+ * capabilities, so a hairline between them keeps the section short.
+ */
+
+.routes {
+  margin: 0 0 1.5rem;
+  padding: 0;
+  list-style: none;
 }
 
-.get-inner {
-  position: relative;
-  z-index: 2;
+.route {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+.route:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.route-text h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.125rem;
+}
+
+.route-text p {
   max-width: 56ch;
+  margin: 0;
 }
 
-.get-inner > :last-child {
-  margin-bottom: 0;
-}
+@media (width <= 52rem) {
+  .route {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 
-.get h2 {
-  color: #ffffff;
-}
-
-.get .tag {
-  color: rgb(255 255 255 / 72%);
-}
-
-.get .tag::before {
-  background: #ffffff;
-}
-
-.get p {
-  color: rgb(255 255 255 / 88%);
-}
-
-.get .fine {
-  color: rgb(255 255 255 / 78%);
-}
-
-.get-notice {
-  display: inline-block;
-  margin-bottom: 1.5rem;
-  padding: 0.6rem 1rem;
-  border: 1px solid rgb(255 255 255 / 30%);
-  border-radius: var(--r-sm);
-  background: rgb(255 255 255 / 10%);
-  font-size: 0.9rem;
+  /* A grid item fills its track by default; the button should not go full-bleed. */
+  .route .btn {
+    justify-self: start;
+  }
 }
 
 /* ─────────────────────────────  FAQ  ──────────────────────────────── */

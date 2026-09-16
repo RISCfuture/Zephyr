@@ -235,6 +235,7 @@
                   >Download for macOS</a
                 >
                 <a class="btn btn-ghost" href="#features">See what it does</a>
+                <div class="cta-aside"><a href="#download">Other ways to install</a></div>
               </div>
               <p class="fine hero-fine">
                 Free and open source (MIT) · macOS 26 or later · Not affiliated with Dropbox
@@ -931,57 +932,63 @@
 
       <!-- ─────────────────────────  Download  ─────────────────────────── -->
       <section class="wrap band" id="download">
-        <div class="get">
-          <svg
-            class="hero-weather"
-            viewBox="0 0 1200 630"
-            preserveAspectRatio="xMidYMid slice"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <defs>
-              <path id="wind-cta" d="M-8.0,344.7C12.4,335.9 73.7,354.0 114.6,355.5C155.4,357.1 196.3,356.4 237.1,353.8C278.0,351.2 318.9,346.0 359.7,339.8C400.6,333.6 441.4,325.0 482.3,316.4C523.1,307.8 564.0,297.4 604.9,288.2C645.7,279.0 686.6,269.0 727.4,261.0C768.3,253.0 809.1,245.4 850.0,240.3C890.9,235.1 931.7,231.4 972.6,230.2C1013.4,228.9 1054.3,229.9 1095.1,232.7C1136.0,235.6 1176.9,241.0 1217.7,247.5C1258.6,253.9 1299.4,262.7 1340.3,271.4C1381.1,280.1 1422.0,290.5 1462.9,299.7C1503.7,308.9 1544.6,318.7 1585.4,326.6C1626.3,334.4 1687.6,333.0 1708.0,346.7C1728.4,360.5 1728.4,401.3 1708.0,409.4C1687.6,417.4 1626.3,401.3 1585.4,395.0C1544.6,388.8 1503.7,380.3 1462.9,371.8C1422.0,363.4 1381.1,353.3 1340.3,344.4C1299.4,335.5 1258.6,325.9 1217.7,318.3C1176.9,310.7 1136.0,303.6 1095.1,298.8C1054.3,294.1 1013.4,290.8 972.6,289.8C931.7,288.9 890.9,290.2 850.0,293.2C809.1,296.3 768.3,301.8 727.4,308.2C686.6,314.7 645.7,323.4 604.9,331.9C564.0,340.4 523.1,350.5 482.3,359.4C441.4,368.3 400.6,377.8 359.7,385.2C318.9,392.7 278.0,399.6 237.1,404.1C196.3,408.6 155.4,411.6 114.6,412.3C73.7,413.0 12.4,419.4 -8.0,408.1C-28.4,396.9 -28.4,353.4 -8.0,344.7Z" />
-            </defs>
-            <g class="gust-track gust-track-cta" fill="#fff" opacity="0.1" style="--gust-period: 1700px">
-              <use href="#wind-cta" x="-1700" />
-              <use href="#wind-cta" x="0" />
-              <use href="#wind-cta" x="1700" />
-            </g>
-          </svg>
-          <div class="get-inner">
-            <h2>Download Zephyr</h2>
-            <p>
-              The build here is signed and notarized by Apple, carries the <code>zephyr</code>
-              command-line tool — which a sandboxed App Store app can't install — and updates
-              itself on a schedule you pick. The Mac App Store edition trades the command line for
-              the App Store's own updates. Everything else is the same app, down to the bundle
-              identifier, so install one edition or the other rather than both.
-            </p>
-            <p>
-              Each release carries an installer package and a disk image. <strong>Take the
-              <code>.pkg</code></strong>. An app dragged out of a disk image is quarantined, macOS
-              runs a quarantined app from a throwaway copy of its own making, and it will not run a
-              file provider from there at all — so a dragged Zephyr can never put a Dropbox in your
-              sidebar, however long you leave it trying. The installer writes the app where it
-              belongs, and offers to put <code>zephyr</code> on your <code>PATH</code> while
-              it's there.
-            </p>
-            <div class="cta-row">
-              <a class="btn btn-onblue" href="https://github.com/RISCfuture/Zephyr/releases/latest"
-                >Download for macOS</a
-              >
-              <a class="btn btn-ghost" href="https://github.com/RISCfuture/Zephyr">View source</a>
-              <div class="cta-aside">
-                <a href="https://apps.apple.com/us/app/zephyr-dropbox-client/id6804861752"
-                  >View on the Mac App Store</a
-                >
-              </div>
+        <h2>Other ways to install</h2>
+        <p class="section-lede">
+          Every route installs the same app, down to the bundle identifier, so take one and not two.
+          Releases carry exactly one artifact, a notarized installer <strong><code>.pkg</code></strong>,
+          and never a disk image: an app dragged out of one is quarantined, macOS runs it from a
+          throwaway copy of its own making, and it will not run a file provider from there at all.
+        </p>
+
+        <ul class="routes">
+          <li class="route">
+            <div class="route-text">
+              <h3>Direct download</h3>
+              <p>
+                Signed and notarized by Apple, updates itself on a schedule you pick, and offers to put
+                <code>zephyr</code> on your <code>PATH</code> while it installs.
+              </p>
             </div>
-            <p class="fine">
-              Free and open source (MIT) · macOS 26 or later · Not affiliated with Dropbox
-            </p>
-          </div>
-        </div>
+            <a class="btn btn-primary" href="https://github.com/RISCfuture/Zephyr/releases/latest"
+              >Download for macOS</a
+            >
+          </li>
+
+          <li class="route">
+            <div class="route-text">
+              <h3>Homebrew</h3>
+              <p>
+                Installs that same package, so the app is written where it belongs and the
+                <code>zephyr</code> tool comes with it.
+              </p>
+            </div>
+            <div class="terminal">
+              <div class="terminal-bar">
+                <i></i><i></i><i></i>
+                <span>Homebrew</span>
+              </div>
+              <pre><code><span class="prompt">$</span> brew install --cask riscfuture/tap/zephyr</code></pre>
+            </div>
+          </li>
+
+          <li class="route">
+            <div class="route-text">
+              <h3>Mac App Store</h3>
+              <p>
+                Trades the command-line tool and the self-updater for the App Store's own updates.
+                Everything else is the same app.
+              </p>
+            </div>
+            <a class="btn" href="https://apps.apple.com/us/app/zephyr-dropbox-client/id6804861752"
+              >View on the Mac App Store</a
+            >
+          </li>
+        </ul>
+
+        <p class="fine">
+          Free and open source (MIT) · macOS 26 or later · Not affiliated with Dropbox ·
+          <a href="https://github.com/RISCfuture/Zephyr">View source</a>
+        </p>
       </section>
 
       <!-- ─────────────────────────────  FAQ  ──────────────────────────── -->
