@@ -201,17 +201,6 @@ svg {
   max-width: 100%;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 .skip-link {
   position: absolute;
   left: 0.75rem;
@@ -910,10 +899,6 @@ svg {
   color: var(--ink-soft);
 }
 
-.finder-files .is-local svg {
-  color: var(--action);
-}
-
 .finder-note {
   margin: 1rem 0 0;
   font-size: 0.8125rem;
@@ -1119,10 +1104,6 @@ svg {
 
 .terminal .out {
   color: var(--slate-ink-dim);
-}
-
-.terminal .flag {
-  color: #8fd0ff;
 }
 
 /* ──────────────────────────  Install routes  ─────────────────────── */
