@@ -173,6 +173,63 @@ struct DropboxOAuthFlowTests {
   }
 
   @Test
+  func `a token endpoint having a bad minute is retried rather than blamed on the account`()
+    async throws
+  {
+    let transport = MockTransport()
+    let flow = makeFlow(redirect: .outOfBand, transport: transport)
+    await transport.enqueue(MockTransport.Exchange(status: 500))
+    await transport.enqueue(MockTransport.Exchange(status: 429, headers: ["Retry-After": "0"]))
+    await transport.enqueueJSON(Self.tokenResponseJSON)
+
+    let link = try await flow.exchange(code: "pasted-code")
+
+    #expect(link.refreshToken == "sl.refresh")
+    #expect(await transport.requests.count == 3)
+  }
+
+  /// Dropbox staying down is a connection failure, which resolves without the
+  /// user — the tier that decides whether syncing waits for them. Calling it
+  /// an authentication failure would stop the account and send someone to
+  /// relink credentials that were never rejected.
+  @Test
+  func `a token endpoint that stays down is a connection failure, not an auth one`() async throws {
+    let transport = MockTransport()
+    let flow = makeFlow(redirect: .outOfBand, transport: transport)
+    // Four retries on top of the first refusal is the server-error budget.
+    for _ in 0..<5 { await transport.enqueue(MockTransport.Exchange(status: 500)) }
+
+    let failure = try #require(
+      await #expect(throws: EngineFailure.self) {
+        try await flow.exchange(code: "pasted-code")
+      }
+    )
+
+    #expect(failure.resolvesWithoutUser)
+    guard case .connection(let detail) = failure else {
+      Issue.record("Expected EngineFailure.connection, got \(failure)")
+      return
+    }
+    #expect(detail?.contains("500") == true)
+    // The budget is spent rather than abandoned after the first refusal.
+    #expect(await transport.requests.count == 5)
+  }
+
+  /// A refused grant is the one token-endpoint failure the user can act on, so
+  /// it has to survive the classification that sorts the transient ones out.
+  @Test
+  func `a rejected grant still asks the user to relink`() async throws {
+    let transport = MockTransport()
+    let flow = makeFlow(redirect: .outOfBand, transport: transport)
+    await transport.enqueueJSON(#"{"error": "invalid_grant"}"#, status: 400)
+
+    await #expect(throws: AuthenticationFailure.invalidGrant) {
+      try await flow.exchange(code: "stale-code")
+    }
+    #expect(await transport.requests.count == 1)
+  }
+
+  @Test
   func `a token response without a refresh token is malformed`() async throws {
     let transport = MockTransport()
     let flow = makeFlow(redirect: .outOfBand, transport: transport)

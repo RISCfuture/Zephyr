@@ -16,6 +16,9 @@ public struct DropboxOAuthFlow: Sendable {
   private static let authorizeEndpoint = URL(string: "https://www.dropbox.com/oauth2/authorize")!
   private static let tokenEndpoint = URL(string: "https://api.dropboxapi.com/oauth2/token")!
 
+  /// The retry budget a token request shares with the rest of the Dropbox API.
+  private static let retryPolicy = RetryPolicy()
+
   /// The PKCE verifier for this flow instance.
   public let verifier: PKCEVerifier
   /// The CSRF token round-tripped through the `state` parameter.
@@ -86,7 +89,41 @@ public struct DropboxOAuthFlow: Sendable {
     return (response.accessToken, Date(timeIntervalSinceNow: response.expiresIn))
   }
 
+  /**
+   Redeems a token request, retrying while Dropbox is the one at fault.
+
+   The token endpoint is a Dropbox service like any other and has the same bad
+   minutes, so a transient answer from it earns the retry budget every other
+   route gets rather than stopping the account outright.
+   */
   private static func requestToken(
+    form: [String: String],
+    transport: any HTTPTransport
+  ) async throws -> OAuthTokenResponse {
+    var attempt: UInt = 0
+    var generator = SystemRandomNumberGenerator()
+    while true {
+      do {
+        return try await attemptToken(form: form, transport: transport)
+      } catch let signal as RateLimitedSignal {
+        try await waitOrGiveUp(
+          .rateLimited(retryAfter: signal.retryAfter),
+          status: 429,
+          attempt: &attempt,
+          generator: &generator
+        )
+      } catch let signal as ServerErrorSignal {
+        try await waitOrGiveUp(
+          .serverError,
+          status: signal.status,
+          attempt: &attempt,
+          generator: &generator
+        )
+      }
+    }
+  }
+
+  private static func attemptToken(
     form: [String: String],
     transport: any HTTPTransport
   ) async throws -> OAuthTokenResponse {
@@ -102,27 +139,88 @@ public struct DropboxOAuthFlow: Sendable {
       throw EngineFailure.connection(detail: urlError.localizedDescription)
     }
     guard response.statusCode == 200 else {
-      if let details = DropboxErrorDetails.parse(body: data),
-        details.fields["error"]?.stringValue == "invalid_grant"
-      {
-        throw AuthenticationFailure.invalidGrant
-      }
-      if let body = String(data: data, encoding: .utf8), body.contains("invalid_grant") {
-        throw AuthenticationFailure.invalidGrant
-      }
-      throw AuthenticationFailure.malformedTokenResponse(
-        detail: String(
-          localized:
-            "the token endpoint returned status \(response.statusCode, format: .number.grouping(.never))",
-          bundle: #bundle
-        )
-      )
+      throw refusal(status: response.statusCode, body: data, headers: response.allHeaderFields)
     }
     do {
       return try JSONDecoder().decode(OAuthTokenResponse.self, from: data)
     } catch {
       throw malformedTokenResponse(from: error)
     }
+  }
+
+  /**
+   What a non-200 from the token endpoint means.
+
+   A rejected grant is the only one of these the user can do anything about.
+   The rest are Dropbox having trouble, and they leave here as the transport
+   signals the retry loop consumes: sending someone to relink an authorization
+   that was never in question would have them redo the one thing that was
+   working.
+   */
+  private static func refusal(
+    status: Int,
+    body: Data,
+    headers: [AnyHashable: Any]
+  ) -> any Error {
+    let details = DropboxErrorDetails.parse(body: body)
+    if details?.fields["error"]?.stringValue == "invalid_grant" {
+      return AuthenticationFailure.invalidGrant
+    }
+    if let text = String(data: body, encoding: .utf8), text.contains("invalid_grant") {
+      return AuthenticationFailure.invalidGrant
+    }
+    switch status {
+      case 429:
+        return RateLimitedSignal(
+          retryAfter: DropboxErrorMapper.retryAfter(headers: headers, details: details)
+        )
+      case 500...:
+        return ServerErrorSignal(status: status, requestID: nil)
+      default:
+        return AuthenticationFailure.malformedTokenResponse(
+          detail: String(
+            localized:
+              "the token endpoint returned status \(status, format: .number.grouping(.never))",
+            bundle: #bundle
+          )
+        )
+    }
+  }
+
+  /**
+   Waits out the policy's backoff, or gives up.
+
+   Giving up is a connection failure rather than an authentication one: the
+   account's credentials were never the thing that failed, and the tier it
+   lands in decides whether syncing waits for the user or simply picks itself
+   back up when Dropbox does.
+   */
+  private static func waitOrGiveUp(
+    _ failure: RetryPolicy.FailureClass,
+    status: Int,
+    attempt: inout UInt,
+    generator: inout SystemRandomNumberGenerator
+  ) async throws {
+    switch retryPolicy.decision(for: failure, attempt: attempt, using: &generator) {
+      case .retry(let delay):
+        logRetry(status: status, after: delay, attempt: attempt)
+        try await ContinuousClock().sleep(for: delay)
+        attempt += 1
+      case .giveUp:
+        throw EngineFailure.connection(
+          detail: String(
+            localized:
+              "Dropbox’s token endpoint returned status \(status, format: .number.grouping(.never)).",
+            bundle: #bundle
+          )
+        )
+    }
+  }
+
+  private static func logRetry(status: Int, after delay: Duration, attempt: UInt) {
+    ZephyrLog.auth.info(
+      "Token endpoint returned \(status, privacy: .public); retrying after \(String(describing: delay), privacy: .public) (attempt \(attempt))"
+    )
   }
 
   /**

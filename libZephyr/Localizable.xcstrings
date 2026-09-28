@@ -275,6 +275,9 @@
     "Dropbox Sync Status" : {
 
     },
+    "Dropbox’s token endpoint returned status %@." : {
+
+    },
     "Errors only" : {
 
     },
