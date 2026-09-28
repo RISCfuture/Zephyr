@@ -285,7 +285,9 @@ enum DropboxErrorMapper {
     return RateLimitedSignal(retryAfter: retryAfter(headers: [:], details: details))
   }
 
-  private static func retryAfter(
+  /// The wait a rate-limited response asks for, from its `Retry-After` header
+  /// or the `retry_after` its error body carries, or `nil` when it named none.
+  static func retryAfter(
     headers: [AnyHashable: Any],
     details: DropboxErrorDetails?
   ) -> Duration? {
