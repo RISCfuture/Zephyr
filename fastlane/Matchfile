@@ -1,6 +1,12 @@
 git_url("git@github.com:RISCfuture/certificates.git")
 storage_mode("git")
 
+# The certificates repository keeps every app's certificates and profiles on `main`, and it is not
+# the branch match reaches for: its git_branch defaults to "master". A branch that does not exist is
+# not an error to match — it starts an empty one — and a `master` that another match run pushed
+# holds only that run's profiles, so a read-only sync fails to find this app's.
+git_branch("main")
+
 type("appstore")
 team_id("2NFSK2WB24")
 
