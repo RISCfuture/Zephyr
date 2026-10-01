@@ -73,7 +73,13 @@ extension DropboxClient {
       }
     }
     return try await upload(
-      DropboxRoute(host: .content, namespace: "files", name: "upload", style: .upload),
+      DropboxRoute(
+        host: .content,
+        namespace: "files",
+        name: "upload",
+        style: .upload,
+        commitsToNamespace: true
+      ),
       argument: Argument(
         path: commit.path,
         mode: commit.mode,
@@ -194,7 +200,8 @@ extension DropboxClient {
         host: .content,
         namespace: "files",
         name: "upload_session/finish",
-        style: .upload
+        style: .upload,
+        commitsToNamespace: true
       ),
       argument: Argument(
         cursor: Cursor(sessionID: session.rawValue, offset: offset),

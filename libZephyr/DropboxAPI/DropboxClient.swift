@@ -1,4 +1,5 @@
 import Foundation
+import Semaphore
 import os
 
 /// The namespace sent as `Dropbox-API-Path-Root` on path-based calls.
@@ -41,10 +42,15 @@ actor PathRootHolder {
  authentication, path-root headers, and retry/backoff handling.
 
  A value type of immutable parts — copies are cheap and share the same
- ``AccessTokenProvider``, `RetryCoordinator`, and path root. Account-level
+ ``AccessTokenProvider``, `RetryCoordinator`, write gate, and path root. Account-level
  calls use a client without a path root; path-based calls use one derived
  with ``withPathRoot(_:)``, and ``adoptPathRoot(_:)`` re-resolves it for the
  whole family.
+
+ Calls that commit a change go out one at a time. Dropbox serializes commits
+ under a lock per namespace and answers a concurrent one with
+ `too_many_write_operations`, so a burst sent in parallel gains nothing: one
+ call wins each round and the rest retry together, losing again.
  */
 public struct DropboxClient: Sendable {
   private static let userAgent = "Zephyr/0.1"
@@ -52,6 +58,7 @@ public struct DropboxClient: Sendable {
   let transport: any HTTPTransport
   let tokenProvider: AccessTokenProvider?
   let retryCoordinator: RetryCoordinator
+  let writeGate: AsyncSemaphore
   let pathRoot: PathRootHolder?
   let uploadThrottle: BandwidthThrottle?
   private let retryPolicy = RetryPolicy()
@@ -75,6 +82,7 @@ public struct DropboxClient: Sendable {
       transport: transport,
       tokenProvider: tokenProvider,
       retryCoordinator: RetryCoordinator(),
+      writeGate: AsyncSemaphore(value: 1),
       pathRoot: nil,
       uploadThrottle: uploadThrottle
     )
@@ -84,12 +92,14 @@ public struct DropboxClient: Sendable {
     transport: any HTTPTransport,
     tokenProvider: AccessTokenProvider?,
     retryCoordinator: RetryCoordinator,
+    writeGate: AsyncSemaphore,
     pathRoot: PathRootHolder?,
     uploadThrottle: BandwidthThrottle?
   ) {
     self.transport = transport
     self.tokenProvider = tokenProvider
     self.retryCoordinator = retryCoordinator
+    self.writeGate = writeGate
     self.pathRoot = pathRoot
     self.uploadThrottle = uploadThrottle
   }
@@ -142,9 +152,18 @@ public struct DropboxClient: Sendable {
     return TimeInterval(components.seconds) + TimeInterval(components.attoseconds) * 1e-18
   }
 
-  private static func logRetry(of route: DropboxRoute, after delay: Duration, attempt: UInt) {
+  private static func logRetry(
+    of route: DropboxRoute,
+    after delay: Duration,
+    attempt: UInt,
+    because failure: RetryPolicy.FailureClass
+  ) {
     ZephyrLog.transport.info(
-      "Retrying \(route.identifier, privacy: .public) after \(String(describing: delay), privacy: .public) (attempt \(attempt))"
+      """
+      Retrying \(route.identifier, privacy: .public) after \
+      \(String(describing: delay), privacy: .public) (attempt \(attempt)): \
+      \(String(describing: failure), privacy: .public)
+      """
     )
   }
 
@@ -157,6 +176,7 @@ public struct DropboxClient: Sendable {
       transport: transport,
       tokenProvider: tokenProvider,
       retryCoordinator: retryCoordinator,
+      writeGate: writeGate,
       pathRoot: PathRootHolder(root),
       uploadThrottle: uploadThrottle
     )
@@ -175,6 +195,7 @@ public struct DropboxClient: Sendable {
       transport: transport,
       tokenProvider: tokenProvider,
       retryCoordinator: retryCoordinator,
+      writeGate: writeGate,
       pathRoot: pathRoot,
       uploadThrottle: uploadThrottle
     )
@@ -325,6 +346,21 @@ public struct DropboxClient: Sendable {
     path: String?,
     attempt attemptBody: @Sendable (URLRequest) async throws -> Result
   ) async throws -> Result {
+    guard route.commitsToNamespace else {
+      return try await retrying(route: route, path: path, attempt: attemptBody)
+    }
+    // A commit keeps the gate through its retries: a rate-limited one waiting
+    // out its backoff would only be refused again alongside the next.
+    try await writeGate.waitUnlessCancelled()
+    defer { writeGate.signal() }
+    return try await retrying(route: route, path: path, attempt: attemptBody)
+  }
+
+  private func retrying<Result>(
+    route: DropboxRoute,
+    path: String?,
+    attempt attemptBody: @Sendable (URLRequest) async throws -> Result
+  ) async throws -> Result {
     var attempt: UInt = 0
     var generator = SystemRandomNumberGenerator()
     while true {
@@ -395,7 +431,7 @@ public struct DropboxClient: Sendable {
   ) async throws {
     switch retryPolicy.decision(for: failure, attempt: attempt, using: &generator) {
       case .retry(let delay):
-        Self.logRetry(of: route, after: delay, attempt: attempt)
+        Self.logRetry(of: route, after: delay, attempt: attempt, because: failure)
         try await ContinuousClock().sleep(for: delay)
         attempt += 1
       case .giveUp:
@@ -420,7 +456,7 @@ public struct DropboxClient: Sendable {
     let failure = RetryPolicy.FailureClass.rateLimited(retryAfter: retryAfter)
     switch retryPolicy.decision(for: failure, attempt: attempt, using: &generator) {
       case .retry(let delay):
-        Self.logRetry(of: route, after: delay, attempt: attempt)
+        Self.logRetry(of: route, after: delay, attempt: attempt, because: failure)
         await retryCoordinator.reportServerBackoff(delay)
         attempt += 1
       case .giveUp:

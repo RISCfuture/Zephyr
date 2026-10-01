@@ -25,6 +25,7 @@ func mapToFileProviderError(_ error: any Error) -> any Error {
   if let failure = error as? EngineFailure { return providerError(for: failure) }
   if error is any AuthError { return NSFileProviderError(.notAuthenticated) }
   if let failure = error as? ItemSyncFailure { return providerError(for: failure) }
+  if let rejection = error as? DropboxRouteError { return cannotSynchronize(rejection) }
   return error
 }
 
@@ -117,7 +118,7 @@ private func providerError(for failure: ItemSyncFailure) -> any Error {
 
 /// A terminal failure, carrying its own text so Finder shows what Dropbox
 /// objected to rather than a bare "couldn't be synchronized."
-private func cannotSynchronize(_ failure: ItemSyncFailure) -> any Error {
+private func cannotSynchronize(_ failure: some LocalizedError) -> any Error {
   var userInfo: [String: Any] = [NSUnderlyingErrorKey: failure as NSError]
   if let description = failure.errorDescription {
     userInfo[NSLocalizedDescriptionKey] = description

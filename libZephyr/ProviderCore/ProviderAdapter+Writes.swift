@@ -5,6 +5,14 @@ import os
 // MARK: Locally-initiated writes
 
 extension ProviderAdapter {
+  private static func entry(_ entry: IndexEntryRecord, sitsAt path: DropboxPath) -> Bool {
+    entry.pathNormalized == path.normalized && entry.name == path.basename
+  }
+
+  private static func metadata(_ metadata: ItemMetadata, sitsAt path: DropboxPath) -> Bool {
+    metadata.pathDisplay?.normalized == path.normalized && metadata.name == path.basename
+  }
+
   /**
    Creates a folder under a parent container, adopting an existing folder at
    the path when the server reports a folder conflict (a `.mayAlreadyExist`
@@ -303,6 +311,10 @@ extension ProviderAdapter {
    Renames and/or reparents an item with a server-side `move_v2` — no
    content transfer. Folder moves rewrite the indexed subtree's paths in the
    same transaction so child enumerations stay correct.
+
+   A move the index already shows done is answered without calling Dropbox.
+   The system repeats a move it never heard succeed, and by then the change
+   feed may have carried the result in.
    */
   public func move(
     _ identifier: NSFileProviderItemIdentifier,
@@ -322,6 +334,10 @@ extension ProviderAdapter {
       under: parent,
       renamedTo: newName
     )
+    if Self.entry(entry, sitsAt: destination) {
+      await clearSyncError(at: destination)
+      return try await freshItem(for: id)
+    }
     if let item = try await movedOutsideSync(
       entry,
       as: identifier,
@@ -331,12 +347,32 @@ extension ProviderAdapter {
       return item
     }
     let moved = try await recordingSyncErrors(at: destination) {
-      try await reresolvingPathRoot {
-        try await client.move(from: .id(id), to: destination, autorename: true)
-      }
+      try await reresolvingPathRoot { try await moveOnDropbox(id, to: destination) }
     }
     try await indexMove(of: moved, from: entry, to: destination)
     return try await freshItem(for: id)
+  }
+
+  /**
+   Moves an item on Dropbox and answers with its metadata where it landed.
+
+   Dropbox can apply a move and still answer with an error the client
+   retries, and the retry is then refused as moving the item onto itself
+   (`duplicated_or_nested_paths`). An item found at the destination after
+   that refusal was moved, so its metadata is the answer.
+   */
+  private func moveOnDropbox(
+    _ id: DropboxFileIdentifier,
+    to destination: DropboxPath
+  ) async throws -> ItemMetadata {
+    do {
+      return try await client.move(from: .id(id), to: destination, autorename: true)
+    } catch let rejection as DropboxRouteError where rejection.refusesSamePath {
+      guard let current = try await client.metadata(for: .id(id)),
+        Self.metadata(current, sitsAt: destination)
+      else { throw rejection }
+      return current
+    }
   }
 
   /// Where a move lands, and whether the folder it lands in is ignored. A move

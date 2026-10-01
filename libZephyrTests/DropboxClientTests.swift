@@ -196,6 +196,31 @@ struct DropboxClientTests {
     #expect(requests.count == 2)
   }
 
+  /// Dropbox takes a lock on the namespace for each commit and refuses the
+  /// others with `too_many_write_operations`, so a burst sent in parallel
+  /// only loses to itself.
+  @Test
+  func `commits sent together reach Dropbox one at a time`() async throws {
+    let transport = MockTransport()
+    let client = await makeLinkedClient(transport: transport)
+    let gauge = OverlapGauge()
+    await transport.setRequestHook { _ in await gauge.measure() }
+    let names = ["a.txt", "b.txt", "c.txt"]
+    for _ in names { await transport.enqueueJSON(#"{"metadata": \#(Self.fileMetadataJSON)}"#) }
+    let source = PathSpecifier.path(try DropboxPath(validating: "/Homework/Math/Prime_Numbers.txt"))
+
+    try await withThrowingTaskGroup { group in
+      for name in names {
+        let destination = try DropboxPath(validating: "/\(name)")
+        group.addTask { _ = try await client.move(from: source, to: destination) }
+      }
+      try await group.waitForAll()
+    }
+
+    #expect(await transport.requests.count == names.count)
+    #expect(await gauge.peak == 1)
+  }
+
   @Test
   func `retries server error and recovers`() async throws {
     let transport = MockTransport()
@@ -256,5 +281,21 @@ struct DropboxClientTests {
     } catch {
       Issue.record("Expected AuthenticationFailure.invalidGrant, got \(error)")
     }
+  }
+}
+
+/// Counts how many requests are in flight at once, holding each open long
+/// enough for a concurrent one to arrive.
+private actor OverlapGauge {
+  private static let holdTime: Duration = .milliseconds(50)
+
+  private(set) var peak = 0
+  private var inFlight = 0
+
+  func measure() async {
+    inFlight += 1
+    peak = max(peak, inFlight)
+    try? await Task.sleep(for: Self.holdTime)
+    inFlight -= 1
   }
 }

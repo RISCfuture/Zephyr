@@ -18,6 +18,15 @@ struct DropboxRoute: Sendable {
   let isAuthenticated: Bool
   let timeout: Duration
 
+  /**
+   Whether the route commits a change to a namespace.
+
+   Dropbox takes a lock on the namespace for each commit and refuses a
+   concurrent one with `too_many_write_operations`, so these calls wait for
+   one another rather than race; see `DropboxClient`.
+   */
+  let commitsToNamespace: Bool
+
   /// The full request URL for this route.
   var url: URL {
     URL(string: "https://\(host.authority)/2/\(namespace)/\(name)")!
@@ -32,7 +41,8 @@ struct DropboxRoute: Sendable {
     name: String,
     style: Style = .rpc,
     isAuthenticated: Bool = true,
-    timeout: Duration = Self.defaultTimeout
+    timeout: Duration = Self.defaultTimeout,
+    commitsToNamespace: Bool = false
   ) {
     self.host = host
     self.namespace = namespace
@@ -40,6 +50,7 @@ struct DropboxRoute: Sendable {
     self.style = style
     self.isAuthenticated = isAuthenticated
     self.timeout = timeout
+    self.commitsToNamespace = commitsToNamespace
   }
 
   /// The Dropbox API host families.

@@ -38,6 +38,23 @@ struct ProviderAdapterTests {
     """
   }
 
+  /// File metadata as a call answering with any kind of item carries it,
+  /// tagged with its kind.
+  private static func taggedFileJSON(
+    id: String,
+    name: String,
+    pathLower: String,
+    pathDisplay: String
+  ) -> String {
+    let fields = uploadedFileJSON(
+      id: id,
+      name: name,
+      pathLower: pathLower,
+      pathDisplay: pathDisplay
+    )
+    return #"{".tag": "file", "# + fields.dropFirst()
+  }
+
   private static func lastAPIArgument(of transport: MockTransport) async -> String? {
     await transport.requests.last?.value(forHTTPHeaderField: "Dropbox-API-Arg")
   }
@@ -834,6 +851,113 @@ struct ProviderAdapterTests {
     #expect(deep.pathCased.rawValue == "/Archive/Sub/deep.txt")
     let children = try await adapter.children(of: NSFileProviderItemIdentifier("id:docs01"))
     #expect(Set(children.map(\.itemIdentifier.rawValue)) == ["id:filea1", "id:subf01"])
+  }
+
+  /// The system repeats a move it never heard succeed, by which time the
+  /// change feed may have indexed the result; sending it again would only
+  /// be refused as moving the file onto itself.
+  @Test
+  func `a move the index already shows done never reaches Dropbox`() async throws {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try await store.applyDeltaPage(
+      [
+        .upsert(try folderRecord(id: "id:docs01", path: "/Docs")),
+        .upsert(try fileRecord(id: "id:filea1", path: "/Docs/b.txt"))
+      ],
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    try await store.markInitialIndexComplete()
+    let destination = try DropboxPath(validating: "/Docs/b.txt")
+    try await store.recordSyncError(
+      SyncErrorRecord(
+        pathNormalized: destination.normalized,
+        path: destination,
+        title: "Dropbox rejected a request.",
+        detail: nil
+      )
+    )
+    let (transport, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
+
+    // The empty transport queue proves the repeated move went nowhere.
+    let repeated = try await adapter.move(
+      NSFileProviderItemIdentifier("id:filea1"),
+      toParent: nil,
+      renamedTo: "b.txt"
+    )
+
+    #expect(repeated.filename == "b.txt")
+    #expect(try await store.syncErrors().isEmpty)
+
+    // A change of case alone is still a rename Dropbox has to make.
+    await transport.enqueueJSON(
+      """
+      {"metadata": \
+      \(
+        Self.taggedFileJSON(
+          id: "id:filea1",
+          name: "B.txt",
+          pathLower: "/docs/b.txt",
+          pathDisplay: "/Docs/B.txt"
+        ))}
+      """
+    )
+    let recased = try await adapter.move(
+      NSFileProviderItemIdentifier("id:filea1"),
+      toParent: nil,
+      renamedTo: "B.txt"
+    )
+
+    #expect(recased.filename == "B.txt")
+    #expect(await transport.requests.count == 1)
+  }
+
+  /// Dropbox can apply a move yet answer with an error the client retries;
+  /// the retry is refused as moving the file onto itself, and the file
+  /// found at its destination is the move having worked.
+  @Test
+  func `a move Dropbox already applied counts as done`() async throws {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try await store.applyDeltaPage(
+      [
+        .upsert(try folderRecord(id: "id:docs01", path: "/Docs")),
+        .upsert(try fileRecord(id: "id:filea1", path: "/Docs/a.txt"))
+      ],
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    try await store.markInitialIndexComplete()
+    let (transport, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
+    await transport.enqueueJSON(
+      """
+      {"error_summary": "duplicated_or_nested_paths/",
+       "error": {".tag": "duplicated_or_nested_paths"}}
+      """,
+      status: 409
+    )
+    await transport.enqueueJSON(
+      Self.taggedFileJSON(
+        id: "id:filea1",
+        name: "b.txt",
+        pathLower: "/docs/b.txt",
+        pathDisplay: "/Docs/b.txt"
+      )
+    )
+
+    let item = try await adapter.move(
+      NSFileProviderItemIdentifier("id:filea1"),
+      toParent: nil,
+      renamedTo: "b.txt"
+    )
+
+    #expect(item.filename == "b.txt")
+    let entry = try #require(
+      try await store.entry(forID: try DropboxFileIdentifier(validating: "id:filea1"))
+    )
+    #expect(entry.pathCased.rawValue == "/Docs/b.txt")
+    #expect(try await store.syncErrors().isEmpty)
   }
 
   @Test

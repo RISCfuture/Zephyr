@@ -91,7 +91,7 @@ extension DropboxClient {
       let rev: String
     }
     return try await rpc(
-      DropboxRoute(host: .api, namespace: "files", name: "restore"),
+      DropboxRoute(host: .api, namespace: "files", name: "restore", commitsToNamespace: true),
       argument: Argument(path: path.rawValue, rev: revision.rawValue),
       path: path.rawValue
     )
@@ -109,7 +109,12 @@ extension DropboxClient {
       let metadata: FolderMetadata
     }
     let result: Result = try await rpc(
-      DropboxRoute(host: .api, namespace: "files", name: "create_folder_v2"),
+      DropboxRoute(
+        host: .api,
+        namespace: "files",
+        name: "create_folder_v2",
+        commitsToNamespace: true
+      ),
       argument: Argument(path: path.rawValue, autorename: autorename),
       path: path.rawValue
     )
@@ -141,7 +146,7 @@ extension DropboxClient {
       let metadata: ItemMetadata
     }
     let result: Result = try await rpc(
-      DropboxRoute(host: .api, namespace: "files", name: "delete_v2"),
+      DropboxRoute(host: .api, namespace: "files", name: "delete_v2", commitsToNamespace: true),
       argument: Argument(path: specifier.wireValue, parentRev: parentRevision?.rawValue),
       path: specifier.wireValue
     )
@@ -173,7 +178,7 @@ extension DropboxClient {
       let metadata: ItemMetadata
     }
     let result: Result = try await rpc(
-      DropboxRoute(host: .api, namespace: "files", name: "move_v2"),
+      DropboxRoute(host: .api, namespace: "files", name: "move_v2", commitsToNamespace: true),
       argument: Argument(
         fromPath: source.wireValue,
         toPath: destination.rawValue,

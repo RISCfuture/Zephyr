@@ -10,6 +10,9 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 - A Dropbox outage no longer reads as a broken account: a token request Dropbox
   answers with a server error or a rate limit is retried, and one that keeps
   failing reports a connection problem instead of asking you to relink.
+- Renaming or moving many files at once no longer stalls. Zephyr sends Dropbox
+  one change at a time instead of racing them into its rate limit, and a rename
+  Dropbox has already made no longer shows up as a sync issue.
 
 ## 1.0
 
