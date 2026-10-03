@@ -1,4 +1,8 @@
-@preconcurrency import FileProvider
+// FileProvider vends no Sendable annotations, so this import has to be
+// `@preconcurrency` to build under Swift 6. That suppresses concurrency
+// checking across it, and `@unsafe` owns the data-race risk the suppression
+// carries — only an audited SDK removes it.
+@unsafe @preconcurrency import FileProvider
 import Foundation
 import libZephyr
 import os
@@ -9,12 +13,14 @@ enum GenerationToken {
   /// Decodes a generation from exactly 8 little-endian bytes, or `nil`.
   static func generation(from data: Data) -> UInt64? {
     guard data.count == MemoryLayout<UInt64>.size else { return nil }
-    return UInt64(littleEndian: data.withUnsafeBytes { $0.loadUnaligned(as: UInt64.self) })
+    return UInt64(
+      littleEndian: unsafe data.withUnsafeBytes { unsafe $0.loadUnaligned(as: UInt64.self) }
+    )
   }
 
   /// Encodes a generation as 8 little-endian bytes.
   static func data(for generation: UInt64) -> Data {
-    withUnsafeBytes(of: generation.littleEndian) { Data($0) }
+    withUnsafeBytes(of: generation.littleEndian) { unsafe Data($0) }
   }
 
   /// Decodes a page token, treating Apple's initial-page constants and empty

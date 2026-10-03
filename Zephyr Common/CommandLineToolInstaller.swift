@@ -66,13 +66,13 @@ enum CommandLineToolInstaller {
   /// Whether the running build's signature carries `name` as a true flag.
   private static func hasEntitlement(_ name: String) -> Bool {
     var code: SecCode?
-    guard SecCodeCopySelf([], &code) == errSecSuccess, let code else { return false }
+    guard unsafe SecCodeCopySelf([], &code) == errSecSuccess, let code else { return false }
     var staticCode: SecStaticCode?
-    guard SecCodeCopyStaticCode(code, [], &staticCode) == errSecSuccess, let staticCode
+    guard unsafe SecCodeCopyStaticCode(code, [], &staticCode) == errSecSuccess, let staticCode
     else { return false }
     var information: CFDictionary?
     guard
-      SecCodeCopySigningInformation(
+      unsafe SecCodeCopySigningInformation(
         staticCode,
         SecCSFlags(rawValue: kSecCSSigningInformation),
         &information

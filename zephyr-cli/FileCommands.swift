@@ -209,7 +209,7 @@ struct GetCommand: AsyncParsableCommand {
         relativeTo: URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
       )
       var isDirectory: ObjCBool = false
-      if FileManager.default.fileExists(atPath: destination.path, isDirectory: &isDirectory),
+      if unsafe FileManager.default.fileExists(atPath: destination.path, isDirectory: &isDirectory),
         isDirectory.boolValue
       {
         destination.append(component: source.basename)

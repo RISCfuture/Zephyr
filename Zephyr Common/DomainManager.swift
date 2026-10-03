@@ -1,4 +1,8 @@
-@preconcurrency import FileProvider
+// FileProvider vends no Sendable annotations, so this import has to be
+// `@preconcurrency` to build under Swift 6. That suppresses concurrency
+// checking across it, and `@unsafe` owns the data-race risk the suppression
+// carries — only an audited SDK removes it.
+@unsafe @preconcurrency import FileProvider
 import Foundation
 import libZephyr
 import os

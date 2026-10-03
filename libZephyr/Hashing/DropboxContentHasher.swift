@@ -41,7 +41,7 @@ struct DropboxContentHasher: Sendable {
   }
 
   private static func lowercaseHex(_ digest: SHA256.Digest) -> String {
-    digest.map { String(format: "%02x", $0) }.joined()
+    digest.map { unsafe String(format: "%02x", $0) }.joined()
   }
 
   /**
