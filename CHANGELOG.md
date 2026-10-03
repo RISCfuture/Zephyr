@@ -6,7 +6,20 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
 ## 1.1
 
+### New
+
+- Keep a folder or a file downloaded on this Mac. A kept item is fetched right
+  away, stays current as it changes on Dropbox, and is never evicted to reclaim
+  disk space. Right-click an item in Finder and choose Keep Downloaded on This
+  Mac; Stop Keeping Downloaded on This Mac hands the space back. Zephyr's
+  Settings lists everything you are keeping downloaded.
+
+### Changed
+
 - Zephyr's website has moved to zephyrmac.app.
+
+### Fixed
+
 - A Dropbox outage no longer reads as a broken account: a token request Dropbox
   answers with a server error or a rate limit is retried, and one that keeps
   failing reports a connection problem instead of asking you to relink.

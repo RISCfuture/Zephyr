@@ -45,6 +45,7 @@ public final class SyncIndexStore: Sendable {
   /// rebuild must preserve.
   private static var hasLocalOnlyState: SQLExpression {
     Column("ignored") == true
+      || Column("keep_downloaded") == true
       || Column("tag_data") != nil
       || Column("favorite_rank") != nil
       || Column("last_used_date") != nil
@@ -227,8 +228,8 @@ public final class SyncIndexStore: Sendable {
   }
 
   /// Local-only attributes (tags, favorite rank, last-used date, xattrs, the
-  /// ignored flag) belong to the system, not Dropbox; a remote change must
-  /// not wipe them.
+  /// ignored flag, the keep-downloaded pin) belong to the system, not Dropbox;
+  /// a remote change must not wipe them.
   private static func carryLocalAttributes(
     from existing: IndexEntryRecord,
     into record: inout IndexEntryRecord
@@ -238,6 +239,7 @@ public final class SyncIndexStore: Sendable {
     record.lastUsedDate = record.lastUsedDate ?? existing.lastUsedDate
     record.xattrs = record.xattrs ?? existing.xattrs
     record.ignored = record.ignored || existing.ignored
+    record.keepDownloaded = record.keepDownloaded || existing.keepDownloaded
   }
 
   /// Frees a path for an item arriving under a different identifier. The
@@ -445,6 +447,7 @@ public final class SyncIndexStore: Sendable {
     record.lastUsedDate = record.lastUsedDate ?? preserved.lastUsedDate
     record.xattrs = record.xattrs ?? preserved.xattrs
     record.ignored = record.ignored || preserved.ignored
+    record.keepDownloaded = record.keepDownloaded || preserved.keepDownloaded
     try preserved.delete(db)
   }
 
@@ -473,7 +476,8 @@ public final class SyncIndexStore: Sendable {
       favoriteRank: record.favoriteRank,
       lastUsedDate: record.lastUsedDate,
       xattrs: record.xattrs,
-      ignored: record.ignored
+      ignored: record.ignored,
+      keepDownloaded: record.keepDownloaded
     )
     try renamed.save(db)
     if record.itemType == .folder {
@@ -693,6 +697,19 @@ public final class SyncIndexStore: Sendable {
     try await read { db in
       try IndexEntryRecord
         .filter(Column("ignored") == true)
+        .order(Column("path_normalized"))
+        .fetchAll(db)
+    }
+  }
+
+  /**
+   Every entry pinned to this Mac, in path order — the account's
+   keep-downloaded list.
+   */
+  public func keepDownloadedEntries() async throws -> [IndexEntryRecord] {
+    try await read { db in
+      try IndexEntryRecord
+        .filter(Column("keep_downloaded") == true)
         .order(Column("path_normalized"))
         .fetchAll(db)
     }
@@ -1013,6 +1030,19 @@ extension SyncIndexStore {
       // Whatever is still wrong is filed again within the half-minute, by an
       // extension that now says which kind it is.
       try db.execute(sql: "DELETE FROM \(EngineErrorRecord.databaseTableName)")
+    }
+    migrator.registerMigration("v3") { db in
+      try db.alter(table: IndexEntryRecord.databaseTableName) { table in
+        table.add(column: "keep_downloaded", .boolean).notNull().defaults(to: false)
+      }
+      // Dropbox stores no pin, so a re-listing has nothing to read one back
+      // from — `preserved_local_state` is where attributes like that wait out
+      // a rebuild. Without a column here, a delta-cursor rebuild would carry
+      // every other local-only attribute across and silently unpin everything
+      // the user pinned.
+      try db.alter(table: PreservedLocalStateRecord.databaseTableName) { table in
+        table.add(column: "keep_downloaded", .boolean).notNull().defaults(to: false)
+      }
     }
     return migrator
   }

@@ -57,6 +57,12 @@ extension HelpAnchor {
           bundle: #bundle,
           comment: "Help button label"
         )
+      case .keepDownloadedItems:
+        String(
+          localized: "Help with items kept downloaded",
+          bundle: #bundle,
+          comment: "Help button label"
+        )
       case .diagnostics:
         String(
           localized: "Help with diagnostic reports",
