@@ -33,7 +33,7 @@ public struct FileVersionsRequest: Sendable, Equatable {
   public init(
     domainIdentifier: String?,
     itemIdentifiers: [NSFileProviderItemIdentifier]
-  ) throws {
+  ) throws(FileVersionsFailure) {
     guard itemIdentifiers.count == 1, let identifier = itemIdentifiers.first else {
       throw FileVersionsFailure.notOneFile
     }
