@@ -11,6 +11,14 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 - Zephyr now requires macOS 27. On macOS 26 the last version you can run is
   1.1, and it keeps working — but it will not see further updates.
 
+### Improved
+
+- A folder you keep downloaded now stays fully browsable offline, not just
+  downloaded. Opening a subtree you have never visited no longer waits on
+  Dropbox to list it.
+- The sync badge holds still when macOS asks apps to go easy on this Mac's
+  resources, the same way it already does when you ask for reduced motion.
+
 ## 1.1
 
 ### New
