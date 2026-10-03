@@ -274,12 +274,8 @@ struct DropboxClientTests {
       status: 400
     )
 
-    do {
-      _ = try await provider.validAccessToken()
-      Issue.record("validAccessToken() should have thrown AuthenticationFailure.invalidGrant")
-    } catch AuthenticationFailure.invalidGrant {
-    } catch {
-      Issue.record("Expected AuthenticationFailure.invalidGrant, got \(error)")
+    await #expect(throws: AuthenticationFailure.invalidGrant) {
+      try await provider.validAccessToken()
     }
   }
 }

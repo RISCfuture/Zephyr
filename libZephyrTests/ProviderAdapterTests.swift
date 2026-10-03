@@ -712,17 +712,13 @@ struct ProviderAdapterTests {
       status: 409
     )
 
-    do {
+    await #expect(throws: ItemSyncFailure.insufficientSpace(path: "/a.txt")) {
       _ = try await adapter.modifyContents(
         of: NSFileProviderItemIdentifier("id:filea1"),
         baseContentVersion: nil,
         contents: contents,
         clientModified: nil
       )
-      Issue.record("modifyContents() should have thrown ItemSyncFailure.insufficientSpace")
-    } catch ItemSyncFailure.insufficientSpace {
-    } catch {
-      Issue.record("Expected ItemSyncFailure.insufficientSpace, got \(error)")
     }
 
     let recorded = try #require(try await store.syncErrors().first)
@@ -773,17 +769,13 @@ struct ProviderAdapterTests {
       status: 401
     )
 
-    do {
+    await #expect(throws: AuthenticationFailure.tokenRevoked) {
       _ = try await adapter.modifyContents(
         of: NSFileProviderItemIdentifier("id:filea1"),
         baseContentVersion: nil,
         contents: contents,
         clientModified: nil
       )
-      Issue.record("modifyContents() should have thrown AuthenticationFailure.tokenRevoked")
-    } catch AuthenticationFailure.tokenRevoked {
-    } catch {
-      Issue.record("Expected AuthenticationFailure.tokenRevoked, got \(error)")
     }
 
     // Nothing is wrong with /a.txt, so it must not read as an item that
@@ -1029,27 +1021,26 @@ struct ProviderAdapterTests {
       status: 409
     )
 
-    var thrown: ItemSyncFailure?
-    do {
-      _ = try await adapter.fetchContents(
-        for: NSFileProviderItemIdentifier("id:filea1"),
-        requestedVersion: nil
-      )
-      Issue.record("fetchContents() should have thrown ItemSyncFailure.restrictedContent")
-    } catch let failure as ItemSyncFailure {
-      thrown = failure
-      guard case .restrictedContent(let blamed) = failure else {
-        Issue.record("Expected restrictedContent, got \(failure)")
-        return
+    let failure = try #require(
+      await #expect(throws: ItemSyncFailure.self) {
+        _ = try await adapter.fetchContents(
+          for: NSFileProviderItemIdentifier("id:filea1"),
+          requestedVersion: nil
+        )
       }
-      // The download addressed a revision, but the user only recognizes the file.
-      #expect(blamed == "/Docs/a.txt")
+    )
+
+    guard case .restrictedContent(let blamed) = failure else {
+      Issue.record("Expected restrictedContent, got \(failure)")
+      return
     }
+    // The download addressed a revision, but the user only recognizes the file.
+    #expect(blamed == "/Docs/a.txt")
 
     let recorded = try #require(try await store.syncErrors().first)
     #expect(recorded.path.rawValue == "/Docs/a.txt")
     #expect(recorded.pathNormalized.rawValue == "/docs/a.txt")
-    #expect(recorded.detail == thrown?.failureReason)
+    #expect(recorded.detail == failure.failureReason)
   }
 
   @Test

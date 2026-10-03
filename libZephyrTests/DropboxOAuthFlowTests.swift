@@ -122,12 +122,8 @@ struct DropboxOAuthFlowTests {
       URL(string: "db-\(Self.appKey)://oauth?code=callback-code\(stateQuery)")
     )
 
-    do {
-      _ = try await flow.exchange(callbackURL: callback)
-      Issue.record("exchange(callbackURL:) should have thrown stateMismatch")
-    } catch AuthenticationFailure.stateMismatch {
-    } catch {
-      Issue.record("Expected AuthenticationFailure.stateMismatch, got \(error)")
+    await #expect(throws: AuthenticationFailure.stateMismatch) {
+      try await flow.exchange(callbackURL: callback)
     }
 
     // A callback that fails its integrity check never reaches Dropbox.
@@ -145,12 +141,8 @@ struct DropboxOAuthFlowTests {
       )
     )
 
-    do {
-      _ = try await flow.exchange(callbackURL: declined)
-      Issue.record("exchange(callbackURL:) should have thrown authorizationDeclined")
-    } catch AuthenticationFailure.authorizationDeclined {
-    } catch {
-      Issue.record("Expected AuthenticationFailure.authorizationDeclined, got \(error)")
+    await #expect(throws: AuthenticationFailure.authorizationDeclined) {
+      try await flow.exchange(callbackURL: declined)
     }
 
     let rejected = try #require(
@@ -159,14 +151,11 @@ struct DropboxOAuthFlowTests {
           + "&error_description=Requested+scope+is+unknown&state=\(flow.state)"
       )
     )
-    do {
-      _ = try await flow.exchange(callbackURL: rejected)
-      Issue.record("exchange(callbackURL:) should have thrown authorizationRejected")
-    } catch AuthenticationFailure.authorizationRejected(let reason) {
-      // Dropbox form-encodes the redirect query, so its spaces arrive as "+".
-      #expect(reason == "Requested scope is unknown")
-    } catch {
-      Issue.record("Expected AuthenticationFailure.authorizationRejected, got \(error)")
+    // Dropbox form-encodes the redirect query, so its spaces arrive as "+".
+    await #expect(
+      throws: AuthenticationFailure.authorizationRejected(reason: "Requested scope is unknown")
+    ) {
+      try await flow.exchange(callbackURL: rejected)
     }
 
     #expect(await transport.requests.isEmpty)
@@ -239,13 +228,16 @@ struct DropboxOAuthFlowTests {
       #"{"access_token": "sl.access", "token_type": "bearer", "expires_in": 14400}"#
     )
 
-    do {
-      _ = try await flow.exchange(code: "pasted-code")
-      Issue.record("exchange(code:) should have thrown malformedTokenResponse")
-    } catch AuthenticationFailure.malformedTokenResponse(let detail) {
-      #expect(detail.contains("refresh token"))
-    } catch {
-      Issue.record("Expected AuthenticationFailure.malformedTokenResponse, got \(error)")
+    let failure = try #require(
+      await #expect(throws: AuthenticationFailure.self) {
+        try await flow.exchange(code: "pasted-code")
+      }
+    )
+
+    guard case .malformedTokenResponse(let detail) = failure else {
+      Issue.record("Expected AuthenticationFailure.malformedTokenResponse, got \(failure)")
+      return
     }
+    #expect(detail.contains("refresh token"))
   }
 }
