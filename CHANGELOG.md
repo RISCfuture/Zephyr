@@ -13,6 +13,16 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   disk space. Right-click an item in Finder and choose Keep Downloaded on This
   Mac; Stop Keeping Downloaded on This Mac hands the space back. Zephyr's
   Settings lists everything you are keeping downloaded.
+- Finder's search field now searches your whole Dropbox, not just what is on
+  this Mac. Results include files you have never downloaded, and finding them
+  costs no network — the search runs against Zephyr's own index.
+
+### Upgrading
+
+- This release re-registers each account's Finder location, which is the only
+  way to turn search on for a location that already exists. Files currently on
+  this Mac download again as you open them. Nothing is lost, and nothing needs
+  doing — but a large Dropbox will be busy for a while afterwards.
 
 ### Changed
 
