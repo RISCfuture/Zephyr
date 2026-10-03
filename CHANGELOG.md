@@ -4,6 +4,13 @@ Release notes for Zephyr. The version headings are what
 `Scripts/release-notes.sh` reads, and what the Release workflow attaches to a
 GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
+## 2.0
+
+### Requirements
+
+- Zephyr now requires macOS 27. On macOS 26 the last version you can run is
+  1.1, and it keeps working — but it will not see further updates.
+
 ## 1.1
 
 ### New

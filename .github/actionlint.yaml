@@ -1,0 +1,6 @@
+# GitHub names its macOS images after the major Xcode version they carry rather than the OS, and
+# actionlint's built-in label list only knows the older `macos-*` spelling. Declaring the label
+# here keeps `runs-on: xcode-27` from reading as a typo.
+self-hosted-runner:
+  labels:
+    - xcode-27

@@ -43,7 +43,7 @@ CLI_COMPONENT_IDENTIFIER="codes.tim.Zephyr.installer.cli"
 
 # Refuse anything older than the app itself will run on, rather than installing onto a Mac that
 # cannot launch what was installed.
-MINIMUM_OS_VERSION="26.0"
+MINIMUM_OS_VERSION="27.0"
 
 [ -d "${APP}" ] || { echo "error: no app bundle at ${APP}" >&2; exit 1; }
 
