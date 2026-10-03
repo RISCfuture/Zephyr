@@ -46,6 +46,9 @@ public struct ZephyrMark: View {
   @Environment(\.zephyrMarksTurn)
   private var marksTurn
 
+  @Environment(\.systemPrefersReducedResourceUsage)
+  private var reducedResourceUsage
+
   public var body: some View {
     let parts = Self.parts(activity, style: style, size: size, colorScheme: colorScheme)
     BadgedMark(
@@ -56,8 +59,12 @@ public struct ZephyrMark: View {
     )
   }
 
-  /// Whether the badge turns: a sync is running, and motion is welcome.
-  private var isTurning: Bool { activity?.state == .syncing && !reduceMotion && marksTurn }
+  /// Whether the badge turns: a sync is running, and motion is welcome. A Mac
+  /// asked to spare its resources is another reason to hold still — the same
+  /// kind of reason as reduced motion, not a separate code path.
+  private var isTurning: Bool {
+    activity?.state == .syncing && !reduceMotion && !reducedResourceUsage && marksTurn
+  }
 
   /// The mark on its own, for the places Zephyr is naming itself.
   public init(size: CGFloat) {
