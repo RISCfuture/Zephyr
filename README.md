@@ -305,7 +305,7 @@ Developer team. The team is not optional if you want to see the thing work:
 `NSFileProviderManager.add(domain:)` accepts only a bundle signed with a real team
 identifier, so an unsigned build registers no domain and puts nothing in Finder.
 
-The fastlane lanes below want Ruby 4.0.6 (`.ruby-version`, gemset `zephyr` from
+The fastlane lanes below want Ruby 4.0.7 (`.ruby-version`, gemset `zephyr` from
 `.ruby-gemset`) and the gems `Gemfile` pins — `fastlane ~> 2.237`, plus the three
 default gems Ruby 4 no longer bundles. Run `bundle install` once, then `bundle exec
 fastlane …`.
