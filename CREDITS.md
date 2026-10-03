@@ -20,12 +20,6 @@ distribution, so these are called out explicitly rather than left to the list be
 - **[swift-argument-parser](https://github.com/apple/swift-argument-parser)** —
   Copyright the Swift project authors. Licensed under the Apache License, Version 2.0,
   with the Swift Runtime Library Exception.
-- **[swift-async-algorithms](https://github.com/apple/swift-async-algorithms)** —
-  Copyright the Swift project authors. Licensed under the Apache License, Version 2.0,
-  with the Swift Runtime Library Exception.
-- **[swift-collections](https://github.com/apple/swift-collections)** — Copyright the
-  Swift project authors. Licensed under the Apache License, Version 2.0, with the Swift
-  Runtime Library Exception.
 - **[swift-log](https://github.com/apple/swift-log)** — Copyright 2018–2019 The SwiftLog
   Project. Licensed under the Apache License, Version 2.0, with no exception. It contains
   a derivation of the lock implementation from
@@ -47,8 +41,6 @@ Direct dependencies of Zephyr:
 - [Semaphore](https://github.com/groue/Semaphore) by Gwendal Roué — MIT.
 - [swift-argument-parser](https://github.com/apple/swift-argument-parser) —
   Apache-2.0 with the Swift Runtime Library Exception. Used by `zephyr-cli` only.
-- [swift-async-algorithms](https://github.com/apple/swift-async-algorithms) —
-  Apache-2.0 with the Swift Runtime Library Exception.
 - [GitHubUpdateChecker](https://github.com/RISCfuture/GitHubUpdateChecker) — MIT.
 - [sentry-cocoa](https://github.com/getsentry/sentry-cocoa) — MIT. Crash reporting.
 - [XCUITestKit](https://github.com/RISCfuture/XCUITestKit) — MIT. Test-only; not shipped
@@ -66,8 +58,6 @@ Pulled in transitively:
   [houdini](https://github.com/vmg/houdini), GitHub's buffer code, and
   [utf8proc](https://juliastrings.github.io/utf8proc/) are MIT.
 - [swift-log](https://github.com/apple/swift-log) — Apache-2.0. Via GitHubUpdateChecker.
-- [swift-collections](https://github.com/apple/swift-collections) — Apache-2.0 with the
-  Swift Runtime Library Exception. Via swift-async-algorithms.
 
 Every version is pinned in
 `Zephyr.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved`. The

@@ -1,5 +1,5 @@
 {
-  "originHash" : "dcd5bf6cce6035f6b5e54c928573ce70dd36274391c590b13178c89f1a0ca7a7",
+  "originHash" : "7bb079bfb054907497d818051c816d346d08c8a2ae90df260c43d12ad2b85c67",
   "pins" : [
     {
       "identity" : "githubupdatechecker",
@@ -56,30 +56,12 @@
       }
     },
     {
-      "identity" : "swift-async-algorithms",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-async-algorithms.git",
-      "state" : {
-        "revision" : "3da39bbc4e687d4192af7c9cf4eab805745a0b9c",
-        "version" : "1.1.5"
-      }
-    },
-    {
       "identity" : "swift-cmark",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-cmark",
       "state" : {
         "revision" : "924936d0427cb25a61169739a7660230bffa6ea6",
         "version" : "0.8.0"
-      }
-    },
-    {
-      "identity" : "swift-collections",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-collections.git",
-      "state" : {
-        "revision" : "a0cb0954ecb21e4e31b0070e6ed5674e8556685a",
-        "version" : "1.6.0"
       }
     },
     {

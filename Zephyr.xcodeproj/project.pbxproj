@@ -34,7 +34,6 @@
 		01EFF4193038914C0082969B /* Semaphore in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFF4183038914C0082969B /* Semaphore */; };
 		01EFF4223038920000829690 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFF4213038920000829690 /* ArgumentParser */; };
 		01EFF9013038999900829691 /* zephyr-cli in Embed Command-Line Tool */ = {isa = PBXBuildFile; fileRef = 01EFF3D33038872F0082969B /* zephyr-cli */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		01EFFAB33038A6AC0082969B /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFFAB23038A6AC0082969B /* AsyncAlgorithms */; };
 		01EFFB063038B00000829705 /* XCUITestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 01EFFB043038B00000829703 /* XCUITestKit */; };
 		0AC0000000000000000000AB /* libZephyr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01EFF3DF3038873E0082969B /* libZephyr.framework */; };
 		0AC0000000000000000000B3 /* ZephyrCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC0000000000000000000A2 /* ZephyrCommon.framework */; };
@@ -478,7 +477,6 @@
 				0AC0000000000000000000C1 /* Sentry in Frameworks */,
 				01EFF416303891310082969B /* GRDB in Frameworks */,
 				01EFF4193038914C0082969B /* Semaphore in Frameworks */,
-				01EFFAB33038A6AC0082969B /* AsyncAlgorithms in Frameworks */,
 			);
 		};
 		01EFF3E63038873E0082969B /* Frameworks */ = {
@@ -803,7 +801,6 @@
 				0AC0000000000000000000C2 /* Sentry */,
 				01EFF415303891310082969B /* GRDB */,
 				01EFF4183038914C0082969B /* Semaphore */,
-				01EFFAB23038A6AC0082969B /* AsyncAlgorithms */,
 			);
 			productName = libZephyr;
 			productReference = 01EFF3DF3038873E0082969B /* libZephyr.framework */;
@@ -915,7 +912,6 @@
 				01EFF414303891310082969B /* XCRemoteSwiftPackageReference "GRDB" */,
 				01EFF4173038914C0082969B /* XCRemoteSwiftPackageReference "Semaphore" */,
 				01EFF4203038920000829690 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
-				01EFFAB13038A6AC0082969B /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 				01EFFB013038B00000829700 /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */,
 				01EFFB023038B00000829701 /* XCRemoteSwiftPackageReference "XCUITestKit" */,
 				0AC0000000000000000000C3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
@@ -2432,14 +2428,6 @@
 				minimumVersion = 1.6.0;
 			};
 		};
-		01EFFAB13038A6AC0082969B /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-async-algorithms.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.5;
-			};
-		};
 		01EFFB013038B00000829700 /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RISCfuture/GitHubUpdateChecker";
@@ -2486,11 +2474,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01EFF4203038920000829690 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
 			productName = ArgumentParser;
-		};
-		01EFFAB23038A6AC0082969B /* AsyncAlgorithms */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 01EFFAB13038A6AC0082969B /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
-			productName = AsyncAlgorithms;
 		};
 		01EFFB043038B00000829703 /* XCUITestKit */ = {
 			isa = XCSwiftPackageProductDependency;
