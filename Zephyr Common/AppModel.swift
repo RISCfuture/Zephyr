@@ -1423,8 +1423,8 @@ extension AppModel {
   private func clearIgnoreMarker(at url: URL) -> Bool {
     let isScoped = url.startAccessingSecurityScopedResource()
     defer { if isScoped { url.stopAccessingSecurityScopedResource() } }
-    let removed = url.withUnsafeFileSystemRepresentation { path in
-      path.map { removexattr($0, DropboxIgnoreMarker.syncableXattrName, 0) } ?? -1
+    let removed = unsafe url.withUnsafeFileSystemRepresentation { path in
+      unsafe path.map { unsafe removexattr($0, DropboxIgnoreMarker.syncableXattrName, 0) } ?? -1
     }
     // The marker being gone already is the state the caller asked for.
     return removed == 0 || errno == ENOATTR

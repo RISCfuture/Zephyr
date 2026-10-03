@@ -164,7 +164,8 @@ extension XCTestCase {
    */
   private func settledScreen(within region: CGRect, framing: ScreenFraming) -> Data? {
     let screenshot = waitForStableScreenImage(within: region)
-    guard let full = screenshot.image.cgImage(forProposedRect: nil, context: nil, hints: nil),
+    guard
+      let full = unsafe screenshot.image.cgImage(forProposedRect: nil, context: nil, hints: nil),
       let screen = NSScreen.main
     else {
       XCTFail("The screen capture carried no bitmap.")
@@ -404,7 +405,8 @@ private final class ScreenSampler {
   /// region cannot be read out of it — which leaves the comparison exactly as
   /// strict as it was before there was a region to narrow it to.
   private static func bytes(of screenshot: XCUIScreenshot, within region: CGRect) -> Data {
-    guard let full = screenshot.image.cgImage(forProposedRect: nil, context: nil, hints: nil),
+    guard
+      let full = unsafe screenshot.image.cgImage(forProposedRect: nil, context: nil, hints: nil),
       let screen = NSScreen.main
     else { return screenshot.pngRepresentation }
     let scale = CGFloat(full.width) / screen.frame.width
@@ -505,7 +507,7 @@ private struct Pixels {
     let bytesPerRow = image.width * Self.bytesPerPixel
     var bytes = [UInt8](repeating: 0, count: bytesPerRow * image.height)
     guard
-      let context = CGContext(
+      let context = unsafe CGContext(
         data: &bytes,
         width: image.width,
         height: image.height,

@@ -1,5 +1,9 @@
 import AppKit
-@preconcurrency import QuickLookThumbnailing
+// QuickLookThumbnailing vends no Sendable annotations, so this import has to be
+// `@preconcurrency` to build under Swift 6. That suppresses concurrency
+// checking across it, and `@unsafe` owns the data-race risk the suppression
+// carries — only an audited SDK removes it.
+@unsafe @preconcurrency import QuickLookThumbnailing
 
 /**
  A picture of what a staged file holds, for the share sheet's list of what is

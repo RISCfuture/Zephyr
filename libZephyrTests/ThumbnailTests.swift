@@ -197,7 +197,7 @@ struct ThumbnailTests {
           try fileRecord(
             id: id,
             path: "/Photo\(index).jpg",
-            revision: String(format: "015d1a1f3f2e5c00000000%08x", index)
+            revision: unsafe String(format: "015d1a1f3f2e5c00000000%08x", index)
           )
         )
       ])

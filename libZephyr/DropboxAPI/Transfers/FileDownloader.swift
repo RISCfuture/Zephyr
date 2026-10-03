@@ -27,7 +27,7 @@ struct FileDownloader: Sendable {
    */
   func download(_ specifier: PathSpecifier, to destination: URL) async throws -> FileMetadata {
     var isDirectory: ObjCBool = false
-    if FileManager.default.fileExists(atPath: destination.path, isDirectory: &isDirectory),
+    if unsafe FileManager.default.fileExists(atPath: destination.path, isDirectory: &isDirectory),
       isDirectory.boolValue
     {
       throw ItemSyncFailure.isAFolder(path: destination.path)

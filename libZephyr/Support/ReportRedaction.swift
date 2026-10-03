@@ -87,11 +87,11 @@ enum ReportRedaction {
 
   /// The string with every path, address, and token in it replaced.
   static func redacted(_ string: String) -> String {
-    var redacted = string.replacing(fileURL, with: placeholder)
-    redacted = redacted.replacing(email, with: placeholder)
-    redacted = redacted.replacing(token, with: placeholder)
-    redacted = redacted.replacing(path) { "\($0.lead)\(placeholder)" }
-    return redacted.replacing(breadcrumbPath, with: placeholder)
+    var redacted = string.replacing(unsafe fileURL, with: placeholder)
+    redacted = redacted.replacing(unsafe email, with: placeholder)
+    redacted = redacted.replacing(unsafe token, with: placeholder)
+    redacted = redacted.replacing(unsafe path) { "\($0.lead)\(placeholder)" }
+    return redacted.replacing(unsafe breadcrumbPath, with: placeholder)
   }
 
   /// The dictionary with every string anywhere inside it redacted.

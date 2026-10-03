@@ -20,9 +20,9 @@ struct FileFingerprint: Sendable, Equatable {
   /// Captures the fingerprint of the file at `url` without following symlinks.
   init(of url: URL) throws {
     var status = stat()
-    let result = url.withUnsafeFileSystemRepresentation { path in
-      guard let path else { return Int32(EINVAL) }
-      return lstat(path, &status)
+    let result = unsafe url.withUnsafeFileSystemRepresentation { path in
+      guard let path = unsafe path else { return Int32(EINVAL) }
+      return unsafe lstat(path, &status)
     }
     guard result == 0 else {
       throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO)

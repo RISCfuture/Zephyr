@@ -155,7 +155,7 @@ private enum KeychainOperations {
     query[kSecReturnData as String] = true
     query[kSecMatchLimit as String] = kSecMatchLimitOne
     var result: CFTypeRef?
-    let status = SecItemCopyMatching(query as CFDictionary, &result)
+    let status = unsafe SecItemCopyMatching(query as CFDictionary, &result)
     switch status {
       case errSecSuccess:
         guard let data = result as? Data, let token = String(data: data, encoding: .utf8) else {
@@ -210,7 +210,7 @@ private enum KeychainOperations {
     query[kSecReturnAttributes as String] = true
     query[kSecMatchLimit as String] = kSecMatchLimitAll
     var result: CFTypeRef?
-    let status = SecItemCopyMatching(query as CFDictionary, &result)
+    let status = unsafe SecItemCopyMatching(query as CFDictionary, &result)
     switch status {
       case errSecSuccess:
         let items = result as? [[String: Any]] ?? []
