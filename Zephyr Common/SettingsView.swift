@@ -20,6 +20,7 @@ struct SettingsView: View {
       BandwidthSection()
       MeteredNetworkSection()
       IgnoredItemsSection()
+      KeepDownloadedItemsSection()
       TroubleshootingSection()
       CommandLineToolSection()
       UpdatesSection()
@@ -399,6 +400,92 @@ private struct IgnoredAccountItemsView: View {
             Task { await resume(item) }
           }
           .accessibilityIdentifier("resumeIgnoredButton")
+        } label: {
+          PathBreadcrumb(item.pathCased)
+            .help(item.pathCased.displayPath)
+        }
+      }
+    }
+  }
+}
+
+/**
+ The items the user keeps downloaded on this Mac, and the way to release one.
+
+ Finder shows nothing about the flag, and a kept item looks exactly like one
+ that happens to have been opened lately, so this list is the only place the
+ user can see what is being held on disk and reclaim the space.
+ */
+private struct KeepDownloadedItemsSection: View {
+  @Environment(AppModel.self)
+  private var model
+
+  @State private var itemsByAccount: [AccountIdentifier: [IndexEntryRecord]] = [:]
+
+  var body: some View {
+    Section {
+      if itemsByAccount.values.allSatisfy(\.isEmpty) {
+        Text("Nothing is being kept downloaded.", bundle: #bundle)
+          .foregroundStyle(.secondary)
+      } else {
+        ForEach(model.accounts, id: \.accountID) { account in
+          KeepDownloadedAccountItemsView(
+            account: account,
+            items: itemsByAccount[account.accountID] ?? [],
+            namesAccount: model.accounts.count > 1,
+            stopKeeping: { item in await stopKeeping(item, in: account.accountID) }
+          )
+        }
+      }
+    } header: {
+      SectionHeader(
+        LocalizedStringResource("Kept Downloaded", bundle: #bundle),
+        help: .keepDownloadedItems,
+        accessibilityIdentifier: "settings.keptDownloaded.help"
+      )
+    } footer: {
+      Text(
+        """
+        These items download as soon as they change and stay on this Mac, however little room is \
+        left. Stopping leaves the contents in place and lets macOS reclaim the space when it needs \
+        it.
+        """,
+        bundle: #bundle
+      )
+      .font(.caption)
+      .foregroundStyle(.secondary)
+    }
+    .task { await reload() }
+  }
+
+  private func reload() async {
+    itemsByAccount = await model.keepDownloadedItemsOfEveryAccount()
+  }
+
+  private func stopKeeping(_ item: IndexEntryRecord, in account: AccountIdentifier) async {
+    await model.stopKeepingDownloaded(of: item, in: account)
+    await reload()
+  }
+}
+
+/// One account's kept items, named only when more than one account is linked.
+private struct KeepDownloadedAccountItemsView: View {
+  let account: AccountConfiguration
+  let items: [IndexEntryRecord]
+  let namesAccount: Bool
+  let stopKeeping: (IndexEntryRecord) async -> Void
+
+  var body: some View {
+    if !items.isEmpty {
+      if namesAccount {
+        Text(account.displayName)
+      }
+      ForEach(items, id: \.dbxID) { item in
+        LabeledContent {
+          Button(LocalizedStringResource("Stop Keeping", bundle: #bundle)) {
+            Task { await stopKeeping(item) }
+          }
+          .accessibilityIdentifier("stopKeepingDownloadedButton")
         } label: {
           PathBreadcrumb(item.pathCased)
             .help(item.pathCased.displayPath)

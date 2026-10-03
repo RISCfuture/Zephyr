@@ -274,6 +274,8 @@ extension FileProviderExtension: NSFileProviderCustomAction {
           switch action {
             case .ignore: _ = try await adapter.ignore(identifier)
             case .resumeSync: _ = try await adapter.resumeSync(identifier)
+            case .keepDownloaded: _ = try await adapter.keepDownloaded(identifier)
+            case .stopKeepingDownloaded: _ = try await adapter.stopKeepingDownloaded(identifier)
           }
         }
         // The state change was recorded as a local anchor generation;
@@ -297,6 +299,8 @@ extension FileProviderExtension: NSFileProviderCustomAction {
   private enum Action: String {
     case ignore = "codes.tim.Zephyr.ignore"
     case resumeSync = "codes.tim.Zephyr.resumeSync"
+    case keepDownloaded = "codes.tim.Zephyr.keepDownloaded"
+    case stopKeepingDownloaded = "codes.tim.Zephyr.stopKeepingDownloaded"
   }
 }
 

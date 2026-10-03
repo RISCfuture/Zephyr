@@ -29,6 +29,7 @@ struct ZephyrCommand: AsyncParsableCommand {
       FileStatusCommand.self,
       FindCommand.self,
       IgnoredCommand.self,
+      KeepDownloadedCommand.self,
       HistoryCommand.self,
       RebuildIndexCommand.self,
       WatchCommand.self,
