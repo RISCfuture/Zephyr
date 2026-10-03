@@ -91,6 +91,9 @@ public actor NetworkReachability {
 
   private let monitor = NWPathMonitor()
   private let snapshot = Mutex(NetworkConditions.unknown)
+  /// The task reading the monitor. Held behind a lock rather than in actor
+  /// state so `deinit`, which cannot await, can end it.
+  private let pathWatcher = Mutex<Task<Void, Never>?>(nil)
   private var waiters: [UUID: Waiter] = [:]
   private var observers: [UUID: AsyncStream<NetworkConditions>.Continuation] = [:]
 
@@ -99,16 +102,21 @@ public actor NetworkReachability {
   nonisolated public var conditions: NetworkConditions { snapshot.withLock { $0 } }
 
   private init() {
-    monitor.pathUpdateHandler = { [weak self] path in
-      guard let self else { return }
-      let conditions = NetworkConditions(path)
-      let previous = snapshot.withLock { stored in
-        defer { stored = conditions }
-        return stored
+    // Iterating the monitor starts it, and delivers the current path first.
+    // The loop takes updates in order, so a waiter is never offered a
+    // transition that never happened.
+    let watcher = Task { [monitor, weak self] in
+      for await path in monitor {
+        guard let self else { return }
+        let conditions = NetworkConditions(path)
+        let previous = snapshot.withLock { stored in
+          defer { stored = conditions }
+          return stored
+        }
+        await pathChanged(from: previous, to: conditions)
       }
-      Task { await self.pathChanged(from: previous, to: conditions) }
     }
-    monitor.start(queue: DispatchQueue(label: "codes.tim.Zephyr.reachability"))
+    pathWatcher.withLock { $0 = watcher }
   }
 
   /// Returns the next time the Mac goes from having no route to having one,
@@ -170,7 +178,10 @@ public actor NetworkReachability {
     observers[id] = nil
   }
 
-  deinit { monitor.cancel() }
+  deinit {
+    pathWatcher.withLock { $0?.cancel() }
+    monitor.cancel()
+  }
 
   /// One suspended caller, and what would answer it.
   private struct Waiter {
