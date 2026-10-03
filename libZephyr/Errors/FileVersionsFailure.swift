@@ -1,7 +1,7 @@
-import Foundation
+public import Foundation
 
 /// Something the version-history sheet was asked to show, and could not.
-enum FileVersionsFailure: Error, Equatable {
+public enum FileVersionsFailure: Error, Equatable {
   /// Finder named no file, or more than one.
   case notOneFile
 
@@ -15,11 +15,11 @@ enum FileVersionsFailure: Error, Equatable {
 }
 
 extension FileVersionsFailure: LocalizedError {
-  var errorDescription: String? {
+  public var errorDescription: String? {
     String(localized: "Zephyr couldn’t show earlier versions.", bundle: #bundle)
   }
 
-  var failureReason: String? {
+  public var failureReason: String? {
     switch self {
       case .notOneFile:
         String(localized: "Versions are shown for one file at a time.", bundle: #bundle)
@@ -32,7 +32,7 @@ extension FileVersionsFailure: LocalizedError {
     }
   }
 
-  var recoverySuggestion: String? {
+  public var recoverySuggestion: String? {
     switch self {
       case .notOneFile:
         String(localized: "Select a single file and try again.", bundle: #bundle)
