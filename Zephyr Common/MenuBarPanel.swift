@@ -37,7 +37,6 @@ struct MenuBarPanel: View {
     .environment(hover)
     .onContinuousHover(perform: clearHoverWhenPointerLeaves)
     .onAppear { hover.row = nil }
-    .background(DismissOnEscapeView())
     .accessibilityIdentifier("menuBarPanel")
     .task {
       await model.refreshStatuses()
@@ -51,31 +50,6 @@ struct MenuBarPanel: View {
   private func clearHoverWhenPointerLeaves(_ phase: HoverPhase) {
     guard case .ended = phase else { return }
     hover.row = nil
-  }
-}
-
-/**
- Escape closes the panel, the way it closes any of macOS's own.
-
- It rides a keyboard shortcut rather than `onExitCommand`, which never fires
- here: `cancelOperation:` travels up from whatever holds focus, and a
- `MenuBarExtra` window focuses nothing. A shortcut reaches the panel either
- way — the same route `Settings…` and `Quit Zephyr` take.
- */
-private struct DismissOnEscapeView: View {
-  @Environment(\.dismiss)
-  private var dismiss
-
-  var body: some View {
-    Button {
-      dismiss()
-    } label: {
-      EmptyView()
-    }
-    .keyboardShortcut(.cancelAction)
-    .frame(width: 0, height: 0)
-    .opacity(0)
-    .accessibilityHidden(true)
   }
 }
 
