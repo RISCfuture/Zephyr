@@ -12,13 +12,13 @@ import Security
  */
 public protocol TokenStore: Sendable {
   /// Returns the stored refresh token for `account`, or `nil` when absent.
-  func refreshToken(for account: AccountIdentifier) throws -> String?
+  func refreshToken(for account: AccountIdentifier) throws(AuthenticationFailure) -> String?
 
   /// Stores (or replaces) the refresh token for `account`.
-  func store(refreshToken: String, for account: AccountIdentifier) throws
+  func store(refreshToken: String, for account: AccountIdentifier) throws(AuthenticationFailure)
 
   /// Removes the refresh token for `account`; succeeds when none exists.
-  func deleteRefreshToken(for account: AccountIdentifier) throws
+  func deleteRefreshToken(for account: AccountIdentifier) throws(AuthenticationFailure)
 
   /**
    The accounts this store holds a refresh token for.
@@ -27,7 +27,7 @@ public protocol TokenStore: Sendable {
    the keychain itself, so it finds tokens for accounts the registry no longer
    lists -- what an interrupted unlink leaves behind.
    */
-  func storedAccounts() throws -> [AccountIdentifier]
+  func storedAccounts() throws(AuthenticationFailure) -> [AccountIdentifier]
 }
 
 /// Shared keychain-item constants for both stores.
@@ -54,19 +54,22 @@ enum TokenKeychainItem {
 public struct LoginKeychainTokenStore: TokenStore {
   public init() {}
 
-  public func refreshToken(for account: AccountIdentifier) throws -> String? {
+  public func refreshToken(for account: AccountIdentifier) throws(AuthenticationFailure) -> String?
+  {
     try KeychainOperations.copyToken(query: baseQuery(for: account))
   }
 
-  public func store(refreshToken: String, for account: AccountIdentifier) throws {
+  public func store(refreshToken: String, for account: AccountIdentifier)
+    throws(AuthenticationFailure)
+  {
     try KeychainOperations.upsertToken(refreshToken, query: baseQuery(for: account))
   }
 
-  public func deleteRefreshToken(for account: AccountIdentifier) throws {
+  public func deleteRefreshToken(for account: AccountIdentifier) throws(AuthenticationFailure) {
     try KeychainOperations.deleteToken(query: baseQuery(for: account))
   }
 
-  public func storedAccounts() throws -> [AccountIdentifier] {
+  public func storedAccounts() throws(AuthenticationFailure) -> [AccountIdentifier] {
     try KeychainOperations.listAccounts(query: [
       kSecClass as String: kSecClassGenericPassword,
       kSecAttrService as String: TokenKeychainItem.service
@@ -116,19 +119,22 @@ public struct GroupKeychainTokenStore: TokenStore {
     self.accessGroup = accessGroup
   }
 
-  public func refreshToken(for account: AccountIdentifier) throws -> String? {
+  public func refreshToken(for account: AccountIdentifier) throws(AuthenticationFailure) -> String?
+  {
     try KeychainOperations.copyToken(query: baseQuery(for: account))
   }
 
-  public func store(refreshToken: String, for account: AccountIdentifier) throws {
+  public func store(refreshToken: String, for account: AccountIdentifier)
+    throws(AuthenticationFailure)
+  {
     try KeychainOperations.upsertToken(refreshToken, query: baseQuery(for: account))
   }
 
-  public func deleteRefreshToken(for account: AccountIdentifier) throws {
+  public func deleteRefreshToken(for account: AccountIdentifier) throws(AuthenticationFailure) {
     try KeychainOperations.deleteToken(query: baseQuery(for: account))
   }
 
-  public func storedAccounts() throws -> [AccountIdentifier] {
+  public func storedAccounts() throws(AuthenticationFailure) -> [AccountIdentifier] {
     try KeychainOperations.listAccounts(query: [
       kSecClass as String: kSecClassGenericPassword,
       kSecAttrService as String: TokenKeychainItem.service,
@@ -150,7 +156,7 @@ public struct GroupKeychainTokenStore: TokenStore {
 
 /// The Security-framework calls shared by both token stores.
 private enum KeychainOperations {
-  static func copyToken(query: [String: Any]) throws -> String? {
+  static func copyToken(query: [String: Any]) throws(AuthenticationFailure) -> String? {
     var query = query
     query[kSecReturnData as String] = true
     query[kSecMatchLimit as String] = kSecMatchLimitOne
@@ -176,7 +182,7 @@ private enum KeychainOperations {
    search key: including it would keep the update from matching an item stored
    under a different one, so it travels with the value instead.
    */
-  static func upsertToken(_ token: String, query: [String: Any]) throws {
+  static func upsertToken(_ token: String, query: [String: Any]) throws(AuthenticationFailure) {
     let attributes: [String: Any] = [
       kSecValueData as String: Data(token.utf8),
       kSecAttrAccessible as String: TokenKeychainItem.accessibility
@@ -198,14 +204,16 @@ private enum KeychainOperations {
     }
   }
 
-  static func deleteToken(query: [String: Any]) throws {
+  static func deleteToken(query: [String: Any]) throws(AuthenticationFailure) {
     let status = SecItemDelete(query as CFDictionary)
     guard status == errSecSuccess || status == errSecItemNotFound else {
       throw AuthenticationFailure.keychain(status: status)
     }
   }
 
-  static func listAccounts(query: [String: Any]) throws -> [AccountIdentifier] {
+  static func listAccounts(query: [String: Any]) throws(AuthenticationFailure)
+    -> [AccountIdentifier]
+  {
     var query = query
     query[kSecReturnAttributes as String] = true
     query[kSecMatchLimit as String] = kSecMatchLimitAll

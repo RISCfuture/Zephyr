@@ -27,11 +27,11 @@ enum DropboxAPIArgumentEncoder {
    - Throws: ``WireFormatFailure/headerEncoding(detail:)`` if the argument
      cannot be encoded as JSON.
    */
-  static func headerValue(for argument: some Encodable) throws -> String {
+  static func headerValue(for argument: some Encodable) throws(WireFormatFailure) -> String {
     asciiEscaped(try encodeJSON(argument))
   }
 
-  private static func encodeJSON(_ argument: some Encodable) throws -> String {
+  private static func encodeJSON(_ argument: some Encodable) throws(WireFormatFailure) -> String {
     let encoder = JSONEncoder()
     encoder.outputFormatting = .sortedKeys
     encoder.dateEncodingStrategy = .iso8601

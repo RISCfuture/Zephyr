@@ -17,20 +17,20 @@ private final class StubTokenStore: TokenStore {
     self.readFailure = readFailure
   }
 
-  func refreshToken(for account: AccountIdentifier) throws -> String? {
+  func refreshToken(for account: AccountIdentifier) throws(AuthenticationFailure) -> String? {
     if let readFailure { throw AuthenticationFailure.keychain(status: readFailure) }
     return tokens.withLock { $0[account] }
   }
 
-  func store(refreshToken: String, for account: AccountIdentifier) throws {
+  func store(refreshToken: String, for account: AccountIdentifier) throws(AuthenticationFailure) {
     tokens.withLock { $0[account] = refreshToken }
   }
 
-  func deleteRefreshToken(for account: AccountIdentifier) throws {
+  func deleteRefreshToken(for account: AccountIdentifier) throws(AuthenticationFailure) {
     tokens.withLock { $0[account] = nil }
   }
 
-  func storedAccounts() throws -> [AccountIdentifier] {
+  func storedAccounts() throws(AuthenticationFailure) -> [AccountIdentifier] {
     tokens.withLock { Array($0.keys) }
   }
 }
