@@ -127,6 +127,39 @@ public actor ProviderAdapter {
     return entry.pathCased
   }
 
+  // MARK: Search
+
+  /**
+   The indexed items whose own names contain `text`, best match first.
+
+   The index describes the whole account rather than the bytes on this Mac,
+   so a file nothing has ever downloaded answers a search exactly like a
+   materialized one, and answering costs no network. Items the user excluded
+   from syncing stay out: excluding one deleted Dropbox's copy.
+
+   - Parameters:
+     - text: Text an item's name must contain, matched the way
+       ``IndexQuery/nameContains`` describes.
+     - limit: How many items to answer with at most.
+   - Returns: Matching index rows in the relevance order ``IndexQuery``
+     defines.
+   */
+  public func items(named text: String, limit: UInt) async throws -> [IndexEntryRecord] {
+    let signposter = ZephyrLog.signposter
+    let state = signposter.beginInterval("Search index", id: signposter.makeSignpostID())
+    var count = 0
+    defer {
+      signposter.endInterval("Search index", state, "results: \(count, privacy: .public)")
+    }
+    // Searching a half-built index would answer "no matches" for a file that
+    // is simply not listed yet, which reads as an answer rather than as a
+    // search that cannot run.
+    try await bringIndexCurrentIfIncomplete()
+    let found = try await store.items(matching: IndexQuery(nameContains: text, limit: limit))
+    count = found.count
+    return found
+  }
+
   // MARK: Working set
 
   /**

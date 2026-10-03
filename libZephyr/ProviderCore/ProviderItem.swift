@@ -208,7 +208,14 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
     isRoot = true
   }
 
-  private static func contentType(for record: IndexEntryRecord) -> UTType {
+  /**
+   The content type an index row presents: `.folder`, `.symbolicLink`, or a
+   type inferred from the filename extension.
+
+   A search result reports the same type, so Finder is never told one thing
+   about a row in a search and another about it as an item.
+   */
+  public static func contentType(for record: IndexEntryRecord) -> UTType {
     switch record.itemType {
       case .folder: .folder
       case .symlink: .symbolicLink

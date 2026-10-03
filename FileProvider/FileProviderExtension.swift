@@ -304,6 +304,16 @@ extension FileProviderExtension: NSFileProviderCustomAction {
   }
 }
 
+// MARK: Finder search
+
+extension FileProviderExtension: NSFileProviderSearching {
+  func searchEnumerator(
+    for request: NSFileProviderStringSearchRequest
+  ) -> any NSFileProviderSearchEnumerator {
+    SearchEnumerator(request: request, adapterBox: adapterBox)
+  }
+}
+
 /// Flattens the doubly-optional value Swift imports an optional Objective-C
 /// property of nullable type as, such as `NSFileProviderItem.tagData`.
 private func flattened<Value>(_ value: Value??) -> Value? {
