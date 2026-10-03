@@ -30,8 +30,11 @@ concurrency:
 
 jobs:
   release:
-    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@main
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.0.0
     with:
+      # The image the release runs on. GitHub names its newer macOS images after the major Xcode
+      # version they carry rather than the OS, so this one's successor is `xcode-27`.
+      runner: macos-26
       # Not a platform in the Apple sense — it is macOS. The reusable workflow runs the release
       # lane once per entry, and `ci_release` reads each one as an edition name.
       platforms: '["mas", "download"]'
