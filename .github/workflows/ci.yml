@@ -44,12 +44,9 @@ jobs:
   # framework and its test bundle and needs no signing at all.
   unit:
     name: Unit Tests
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 30
     steps:
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
       - uses: actions/checkout@v6
 
       # Observation's @Observable macro can fail fingerprint validation on hosted runners; skipping
@@ -79,7 +76,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-unit/Build
             ${{ runner.temp }}/dd-unit/SourcePackages
-          key: derived-unit-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-unit-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       - name: Run unit tests
         run: |
@@ -109,12 +106,9 @@ jobs:
   # this job needs no signing to produce that answer.
   build:
     name: Build App
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 30
     steps:
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
       - uses: actions/checkout@v6
 
       - name: Enable macros
@@ -142,7 +136,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-build/Build
             ${{ runner.temp }}/dd-build/SourcePackages
-          key: derived-build-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-build-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       # Both editions emit Zephyr.app, so the second build replaces the first in the shared derived
       # data. That is only a compile check, and each still compiles its own sources.
@@ -166,12 +160,9 @@ jobs:
   # ZephyrUITests, so this job runs both bundles; that is where the host-bound unit tests run.
   ui:
     name: UI Tests
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
     steps:
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
       - uses: actions/checkout@v6
 
       - name: Enable macros
@@ -199,7 +190,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-ui/Build
             ${{ runner.temp }}/dd-ui/SourcePackages
-          key: derived-ui-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-ui-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       # XCUITEST_TIMEOUT_MULTIPLIER stretches XCUITestKit's waits so the slower CI hardware doesn't
       # trip element lookups that pass locally. The waits are read by the test code, which runs in
@@ -233,12 +224,9 @@ jobs:
   # `- Parameter` name that has drifted from the code is caught here.
   docs:
     name: Documentation
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 45
     steps:
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
       - uses: actions/checkout@v6
 
       - name: Enable macros
@@ -266,7 +254,7 @@ jobs:
           path: |
             ${{ runner.temp }}/dd-docs/Build
             ${{ runner.temp }}/dd-docs/SourcePackages
-          key: derived-docs-macos-26-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
+          key: derived-docs-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
       # One derived-data directory for all three schemes: the app and the tool both build on the
       # framework, so a shared one compiles it once. The archives are throwaway — nothing publishes

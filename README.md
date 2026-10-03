@@ -298,9 +298,9 @@ and its `~/Library/CloudStorage` mount.
 
 ## Requirements
 
-Zephyr is written in Swift 6 and requires macOS 26.
+Zephyr is written in Swift 6 and requires macOS 27 or later.
 
-Building it needs Xcode with a Swift 6.3 toolchain — what CI pins — and an Apple
+Building it needs Xcode with a Swift 6.4 toolchain — what CI pins — and an Apple
 Developer team. The team is not optional if you want to see the thing work:
 `NSFileProviderManager.add(domain:)` accepts only a bundle signed with a real team
 identifier, so an unsigned build registers no domain and puts nothing in Finder.
