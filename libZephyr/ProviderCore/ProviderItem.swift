@@ -146,6 +146,21 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
     storedKeepDownloaded ? .downloadEagerlyAndKeepDownloaded : .inherited
   }
 
+  /**
+   How the system treats a folder's listing on this Mac.
+
+   `contentPolicy` keeps a pinned folder's contents downloaded, but a folder
+   can be fully downloaded and still not fully listed: a subtree the user has
+   never opened is enumerated on access. Materializing eagerly enumerates it
+   up front, so a pinned folder browsed offline shows what is in it rather
+   than an empty window.
+
+   Only folders carry a policy. A file has no listing to materialize.
+   */
+  public var namespacePolicy: NSFileProviderNamespacePolicy {
+    storedKeepDownloaded && itemType == .folder ? .materializeEagerly : .inherited
+  }
+
   /// Badges an ignored item, so its state reads from the Finder window
   /// rather than only from the context menu.
   public var decorations: [NSFileProviderItemDecorationIdentifier]? {
