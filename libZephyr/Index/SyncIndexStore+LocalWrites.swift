@@ -75,7 +75,8 @@ extension SyncIndexStore {
       favoriteRank: record.favoriteRank,
       lastUsedDate: record.lastUsedDate,
       xattrs: record.xattrs,
-      ignored: record.ignored
+      ignored: record.ignored,
+      keepDownloaded: record.keepDownloaded
     )
   }
 
@@ -90,6 +91,16 @@ extension SyncIndexStore {
     guard pathCased.rawValue.hasPrefix(oldPrefix) else { return pathCased }
     let rewritten = newCased.rawValue + "/" + pathCased.rawValue.dropFirst(oldPrefix.count)
     return (try? DropboxPath(validating: rewritten)) ?? pathCased
+  }
+
+  /// Lifts an exclusion from syncing, `com.dropbox.ignored` marker and all, so
+  /// that an item pinned to this Mac is not simultaneously one whose remote
+  /// changes are suppressed.
+  private static func resumeSyncing(of record: inout IndexEntryRecord) {
+    guard record.ignored else { return }
+    let xattrs = DropboxIgnoreMarker.removingMarker(from: record.xattrs ?? [:])
+    record.xattrs = xattrs.isEmpty ? nil : xattrs
+    record.ignored = false
   }
 
   /**
@@ -166,6 +177,9 @@ extension SyncIndexStore {
    attribute in step. Folders propagate the flag to every indexed descendant
    so remote-change suppression covers the whole subtree.
 
+   Excluding an item from syncing releases its keep-downloaded pin: the two
+   ask for opposite things, so nothing is ever both.
+
    - Returns: The updated record plus every affected identifier (for change
      reporting), or `nil` when the identifier is unknown.
    */
@@ -184,6 +198,7 @@ extension SyncIndexStore {
       }
       record.xattrs = xattrs.isEmpty ? nil : xattrs
       record.ignored = ignored
+      if ignored { record.keepDownloaded = false }
       record.metaGeneration += 1
       try record.save(db)
       var affected = [record.dbxID]
@@ -195,6 +210,51 @@ extension SyncIndexStore {
           .fetchAll(db)
         for var descendant in descendants {
           descendant.ignored = ignored
+          if ignored { descendant.keepDownloaded = false }
+          descendant.metaGeneration += 1
+          try descendant.save(db)
+          affected.append(descendant.dbxID)
+        }
+      }
+      return (record, affected)
+    }
+  }
+
+  /**
+   Flips an item's keep-downloaded pin, releasing the ignore flag it cannot
+   coexist with. Folders propagate the pin to every indexed descendant, so a
+   whole subtree is kept on this Mac together.
+
+   No extended attribute moves with it. `com.dropbox.ignored` is Dropbox's own
+   protocol, which every client reads, whereas the pin is Zephyr's own state
+   describing what this Mac keeps and has no Dropbox-side equivalent.
+
+   - Returns: The updated record plus every affected identifier (for change
+     reporting), or `nil` when the identifier is unknown.
+   */
+  public func setKeepDownloadedState(
+    _ keepDownloaded: Bool,
+    forID id: DropboxFileIdentifier
+  ) async throws -> (record: IndexEntryRecord, affectedIDs: [DropboxFileIdentifier])? {
+    try ensureWritable()
+    return try await write { db in
+      guard var record = try IndexEntryRecord.fetchOne(db, key: id.rawValue) else {
+        return nil
+      }
+      record.keepDownloaded = keepDownloaded
+      if keepDownloaded { Self.resumeSyncing(of: &record) }
+      record.metaGeneration += 1
+      try record.save(db)
+      var affected = [record.dbxID]
+      if record.itemType == .folder {
+        let descendants =
+          try IndexEntryRecord
+          .filter(Self.under(record.pathNormalized))
+          .filter(Column("keep_downloaded") == !keepDownloaded)
+          .fetchAll(db)
+        for var descendant in descendants {
+          descendant.keepDownloaded = keepDownloaded
+          if keepDownloaded { Self.resumeSyncing(of: &descendant) }
           descendant.metaGeneration += 1
           try descendant.save(db)
           affected.append(descendant.dbxID)
@@ -238,7 +298,8 @@ extension SyncIndexStore {
         favoriteRank: record.favoriteRank,
         lastUsedDate: record.lastUsedDate,
         xattrs: record.xattrs,
-        ignored: record.ignored
+        ignored: record.ignored,
+        keepDownloaded: record.keepDownloaded
       )
       try updated.save(db)
       return updated

@@ -68,7 +68,7 @@ extension ProviderAdapter {
   /// comes to collect it. A failure only costs the immediate refresh — the
   /// next enumeration still reports the new state — but nothing else would
   /// say why Finder went quiet.
-  private func recordLocalChangeGeneration(updatedIDs: [DropboxFileIdentifier]) async {
+  func recordLocalChangeGeneration(updatedIDs: [DropboxFileIdentifier]) async {
     do {
       try await store.recordLocalChangeGeneration(updatedIDs: updatedIDs)
     } catch {
@@ -204,7 +204,8 @@ extension ProviderAdapter {
       favoriteRank: entry.favoriteRank,
       lastUsedDate: entry.lastUsedDate,
       xattrs: entry.xattrs,
-      ignored: entry.ignored
+      ignored: entry.ignored,
+      keepDownloaded: entry.keepDownloaded
     )
     if entry.itemType == .folder {
       try await store.applyLocalMove(

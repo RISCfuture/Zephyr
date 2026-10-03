@@ -1431,6 +1431,62 @@ extension AppModel {
   }
 }
 
+// MARK: Items kept downloaded
+
+extension AppModel {
+  /// The items the user keeps downloaded on this Mac, in path order, or an
+  /// empty list when the account has none.
+  func keepDownloadedItems(for account: AccountIdentifier) async -> [IndexEntryRecord] {
+    guard !usesSampleAccounts, let store = try? await readOnlyIndex(for: account) else {
+      return []
+    }
+    return (try? await store.keepDownloadedEntries()) ?? []
+  }
+
+  /// Every account's kept-downloaded items at once: each read opens that
+  /// account's index, and one slow index must not hold up the rest.
+  func keepDownloadedItemsOfEveryAccount() async -> [AccountIdentifier: [IndexEntryRecord]] {
+    await withTaskGroup(
+      of: (account: AccountIdentifier, items: [IndexEntryRecord]).self
+    ) { group in
+      for account in accounts.map(\.accountID) {
+        group.addTask { (account, await self.keepDownloadedItems(for: account)) }
+      }
+      var itemsByAccount: [AccountIdentifier: [IndexEntryRecord]] = [:]
+      for await kept in group {
+        itemsByAccount[kept.account] = kept.items
+      }
+      return itemsByAccount
+    }
+  }
+
+  /**
+   Stops keeping an item downloaded, leaving its contents on this Mac with
+   nothing protecting them.
+
+   Dropbox stores nothing that matches the flag, so there is no marker for
+   Finder to carry to the File Provider extension the way resuming an
+   ignored item does: the app writes the index itself. Two things have to
+   follow that write before the system stops treating the item as kept
+   downloaded — an anchor generation carrying the items the write touched,
+   which is what the extension replays, and a working-set signal to have
+   the system come and collect it.
+   */
+  func stopKeepingDownloaded(of item: IndexEntryRecord, in account: AccountIdentifier) async {
+    guard !usesSampleAccounts else { return }
+    do {
+      let store = try await manager.session(for: account).openIndex(mode: .readWrite)
+      guard let released = try await store.setKeepDownloadedState(false, forID: item.dbxID) else {
+        return
+      }
+      try await store.recordLocalChangeGeneration(updatedIDs: released.affectedIDs)
+      await DomainManager.signalWorkingSet(for: account)
+    } catch {
+      alertMessage = Self.alertText(for: error)
+    }
+  }
+}
+
 // MARK: Repair
 
 extension AppModel {
@@ -1611,6 +1667,9 @@ extension AppModel {
     }
     for ignored in await ignoredItems(for: account.accountID) {
       lines.append("  ignored \(ignored.pathCased.rawValue)")
+    }
+    for kept in await keepDownloadedItems(for: account.accountID) {
+      lines.append("  kept downloaded \(kept.pathCased.rawValue)")
     }
     return lines
   }

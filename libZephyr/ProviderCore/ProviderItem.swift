@@ -59,6 +59,7 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
   private let storedLastUsedDate: Date?
   private let storedExtendedAttributes: [String: Data]?
   private let storedIgnored: Bool
+  private let storedKeepDownloaded: Bool
   private let isRoot: Bool
 
   /// The stable identifier of this item — the Dropbox file identifier's raw string.
@@ -108,7 +109,8 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
 
   /**
    State the custom actions' activation predicates test: whether the item
-   carries the `com.dropbox.ignored` marker, and whether it is a plain file.
+   carries the `com.dropbox.ignored` marker, whether it is pinned to this Mac,
+   and whether it is a plain file.
 
    A predicate has no other way to tell a file from a folder. `capabilities`
    cannot: `allowsContentEnumerating` and `allowsReading` are the same bit, as
@@ -123,7 +125,25 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
    Zephyr rewrite.
    */
   public var userInfo: [AnyHashable: Any]? {
-    ["ignored": storedIgnored, "isFile": itemType == .file]
+    [
+      "ignored": storedIgnored,
+      "keepDownloaded": storedKeepDownloaded,
+      "isFile": itemType == .file
+    ]
+  }
+
+  /**
+   How the system treats the item's contents on this Mac.
+
+   A pinned item is downloaded before anything reads it, has remote updates
+   downloaded as they arrive, and is spared eviction under disk pressure.
+   Everything else inherits its containing folder's policy, which is how a
+   pinned folder pulls down a subtree: the index propagates the pin to every
+   descendant, and an item later moved in inherits the folder's policy and is
+   scheduled for download.
+   */
+  public var contentPolicy: NSFileProviderContentPolicy {
+    storedKeepDownloaded ? .downloadEagerlyAndKeepDownloaded : .inherited
   }
 
   /// Badges an ignored item, so its state reads from the Finder window
@@ -165,6 +185,7 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
     storedLastUsedDate = record.lastUsedDate
     storedExtendedAttributes = record.xattrs
     storedIgnored = record.ignored
+    storedKeepDownloaded = record.keepDownloaded
     isRoot = false
   }
 
@@ -183,6 +204,7 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
     storedLastUsedDate = nil
     storedExtendedAttributes = nil
     storedIgnored = false
+    storedKeepDownloaded = false
     isRoot = true
   }
 

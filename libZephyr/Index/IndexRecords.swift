@@ -90,6 +90,18 @@ public struct IndexEntryRecord: Sendable, Equatable, Codable, FetchableRecord, P
    */
   public var ignored = false
 
+  /**
+   Whether the item is pinned to this Mac: it downloads eagerly, keeps remote
+   updates downloaded, and is never evicted.
+
+   Zephyr's own state with no Dropbox-side equivalent — unlike ``ignored``,
+   which Dropbox itself understands through an extended attribute — so like
+   ``tagData`` it has to be preserved across a rebuild rather than rediscovered.
+   It is mutually exclusive with ``ignored``: an item cannot be both kept off
+   this Mac's syncing and pinned to it.
+   */
+  public var keepDownloaded = false
+
   public init(
     dbxID: DropboxFileIdentifier,
     pathNormalized: NormalizedDropboxPath,
@@ -108,7 +120,8 @@ public struct IndexEntryRecord: Sendable, Equatable, Codable, FetchableRecord, P
     favoriteRank: Int64? = nil,
     lastUsedDate: Date? = nil,
     xattrs: [String: Data]? = nil,
-    ignored: Bool = false
+    ignored: Bool = false,
+    keepDownloaded: Bool = false
   ) {
     self.dbxID = dbxID
     self.pathNormalized = pathNormalized
@@ -129,6 +142,7 @@ public struct IndexEntryRecord: Sendable, Equatable, Codable, FetchableRecord, P
     self.lastUsedDate = lastUsedDate
     self.xattrs = xattrs
     self.ignored = ignored
+    self.keepDownloaded = keepDownloaded
   }
 
   public enum CodingKeys: String, CodingKey {
@@ -169,6 +183,8 @@ public struct IndexEntryRecord: Sendable, Equatable, Codable, FetchableRecord, P
     case xattrs
 
     case ignored
+
+    case keepDownloaded = "keep_downloaded"
   }
 }
 
@@ -380,8 +396,9 @@ public struct EngineErrorRecord: Sendable, Codable, Equatable, FetchableRecord, 
  The attributes of one indexed item that Dropbox does not store, parked while
  the index is rebuilt.
 
- Finder tags, favorite ranks, last-used dates, extended attributes, and the
- ignore marker exist only on this Mac, so a re-listing cannot restore them:
+ Finder tags, favorite ranks, last-used dates, extended attributes, the ignore
+ marker, and the keep-downloaded pin exist only on this Mac, so a re-listing
+ cannot restore them:
  ``SyncIndexStore/resetSyncState()`` writes them here and the re-listing's
  first upsert of each item takes them back.
  */
@@ -396,6 +413,8 @@ struct PreservedLocalStateRecord: Sendable, Codable, FetchableRecord, Persistabl
 
   let ignored: Bool
 
+  let keepDownloaded: Bool
+
   let tagData: Data?
 
   let favoriteRank: Int64?
@@ -407,12 +426,13 @@ struct PreservedLocalStateRecord: Sendable, Codable, FetchableRecord, Persistabl
   /// The state worth preserving for an entry, or `nil` when it has none.
   init?(preserving entry: IndexEntryRecord) {
     guard
-      entry.ignored || entry.tagData != nil || entry.favoriteRank != nil
-        || entry.lastUsedDate != nil || entry.xattrs != nil
+      entry.ignored || entry.keepDownloaded || entry.tagData != nil
+        || entry.favoriteRank != nil || entry.lastUsedDate != nil || entry.xattrs != nil
     else { return nil }
     dbxID = entry.dbxID
     pathNormalized = entry.pathNormalized
     ignored = entry.ignored
+    keepDownloaded = entry.keepDownloaded
     tagData = entry.tagData
     favoriteRank = entry.favoriteRank
     lastUsedDate = entry.lastUsedDate
@@ -425,6 +445,8 @@ struct PreservedLocalStateRecord: Sendable, Codable, FetchableRecord, Persistabl
     case pathNormalized = "path_normalized"
 
     case ignored
+
+    case keepDownloaded = "keep_downloaded"
 
     case tagData = "tag_data"
 

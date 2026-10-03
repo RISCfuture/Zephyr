@@ -51,6 +51,9 @@ public enum HelpAnchor: String, Sendable {
   /// The items taken out of syncing, and putting one back.
   case ignoredItems = "ignored-items"
 
+  /// The items kept downloaded on this Mac, and releasing one.
+  case keepDownloadedItems = "kept-downloaded"
+
   /// Collecting what a bug report needs.
   case diagnostics = "diagnostics"
 

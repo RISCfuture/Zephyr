@@ -34,6 +34,22 @@
 				<key>NSExtensionFileProviderActionActivationRule</key>
 				<string>SUBQUERY( fileproviderItems, $item, $item.userInfo.ignored == YES ).@count &gt; 0</string>
 			</dict>
+			<dict>
+				<key>NSExtensionFileProviderActionIdentifier</key>
+				<string>codes.tim.Zephyr.keepDownloaded</string>
+				<key>NSExtensionFileProviderActionName</key>
+				<string>Keep Downloaded on This Mac</string>
+				<key>NSExtensionFileProviderActionActivationRule</key>
+				<string>SUBQUERY( fileproviderItems, $item, $item.userInfo.keepDownloaded == NO AND $item.userInfo.ignored == NO ).@count &gt; 0</string>
+			</dict>
+			<dict>
+				<key>NSExtensionFileProviderActionIdentifier</key>
+				<string>codes.tim.Zephyr.stopKeepingDownloaded</string>
+				<key>NSExtensionFileProviderActionName</key>
+				<string>Stop Keeping Downloaded on This Mac</string>
+				<key>NSExtensionFileProviderActionActivationRule</key>
+				<string>SUBQUERY( fileproviderItems, $item, $item.userInfo.keepDownloaded == YES ).@count &gt; 0</string>
+			</dict>
 		</array>
 		<key>NSFileProviderDecorations</key>
 		<array>

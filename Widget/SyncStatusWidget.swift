@@ -13,8 +13,13 @@ struct SyncStatusWidget: Widget {
       SyncStatusEntryView(entry: entry)
         .containerBackground(.fill.tertiary, for: .widget)
     }
-    .configurationDisplayName("Sync Status")
-    .description("Your Dropbox accounts’ file counts and sync issues.")
+    .configurationDisplayName(LocalizedStringResource("Sync Status", bundle: #bundle))
+    .description(
+      LocalizedStringResource(
+        "Your Dropbox accounts’ file counts and sync issues.",
+        bundle: #bundle
+      )
+    )
     .supportedFamilies([.systemSmall, .systemMedium])
   }
 }
