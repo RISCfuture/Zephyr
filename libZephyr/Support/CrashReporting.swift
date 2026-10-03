@@ -145,6 +145,10 @@ public enum CrashReporting {
     // device name, or account name it would otherwise infer.
     options.sendDefaultPii = false
 
+    // A failed HTTP response is Dropbox having a bad minute, which Zephyr
+    // already handles; it is not a Zephyr bug.
+    options.enableCaptureFailedRequests = false
+
     options.beforeSend = { ReportRedaction.redacting($0) }
     options.beforeBreadcrumb = { ReportRedaction.redacting($0) }
 
