@@ -174,6 +174,9 @@ enum DomainManager {
     )
     // Dropbox has no trash API; deletes fall back to revision history.
     domain.supportsSyncingTrash = false
+    // Finder's search field asks the extension, which answers from the sync
+    // index — so a search finds files that were never downloaded.
+    domain.supportsStringSearchRequest = true
     return domain
   }
 }
@@ -189,13 +192,13 @@ extension DomainManager {
    which throws away the account's local replica and makes the system
    re-download everything the user had materialized. That is too expensive to
    guess at, so every registration is stamped with the version that wrote it
-   and a build that needs different settings names the versions it is
-   replacing in ``needsReregistration(_:registeredBy:)``.
+   and a build that needs different settings re-registers every domain
+   stamped below this one — see ``needsReregistration(registeredBy:)``.
 
    Raise this only alongside a settings change, and only with a matching
    migration. A version that needs no migration removes nothing.
    */
-  private static var currentRegistrationVersion: Int { 1 }
+  private static var currentRegistrationVersion: Int { 2 }
 
   private static var registrationVersionKeyPrefix: String { "domainRegistrationVersion-" }
 
@@ -217,7 +220,7 @@ extension DomainManager {
   ) async throws {
     for domain in existing {
       guard let account = account(of: domain) else { continue }
-      guard needsReregistration(domain, registeredBy: registrationVersion(of: account)) else {
+      guard needsReregistration(registeredBy: registrationVersion(of: account)) else {
         stampRegistrationVersion(of: account)
         continue
       }
@@ -229,18 +232,12 @@ extension DomainManager {
   /**
    Whether a domain registered at `version` has to be registered again.
 
-   Version 0 is a domain from a build that stamped nothing. Those builds
-   registered the domain with trash syncing on, which Dropbox has no API to
-   serve, so the flag is the evidence that a version-0 domain came from one
-   of them — and a version-0 domain without it was registered correctly and
-   is left alone. Nothing consults the flag once a domain carries a stamp.
+   Every version below the current one was written without a setting this
+   build needs, so the stamp alone decides. Version 0 is a domain from a
+   build that stamped nothing.
    */
-  private static func needsReregistration(
-    _ domain: NSFileProviderDomain,
-    registeredBy version: Int
-  ) -> Bool {
-    guard version < currentRegistrationVersion else { return false }
-    return version == 0 && domain.supportsSyncingTrash
+  private static func needsReregistration(registeredBy version: Int) -> Bool {
+    version < currentRegistrationVersion
   }
 
   /// Which build registered the account's domain; zero for a domain
