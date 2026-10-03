@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 import SwiftUI
 import libZephyr
@@ -27,10 +26,13 @@ struct ContentView: View {
     // statuses as well as approvals, on becoming active as well as on
     // appearing: a failure that has resolved clears without waiting for the
     // menu bar panel to be opened.
-    .task { await refresh() }
-    .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification))
-    { _ in
-      Task { await refresh() }
+    .task {
+      await refresh()
+      for await _ in NotificationCenter.default.notifications(
+        named: NSApplication.didBecomeActiveNotification
+      ) {
+        await refresh()
+      }
     }
     .toolbar {
       ToolbarItem(placement: .primaryAction) {

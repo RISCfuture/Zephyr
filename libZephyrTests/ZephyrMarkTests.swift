@@ -15,8 +15,8 @@ struct ZephyrMarkTests {
     )
   }
 
-  @Test("A turn's frames run once round and land back where they started")
-  func framesRunOnceRound() {
+  @Test
+  func `A turn's frames run once round and land back where they started`() {
     let start = frame(at: 0)
     #expect(frame(at: Self.revolution) == start)
     #expect(frame(at: Self.revolution / 2) == start + Self.frameCount / 2)

@@ -1,4 +1,3 @@
-import Combine
 import SwiftUI
 import libZephyr
 
@@ -29,13 +28,18 @@ struct SetupView: View {
     // report itself as the identifier of the Continue button, the Back button,
     // and every control the pages put up — and the window already has a title
     // to be found by.
+
+    // Approvals are granted over in System Settings, so they're re-read every
+    // time the user comes back to Zephyr: the step they're on shows the switch
+    // they just flipped.
     .task {
       recordStart()
       await setup.refreshApprovals()
-    }
-    .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification))
-    { _ in
-      Task { await setup.refreshApprovals() }
+      for await _ in NotificationCenter.default.notifications(
+        named: NSApplication.didBecomeActiveNotification
+      ) {
+        await setup.refreshApprovals()
+      }
     }
   }
 
