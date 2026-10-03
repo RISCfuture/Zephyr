@@ -134,11 +134,17 @@ public final class ShareUploadModel {
   /// The URL of the shared item itself, or `nil` when the provider offers none
   /// that can be read.
   private static func sharedFileURL(of provider: NSItemProvider) async -> URL? {
+    // Both checks earn their place: the first keeps a shared web link from
+    // being staged as though it were a file, and the second is what the
+    // loader itself answers to.
     guard provider.hasItemConformingToTypeIdentifier(UTType.fileURL.identifier),
-      let item = try? await provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier)
+      provider.canLoadObject(ofClass: URL.self)
     else { return nil }
-    return item as? URL
-      ?? (item as? Data).flatMap { URL(dataRepresentation: $0, relativeTo: nil) }
+    return await withCheckedContinuation { continuation in
+      _ = provider.loadObject(ofClass: URL.self) { url, _ in
+        continuation.resume(returning: url)
+      }
+    }
   }
 
   /**
