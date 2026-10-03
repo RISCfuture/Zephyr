@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/RISCfuture/GitHubUpdateChecker",
       "state" : {
-        "revision" : "02f7a29050646bb726922728b196c1b68d1bb3b3",
-        "version" : "2.1.0"
+        "revision" : "45897c308540e2af4ad86d2710825983db9e4d90",
+        "version" : "2.1.1"
       }
     },
     {
@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/RISCfuture/XCUITestKit",
       "state" : {
-        "branch" : "main",
-        "revision" : "797d5d183a67b0bb3034250d34d27f838f6cbab5"
+        "revision" : "b76d0fc269f04019767530b0180671738128fe7e",
+        "version" : "1.0.0"
       }
     }
   ],
