@@ -85,7 +85,7 @@ public enum ChangeSignal: Sendable, Hashable {
   private static func digest(of account: AccountIdentifier) -> String {
     SHA256.hash(data: Data(account.rawValue.utf8))
       .prefix(digestLength)
-      .map { String(format: "%02x", $0) }
+      .map { unsafe String(format: "%02x", $0) }
       .joined()
   }
 
@@ -97,7 +97,7 @@ public enum ChangeSignal: Sendable, Hashable {
    a failure — most of the time only one process is running.
    */
   public func post() {
-    let status = notify_post(name)
+    let status = unsafe notify_post(name)
     guard status != Self.ok else { return }
     ZephyrLog.engine.error(
       "Cannot post \(self.name, privacy: .public), notify status \(status, privacy: .public)"
@@ -116,7 +116,7 @@ public enum ChangeSignal: Sendable, Hashable {
       bufferingPolicy: .bufferingNewest(1)
     )
     var token = NOTIFY_TOKEN_INVALID
-    let status = notify_register_dispatch(name, &token, Self.deliveryQueue) { _ in
+    let status = unsafe notify_register_dispatch(name, &token, Self.deliveryQueue) { _ in
       continuation.yield()
     }
     guard status == Self.ok else {

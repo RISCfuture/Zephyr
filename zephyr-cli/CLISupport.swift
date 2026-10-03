@@ -61,7 +61,7 @@ enum CLI {
     CrashReporting.start(as: .commandLineTool)
 
     // Line-buffer stdout so long-running commands stream when piped.
-    setvbuf(stdout, nil, _IOLBF, 0)
+    unsafe setvbuf(stdout, nil, _IOLBF, 0)
     do {
       try await body()
     } catch EngineFailure.notLinked {

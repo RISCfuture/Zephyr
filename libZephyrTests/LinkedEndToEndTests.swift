@@ -144,8 +144,8 @@ enum LinkedDropbox {
   /// Random-prefixed repeating payload of the given size.
   static func randomPayload(mebibytes: Int) -> Data {
     var block = Data(count: 1 << 20)
-    block.withUnsafeMutableBytes { buffer in
-      _ = SecRandomCopyBytes(kSecRandomDefault, buffer.count, buffer.baseAddress!)
+    unsafe block.withUnsafeMutableBytes { buffer in
+      _ = unsafe SecRandomCopyBytes(kSecRandomDefault, buffer.count, buffer.baseAddress!)
     }
     var payload = Data(capacity: mebibytes << 20)
     for _ in 0..<mebibytes {

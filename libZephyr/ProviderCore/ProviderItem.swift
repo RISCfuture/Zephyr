@@ -207,6 +207,6 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
   }
 
   private static func metadataVersion(for generation: Int64) -> Data {
-    withUnsafeBytes(of: generation.littleEndian) { Data($0) }
+    withUnsafeBytes(of: generation.littleEndian) { unsafe Data($0) }
   }
 }
