@@ -134,8 +134,15 @@ enum SystemApproval: String, CaseIterable, Identifiable, Sendable {
 @MainActor
 enum SystemApprovalAudit {
   /// The login item is registered, but the user has switched it off.
-  private static var isLoginItemWithheld: Bool {
-    SMAppService.mainApp.status == .requiresApproval
+  private static func isLoginItemWithheld() async -> Bool {
+    await loginItemStatus() == .requiresApproval
+  }
+
+  /// Reads the login item's status off the main actor: `SMAppService` asks
+  /// `smd` over synchronous XPC, which can block for seconds.
+  @concurrent
+  private static func loginItemStatus() async -> SMAppService.Status {
+    SMAppService.mainApp.status
   }
 
   /**
@@ -149,7 +156,7 @@ enum SystemApprovalAudit {
     var withheld: [SystemApproval] = []
     if await isFinderExtensionWithheld() { withheld.append(.finderExtension) }
     if await areNotificationsWithheld() { withheld.append(.notifications) }
-    if isLoginItemWithheld { withheld.append(.loginItem) }
+    if await isLoginItemWithheld() { withheld.append(.loginItem) }
     return withheld
   }
 
@@ -164,7 +171,7 @@ enum SystemApprovalAudit {
     switch approval {
       case .finderExtension: await isFinderExtensionEnabled()
       case .notifications: await notificationAuthorizationStatus() == .authorized
-      case .loginItem: SMAppService.mainApp.status == .enabled
+      case .loginItem: await loginItemStatus() == .enabled
     }
   }
 
