@@ -25,6 +25,7 @@ enum DomainManager {
 
   /// Adds domains for newly linked accounts, removes domains whose account is
   /// gone, and re-registers domains an older build left settings on.
+  @concurrent
   static func reconcile(with configurations: [AccountConfiguration]) async throws {
     try await migrateDomainRegistrations(in: try await NSFileProviderManager.domains())
     let existing = try await NSFileProviderManager.domains()
@@ -53,6 +54,7 @@ enum DomainManager {
    system keeps reporting the last failure it was handed, however long ago
    the user fixed it.
    */
+  @concurrent
   static func signalErrorsResolved(for account: AccountIdentifier) async {
     guard let manager = try? await providerManager(for: account) else { return }
     await withTaskGroup(of: Void.self) { group in
@@ -64,6 +66,7 @@ enum DomainManager {
 
   /// Asks the system to re-enumerate an account's working set, which is how
   /// a change the app made to the index reaches Finder.
+  @concurrent
   static func signalWorkingSet(for account: AccountIdentifier) async {
     guard let manager = try? await providerManager(for: account) else { return }
     try? await manager.signalEnumerator(for: .workingSet)
@@ -71,6 +74,7 @@ enum DomainManager {
 
   /// The user-visible location of one item, security-scoped for a sandboxed
   /// caller, or `nil` when the account has no domain or the system won't say.
+  @concurrent
   static func userVisibleURL(
     of item: NSFileProviderItemIdentifier,
     in account: AccountIdentifier
@@ -269,6 +273,7 @@ extension DomainManager {
    An account whose count can't be read is left out rather than reported as
    zero, so a failure reads as "not known" instead of "nothing to do".
    */
+  @concurrent
   static func pendingItemCounts() async -> [AccountIdentifier: UInt] {
     let domains: [NSFileProviderDomain]
     do {

@@ -954,10 +954,9 @@ extension AppModel {
 extension AppModel {
   /// Reveals an account's File Provider domain root in Finder.
   func revealInFinder(_ account: AccountIdentifier) async {
-    guard let domain = try? await DomainManager.domain(for: account),
-      let manager = NSFileProviderManager(for: domain),
-      let url = try? await manager.getUserVisibleURL(for: .rootContainer)
-    else { return }
+    guard let url = await DomainManager.userVisibleURL(of: .rootContainer, in: account) else {
+      return
+    }
     NSWorkspace.shared.activateFileViewerSelecting([url])
   }
 
