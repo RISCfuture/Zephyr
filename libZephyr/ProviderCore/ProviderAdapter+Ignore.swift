@@ -61,7 +61,24 @@ extension ProviderAdapter {
         try await restoreFile(record)
     }
     await recordLocalChangeGeneration(updatedIDs: affected)
-    return try await freshItem(for: id)
+    return try await resumedItem(at: record.pathNormalized, otherwiseFor: id)
+  }
+
+  /// The item a resume ended up with.
+  ///
+  /// Restoring re-creates the Dropbox copy, and Dropbox mints a fresh
+  /// identifier for anything it creates — so what the resume produced is
+  /// whatever now sits at the path, which need not be what the request
+  /// named. Asking for the old identifier instead answers a completed
+  /// resume with "no such item".
+  private func resumedItem(
+    at path: NormalizedDropboxPath,
+    otherwiseFor id: DropboxFileIdentifier
+  ) async throws -> ProviderItem {
+    guard let entry = try await store.entry(forPath: path) else {
+      return try await freshItem(for: id)
+    }
+    return try await providerItem(for: entry)
   }
 
   /// Records the state change as a local anchor generation, so the system
@@ -340,8 +357,14 @@ extension ProviderAdapter {
   /// (parents before children), files reconcile individually, and one
   /// item's failure never aborts the rest.
   private func restoreFolderTree(rootedAt root: IndexEntryRecord) async {
-    await ensureRemoteFolder(at: root)
+    // The subtree is read before anything is re-created on Dropbox. These
+    // rows stopped being ignored a moment ago, which makes them eligible for
+    // ordinary reconciliation again — and reconciling them against a Dropbox
+    // that no longer holds them removes them. A read taken after the folder
+    // is re-created can come back empty, leaving the contents it would have
+    // restored behind as shadows nothing refers to.
     let descendants = (try? await store.descendants(of: root.pathNormalized)) ?? []
+    await ensureRemoteFolder(at: root)
     for entry in descendants {
       switch entry.itemType {
         case .folder:
