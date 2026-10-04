@@ -20,6 +20,10 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
 ### Fixed
 
+- Putting an item back on Dropbox and resuming its syncing now works. It
+  reported that the file did not exist, and a folder came back empty on both
+  sides even though its contents were still held on this Mac. Putting a folder
+  back now restores everything beneath it, subfolders included.
 - A Dropbox outage no longer reads as a broken account: a token request Dropbox
   answers with a server error or a rate limit is retried, and one that keeps
   failing reports a connection problem instead of asking you to relink.
