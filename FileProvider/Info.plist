@@ -48,7 +48,7 @@
 				<key>NSExtensionFileProviderActionName</key>
 				<string>Stop Keeping Downloaded on This Mac</string>
 				<key>NSExtensionFileProviderActionActivationRule</key>
-				<string>SUBQUERY( fileproviderItems, $item, $item.userInfo.keepDownloaded == YES ).@count &gt; 0</string>
+				<string>SUBQUERY( fileproviderItems, $item, $item.userInfo.keepDownloadedRoot == YES ).@count &gt; 0</string>
 			</dict>
 		</array>
 		<key>NSFileProviderDecorations</key>

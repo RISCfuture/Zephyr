@@ -264,6 +264,63 @@ struct IndexStoreTests {
   }
 
   @Test
+  func `keeping a folder downloaded marks the folder and signals its subtree`() async throws {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try await store.applyDeltaPage(
+      [
+        .upsert(try folderRecord(id: "id:box001", path: "/Box")),
+        .upsert(try fileRecord(id: "id:boxa01", path: "/Box/a.txt")),
+        .upsert(try folderRecord(id: "id:deep01", path: "/Box/Deep")),
+        .upsert(try fileRecord(id: "id:deepb1", path: "/Box/Deep/b.txt")),
+        .upsert(try fileRecord(id: "id:other1", path: "/outside.txt"))
+      ],
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    let folderID = try DropboxFileIdentifier(validating: "id:box001")
+    let childID = try DropboxFileIdentifier(validating: "id:boxa01")
+    let before = try #require(try await store.entry(forID: childID)).metaGeneration
+
+    let result = try #require(try await store.setKeepDownloadedState(true, forID: folderID))
+
+    // Only the folder is marked: everything under it reports `.inherited` and
+    // the system resolves the policy from the folder, so a second row saying
+    // the same thing would only show up in the lists of what the user chose.
+    #expect(try await store.keepDownloadedEntries().map(\.pathNormalized.rawValue) == ["/box"])
+    // The subtree still has to be re-read, because the policy it resolves to
+    // changed even though its own rows did not.
+    #expect(try #require(try await store.entry(forID: childID)).metaGeneration > before)
+    #expect(result.affectedIDs.count == 4)
+    #expect(!result.affectedIDs.contains(try DropboxFileIdentifier(validating: "id:other1")))
+  }
+
+  @Test
+  func `releasing a folder leaves a separately pinned descendant pinned`() async throws {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try await store.applyDeltaPage(
+      [
+        .upsert(try folderRecord(id: "id:box001", path: "/Box")),
+        .upsert(try folderRecord(id: "id:deep01", path: "/Box/Deep"))
+      ],
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    let folderID = try DropboxFileIdentifier(validating: "id:box001")
+    let deepID = try DropboxFileIdentifier(validating: "id:deep01")
+    _ = try await store.setKeepDownloadedState(true, forID: deepID)
+    _ = try await store.setKeepDownloadedState(true, forID: folderID)
+
+    _ = try await store.setKeepDownloadedState(false, forID: folderID)
+
+    // The user chose the inner folder on its own, so releasing the outer one
+    // is not an instruction to release it too.
+    #expect(try #require(try await store.entry(forID: deepID)).keepDownloaded)
+    #expect(try #require(try await store.entry(forID: folderID)).keepDownloaded == false)
+  }
+
+  @Test
   func `reset sync state keeps ignored items and every item's local attributes`() async throws {
     let (store, directory) = try makeStore()
     defer { try? FileManager.default.removeItem(at: directory) }

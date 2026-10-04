@@ -178,6 +178,12 @@ public struct NormalizedDropboxPath: Sendable, Hashable {
   public static func folded(_ text: String) -> String {
     text.precomposedStringWithCanonicalMapping.lowercased()
   }
+
+  /// Whether `other` lies beneath this path. A path does not lie beneath
+  /// itself, so this answers for a containing folder rather than for the item.
+  public func contains(_ other: Self) -> Bool {
+    other.rawValue.hasPrefix("\(rawValue)/")
+  }
 }
 
 extension NormalizedDropboxPath: Codable {

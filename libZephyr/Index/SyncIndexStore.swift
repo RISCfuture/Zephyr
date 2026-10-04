@@ -706,6 +706,20 @@ public final class SyncIndexStore: Sendable {
    Every entry pinned to this Mac, in path order — the account's
    keep-downloaded list.
    */
+  /// The paths of the items marked kept downloaded.
+  ///
+  /// Only the items the caller chose carry the mark, so this set stays small
+  /// whatever the size of the subtrees beneath it — small enough to resolve
+  /// ancestry against in memory rather than asking the index per item.
+  public func keptDownloadedPaths() async throws -> [NormalizedDropboxPath] {
+    try await read { db in
+      try IndexEntryRecord
+        .filter(Column("keep_downloaded") == true)
+        .fetchAll(db)
+        .map(\.pathNormalized)
+    }
+  }
+
   public func keepDownloadedEntries() async throws -> [IndexEntryRecord] {
     try await read { db in
       try IndexEntryRecord
