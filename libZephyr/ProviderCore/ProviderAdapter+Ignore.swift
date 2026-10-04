@@ -61,24 +61,30 @@ extension ProviderAdapter {
         try await restoreFile(record)
     }
     await recordLocalChangeGeneration(updatedIDs: affected)
-    return try await resumedItem(at: record.pathNormalized, otherwiseFor: id)
+    return try await freshItem(
+      for: try await currentIdentifier(at: record.pathNormalized, otherwise: id)
+    )
   }
 
-  /// The item a resume ended up with.
-  ///
-  /// Restoring re-creates the Dropbox copy, and Dropbox mints a fresh
-  /// identifier for anything it creates — so what the resume produced is
-  /// whatever now sits at the path, which need not be what the request
-  /// named. Asking for the old identifier instead answers a completed
-  /// resume with "no such item".
-  private func resumedItem(
+  /**
+   The identifier the item at a path holds now.
+
+   Restoring re-creates the Dropbox copy, and Dropbox mints a fresh
+   identifier for anything it creates — so once a resume has run, the item it
+   produced is whatever sits at the path, which need not be what the request
+   named. Anything that goes on to read or write that item has to ask under
+   the new identifier; the old one answers "no such item".
+
+   - Parameters:
+     - path: Where the item is.
+     - id: What to answer with when the index has no row at the path, so a
+       caller still has an identifier to fail on rather than a nil to handle.
+   */
+  func currentIdentifier(
     at path: NormalizedDropboxPath,
-    otherwiseFor id: DropboxFileIdentifier
-  ) async throws -> ProviderItem {
-    guard let entry = try await store.entry(forPath: path) else {
-      return try await freshItem(for: id)
-    }
-    return try await providerItem(for: entry)
+    otherwise id: DropboxFileIdentifier
+  ) async throws -> DropboxFileIdentifier {
+    try await store.entry(forPath: path)?.dbxID ?? id
   }
 
   /// Records the state change as a local anchor generation, so the system

@@ -1466,6 +1466,46 @@ struct ProviderAdapterTests {
     #expect(item.userInfo?["ignored"] as? Bool == false)
   }
 
+  @Test
+  func `keeping an excluded item downloaded resumes it and pins what came back`() async throws {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try await store.applyDeltaPage(
+      [.upsert(try fileRecord(id: "id:filea1", path: "/a.txt"))],
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    try await store.markInitialIndexComplete()
+    let excluded = try DropboxFileIdentifier(validating: "id:filea1")
+    _ = try await store.setIgnoredState(true, forID: excluded)
+    let (transport, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
+    await transport.enqueueJSON(
+      """
+      {"error_summary": "path/not_found/..",
+       "error": {".tag": "path", "path": {".tag": "not_found"}}}
+      """,
+      status: 409
+    )
+    await transport.enqueueJSON(
+      Self.uploadedFileJSON(
+        id: "id:filea2",
+        name: "a.txt",
+        pathLower: "/a.txt",
+        pathDisplay: "/a.txt"
+      )
+    )
+
+    let item = try await adapter.keepDownloaded(NSFileProviderItemIdentifier("id:filea1"))
+
+    // The pin belongs to the copy Dropbox just created, not to the
+    // identifier the excluded item used to have.
+    #expect(item.itemIdentifier.rawValue == "id:filea2")
+    let restored = try DropboxFileIdentifier(validating: "id:filea2")
+    let entry = try #require(try await store.entry(forID: restored))
+    #expect(entry.keepDownloaded)
+    #expect(entry.ignored == false)
+  }
+
   // MARK: Fixtures
 
   /// Every identifier the working set enumerates, across all its pages.
