@@ -1379,6 +1379,93 @@ struct ProviderAdapterTests {
     #expect(entry.revision?.rawValue == "015d1a1f3f2e5d0")
   }
 
+  @Test
+  func `resume sync restores a folder's children`() async throws {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try await store.applyDeltaPage(
+      [
+        .upsert(try folderRecord(id: "id:folder1", path: "/Box")),
+        .upsert(try fileRecord(id: "id:boxa1", path: "/Box/a.txt")),
+        .upsert(try fileRecord(id: "id:boxb1", path: "/Box/b.txt"))
+      ],
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    try await store.markInitialIndexComplete()
+    let folderID = try DropboxFileIdentifier(validating: "id:folder1")
+    _ = try await store.setIgnoredState(true, forID: folderID)
+    let (transport, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
+    // Dropbox mints a new identifier for anything re-created, so the resumed
+    // folder and its restored children all come back under new ones.
+    await transport.enqueueJSON(
+      """
+      {".tag": "folder", "id": "id:folder2", "name": "Box",
+       "path_lower": "/box", "path_display": "/Box"}
+      """
+    )
+    for (name, id) in [("a.txt", "id:boxa2"), ("b.txt", "id:boxb2")] {
+      await transport.enqueueJSON(
+        """
+        {"error_summary": "path/not_found/..",
+         "error": {".tag": "path", "path": {".tag": "not_found"}}}
+        """,
+        status: 409
+      )
+      await transport.enqueueJSON(
+        Self.uploadedFileJSON(
+          id: id,
+          name: name,
+          pathLower: "/box/\(name)",
+          pathDisplay: "/Box/\(name)"
+        )
+      )
+    }
+
+    _ = try await adapter.resumeSync(NSFileProviderItemIdentifier("id:folder1"))
+
+    let restored = await transport.requests.compactMap(\.url?.path)
+      .filter { $0.contains("files/restore") }
+    #expect(restored.count == 2)
+  }
+
+  @Test
+  func `resume sync answers for a file Dropbox gave a new identifier`() async throws {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try await store.applyDeltaPage(
+      [.upsert(try fileRecord(id: "id:filea1", path: "/a.txt"))],
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    try await store.markInitialIndexComplete()
+    let id = try DropboxFileIdentifier(validating: "id:filea1")
+    _ = try await store.setIgnoredState(true, forID: id)
+    let (transport, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
+    await transport.enqueueJSON(
+      """
+      {"error_summary": "path/not_found/..",
+       "error": {".tag": "path", "path": {".tag": "not_found"}}}
+      """,
+      status: 409
+    )
+    // The restore lands the contents under a new identifier, which is what
+    // the resumed item has to be answered for.
+    await transport.enqueueJSON(
+      Self.uploadedFileJSON(
+        id: "id:filea2",
+        name: "a.txt",
+        pathLower: "/a.txt",
+        pathDisplay: "/a.txt"
+      )
+    )
+
+    let item = try await adapter.resumeSync(NSFileProviderItemIdentifier("id:filea1"))
+
+    #expect(item.itemIdentifier.rawValue == "id:filea2")
+    #expect(item.userInfo?["ignored"] as? Bool == false)
+  }
+
   // MARK: Fixtures
 
   /// Every identifier the working set enumerates, across all its pages.
