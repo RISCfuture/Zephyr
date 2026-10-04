@@ -247,14 +247,17 @@ extension SyncIndexStore {
       try record.save(db)
       var affected = [record.dbxID]
       if record.itemType == .folder {
-        let descendants =
-          try IndexEntryRecord
-          .filter(Self.under(record.pathNormalized))
-          .filter(Column("keep_downloaded") == !keepDownloaded)
-          .fetchAll(db)
-        for var descendant in descendants {
-          descendant.keepDownloaded = keepDownloaded
-          if keepDownloaded { Self.resumeSyncing(of: &descendant) }
+        // Only the item the user chose carries the mark. Everything beneath it
+        // reports ``ProviderItem/contentPolicy`` as `.inherited`, which the
+        // system resolves from the nearest marked ancestor — so the subtree is
+        // kept downloaded without a row of its own saying so, and a descendant
+        // the user pinned separately keeps its own mark when this one is
+        // released. Each descendant is still stamped with a new metadata
+        // generation, because the policy it resolves to has changed and the
+        // system only re-reads an item whose version moved.
+        for var descendant
+          in try IndexEntryRecord.filter(Self.under(record.pathNormalized)).fetchAll(db)
+        {
           descendant.metaGeneration += 1
           try descendant.save(db)
           affected.append(descendant.dbxID)

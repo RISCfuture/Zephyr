@@ -107,8 +107,15 @@ public actor ProviderAdapter {
     let children = try await recordingSyncErrors(at: recordingPath) {
       try await bringIndexCurrentIfIncomplete()
       let path = try await containerPath(of: container)
+      let kept = try await store.keptDownloadedPaths()
       return try await store.children(of: path)
-        .map { ProviderItem(record: $0, parentIdentifier: container) }
+        .map { child in
+          ProviderItem(
+            record: child,
+            parentIdentifier: container,
+            keptByAncestor: kept.contains { $0.contains(child.pathNormalized) }
+          )
+        }
     }
     count = children.count
     return children
@@ -408,7 +415,8 @@ public actor ProviderAdapter {
   func providerItem(for entry: IndexEntryRecord) async throws -> ProviderItem {
     ProviderItem(
       record: entry,
-      parentIdentifier: try await parentIdentifier(of: entry) ?? .rootContainer
+      parentIdentifier: try await parentIdentifier(of: entry) ?? .rootContainer,
+      keptByAncestor: try await isKeptByAncestor(entry)
     )
   }
 
@@ -416,7 +424,17 @@ public actor ProviderAdapter {
   /// reporting changes skip such items rather than misparent them at root.
   func resolvableProviderItem(for entry: IndexEntryRecord) async throws -> ProviderItem? {
     guard let parent = try await parentIdentifier(of: entry) else { return nil }
-    return ProviderItem(record: entry, parentIdentifier: parent)
+    return ProviderItem(
+      record: entry,
+      parentIdentifier: parent,
+      keptByAncestor: try await isKeptByAncestor(entry)
+    )
+  }
+
+  /// Whether a folder above the entry is kept downloaded, which keeps the
+  /// entry downloaded too even though it carries no mark of its own.
+  private func isKeptByAncestor(_ entry: IndexEntryRecord) async throws -> Bool {
+    try await store.keptDownloadedPaths().contains { $0.contains(entry.pathNormalized) }
   }
 
   private func parentIdentifier(

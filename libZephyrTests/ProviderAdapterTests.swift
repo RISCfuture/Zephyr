@@ -1506,6 +1506,42 @@ struct ProviderAdapterTests {
     #expect(entry.ignored == false)
   }
 
+  @Test
+  func `a child of a kept folder reads as kept without carrying the mark`() async throws {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try await store.applyDeltaPage(
+      [
+        .upsert(try folderRecord(id: "id:box001", path: "/Box")),
+        .upsert(try fileRecord(id: "id:boxa01", path: "/Box/a.txt")),
+        .upsert(try fileRecord(id: "id:out001", path: "/outside.txt"))
+      ],
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    try await store.markInitialIndexComplete()
+    _ = try await store.setKeepDownloadedState(
+      true,
+      forID: try DropboxFileIdentifier(validating: "id:box001")
+    )
+    let (_, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
+
+    let child = try await adapter.item(for: NSFileProviderItemIdentifier("id:boxa01"))
+    let folder = try await adapter.item(for: NSFileProviderItemIdentifier("id:box001"))
+    let outside = try await adapter.item(for: NSFileProviderItemIdentifier("id:out001"))
+
+    // The child is kept, so Finder must not offer to keep it; only the folder
+    // the user chose offers to stop.
+    #expect(child.userInfo?["keepDownloaded"] as? Bool == true)
+    #expect(child.userInfo?["keepDownloadedRoot"] as? Bool == false)
+    #expect(folder.userInfo?["keepDownloaded"] as? Bool == true)
+    #expect(folder.userInfo?["keepDownloadedRoot"] as? Bool == true)
+    #expect(outside.userInfo?["keepDownloaded"] as? Bool == false)
+    // The policy stays the item's own business: the system resolves
+    // `.inherited` from the folder rather than the index restating it.
+    #expect(child.contentPolicy == .inherited)
+  }
+
   // MARK: Fixtures
 
   /// Every identifier the working set enumerates, across all its pages.
@@ -1526,9 +1562,14 @@ struct ProviderAdapterTests {
   ) async -> (MockTransport, ProviderAdapter) {
     let transport = MockTransport()
     let client = await makeLinkedClient(transport: transport)
+    // The adapter sweeps its scratch directory clean on first use, so it gets one
+    // of its own: handed the directory that holds index.sqlite, it deletes the
+    // database the test is still reading.
+    let scratch = scratchDirectory.appendingPathComponent("provider-scratch")
+    try? FileManager.default.createDirectory(at: scratch, withIntermediateDirectories: true)
     return (
       transport,
-      ProviderAdapter(store: store, client: client, scratchDirectory: scratchDirectory)
+      ProviderAdapter(store: store, client: client, scratchDirectory: scratch)
     )
   }
 }
