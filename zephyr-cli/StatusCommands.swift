@@ -339,9 +339,10 @@ struct RebuildIndexCommand: AsyncParsableCommand {
     commandName: "rebuild-index",
     abstract: "Drop and rebuild the sync index from the current remote state.",
     discussion: """
-      Finder tags, favorite ranks, last-used dates, extended attributes, and the excluded-item \
-      marks survive a rebuild. The record of synced changes does not: Dropbox’s change feed never \
-      replays an event it has already delivered, so “zephyr history” starts over empty.
+      Finder tags, favorite ranks, last-used dates, extended attributes, and the marks for \
+      excluded and kept-downloaded items all survive a rebuild. The record of synced changes does \
+      not: Dropbox’s change feed never replays an event it has already delivered, so “zephyr \
+      history” starts over empty.
       """
   )
 
