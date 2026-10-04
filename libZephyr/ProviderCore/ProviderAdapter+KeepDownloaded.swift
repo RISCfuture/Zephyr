@@ -25,17 +25,20 @@ extension ProviderAdapter {
       throw NSFileProviderError(.noSuchItem)
     }
     guard !entry.keepDownloaded else { return try await freshItem(for: id) }
+    var pinning = id
     if entry.ignored {
       // Puts the contents back on Dropbox before the index stops calling the
       // item ignored, so the two sides never disagree about whether a remote
-      // copy exists.
+      // copy exists. What comes back carries the identifier Dropbox minted
+      // for the re-created copy, and that is the item the pin belongs to.
       _ = try await resumeSync(identifier)
+      pinning = try await currentIdentifier(at: entry.pathNormalized, otherwise: id)
     }
-    guard let (_, affected) = try await store.setKeepDownloadedState(true, forID: id) else {
+    guard let (_, affected) = try await store.setKeepDownloadedState(true, forID: pinning) else {
       throw NSFileProviderError(.noSuchItem)
     }
     await recordLocalChangeGeneration(updatedIDs: affected)
-    return try await freshItem(for: id)
+    return try await freshItem(for: pinning)
   }
 
   /**
