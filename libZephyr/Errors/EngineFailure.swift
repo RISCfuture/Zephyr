@@ -167,7 +167,7 @@ public enum NetworkCostRefusal: String, Sendable, Equatable, Codable {
    refused. It states the same rule the bulk transport's sessions are built
    from, and has to keep stating it: Low Data Mode is an instruction and is
    refused unconditionally, while an expensive path is a reading the user may
-   overrule. See ``HTTPTransport/Traffic/bulk(_:)``.
+   overrule. See ``URLSessionTransport/Traffic/bulk(_:)``.
 
    - Parameters:
      - conditions: What the Mac's path is and what it costs.
