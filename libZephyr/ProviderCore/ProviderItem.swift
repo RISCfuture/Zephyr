@@ -60,6 +60,7 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
   private let storedExtendedAttributes: [String: Data]?
   private let storedIgnored: Bool
   private let storedKeepDownloaded: Bool
+  private let storedKeptByAncestor: Bool
   private let isRoot: Bool
 
   /// The stable identifier of this item — the Dropbox file identifier's raw string.
@@ -127,7 +128,8 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
   public var userInfo: [AnyHashable: Any]? {
     [
       "ignored": storedIgnored,
-      "keepDownloaded": storedKeepDownloaded,
+      "keepDownloaded": storedKeepDownloaded || storedKeptByAncestor,
+      "keepDownloadedRoot": storedKeepDownloaded,
       "isFile": itemType == .file
     ]
   }
@@ -137,10 +139,11 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
 
    A pinned item is downloaded before anything reads it, has remote updates
    downloaded as they arrive, and is spared eviction under disk pressure.
-   Everything else inherits its containing folder's policy, which is how a
-   pinned folder pulls down a subtree: the index propagates the pin to every
-   descendant, and an item later moved in inherits the folder's policy and is
-   scheduled for download.
+   Everything else inherits, which is how a pinned folder pulls down a
+   subtree: only the folder carries the mark, and the system resolves
+   `.inherited` from the nearest ancestor that states a policy — so a
+   descendant is kept without a mark of its own, whether it was there when the
+   folder was pinned or arrived afterwards.
    */
   public var contentPolicy: NSFileProviderContentPolicy {
     storedKeepDownloaded ? .downloadEagerlyAndKeepDownloaded : .inherited
@@ -169,8 +172,16 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
    - Parameters:
      - record: The index row to present.
      - parentIdentifier: The identifier of the containing item, already resolved by the caller.
+     - keptByAncestor: Whether a folder above this item is kept downloaded, which keeps this
+       item downloaded too. Only ``userInfo`` reads it: the Finder actions ask whether an item
+       is kept at all, while ``contentPolicy`` answers for this item alone and lets the system
+       do the resolving.
    */
-  public init(record: IndexEntryRecord, parentIdentifier: NSFileProviderItemIdentifier) {
+  public init(
+    record: IndexEntryRecord,
+    parentIdentifier: NSFileProviderItemIdentifier,
+    keptByAncestor: Bool = false
+  ) {
     identifierRawValue = record.dbxID.rawValue
     parentIdentifierRawValue = parentIdentifier.rawValue
     itemType = record.itemType
@@ -186,6 +197,7 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
     storedExtendedAttributes = record.xattrs
     storedIgnored = record.ignored
     storedKeepDownloaded = record.keepDownloaded
+    storedKeptByAncestor = keptByAncestor
     isRoot = false
   }
 
@@ -204,6 +216,7 @@ public final class ProviderItem: NSObject, NSFileProviderItemDecorating, Sendabl
     storedLastUsedDate = nil
     storedExtendedAttributes = nil
     storedIgnored = false
+    storedKeptByAncestor = false
     storedKeepDownloaded = false
     isRoot = true
   }
