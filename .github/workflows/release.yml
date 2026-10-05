@@ -30,7 +30,7 @@ concurrency:
 
 jobs:
   release:
-    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.0.0
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.0
     with:
       # The image the release runs on. GitHub names its macOS images after the major Xcode version
       # they carry rather than the OS they run.
