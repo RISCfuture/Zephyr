@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "fastlane", "~> 2.237"
+gem "fastlane"
 
 # Default gems that Ruby 4 no longer bundles, but fastlane's dependencies still expect.
 gem "abbrev", "~> 0.1.2"
