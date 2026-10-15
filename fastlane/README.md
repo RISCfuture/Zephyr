@@ -87,6 +87,22 @@ Regenerate the site's and the App Store listing's screenshots from the UI test h
 
 Replace the App Store listing's screenshots with the captured set
 
+### mac upload_metadata
+
+```sh
+[bundle exec] fastlane mac upload_metadata
+```
+
+Upload fastlane/metadata to the version open for editing
+
+### mac download_metadata
+
+```sh
+[bundle exec] fastlane mac download_metadata
+```
+
+Download the live listing into fastlane/metadata
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
