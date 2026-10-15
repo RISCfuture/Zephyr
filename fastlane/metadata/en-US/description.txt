@@ -1,0 +1,25 @@
+Your Dropbox, in Finder, with each file downloaded only when you open it. Nothing is mirrored, so a terabyte account costs no local disk.
+
+Zephyr is an independent, open-source client written in Swift on Apple's File Provider framework, so the Finder, Quick Look, the share sheet, and the Open and Save dialogs treat Dropbox files the way they treat local ones. There is no watched folder and no background scan.
+
+FEATURES
+
+• Link several Dropbox accounts at once. Each gets its own place in the Finder sidebar and its own sync index.
+• Two-way sync over Dropbox's change feed: a file edited on another machine turns up in seconds, and what you save goes back the same way.
+• Transfers are checked against Dropbox's content hash, and a large upload interrupted partway resumes instead of starting over.
+• The Finder shows real image thumbnails for pictures you have never downloaded.
+• Browse a file's recent revisions from the Finder and put an older one back. Renames and moves are followed, so a rename doesn't end a file's history.
+• Keep a folder or a file downloaded on this Mac. It is fetched right away, stays current as it changes on Dropbox, and is never evicted to free up space.
+• Delete something from Dropbox but keep it on this Mac, and put it back later, straight from the Finder. Exclusions use com.dropbox.ignored, the same extended attribute the official client uses, so a file excluded in one client stays excluded in the other.
+• Send files to Dropbox from any app's Share menu, up to 20 at a time, into any folder you choose.
+• Six Shortcuts actions: pause syncing, snooze notifications, check sync status, upload a file, get a share link, and restore an earlier revision. Three of them work from Spotlight and Siri with no setup, and syncing can be paused from Control Center.
+• Upload and download limits from 250 kB/s to 100 MB/s or unlimited, plus a separate cap for metered connections, so a laptop on a hotspot doesn't walk your whole Dropbox unasked.
+• Four notification levels, from every file change down to none at all, and a snooze for 30 minutes, an hour, or eight hours. Everything held back arrives when the snooze ends.
+• A menu bar panel for current activity, a desktop widget for status, and notifications when something needs attention.
+• Anything that could not sync is collected in one window that says what failed and why.
+• When Dropbox invalidates the sync cursor, Zephyr re-lists the account on its own. Your Finder tags, favorites, exclusions, and kept-downloaded items come through it intact.
+• Works with Dropbox Business team spaces, and follows the change when you join or leave a team.
+
+Requires macOS 27 or later.
+
+Zephyr is free software under the MIT license; the full source is on GitHub. Zephyr is not affiliated with, endorsed by, or sponsored by Dropbox, Inc. It is an independent client built against Dropbox's public HTTP API. Dropbox is a trademark of Dropbox, Inc.

@@ -1,0 +1,1 @@
+New: keep any folder or file downloaded on this Mac. It's fetched right away, stays current as it changes on Dropbox, and is never evicted to free up space.

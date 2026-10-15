@@ -164,6 +164,17 @@ ANIMATED_SCREENSHOTS = %w[setup].freeze
 # wrong for a page whose download button points at the other edition.
 APP_STORE_SCREENSHOTS = %w[menu-bar-panel accounts setup settings].freeze
 
+# The listing text deliver uploads and downloads, a folder per locale.
+METADATA_PATH = File.expand_path("metadata", __dir__)
+
+# Removes what deliver's metadata download writes but the repository doesn't keep: CHANGELOG.md is
+# the source of the release notes, the review contact holds personal details, and the app has no
+# Apple TV listing.
+def remove_unversioned_metadata
+  FileUtils.rm_f(Dir.glob(File.join(METADATA_PATH, "*", "{release_notes,apple_tv_privacy_policy}.txt")))
+  FileUtils.rm_rf(Dir.glob(File.join(METADATA_PATH, "{review_information,trade_representative_contact_information}")))
+end
+
 # Signing credentials live in a private repository, everything in it encrypted under one
 # MATCH_PASSWORD: the signing certificates (managed by _match_) and the App Store Connect API key
 # (decrypted by that repository's own `bin/api-key`). Neither is ever written to this working tree.
@@ -623,7 +634,7 @@ platform :mac do
     ensure_api_key
 
     # Screenshots alone: the binary is the release lanes' business, and the listing's text is
-    # written by Scripts/push-app-store-metadata.rb from the markdown that holds it.
+    # upload_metadata's.
     # `overwrite_screenshots` clears the version's existing set before this run's is sent, which is
     # what keeps one run from stacking another copy of the same four images onto the last run's.
     upload_to_app_store(
@@ -640,6 +651,40 @@ platform :mac do
     )
 
     prune_duplicate_screenshots
+  end
+
+  desc "Upload fastlane/metadata to the version open for editing"
+  lane :upload_metadata do
+    ensure_api_key
+    remove_unversioned_metadata
+    upload_to_app_store(
+      app_identifier:             APP_IDENTIFIER,
+      platform:                   "osx",
+      metadata_path:              METADATA_PATH,
+      skip_binary_upload:         true,
+      skip_screenshots:           true,
+      skip_app_version_update:    true,
+      force:                      true,
+      run_precheck_before_submit: false
+    )
+  end
+
+  desc "Download the live listing into fastlane/metadata"
+  lane :download_metadata do
+    ensure_api_key
+    require "deliver"
+    require "deliver/setup"
+
+    app = Spaceship::ConnectAPI::App.find(APP_IDENTIFIER)
+    version = app.get_live_app_store_version(platform: Spaceship::ConnectAPI::Platform::MAC_OS)
+    UI.user_error!("#{APP_IDENTIFIER} has no live macOS version to download.") unless version
+
+    deliver_options = FastlaneCore::Configuration.create(Deliver::Options.available_options,
+                                                         app_identifier:   APP_IDENTIFIER,
+                                                         platform:         "osx",
+                                                         use_live_version: true)
+    Deliver::Setup.new.generate_metadata_files(app, version, METADATA_PATH, deliver_options)
+    remove_unversioned_metadata
   end
 
   # Deletes the second copy of every screenshot, which `upload_to_app_store` leaves behind roughly
@@ -925,9 +970,8 @@ platform :mac do
     )
   end
 
-  # Uploads the archived App Store build. The listing's text is maintained by hand in App Store
-  # Connect and its screenshots come from the `screenshots` lane, so a release carries neither; the
-  # build waits there to be attached to a version and submitted.
+  # Uploads the archived App Store build. The listing's text and screenshots have lanes of their own,
+  # so a release carries neither; the build waits there to be attached to a version and submitted.
   private_lane :upload_store_build do
     upload_to_app_store(
       app_identifier:             APP_IDENTIFIER,
