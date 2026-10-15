@@ -168,10 +168,10 @@ copy won before assuming the build is at fault.
 ## Screenshots
 
 The book's images are taken from the running app, not captured by hand.
-`bundle exec fastlane mac screenshots` drives `ScreenshotUITests` and
-`Scripts/export-screenshots.sh` writes each still into the site's images, the
-App Store's, and the book's — one capture run for all three, so a page in the
-book can never illustrate an older build than the site does. Commit the images
+`bundle exec fastlane mac site_screenshots` drives `ScreenshotUITests` and
+`Scripts/export-screenshots.sh` writes each still into the site's images and
+the book's — one capture run for both, so a page in the book can never
+illustrate an older build than the site does. Commit the images
 with the article changes.
 
 The lane **owns** `Help/Zephyr.help/Contents/Resources/en.lproj/images` and

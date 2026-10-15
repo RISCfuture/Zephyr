@@ -5,9 +5,9 @@ import XCUITestKit
  Photographs the menu-bar panel in each of the states it can be in.
 
  A class of its own, apart from ``ScreenshotUITests``, and deliberately so.
- That suite's captures are published — `fastlane screenshots` names it with
- `-only-testing:`, and `Scripts/export-screenshots.sh` owns the site's and the
- help book's image directories outright, filing whatever attachments it finds
+ That suite's captures are published — `fastlane site_screenshots` names it
+ with `-only-testing:`, and `Scripts/export-screenshots.sh` owns the site's and
+ the help book's image directories outright, filing whatever attachments it finds
  into them. An attachment added there is a picture shipped inside every app
  bundle and served from the site, whether or not a page ever embeds it. These
  are for reading a change by, so they are taken where the export cannot reach

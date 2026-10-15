@@ -323,6 +323,11 @@ extension XCTestCase {
     return sampler.latest
   }
 
+  /// Waits until `region` of the screen stops changing, failing the test if it never does.
+  func waitForScreenToSettle(within region: CGRect) {
+    _ = waitForStableScreenImage(within: region)
+  }
+
   /**
    Lets `interval` pass.
 
@@ -577,4 +582,22 @@ extension NSScreen {
       height: visibleFrame.height * scale
     )
   }
+}
+
+/// The windows every capture run pins to fixed sizes.
+enum CapturedWindows {
+  /**
+   The content sizes the captured windows are pinned to, by title.
+
+   Pinned rather than left to each scene's `defaultSize`, which loses to
+   whatever frame the window was last dragged to on the machine the captures
+   come from. The heights are deliberately shorter than the seeded content
+   needs: both windows resize to their content's minimum, so asking for less
+   than that yields the tightest window the app will draw rather than one
+   padded out with the empty space a `defaultSize` leaves.
+   */
+  static let sizes = [
+    "Zephyr": CGSize(width: 560, height: 160),
+    "Sync Issues": CGSize(width: 560, height: 160)
+  ]
 }
