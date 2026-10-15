@@ -1,0 +1,88 @@
+/*
+  Zephyr's look for promokit renders: the site's hero panel — the app icon's three blues, its two
+  gusts — under a headline set like the site's section headings, in white.
+
+  Mac stills arrive as windows over transparency, each with its own corners and system shadow, so
+  nothing here clips or shadows a window; it only places and sizes them. A canvas is 2560×1600, so
+  1cqw is 25.6px and 1cqh is 16px.
+*/
+
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("../docs/assets/fonts/schibsted-grotesk.woff2") format("woff2-variations");
+  font-weight: 400 900;
+}
+
+.promo-root {
+  --deep: #002a92;
+  --action: #0b57e8;
+  --sky: #2b98fd;
+  --display: "Schibsted Grotesk", sans-serif;
+
+  background:
+    url("assets/weather.svg") center / cover no-repeat,
+    linear-gradient(112deg, var(--deep) 0%, var(--action) 52%, var(--sky) 100%);
+}
+
+.promo-screenshot {
+  container-type: size;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.promo-headline {
+  max-width: 82cqw;
+  margin: 5cqh 0 0;
+  font-family: var(--display);
+  font-size: 4.4cqw;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  text-align: center;
+  text-wrap: balance;
+  color: #ffffff;
+}
+
+/* The window sits in the band under the headline, centred in it. */
+[data-layout="mac"] .promo-window {
+  position: absolute;
+  inset: 16cqh 0 2cqh;
+  align-items: center;
+  max-width: none;
+}
+
+[data-layout="mac"] .promo-screen {
+  flex: none;
+  max-width: 94cqw;
+  max-height: 100%;
+}
+
+/* Each surface is sized for the canvas rather than shown at its own size: Zephyr's windows are
+   small, and at 1:1 they read as lost on a 2560-pixel canvas. */
+[data-theme="photo"] .promo-screen { width: 94cqw; }
+[data-theme="window"] .promo-screen { width: 74cqw; }
+[data-theme="tall"] .promo-screen { height: 100%; }
+[data-theme="panel"] .promo-screen { height: 100%; }
+[data-theme="widget"] .promo-screen { width: 82cqw; }
+
+/* The menu-bar panel is photographed as it lies on screen, without the window's own shadow, so it
+   is given its corners and one here. */
+[data-theme="panel"] .promo-window {
+  filter: drop-shadow(0 1.4cqh 2.4cqh rgb(0 17 58 / 45%));
+}
+
+[data-theme="panel"] .promo-screen {
+  clip-path: inset(0 round 4.7% / 4.8%);
+}
+
+/* A widget's tile is nearly clear, as WidgetKit draws it over a desktop's glass. This is that glass,
+   drawn in the still's own pixels — the 728×340 tile 48 px in and 112 px down a 824×500 capture — so
+   it stays under the tile at any size. */
+[data-theme="widget"] .promo-screen {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 824 500' preserveAspectRatio='none'%3E%3Crect x='48' y='112' width='728' height='340' rx='48' fill='white' fill-opacity='0.72'/%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat;
+}
+
+[data-theme="widget"] .promo-window {
+  filter: drop-shadow(0 1.2cqh 2.2cqh rgb(0 17 58 / 35%));
+}

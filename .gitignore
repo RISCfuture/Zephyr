@@ -17,10 +17,6 @@ fastlane/.env
 fastlane/Preview.html
 *.dmg
 
-# App Store screenshots, staged for `deliver` by the screenshots lane. Regenerated from the UI test
-# harness; only the site's copies under docs/assets/screenshots are committed.
-fastlane/screenshots/
-
 # Decrypted App Store Connect API key, written here by the certificates repo's bin/api-key.
 asc_api_key.json
 *.p8
@@ -44,3 +40,6 @@ Help/**/*.cshelpindex
 # state and asset-upload cache.
 node_modules/
 .wrangler/
+
+# promokit: its takes, stills, renders and derived data.
+.build/

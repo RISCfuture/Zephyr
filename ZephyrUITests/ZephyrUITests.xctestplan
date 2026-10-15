@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "9441C410-2F1F-433C-849A-A893C18FBCDF",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Zephyr.xcodeproj",
+        "identifier" : "01EFF3713038864A0082969B",
+        "name" : "ZephyrUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -180,7 +180,8 @@
     }
 
     /**
-     Puts every window the app has open in front of the backdrop.
+     Puts the backdrop over every other app, and every window the app has open
+     in front of it.
 
      `orderBack(nil)` on the backdrop is the obvious way to say that and does
      not work here: Zephyr is an agent app (`LSUIElement`), and ordering a
@@ -193,10 +194,15 @@
      Run again whenever the app is activated, rather than once as the backdrop
      goes up. A window that takes key orders itself in front and needs none of
      this; the design gallery's does not, because a plain window cannot become
-     key, and without this it spends the whole launch behind the backdrop.
+     key, and without this it spends the whole launch behind the backdrop. Nor
+     does the backdrop stay above other apps on its own: closing the accounts
+     window, the last an agent app has open, hands activation to whichever app
+     is next, and its windows come forward over the backdrop — where the menu
+     bar panel, opened next, would be photographed over them.
      */
     private static func raiseWindowsAboveBackdrop() {
       guard let backdrop else { return }
+      backdrop.orderFrontRegardless()
       for window in NSApplication.shared.windows
       where window !== backdrop && window.isVisible && window.level == .normal {
         window.orderFront(nil)

@@ -117,11 +117,6 @@ HELP_SCREENSHOTS_PATH = File.join(HELP_PAGES_PATH, "images")
 SITE_IMAGE_PREFIX = "assets/screenshots/"
 HELP_IMAGE_PREFIX = "images/"
 
-# Where the App Store listing's screenshots are staged. `deliver` reads one directory per locale
-# from here, and Zephyr is localized into English alone.
-APP_STORE_SCREENSHOTS_PATH = File.join(REPO_ROOT, "fastlane", "screenshots")
-APP_STORE_SCREENSHOTS_LOCALE = "en-US"
-
 # Every still the suite takes, by slug. The export script files whatever the test run happened
 # to attach; this list is what is *required*, which is the check that matters — a capture that
 # quietly stopped happening, because an accessibility identifier moved or a test method was renamed,
@@ -153,16 +148,119 @@ SCREENSHOTS = %w[
 # who has asked for reduced motion — so both are checked for below.
 ANIMATED_SCREENSHOTS = %w[setup].freeze
 
-# The subset the App Store listing shows, in the order it shows them — the export numbers the files
-# accordingly, because App Store Connect orders a screenshot set by file name. Sync issues are left
-# out: a listing's first impression should not be a window full of things that went wrong.
+# promokit's folder, and the configuration and storyboard it captures and renders from.
+PROMO_PATH = File.expand_path("../promo", __dir__)
+PROMO_CONFIG = JSON.parse(File.read(File.join(PROMO_PATH, "promokit.json")))
+PROMO_STORYBOARD = JSON.parse(File.read(File.join(PROMO_PATH, "storyboard.json")))
+
+# Where promokit keeps the stills it captures, a folder per locale and device.
+PROMO_STILLS_PATH = File.expand_path("../.build/promo/stills", __dir__)
+
+# The folder `promokit render` writes the Mac screenshots into and deliver uploads from, a folder
+# per locale.
+MAC_SCREENSHOTS_PATH = File.expand_path("screenshots_mac", __dir__)
+
+# Runs XCUIPromoKit's `promokit` from promo/.
+def promokit(*)
+  sh("pnpm", "--dir", PROMO_PATH, "promokit", *)
+end
+
+# The capture lanes drive the Mac's own screen, which a CI runner can't stand in for.
+def refuse_ci
+  UI.user_error!("Capturing App Store media needs a capture-ready Mac; it doesn't run on CI.") if Helper.ci?
+end
+
+# The screenshots `promokit render` makes for one locale and device: each of the storyboard's
+# screenshots whose still the test captured there, in order.
+def expected_screenshots(locale, device)
+  stills = File.join(PROMO_STILLS_PATH, locale, device)
+  UI.user_error!("No #{device} stills for #{locale} in #{stills}; run the capture lane first.") unless Dir.exist?(stills)
+
+  PROMO_STORYBOARD.fetch("screenshots", []).each_with_index.filter_map do |screenshot, index|
+    next unless screenshot["file"] || File.exist?(File.join(stills, "#{screenshot["still"]}.png"))
+
+    "#{device}-#{index.to_s.rjust(2, "0")}-#{screenshot["id"]}.png"
+  end
+end
+
+# Refuses a rendered screenshot folder that is not exactly what the storyboard makes of the
+# captured stills. An upload syncs the remote sets to it, so a missing file would clear a slot on
+# the product page and a stray one would publish whatever it happens to be.
+def verify_screenshot_folder(directory, devices)
+  PROMO_CONFIG.fetch("locales", %w[en-US]).each do |locale|
+    folder = File.join(directory, locale)
+    expected = devices.flat_map { |device| expected_screenshots(locale, device) }.sort
+    found = Dir.exist?(folder) ? Dir.children(folder).grep(/\.png\z/).sort : []
+    next if found == expected
+
+    UI.user_error!("#{folder} holds #{found.join(", ").then { it.empty? ? "nothing" : it }}, " \
+                   "not #{expected.join(", ")}. Run the capture lane again.")
+  end
+end
+
+# `upload_to_app_store` syncs every slot it uploads into, so an empty directory would strip the
+# screenshots from the product page rather than leave the ones already there alone.
+def verify_screenshots_present(directory, lane:)
+  return if Dir.glob(File.join(directory, "*", "*.png")).any?
+
+  UI.user_error!("No screenshots under #{directory}; run the #{lane} lane first. Uploading an " \
+                 "empty set would clear the screenshots already on the App Store.")
+end
+
+# Every screenshot set on the version currently open for editing.
+def editable_screenshot_sets(platform)
+  app = Spaceship::ConnectAPI::App.find(APP_IDENTIFIER)
+  version = app.get_edit_app_store_version(platform: platform)
+  UI.user_error!("No editable #{platform} version of #{APP_IDENTIFIER} to hold screenshots.") unless version
+
+  version.get_app_store_version_localizations.flat_map(&:get_app_screenshot_sets)
+end
+
+# Empties those sets before an upload refills them.
 #
-# Settings is here and not on the site, which shows the other four. The captures are of the App
-# Store edition, because that is the app the UI test target hosts, and Settings is the one window
-# where the two editions differ — this one says the store keeps Zephyr up to date and that the
-# command-line tool comes with the download. That is exactly right for the listing and exactly
-# wrong for a page whose download button points at the other edition.
-APP_STORE_SCREENSHOTS = %w[menu-bar-panel accounts setup settings].freeze
+# A set holds at most ten images, and deliver's sync uploads before it deletes, so a set already at
+# that ceiling has no room to work in and the sync fails outright. Clearing it first also spares the
+# sync from reconciling screenshots that are about to be replaced anyway.
+#
+# The count is re-read from App Store Connect rather than inferred from the deletions: deliver's own
+# overwrite path checks the objects it already holds, which is why it reports having removed
+# screenshots that are still there.
+def purge_remote_screenshots(platform)
+  editable_screenshot_sets(platform).each do |set|
+    set.app_screenshots.each(&:delete!)
+  end
+
+  remaining = editable_screenshot_sets(platform).sum { |set| set.app_screenshots.count }
+  return if remaining.zero?
+
+  UI.user_error!("#{remaining} screenshot(s) are still on App Store Connect after being deleted. " \
+                 "Uploading now would leave the set a mix of old and new.")
+end
+
+# Syncs one platform's rendered screenshots to the version open for editing, after `verify` and a
+# purge.
+def upload_rendered_screenshots(directory, platform:, lane:)
+  verify_screenshots_present(directory, lane: lane)
+  verify
+  ensure_api_key
+  purge_remote_screenshots(Spaceship::ConnectAPI::Platform.map(platform))
+  # deliver ships screenshot syncing as a beta and refuses `sync_screenshots` without this opt-in.
+  ENV["FASTLANE_ENABLE_BETA_DELIVER_SYNC_SCREENSHOTS"] = "true"
+  upload_to_app_store(
+    app_identifier:                       APP_IDENTIFIER,
+    platform:                             platform,
+    screenshots_path:                     directory,
+    # `overwrite_screenshots` verifies its deletions against the objects it already held rather
+    # than App Store Connect; syncing reconciles against what is actually there.
+    sync_screenshots:                     true,
+    skip_binary_upload:                   true,
+    skip_metadata:                        true,
+    languages:                            PROMO_CONFIG.fetch("locales", %w[en-US]),
+    force:                                true,
+    run_precheck_before_submit:           false,
+    ignore_language_directory_validation: true
+  )
+end
 
 # The listing text deliver uploads and downloads, a folder per locale.
 METADATA_PATH = File.expand_path("metadata", __dir__)
@@ -553,8 +651,8 @@ platform :mac do
     end
   end
 
-  desc "Regenerate the site's and the App Store listing's screenshots from the UI test harness"
-  lane :screenshots do
+  desc "Regenerate the site's and the help book's screenshots from the UI test harness"
+  lane :site_screenshots do
     # These images are a build product of the app, not artifacts someone captured once and then had
     # to remember to recapture — but that only holds while the machine taking them is pinned. A
     # hosted runner draws to a virtual display that is not 2×, so a CI regeneration would write a
@@ -616,41 +714,32 @@ platform :mac do
     end
 
     sh(File.join(REPO_ROOT, "Scripts", "export-screenshots.sh"), result_bundle,
-       SITE_SCREENSHOTS_PATH, app_store_locale_path,
-       HELP_SCREENSHOTS_PATH, *APP_STORE_SCREENSHOTS)
+       SITE_SCREENSHOTS_PATH, HELP_SCREENSHOTS_PATH)
 
     verify_screenshots
 
     published = (SCREENSHOTS.count + ANIMATED_SCREENSHOTS.count * 2) * 2
     UI.success("Wrote #{published} images to #{SITE_SCREENSHOTS_PATH} and the stills again to " \
-               "#{HELP_SCREENSHOTS_PATH} — commit them with the page changes. " \
-               "#{APP_STORE_SCREENSHOTS.count} are staged for the store; " \
-               "`fastlane mac upload_app_store_screenshots` sends them.")
+               "#{HELP_SCREENSHOTS_PATH} — commit them with the page changes.")
   end
 
-  desc "Replace the App Store listing's screenshots with the captured set"
-  lane :upload_app_store_screenshots do
-    verify_screenshots
-    ensure_api_key
+  desc "Capture the Mac windows and render the Mac App Store screenshots"
+  lane :mac_screenshots do
+    refuse_ci
+    promokit("mac-stills")
+    promokit("render", "--only", "screenshots")
+    verify
+  end
 
-    # Screenshots alone: the binary is the release lanes' business, and the listing's text is
-    # upload_metadata's.
-    # `overwrite_screenshots` clears the version's existing set before this run's is sent, which is
-    # what keeps one run from stacking another copy of the same four images onto the last run's.
-    upload_to_app_store(
-      app_identifier:             APP_IDENTIFIER,
-      platform:                   "osx",
-      skip_binary_upload:         true,
-      skip_metadata:              true,
-      skip_screenshots:           false,
-      screenshots_path:           APP_STORE_SCREENSHOTS_PATH,
-      overwrite_screenshots:      true,
-      submit_for_review:          false,
-      run_precheck_before_submit: false,
-      force:                      true
-    )
+  desc "Check the rendered media against Apple's rules and the screenshots against the storyboard"
+  lane :verify do
+    verify_screenshot_folder(MAC_SCREENSHOTS_PATH, %w[mac]) if Dir.exist?(MAC_SCREENSHOTS_PATH)
+    promokit("check")
+  end
 
-    prune_duplicate_screenshots
+  desc "Upload the rendered Mac screenshots to App Store Connect"
+  lane :upload_mac_screenshots do
+    upload_rendered_screenshots(MAC_SCREENSHOTS_PATH, platform: "osx", lane: "mac_screenshots")
   end
 
   desc "Upload fastlane/metadata to the version open for editing"
@@ -687,54 +776,8 @@ platform :mac do
     remove_unversioned_metadata
   end
 
-  # Deletes the second copy of every screenshot, which `upload_to_app_store` leaves behind roughly
-  # every other run.
-  #
-  # It is not `overwrite_screenshots` failing. Deliver uploads the set, then reads the version back
-  # to confirm each image arrived — and App Store Connect accepts an upload before it finishes
-  # processing it, so a read taken immediately after can report an image it already holds as
-  # "missing on App Store Connect". Deliver believes the read, calls the attempt failed, and retries
-  # the whole set. The second attempt's read comes late enough to succeed, so the run ends green
-  # having uploaded everything twice, and the listing carries eight screenshots where four were
-  # staged. Nothing in the log says so: the failure is announced, the retry is announced, and the
-  # success is announced.
-  #
-  # Retrying is right in general — an upload really can fail — so this does not try to talk deliver
-  # out of it. It reconciles afterwards instead, which is also correct when the set was already
-  # clean. Ordering survives: App Store Connect sorts a set by file name, the copies are identical,
-  # and the one kept is whichever the sort reaches first.
-  private_lane :prune_duplicate_screenshots do
-    version = editable_store_version
-    removed = 0
-
-    version.get_app_store_version_localizations.each do |localization|
-      localization.get_app_screenshot_sets.each do |set|
-        kept = Set.new
-        set.app_screenshots.sort_by(&:file_name).each do |screenshot|
-          next if kept.add?(screenshot.file_name)
-
-          screenshot.delete!
-          removed += 1
-        end
-      end
-    end
-
-    UI.important("Removed #{removed} duplicate screenshots left by the upload's retry.") if
-      removed.positive?
-  end
-
-  # The macOS version whose listing is still editable, for the spaceship calls that reach past what
-  # the deliver action exposes. `ensure_api_key` has to have run: it is what leaves a token behind
-  # for `Spaceship::ConnectAPI` to use.
-  def editable_store_version
-    app = Spaceship::ConnectAPI::App.find(APP_IDENTIFIER) ||
-          UI.user_error!("No app with the bundle identifier #{APP_IDENTIFIER} on this account.")
-    app.get_edit_app_store_version(platform: Spaceship::ConnectAPI::Platform::MAC_OS) ||
-      UI.user_error!("No editable macOS version, so there is no screenshot set to reconcile.")
-  end
-
   # Fails unless every published set is complete, agrees with itself, and agrees with the pages that
-  # embed it. The export maps whatever the run attached and owns all three directories outright; this
+  # embed it. The export maps whatever the run attached and owns both directories outright; this
   # is what says the run attached everything, that no half of an appearance pair is the odd size out,
   # that nothing is being published for nobody, and that every page states the size its capture
   # actually has.
@@ -770,19 +813,15 @@ platform :mac do
     file.sub(/(\.\w+)\z/, '-dark\1')
   end
 
-  def app_store_locale_path
-    File.join(APP_STORE_SCREENSHOTS_PATH, APP_STORE_SCREENSHOTS_LOCALE)
-  end
-
   # A capture that quietly stopped happening leaves the last good one in place, so absence is checked
   # first and is the only one of the four that needs no file read to find.
   def verify_captures_published
-    missing = required_capture_paths.reject { |path| File.exist?(path) } + unstaged_store_captures
+    missing = required_capture_paths.reject { |path| File.exist?(path) }
     return if missing.empty?
 
     UI.user_error!("No capture was published as: #{repo_paths(missing)}. Pages on the site and in " \
                    "the help book embed these by name, so a missing one is a broken image rather " \
-                   "than a page with one fewer picture. Rerun `fastlane mac screenshots`; if the " \
+                   "than a page with one fewer picture. Rerun `fastlane mac site_screenshots`; if the " \
                    "run keeps skipping one, the name it is filed under is the name the suite " \
                    "attaches it under in ZephyrUITests/ScreenshotUITests.swift.")
   end
@@ -793,18 +832,6 @@ platform :mac do
       appearances = files.flat_map { |file| [file, dark_twin(file)] }
       appearances.map { |file| File.join(directory, file) }
     end
-  end
-
-  # The store's copies are numbered by listing position, so the slug is all there is to match on —
-  # and a missing one is named with the number left as NN, since a file that was never written has
-  # no position to report.
-  def unstaged_store_captures
-    unstaged = APP_STORE_SCREENSHOTS.reject { |slug| staged_for_store?(slug) }
-    unstaged.map { |slug| File.join(app_store_locale_path, "NN-#{slug}.png") }
-  end
-
-  def staged_for_store?(slug)
-    Dir[File.join(app_store_locale_path, "*-#{slug}.png")].any?
   end
 
   # A page embeds an appearance pair as one <picture>: it writes a single width and height and swaps
@@ -924,7 +951,7 @@ platform :mac do
     width, height = `magick identify -format "%w %h" #{"#{path}[0]".shellescape}`.split.map(&:to_i)
     if width.nil? || height.nil?
       UI.user_error!("Nothing readable as an image at #{repo_path(path)}, which a page embeds or " \
-                     "the lane requires. Rerun `fastlane mac screenshots` to write the set again.")
+                     "the lane requires. Rerun `fastlane mac site_screenshots` to write the set again.")
     end
     [width, height]
   end

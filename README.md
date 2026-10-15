@@ -590,20 +590,22 @@ the whole story, and worth reading before editing a page.
 ## Screenshots
 
 Every picture on the marketing site and in the help book is a build product rather than
-something someone remembered to retake. `bundle exec fastlane screenshots` runs one UI
-test class against canned accounts — no keychain, no domain, no network — with the
+something someone remembered to retake. `bundle exec fastlane mac site_screenshots` runs
+one UI test class against canned accounts — no keychain, no domain, no network — with the
 process pinned to one appearance and a flat fill behind every window, and writes both
 appearances of every capture into `docs/assets/screenshots` and the help book's `images`
 directory. It refuses to run on CI: a hosted runner draws to a display that isn't 2×, and
 a soft half-size set looks wrong only once it has been published.
 
-The App Store set is captured by the same lane, but only staged by it: four of the slugs,
-light alone, each composited onto an opaque canvas in `fastlane/screenshots` and numbered
-in the order the listing shows them, because App Store Connect rejects the alpha channel
-a rounded window corner leaves behind and orders a set by file name. Pushing it is a
-separate lane, `bundle exec fastlane mac upload_app_store_screenshots`, and
-`fastlane/screenshots` is gitignored — so nothing in the repository says what the
-listing currently shows.
+The App Store listing's screenshots come from
+[XCUIPromoKit](https://github.com/RISCfuture/XCUIPromoKit) instead.
+`bundle exec fastlane mac mac_screenshots` runs `MacStoreScreenshots`, which photographs
+each listing surface in the light appearance, and `promokit render` captions them on the
+canvas `promo/brand.css` designs, in the order `promo/storyboard.json` gives, into
+`fastlane/screenshots_mac`. The Finder window that leads the listing is photographed by
+hand in the screenshot VM (`Scripts/screenshot-vm/run.sh`), and the storyboard names that
+file. `verify` checks the renders against the storyboard and Apple's rules, and
+`upload_mac_screenshots` replaces the listing's set with them.
 
 Settings is photographed twice out of the one window, in the one launch, with nothing
 scrolled or clicked between the two. `settings` is the whole of it, which is what the
@@ -649,7 +651,7 @@ in System Settings. Each needs a linked account, a registered domain, and the ap
 `/Applications`, because Finder reads a domain's actions from the bundle serving that
 domain. `Scripts/capture-system-shots.sh` drives those, and writes into
 `docs/assets/system` and a `system` directory beside the help book's images — kept apart
-from the lane because the export script empties all three of its own directories on every
+from the lane because the export script empties both of its own directories on every
 run. Nothing about those captures is reproducible, so nothing about them belongs in the
 lane.
 

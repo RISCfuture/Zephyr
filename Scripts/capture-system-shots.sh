@@ -4,7 +4,7 @@
 #
 #   Scripts/capture-system-shots.sh [--appearance light|dark|both] [--file <path>] [subject]…
 #
-# `fastlane screenshots` photographs surfaces Zephyr draws every pixel of, against a staged
+# `fastlane site_screenshots` photographs surfaces Zephyr draws every pixel of, against a staged
 # backdrop, in a process pinned to one appearance, from canned accounts that reach neither the
 # keychain nor the network. That is what makes those images a build product: run it twice and get
 # the same bytes.

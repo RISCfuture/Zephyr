@@ -1,0 +1,47 @@
+{
+  "$schema": "./node_modules/xcuipromokit/schema/storyboard.schema.json",
+  "screenshots": [
+    {
+      "id": "finder-window",
+      "file": "../docs/assets/system/finder-window.webp",
+      "caption": "finder-window",
+      "theme": "photo"
+    },
+    {
+      "id": "menu-bar-panel",
+      "still": "menu-bar-panel",
+      "caption": "menu-bar-panel",
+      "theme": "panel"
+    },
+    {
+      "id": "file-versions",
+      "still": "file-versions",
+      "caption": "file-versions",
+      "theme": "window"
+    },
+    {
+      "id": "accounts",
+      "still": "accounts",
+      "caption": "accounts",
+      "theme": "window"
+    },
+    {
+      "id": "share-upload",
+      "still": "share-upload",
+      "caption": "share-upload",
+      "theme": "window"
+    },
+    {
+      "id": "widget-medium",
+      "still": "widget-medium",
+      "caption": "widget-medium",
+      "theme": "widget"
+    },
+    {
+      "id": "settings",
+      "still": "settings",
+      "caption": "settings",
+      "theme": "tall"
+    }
+  ]
+}
