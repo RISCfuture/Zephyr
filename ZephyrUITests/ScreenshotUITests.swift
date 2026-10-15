@@ -2,12 +2,11 @@ import XCTest
 import XCUITestKit
 
 /**
- Captures the images the marketing site and the App Store listing ship, so they
- are a build product of the app they show rather than hand-made pictures that
- rot.
+ Captures the images the marketing site and the help book ship, so they are a
+ build product of the app they show rather than hand-made pictures that rot.
 
- Not part of an ordinary test run: `fastlane screenshots` names this class with
- `-only-testing:`, and CI skips it. The precondition below is the defence that
+ Not part of an ordinary test run: `fastlane site_screenshots` names this class
+ with `-only-testing:`, and CI skips it. The precondition below is the defence that
  survives an edit to either — a machine whose display, accent colour, or
  accessibility settings would change what is drawn skips the whole class rather
  than quietly publishing ten different images.
@@ -16,21 +15,6 @@ import XCUITestKit
  both and a light-only image is the one element on a dark page that doesn't.
  */
 final class ScreenshotUITests: XCTestCase {
-  /**
-   The content sizes the captured windows are pinned to, by title.
-
-   Pinned rather than left to each scene's `defaultSize`, which loses to
-   whatever frame the window was last dragged to on the machine the captures
-   come from. The heights are deliberately shorter than the seeded content
-   needs: both windows resize to their content's minimum, so asking for less
-   than that yields the tightest window the app will draw rather than one
-   padded out with the empty space a `defaultSize` leaves.
-   */
-  private static let windowSizes = [
-    "Zephyr": CGSize(width: 560, height: 160),
-    "Sync Issues": CGSize(width: 560, height: 160)
-  ]
-
   /// How many pages first-run setup walks through, which the animation is made
   /// of. Asserted rather than assumed: a page that stopped being reached would
   /// otherwise just shorten the animation, and nothing would say so.
@@ -85,13 +69,18 @@ final class ScreenshotUITests: XCTestCase {
    goes before the panel opens, and the panel is what Settings is opened from,
    since an agent app has no menu bar to open it from and a key equivalent
    needs some window in front to take it.
+
+   That launch is staged as `sending`: both accounts healthy, with changes on
+   their way out. The published panel is what a listing and a page lead with,
+   and the sample accounts' sync errors have a capture of their own.
    */
   @MainActor
   private func captureEverything(in appearance: Zephyr.Appearance) {
     let accounts = MainScreen.launch(
       sampleAccounts: true,
       appearance: appearance,
-      windowSizes: Self.windowSizes
+      windowSizes: CapturedWindows.sizes,
+      panelState: "sending"
     )
     captureAccounts(accounts, in: appearance)
     accounts.close()
@@ -136,7 +125,7 @@ final class ScreenshotUITests: XCTestCase {
   /// The sync-issues window, in a launch that presents it on its own.
   @MainActor
   private func captureSyncIssues(in appearance: Zephyr.Appearance) {
-    let issues = SyncIssuesScreen.launch(appearance: appearance, windowSizes: Self.windowSizes)
+    let issues = SyncIssuesScreen.launch(appearance: appearance, windowSizes: CapturedWindows.sizes)
     parkPointer(beside: issues.window)
     capture(slug("sync-issues", in: appearance), around: issues.window)
   }

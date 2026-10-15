@@ -1,0 +1,27 @@
+{
+  "configurations" : [
+    {
+      "id" : "B6542300-1849-4F89-BEC0-92B9B2E0892F",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "selectedTests" : [
+        "MacStoreScreenshots"
+      ],
+      "target" : {
+        "containerPath" : "container:Zephyr.xcodeproj",
+        "identifier" : "01EFF3713038864A0082969B",
+        "name" : "ZephyrUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

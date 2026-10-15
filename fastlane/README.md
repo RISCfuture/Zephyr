@@ -71,21 +71,37 @@ Refuse to start a release whose notes are missing, empty, or too long (CI)
 
 Write the release notes and attach the build to its version (CI)
 
-### mac screenshots
+### mac site_screenshots
 
 ```sh
-[bundle exec] fastlane mac screenshots
+[bundle exec] fastlane mac site_screenshots
 ```
 
-Regenerate the site's and the App Store listing's screenshots from the UI test harness
+Regenerate the site's and the help book's screenshots from the UI test harness
 
-### mac upload_app_store_screenshots
+### mac mac_screenshots
 
 ```sh
-[bundle exec] fastlane mac upload_app_store_screenshots
+[bundle exec] fastlane mac mac_screenshots
 ```
 
-Replace the App Store listing's screenshots with the captured set
+Capture the Mac windows and render the Mac App Store screenshots
+
+### mac verify
+
+```sh
+[bundle exec] fastlane mac verify
+```
+
+Check the rendered media against Apple's rules and the screenshots against the storyboard
+
+### mac upload_mac_screenshots
+
+```sh
+[bundle exec] fastlane mac upload_mac_screenshots
+```
+
+Upload the rendered Mac screenshots to App Store Connect
 
 ### mac upload_metadata
 

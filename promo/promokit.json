@@ -1,0 +1,22 @@
+{
+  "$schema": "./node_modules/xcuipromokit/schema/promokit.schema.json",
+  "app": "Zephyr",
+  "project": "../Zephyr.xcodeproj",
+  "scheme": "Zephyr UITests",
+  "testPlan": "Promo",
+  "locales": [
+    "en-US"
+  ],
+  "brand": {
+    "css": "brand.css",
+    "assets": [
+      "../docs/assets/fonts",
+      "assets"
+    ]
+  },
+  "mac": {
+    "test": "ZephyrUITests/MacStoreScreenshots/testCaptureStills",
+    "size": "2560x1600",
+    "capture": "window"
+  }
+}
