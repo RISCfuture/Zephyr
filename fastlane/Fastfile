@@ -1089,10 +1089,11 @@ platform :mac do
   # Builds, signs, and notarizes the installer package.
   #
   # `productsign` cannot sign a package onto itself, so the signature is written beside the archive
-  # and moved over it — leaving one path, the one make-pkg.sh named and the release attaches.
+  # and moved over it — leaving one path, the one make-pkg.sh named and the release attaches. The
+  # script prints that path last; `sh` folds the packaging tools' stderr in ahead of it.
   private_lane :package_installer do |options|
     pkg = sh(File.join(REPO_ROOT, "Scripts", "make-pkg.sh"),
-             options.fetch(:app_path), options.fetch(:version), OUTPUT_PATH).strip
+             options.fetch(:app_path), options.fetch(:version), OUTPUT_PATH).lines.last.strip
 
     signed = "#{pkg}.signed"
     FileUtils.rm_f(signed)
