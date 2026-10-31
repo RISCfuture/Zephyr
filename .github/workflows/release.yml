@@ -1,9 +1,13 @@
 name: Release
 
 # Pushing a version tag builds both editions: the App Store build is uploaded to App Store Connect,
-# and the downloadable build is notarized, packaged as an installer package, and published as a
-# GitHub release. Nothing here re-runs the tests: tag a commit CI has already
-# passed.
+# and the downloadable build is notarized, packaged as an installer package, published as a GitHub
+# release, and handed to the Homebrew tap. Nothing here re-runs the tests: tag a commit CI has
+# already passed.
+#
+# The project is the version source. A tag names the version it releases, and the run refuses it
+# unless both editions' MARKETING_VERSION matches and the commit is on main or a release/* branch;
+# the build number comes from App Store Connect.
 #
 # The App Store build's notes are written and the build attached to its version once Apple has
 # processed it, leaving only the submission by hand.
@@ -20,7 +24,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Marketing version to build and release.
+        description: Version to release, which must match the project's MARKETING_VERSION.
         required: true
         type: string
 
@@ -29,29 +33,48 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  release:
+  # The editions are released by two calls rather than one matrix, so the GitHub release waits on
+  # the installer package alone and not on App Store Connect processing the store build, which can
+  # take most of an hour and fail on its own account. Each call resolves the build number before
+  # either has uploaded anything, so both editions carry the same one.
+  store:
     uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.0
     with:
       # The image the release runs on. GitHub names its macOS images after the major Xcode version
       # they carry rather than the OS they run.
       runner: xcode-27
-      # Not a platform in the Apple sense — it is macOS. The reusable workflow runs the release
-      # lane once per entry, and `ci_release` reads each one as an edition name.
-      platforms: '["mas", "download"]'
+      # Not a platform in the Apple sense — it is macOS. The reusable workflow passes it through to
+      # the release lane verbatim, and `ci_release` reads it as an edition name.
+      platforms: '["mas"]'
       version: ${{ inputs.version || github.ref_name }}
       certificates-repo: RISCfuture/certificates
       # Before the build number is even resolved, on a runner with no credentials: a release that
-      # cannot succeed then costs seconds instead of the whole archive matrix. By the time the
-      # archives have run a build has reached App Store Connect, and neither that upload nor the
-      # tag can be taken back.
-      verify-lane: ci_verify_release_notes
-      # After every edition has uploaded. Writes the version's notes and attaches the build once
-      # Apple has processed it — a version cannot hold a build that is still processing, which is
-      # why this cannot run when the upload does.
+      # cannot succeed then costs seconds instead of the whole archive. By the time the archive has
+      # run a build has reached App Store Connect, and neither that upload nor the tag can be taken
+      # back.
+      verify-lane: ci_verify_release
+      # After the upload. Writes the version's notes and attaches the build once Apple has
+      # processed it — a version cannot hold a build that is still processing, which is why this
+      # cannot run when the upload does.
       finish-lane: ci_finish_release
-      # Both editions archive from the same sources with nothing to build from scratch first, so
-      # the default 60 is close; this leaves room for a slow notarization rather than losing the
-      # archive to a timeout.
+      # The default 60 is close for an archive with nothing to build from scratch first; this
+      # leaves room for a slow upload rather than losing the archive to a timeout.
+      timeout-minutes: 90
+    secrets:
+      certificates-token: ${{ secrets.CERTIFICATES_TOKEN }}
+      match-password: ${{ secrets.MATCH_PASSWORD }}
+      sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
+  download:
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.0
+    with:
+      runner: xcode-27
+      platforms: '["download"]'
+      version: ${{ inputs.version || github.ref_name }}
+      certificates-repo: RISCfuture/certificates
+      verify-lane: ci_verify_release
+      # Room for two notarizations, the app's and the package's, rather than losing the archive to
+      # a timeout.
       timeout-minutes: 90
     secrets:
       certificates-token: ${{ secrets.CERTIFICATES_TOKEN }}
@@ -60,7 +83,7 @@ jobs:
 
   publish:
     name: Publish GitHub release
-    needs: release
+    needs: download
     # Nothing here is Apple-specific: both artifacts arrive already built and notarized.
     runs-on: ubuntu-latest
     permissions:
@@ -113,3 +136,16 @@ jobs:
               --notes-file release-notes.md \
               "$pkg"
           fi
+
+      # Only once the release and its installer package are up: the tap's audit checks the cask's
+      # version against the latest GitHub release, and its URL against the asset. -f rather than -F,
+      # which would send the version as a number and turn 1.10 into 1.1.
+      - name: Bump the Homebrew cask
+        env:
+          GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          VERSION: ${{ inputs.version || github.ref_name }}
+        run: |
+          gh api repos/RISCfuture/homebrew-tap/dispatches \
+            -f event_type=cask-release \
+            -f 'client_payload[cask]=zephyr' \
+            -f "client_payload[version]=${VERSION}"

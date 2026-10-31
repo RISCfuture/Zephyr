@@ -2,9 +2,5 @@
 
 source "https://rubygems.org"
 
-gem "fastlane"
-
-# Default gems that Ruby 4 no longer bundles, but fastlane's dependencies still expect.
-gem "abbrev", "~> 0.1.2"
-gem "nkf", "~> 0.3.0"
-gem "ostruct", "~> 0.6.3"
+# Carries fastlane PRs #30442 and #30457 (creative asset uploads) until a fastlane release includes them.
+gem "fastlane", git: "https://github.com/RISCfuture/fastlane.git", branch: "creative-assets"

@@ -55,13 +55,13 @@ Archive one edition and ship it (CI)
 
 Resolve the next build number and write it where CI can read it
 
-### mac ci_verify_release_notes
+### mac ci_verify_release
 
 ```sh
-[bundle exec] fastlane mac ci_verify_release_notes
+[bundle exec] fastlane mac ci_verify_release
 ```
 
-Refuse to start a release whose notes are missing, empty, or too long (CI)
+Refuse to start a release that names the wrong version, sits off main, or lacks notes (CI)
 
 ### mac ci_finish_release
 

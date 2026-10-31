@@ -754,14 +754,21 @@ running the app on a real Mac.
 
 ## Releasing
 
-Pushing a version tag builds both editions. The App Store build is uploaded to App Store
-Connect, where attaching it to a version and submitting it for review is still manual.
-The downloadable build is notarized, packaged as an installer package, and published as
-a GitHub release. That package is the release's only asset, for the reason given under
-[Installing](#installing). Tags carry no `v` prefix — the downloadable edition's update
-checker compares release tags against `CFBundleShortVersionString`, so `1.2` is the tag
-for version 1.2. The release workflow doesn't re-run the tests; tag a commit CI has
-already passed.
+A release is a commit titled "Release X.Y" that advances `MARKETING_VERSION` on every
+target, beside a `## X.Y` section in `CHANGELOG.md`, tagged `X.Y` on `main` or on a
+`release/X.Y` branch for a hotfix. Tags carry no `v` prefix — the downloadable edition's
+update checker compares release tags against `CFBundleShortVersionString`, so `1.2` is
+the tag for version 1.2.
+
+Pushing the tag builds both editions. The App Store build is uploaded to App Store
+Connect, where its release notes are written and it is attached to the version, leaving
+the submission for review by hand. The downloadable build is notarized, packaged as an
+installer package, published as a GitHub release, and handed to
+[the Homebrew tap](https://github.com/RISCfuture/homebrew-tap), which bumps its cask.
+That package is the release's only asset, for the reason given under
+[Installing](#installing). The release workflow refuses a tag the project's version
+doesn't match, numbers the build one past App Store Connect's latest, and doesn't re-run
+the tests; tag a commit CI has already passed.
 
 Locally, `bundle exec fastlane mac release` ships the App Store edition and
 `bundle exec fastlane mac download_release` the downloadable one; `beta` uploads the App
@@ -769,8 +776,10 @@ Store edition to TestFlight.
 
 Signing credentials come from the private `RISCfuture/certificates` repository via
 [fastlane match](https://docs.fastlane.tools/actions/match/). On CI they arrive as the
-repository secrets `CERTIFICATES_TOKEN`, `MATCH_PASSWORD`, and `SENTRY_AUTH_TOKEN`.
-Locally, copy `fastlane/.env.example` to `fastlane/.env` and fill it in.
+repository secrets `CERTIFICATES_TOKEN`, `MATCH_PASSWORD`, and `SENTRY_AUTH_TOKEN`, with
+`HOMEBREW_TAP_TOKEN` for the cask bump: a fine-grained token limited to
+`RISCfuture/homebrew-tap` with Contents read and write. Locally, copy
+`fastlane/.env.example` to `fastlane/.env` and fill it in.
 
 ### Crash reporting
 
