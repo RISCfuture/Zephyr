@@ -1,3 +1,64 @@
+GIT
+  remote: https://github.com/RISCfuture/fastlane.git
+  revision: 2160673b93cb5ab82cbdb807f428bedfa3297dcc
+  branch: creative-assets
+  specs:
+    fastlane (2.241.2)
+      CFPropertyList (>= 2.3, < 5.0.0)
+      abbrev (~> 0.1)
+      addressable (>= 2.9.0, < 3.0.0)
+      artifactory (~> 3.0)
+      aws-sdk-s3 (~> 1.197)
+      babosa (>= 1.0.3, < 2.0.0)
+      base64 (~> 0.2)
+      benchmark (>= 0.1.0)
+      bundler (>= 2.4.0, < 5.0.0)
+      cgi (~> 0.4)
+      colored (~> 1.2)
+      commander (~> 4.6)
+      csv (~> 3.3)
+      dotenv (>= 2.1.1, < 3.0.0)
+      emoji_regex (>= 0.1, < 4.0)
+      erb (>= 4.0, < 7.0)
+      excon (>= 1.0.0, < 2.0.0)
+      faraday (~> 2.7)
+      faraday-cookie_jar (~> 0.0.8)
+      faraday-follow_redirects (~> 0.3)
+      faraday-multipart (~> 1.0)
+      faraday-retry (~> 2.0)
+      fastimage (>= 2.1.0, < 3.0.0)
+      fastlane-sirp (>= 1.1.0)
+      gh_inspector (>= 1.1.2, < 2.0.0)
+      google-apis-androidpublisher_v3 (~> 0.99)
+      google-apis-playcustomapp_v1 (~> 0.1)
+      google-cloud-env (>= 1.6.0, < 2.5.0)
+      google-cloud-storage (~> 1.31)
+      highline (~> 2.0)
+      irb (>= 1.8)
+      json (< 3.0.0)
+      jwt (>= 2.10.3, < 4)
+      logger (>= 1.6, < 2.0)
+      mini_magick (>= 4.9.4, < 5.0.0)
+      multi_json (~> 1.12)
+      multipart-post (>= 2.0.0, < 3.0.0)
+      mutex_m (~> 0.3)
+      naturally (~> 2.2)
+      nkf (~> 0.2)
+      optparse (>= 0.1.1, < 1.0.0)
+      ostruct (>= 0.1.0)
+      plist (>= 3.1.0, < 4.0.0)
+      rubyzip (>= 3.4.0, < 4.0.0)
+      security (~> 0.3)
+      simctl (~> 1.6.3)
+      terminal-notifier (>= 3.1.0, < 4.0.0)
+      terminal-table (~> 4)
+      tty-screen (>= 0.6.3, < 1.0.0)
+      tty-spinner (>= 0.8.0, < 1.0.0)
+      word_wrap (~> 1.0.0)
+      xcodeproj (>= 1.13.0, < 2.0.0)
+      xcpretty (~> 0.4.1)
+      xcpretty-travis-formatter (>= 0.0.3, < 2.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -63,61 +124,6 @@ GEM
     faraday-retry (2.4.0)
       faraday (~> 2.0)
     fastimage (2.4.1)
-    fastlane (2.241.1)
-      CFPropertyList (>= 2.3, < 5.0.0)
-      abbrev (~> 0.1)
-      addressable (>= 2.9.0, < 3.0.0)
-      artifactory (~> 3.0)
-      aws-sdk-s3 (~> 1.197)
-      babosa (>= 1.0.3, < 2.0.0)
-      base64 (~> 0.2)
-      benchmark (>= 0.1.0)
-      bundler (>= 2.4.0, < 5.0.0)
-      cgi (~> 0.4)
-      colored (~> 1.2)
-      commander (~> 4.6)
-      csv (~> 3.3)
-      dotenv (>= 2.1.1, < 3.0.0)
-      emoji_regex (>= 0.1, < 4.0)
-      erb (>= 4.0, < 7.0)
-      excon (>= 1.0.0, < 2.0.0)
-      faraday (~> 2.7)
-      faraday-cookie_jar (~> 0.0.8)
-      faraday-follow_redirects (~> 0.3)
-      faraday-multipart (~> 1.0)
-      faraday-retry (~> 2.0)
-      fastimage (>= 2.1.0, < 3.0.0)
-      fastlane-sirp (>= 1.1.0)
-      gh_inspector (>= 1.1.2, < 2.0.0)
-      google-apis-androidpublisher_v3 (~> 0.99)
-      google-apis-playcustomapp_v1 (~> 0.1)
-      google-cloud-env (>= 1.6.0, < 2.5.0)
-      google-cloud-storage (~> 1.31)
-      highline (~> 2.0)
-      irb (>= 1.8)
-      json (< 3.0.0)
-      jwt (>= 2.10.3, < 4)
-      logger (>= 1.6, < 2.0)
-      mini_magick (>= 4.9.4, < 5.0.0)
-      multi_json (~> 1.12)
-      multipart-post (>= 2.0.0, < 3.0.0)
-      mutex_m (~> 0.3)
-      naturally (~> 2.2)
-      nkf (~> 0.2)
-      optparse (>= 0.1.1, < 1.0.0)
-      ostruct (>= 0.1.0)
-      plist (>= 3.1.0, < 4.0.0)
-      rubyzip (>= 3.4.0, < 4.0.0)
-      security (~> 0.3)
-      simctl (~> 1.6.3)
-      terminal-notifier (>= 3.1.0, < 4.0.0)
-      terminal-table (~> 4)
-      tty-screen (>= 0.6.3, < 1.0.0)
-      tty-spinner (>= 0.8.0, < 1.0.0)
-      word_wrap (~> 1.0.0)
-      xcodeproj (>= 1.13.0, < 2.0.0)
-      xcpretty (~> 0.4.1)
-      xcpretty-travis-formatter (>= 0.0.3, < 2.0.0)
     fastlane-sirp (1.1.0)
     gh_inspector (1.1.3)
     google-apis-androidpublisher_v3 (0.110.0)
@@ -263,10 +269,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  abbrev (~> 0.1.2)
-  fastlane
-  nkf (~> 0.3.0)
-  ostruct (~> 0.6.3)
+  fastlane!
 
 CHECKSUMS
   CFPropertyList (3.0.8) sha256=2c99d0d980536d3d7ab252f7bd59ac8be50fbdd1ff487c98c949bb66bb114261
@@ -284,7 +287,7 @@ CHECKSUMS
   base64 (0.3.0) sha256=27337aeabad6ffae05c265c450490628ef3ebd4b67be58257393227588f5a97b
   benchmark (0.5.0) sha256=465df122341aedcb81a2a24b4d3bd19b6c67c1530713fd533f3ff034e419236c
   bigdecimal (4.1.3) sha256=61ebe1e5e559bdc3cc6f2c0ee7f427321fc838f59611c294356eb04d6e21cf66
-  bundler (4.0.21) sha256=7cbf5499b426076aa16c8d28a59e4c2c3aad5a438402abcd961f0119f29f1dd0
+  bundler (4.0.22) sha256=d8d5ec84c8555e0af71db63ed7aee4d1a8fb839ec46d84212d61979242a5d75a
   cgi (0.5.2) sha256=61ca30298171190fd4fa0d8018e57ada456eae9b7a2b78526debf7f0a0e6f8bb
   claide (1.1.0) sha256=6d3c5c089dde904d96aa30e73306d0d4bd444b1accb9b3125ce14a3c0183f82e
   colored (1.2) sha256=9d82b47ac589ce7f6cab64b1f194a2009e9fd00c326a5357321f44afab2c1d2c
@@ -305,7 +308,7 @@ CHECKSUMS
   faraday-net_http (3.5.0) sha256=2e7094c34e38754ee048cc3df47376f8657005d9375f8473bce1c3b526a22e36
   faraday-retry (2.4.0) sha256=7b79c48fb7e56526faf247b12d94a680071ff40c9fda7cf1ec1549439ad11ebe
   fastimage (2.4.1) sha256=c64bebd46b6fd8943ab70c1e6e85ff728f970f2e48f92ecd249b6bc3a540ad20
-  fastlane (2.241.1) sha256=e8e97f3274d678c74d9e473b98d202621262c40dfce2b43b7a05afde7caa2ea5
+  fastlane (2.241.2)
   fastlane-sirp (1.1.0) sha256=10bc94f9682efd8e1badfb31452a76dd8981f1f3a33717c765fde6d75b54d847
   gh_inspector (1.1.3) sha256=04cca7171b87164e053aa43147971d3b7f500fcb58177698886b48a9fc4a1939
   google-apis-androidpublisher_v3 (0.110.0) sha256=0b0b84af02fb7f3a062849bc60d545ff8b37670ea7e90bd947199cc671916513
@@ -377,4 +380,4 @@ CHECKSUMS
   xcpretty-travis-formatter (1.0.1) sha256=aacc332f17cb7b2cba222994e2adc74223db88724fe76341483ad3098e232f93
 
 BUNDLED WITH
-  4.0.21
+  4.0.22
