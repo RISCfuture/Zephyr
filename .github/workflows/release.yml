@@ -38,7 +38,7 @@ jobs:
   # take most of an hour and fail on its own account. Each call resolves the build number before
   # either has uploaded anything, so both editions carry the same one.
   store:
-    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.0
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.1
     with:
       # The image the release runs on. GitHub names its macOS images after the major Xcode version
       # they carry rather than the OS they run.
@@ -66,7 +66,7 @@ jobs:
       sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
   download:
-    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.0
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.1
     with:
       runner: xcode-27
       platforms: '["download"]'
@@ -89,12 +89,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
 
       # Only the downloadable edition produces these; the App Store edition's build went straight to
       # App Store Connect and leaves nothing to attach here.
       - name: Download the notarized artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v8.0.2
         with:
           name: release-download-${{ inputs.version || github.ref_name }}
           path: artifacts
