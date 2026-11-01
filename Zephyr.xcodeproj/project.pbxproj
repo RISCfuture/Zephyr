@@ -2431,7 +2431,7 @@
 			repositoryURL = "https://github.com/apple/swift-argument-parser";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.6.0;
+				minimumVersion = 1.8.2;
 			};
 		};
 		01EFFB013038B00000829700 /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */ = {
@@ -2455,7 +2455,7 @@
 			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.26.0;
+				minimumVersion = 9.32.0;
 			};
 		};
 		01EFFC0130390000008297A1 /* XCRemoteSwiftPackageReference "XCUIPromoKit" */ = {

@@ -47,7 +47,7 @@ jobs:
     runs-on: xcode-27
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
 
       # Observation's @Observable macro can fail fingerprint validation on hosted runners; skipping
       # it lets the build resolve the macro implementations.
@@ -59,7 +59,7 @@ jobs:
         run: echo "xcode=$(xcodebuild -version | tr '\n' '-')" >> "$GITHUB_OUTPUT"
 
       - name: Cache SwiftPM dependencies
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: ~/Library/Caches/org.swift.swiftpm
           key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
@@ -71,7 +71,7 @@ jobs:
       # dependency graph or toolchain must never be reused. Only Build and SourcePackages are kept:
       # the index store is regenerated each run rather than restored stale.
       - name: Cache Xcode build products
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: |
             ${{ runner.temp }}/dd-unit/Build
@@ -92,7 +92,7 @@ jobs:
 
       - name: Upload test results
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: test-results-unit
           path: TestResults-Unit.xcresult
@@ -109,7 +109,7 @@ jobs:
     runs-on: xcode-27
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
 
       - name: Enable macros
         run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
@@ -119,7 +119,7 @@ jobs:
         run: echo "xcode=$(xcodebuild -version | tr '\n' '-')" >> "$GITHUB_OUTPUT"
 
       - name: Cache SwiftPM dependencies
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: ~/Library/Caches/org.swift.swiftpm
           key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
@@ -131,7 +131,7 @@ jobs:
       # dependency graph or toolchain must never be reused. Only Build and SourcePackages are kept:
       # the index store is regenerated each run rather than restored stale.
       - name: Cache Xcode build products
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: |
             ${{ runner.temp }}/dd-build/Build
@@ -163,7 +163,7 @@ jobs:
     runs-on: xcode-27
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
 
       - name: Enable macros
         run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
@@ -173,7 +173,7 @@ jobs:
         run: echo "xcode=$(xcodebuild -version | tr '\n' '-')" >> "$GITHUB_OUTPUT"
 
       - name: Cache SwiftPM dependencies
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: ~/Library/Caches/org.swift.swiftpm
           key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
@@ -185,7 +185,7 @@ jobs:
       # dependency graph or toolchain must never be reused. Only Build and SourcePackages are kept:
       # the index store is regenerated each run rather than restored stale.
       - name: Cache Xcode build products
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: |
             ${{ runner.temp }}/dd-ui/Build
@@ -212,7 +212,7 @@ jobs:
 
       - name: Upload test results
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v7.0.2
         with:
           name: test-results-ui
           path: TestResults-UI.xcresult
@@ -227,7 +227,7 @@ jobs:
     runs-on: xcode-27
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
 
       - name: Enable macros
         run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
@@ -237,7 +237,7 @@ jobs:
         run: echo "xcode=$(xcodebuild -version | tr '\n' '-')" >> "$GITHUB_OUTPUT"
 
       - name: Cache SwiftPM dependencies
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: ~/Library/Caches/org.swift.swiftpm
           key: spm-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
@@ -249,7 +249,7 @@ jobs:
       # dependency graph or toolchain must never be reused. Only Build and SourcePackages are kept:
       # the index store is regenerated each run rather than restored stale.
       - name: Cache Xcode build products
-        uses: actions/cache@v6
+        uses: actions/cache@v6.1.0
         with:
           path: |
             ${{ runner.temp }}/dd-docs/Build

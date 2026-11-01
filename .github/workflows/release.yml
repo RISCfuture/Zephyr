@@ -89,12 +89,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7.0.1
 
       # Only the downloadable edition produces these; the App Store edition's build went straight to
       # App Store Connect and leaves nothing to attach here.
       - name: Download the notarized artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v8.0.2
         with:
           name: release-download-${{ inputs.version || github.ref_name }}
           path: artifacts
