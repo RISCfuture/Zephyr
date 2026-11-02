@@ -4,6 +4,16 @@ Release notes for Zephyr. The version headings are what
 `Scripts/release-notes.sh` reads, and what the Release workflow attaches to a
 GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
+## 2.0.1
+
+### Fixed
+
+- Keeping a very large folder downloaded, ignoring it, or deleting it on
+  Dropbox no longer makes Zephyr stop syncing. A folder with more than about
+  20,000 items beneath it could crash the part of Zephyr that talks to Finder.
+  Such changes now reach Finder in several smaller steps, and a folder with
+  that many items directly inside it opens without trouble too.
+
 ## 2.0
 
 ### Requirements
