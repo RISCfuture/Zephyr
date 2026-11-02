@@ -7,20 +7,22 @@ import Foundation
 import libZephyr
 import os
 
-/// Encodes enumeration page tokens and sync anchors as 8-byte little-endian
-/// index generations.
+/// Encodes enumeration page tokens as 8-byte little-endian index watermarks,
+/// and sync anchors as change positions: a little-endian generation, followed
+/// by a little-endian count of its changes already delivered when the
+/// position lies partway through it.
 enum GenerationToken {
-  /// Decodes a generation from exactly 8 little-endian bytes, or `nil`.
-  static func generation(from data: Data) -> UInt64? {
+  /// Decodes an integer from exactly 8 little-endian bytes, or `nil`.
+  static func integer(from data: Data) -> UInt64? {
     guard data.count == MemoryLayout<UInt64>.size else { return nil }
     return UInt64(
       littleEndian: unsafe data.withUnsafeBytes { unsafe $0.loadUnaligned(as: UInt64.self) }
     )
   }
 
-  /// Encodes a generation as 8 little-endian bytes.
-  static func data(for generation: UInt64) -> Data {
-    withUnsafeBytes(of: generation.littleEndian) { unsafe Data($0) }
+  /// Encodes an integer as 8 little-endian bytes.
+  static func data(for integer: UInt64) -> Data {
+    withUnsafeBytes(of: integer.littleEndian) { unsafe Data($0) }
   }
 
   /// Decodes a page token, treating Apple's initial-page constants and empty
@@ -30,7 +32,7 @@ enum GenerationToken {
       page.rawValue != NSFileProviderPage.initialPageSortedByName as Data,
       page.rawValue != NSFileProviderPage.initialPageSortedByDate as Data
     else { return nil }
-    return generation(from: page.rawValue)
+    return integer(from: page.rawValue)
   }
 
   /// Encodes a continuation token as a page, or `nil` when the listing is done.
@@ -38,14 +40,24 @@ enum GenerationToken {
     generation.map { NSFileProviderPage(data(for: $0)) }
   }
 
-  /// Decodes a sync anchor's generation, or `nil` for an unrecognized anchor.
-  static func generation(from anchor: NSFileProviderSyncAnchor) -> UInt64? {
-    generation(from: anchor.rawValue)
+  /// Decodes a sync anchor's change position, or `nil` for an unrecognized anchor.
+  static func position(from anchor: NSFileProviderSyncAnchor) -> ChangePosition? {
+    let generationBytes = anchor.rawValue.prefix(MemoryLayout<UInt64>.size)
+    let deliveredBytes = anchor.rawValue.dropFirst(MemoryLayout<UInt64>.size)
+    guard let generation = integer(from: Data(generationBytes)) else { return nil }
+    if deliveredBytes.isEmpty { return .through(generation) }
+    guard let delivered = integer(from: Data(deliveredBytes)) else { return nil }
+    return .within(generation, delivered: UInt(delivered))
   }
 
-  /// Encodes a generation as a sync anchor.
-  static func syncAnchor(for generation: UInt64) -> NSFileProviderSyncAnchor {
-    NSFileProviderSyncAnchor(data(for: generation))
+  /// Encodes a change position as a sync anchor.
+  static func syncAnchor(for position: ChangePosition) -> NSFileProviderSyncAnchor {
+    switch position {
+      case .through(let generation):
+        NSFileProviderSyncAnchor(data(for: generation))
+      case let .within(generation, delivered):
+        NSFileProviderSyncAnchor(data(for: generation) + data(for: UInt64(delivered)))
+    }
   }
 }
 
@@ -82,17 +94,17 @@ final class DomainChangeFeed: Sendable {
     for observer: any NSFileProviderChangeObserver,
     from anchor: NSFileProviderSyncAnchor
   ) {
-    guard let generation = GenerationToken.generation(from: anchor) else {
+    guard let position = GenerationToken.position(from: anchor) else {
       observer.finishEnumeratingWithError(NSFileProviderError(.syncAnchorExpired))
       return
     }
     Task {
       do {
-        let batch = try await adapterBox.adapter().changes(fromAnchor: generation)
+        let batch = try await adapterBox.adapter().changes(from: position)
         if !batch.updated.isEmpty { observer.didUpdate(batch.updated) }
         if !batch.removed.isEmpty { observer.didDeleteItems(withIdentifiers: batch.removed) }
         observer.finishEnumeratingChanges(
-          upTo: GenerationToken.syncAnchor(for: batch.anchor),
+          upTo: GenerationToken.syncAnchor(for: batch.position),
           moreComing: batch.moreComing
         )
       } catch {
@@ -109,14 +121,14 @@ final class DomainChangeFeed: Sendable {
   func currentSyncAnchor(completionHandler: @escaping @Sendable (NSFileProviderSyncAnchor?) -> Void)
   {
     if let captured = capturedGeneration.withLock({ $0 }) {
-      completionHandler(GenerationToken.syncAnchor(for: captured))
+      completionHandler(GenerationToken.syncAnchor(for: .through(captured)))
       return
     }
     Task {
       let generation =
         (try? await adapterBox.adapter().currentAnchor())
         ?? Self.neverIssuedGeneration
-      completionHandler(GenerationToken.syncAnchor(for: generation))
+      completionHandler(GenerationToken.syncAnchor(for: .through(generation)))
     }
   }
 }
@@ -171,7 +183,7 @@ final class WorkingSetEnumerator: NSObject, NSFileProviderEnumerator {
   }
 }
 
-/// Enumerates the direct children of one container in a single page.
+/// Enumerates the direct children of one container, paged by index row.
 final class ContainerEnumerator: NSObject, NSFileProviderEnumerator {
   private let container: NSFileProviderItemIdentifier
   private let adapterBox: AdapterBox
@@ -187,13 +199,17 @@ final class ContainerEnumerator: NSObject, NSFileProviderEnumerator {
 
   func enumerateItems(
     for observer: any NSFileProviderEnumerationObserver,
-    startingAt _: NSFileProviderPage
+    startingAt page: NSFileProviderPage
   ) {
+    let token = GenerationToken.pageToken(from: page)
     Task { [adapterBox, container, changeFeed] in
       do {
-        await changeFeed.captureAnchorForEnumerationStart()
-        observer.didEnumerate(try await adapterBox.adapter().children(of: container))
-        observer.finishEnumerating(upTo: nil)
+        if token == nil {
+          await changeFeed.captureAnchorForEnumerationStart()
+        }
+        let childPage = try await adapterBox.adapter().children(of: container, after: token)
+        if !childPage.items.isEmpty { observer.didEnumerate(childPage.items) }
+        observer.finishEnumerating(upTo: GenerationToken.page(for: childPage.nextToken))
       } catch {
         ZephyrLog.provider.error(
           """

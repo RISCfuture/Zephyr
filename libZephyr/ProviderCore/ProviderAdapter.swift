@@ -7,12 +7,20 @@ import os
  change, and content requests from the sync index, reaching out to Dropbox only
  for catch-up indexing, change pages, and file content.
 
- Anchors handed to the system are generations recorded in the index's `anchors`
- table; each maps back to the delta cursor the index reflected at that moment.
+ Anchors handed to the system are positions in the change history recorded in
+ the index's `anchors` table: a generation, which maps back to the delta
+ cursor the index reflected at that moment, and how far into its changes the
+ system has read.
  */
 public actor ProviderAdapter {
-  /// How many items a working-set page carries.
-  private static let domainPageSize = 500
+  /// How many items an enumeration page carries.
+  private static let pageSize = 500
+
+  /// How many changes one change batch reports at most: above a Dropbox delta
+  /// page's 2,000 entries, so a page ordinarily goes in one batch, and well
+  /// under the 20,000 the system accepts in one before it terminates the
+  /// extension.
+  private static let changeBatchSize = 5_000
 
   /// How many index rows one working-set page reads through before yielding.
   /// The working set is a sparse subset of a large index, so a page has to
@@ -92,8 +100,20 @@ public actor ProviderAdapter {
     return try await providerItem(for: entry)
   }
 
-  /// The direct children of a container, sorted by name.
-  public func children(of container: NSFileProviderItemIdentifier) async throws -> [ProviderItem] {
+  /// One page of a container's direct children, resuming after an opaque
+  /// page token.
+  public func children(
+    of container: NSFileProviderItemIdentifier,
+    after token: UInt64?
+  ) async throws -> ItemPage {
+    try await children(of: container, after: token, limit: Self.pageSize)
+  }
+
+  func children(
+    of container: NSFileProviderItemIdentifier,
+    after token: UInt64?,
+    limit: Int
+  ) async throws -> ItemPage {
     let signposter = ZephyrLog.signposter
     let state = signposter.beginInterval(
       "Enumerate container",
@@ -104,21 +124,30 @@ public actor ProviderAdapter {
       signposter.endInterval("Enumerate container", state, "children: \(count, privacy: .public)")
     }
     let recordingPath = await knownPath(of: container)
-    let children = try await recordingSyncErrors(at: recordingPath) {
-      try await bringIndexCurrentIfIncomplete()
+    let page = try await recordingSyncErrors(at: recordingPath) {
+      if token == nil {
+        try await bringIndexCurrentIfIncomplete()
+      }
       let path = try await containerPath(of: container)
       let kept = try await store.keptDownloadedPaths()
-      return try await store.children(of: path)
-        .map { child in
-          ProviderItem(
-            record: child,
-            parentIdentifier: container,
-            keptByAncestor: kept.contains { $0.contains(child.pathNormalized) }
-          )
-        }
+      let rows = try await store.children(
+        of: path,
+        afterRowID: token.map(Int64.init),
+        limit: UInt(limit)
+      )
+      let items = rows.map { _, child in
+        ProviderItem(
+          record: child,
+          parentIdentifier: container,
+          keptByAncestor: kept.contains { $0.contains(child.pathNormalized) }
+        )
+      }
+      // A short read is the last of the children.
+      let nextToken = rows.count == limit ? rows.last.map { UInt64($0.rowID) } : nil
+      return ItemPage(items: items, nextToken: nextToken)
     }
-    count = children.count
-    return children
+    count = page.items.count
+    return page
   }
 
   /// The container's cased path as the index knows it right now, falling back
@@ -145,13 +174,13 @@ public actor ProviderAdapter {
    everything whose parent folder the system holds on disk. The rest of the
    index the system fetches when the user browses to it.
    */
-  public func domainItems(after token: UInt64?) async throws -> DomainPage {
+  public func domainItems(after token: UInt64?) async throws -> ItemPage {
     try await recordingSyncErrors(at: .root) {
-      try await domainItems(after: token, limit: Self.domainPageSize)
+      try await domainItems(after: token, limit: Self.pageSize)
     }
   }
 
-  func domainItems(after token: UInt64?, limit: Int) async throws -> DomainPage {
+  func domainItems(after token: UInt64?, limit: Int) async throws -> ItemPage {
     let signposter = ZephyrLog.signposter
     let state = signposter.beginInterval(
       "Enumerate working set",
@@ -179,9 +208,9 @@ public actor ProviderAdapter {
         items.append(try await providerItem(for: entry))
       }
       // A short read is the end of the index.
-      guard rows.count == limit else { return DomainPage(items: items, nextToken: nil) }
+      guard rows.count == limit else { return ItemPage(items: items, nextToken: nil) }
     }
-    return DomainPage(items: items, nextToken: watermark.map(UInt64.init))
+    return ItemPage(items: items, nextToken: watermark.map(UInt64.init))
   }
 
   /**
@@ -225,18 +254,24 @@ public actor ProviderAdapter {
   }
 
   /**
-   Reports one page of remote changes since an anchor.
+   Reports one batch of remote changes since an anchor.
 
-   A generation the index has already advanced past replays its recorded
-   successor page — a fresh server page would be diffed against pre-apply
-   state that no longer exists. The newest generation fetches and applies one
-   `list_folder/continue` page.
+   A position the index has already advanced past replays its recorded
+   changes — a fresh server page would be diffed against pre-apply state that
+   no longer exists. The end of the newest generation fetches and applies one
+   `list_folder/continue` page. Either way a batch carries one generation's
+   changes at most, and stops partway through a generation that recorded more
+   than fit in one.
 
    An unknown (pruned or never-issued) generation and a server-side cursor
    reset both surface as `NSFileProviderError.syncAnchorExpired`, telling the
    system to re-enumerate from scratch; a cursor reset also drops the index.
    */
-  public func changes(fromAnchor generation: UInt64) async throws -> ChangeBatch {
+  public func changes(from position: ChangePosition) async throws -> ChangeBatch {
+    try await changes(from: position, limit: UInt(Self.changeBatchSize))
+  }
+
+  func changes(from position: ChangePosition, limit: UInt) async throws -> ChangeBatch {
     let signposter = ZephyrLog.signposter
     let state = signposter.beginInterval("Enumerate changes", id: signposter.makeSignpostID())
     var updated = 0, removed = 0
@@ -248,19 +283,22 @@ public actor ProviderAdapter {
       )
     }
     let batch = try await recordingSyncErrors(at: .root) {
-      try await applyChanges(fromAnchor: generation)
+      try await applyChanges(from: position, limit: limit)
     }
     updated = batch.updated.count
     removed = batch.removed.count
     return batch
   }
 
-  private func applyChanges(fromAnchor generation: UInt64) async throws -> ChangeBatch {
-    guard let cursor = try await store.cursor(forAnchorGeneration: generation) else {
+  private func applyChanges(from position: ChangePosition, limit: UInt) async throws -> ChangeBatch
+  {
+    guard let cursor = try await store.cursor(forAnchorGeneration: position.generation) else {
       throw NSFileProviderError(.syncAnchorExpired)
     }
-    if let recorded = try await store.recordedChanges(afterGeneration: generation) {
-      return try await changeBatch(from: recorded, moreComing: !recorded.isLatest)
+    if let recorded = try await store.recordedChanges(after: position, limit: limit) {
+      // The page a generation came from may have had more behind it on
+      // Dropbox; past the first batch of it, only asking again can tell.
+      return try await changeBatch(from: recorded, serverHasMore: position.isPartway)
     }
     let page: ListFolderPage
     do {
@@ -275,15 +313,23 @@ public actor ProviderAdapter {
       history: interpretation.history,
       advancingCursorTo: page.cursor
     )
-    return try await changeBatch(from: applied, moreComing: page.hasMore)
+    guard
+      let recorded = try await store.recordedChanges(
+        after: .within(applied.generation, delivered: 0),
+        limit: limit
+      )
+    else {
+      throw NSFileProviderError(.syncAnchorExpired)
+    }
+    return try await changeBatch(from: recorded, serverHasMore: page.hasMore)
   }
 
   private func changeBatch(
-    from applied: SyncIndexStore.AppliedChangeSet,
-    moreComing: Bool
+    from recorded: SyncIndexStore.RecordedChanges,
+    serverHasMore: Bool
   ) async throws -> ChangeBatch {
     var updated: [ProviderItem] = []
-    for id in applied.updatedIDs {
+    for id in recorded.updatedIDs {
       // A recorded update whose row is gone was removed by a later
       // generation; that generation's replay reports the removal.
       guard let entry = try await store.entry(forID: id) else { continue }
@@ -295,9 +341,10 @@ public actor ProviderAdapter {
     }
     return ChangeBatch(
       updated: updated,
-      removed: applied.removedIDs.map { NSFileProviderItemIdentifier($0.rawValue) },
-      anchor: applied.generation,
-      moreComing: moreComing
+      removed: recorded.removedIDs.map { NSFileProviderItemIdentifier($0.rawValue) },
+      position: recorded.position,
+      moreComing: recorded.position.isPartway || recorded.newerGenerationRecorded
+        || serverHasMore
     )
   }
 
@@ -557,26 +604,26 @@ public actor ProviderAdapter {
     }
   }
 
-  /// One page of the working set.
-  public struct DomainPage: Sendable {
-    /// The working-set items this page carries.
+  /// One page of an item enumeration: the working set or a container's children.
+  public struct ItemPage: Sendable {
+    /// The items this page carries.
     public let items: [ProviderItem]
     /// `nil` when this was the last page; otherwise the opaque watermark to
-    /// pass back to ``ProviderAdapter/domainItems(after:)`` for the next one.
+    /// pass back to the call that produced this page for the next one.
     public let nextToken: UInt64?
   }
 
-  /// One applied page of remote changes since an anchor.
+  /// One batch of remote changes since an anchor.
   public struct ChangeBatch: Sendable {
     /// The items that were added or changed, ready to hand to the observer.
     public let updated: [ProviderItem]
     /// The items that are gone, by identifier.
     public let removed: [NSFileProviderItemIdentifier]
-    /// The generation this page brings the enumeration up to, which the
+    /// The position this batch brings the enumeration up to, which the
     /// caller reports as its new sync anchor.
-    public let anchor: UInt64
+    public let position: ChangePosition
     /// Whether more changes are waiting, meaning the caller must enumerate
-    /// again from ``anchor``.
+    /// again from ``position``.
     public let moreComing: Bool
   }
 }

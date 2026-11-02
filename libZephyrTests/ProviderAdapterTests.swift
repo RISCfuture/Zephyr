@@ -118,16 +118,18 @@ struct ProviderAdapterTests {
 
     let initialAnchor = try await adapter.currentAnchor()
     await transport.enqueueJSON(Self.continuePageJSON)
-    let batch = try await adapter.changes(fromAnchor: initialAnchor)
+    let batch = try await adapter.changes(from: .through(initialAnchor))
 
     #expect(batch.updated.count == 1)
     let updated = try #require(batch.updated.first)
     #expect(updated.itemIdentifier.rawValue == "id:fileb1")
     #expect(updated.parentItemIdentifier.rawValue == "id:docs01")
     #expect(Set(batch.removed.map(\.rawValue)) == ["id:oldf01", "id:gonef1"])
-    #expect(batch.anchor > initialAnchor)
+    #expect(batch.position.generation > initialAnchor)
     #expect(batch.moreComing == false)
-    #expect(try await store.cursor(forAnchorGeneration: batch.anchor)?.rawValue == "cursor-2")
+    #expect(
+      try await store.cursor(forAnchorGeneration: batch.position.generation)?.rawValue == "cursor-2"
+    )
     #expect(try await store.entry(forID: try DropboxFileIdentifier(validating: "id:gonef1")) == nil)
     #expect(try await store.entry(forID: try DropboxFileIdentifier(validating: "id:fileb1")) != nil)
   }
@@ -173,7 +175,7 @@ struct ProviderAdapterTests {
       }
       """
     )
-    let batch = try await adapter.changes(fromAnchor: initialAnchor)
+    let batch = try await adapter.changes(from: .through(initialAnchor))
 
     let updatedIDs = Set(batch.updated.map(\.itemIdentifier.rawValue))
     #expect(updatedIDs == ["id:movef1", "id:newid1"])
@@ -191,7 +193,7 @@ struct ProviderAdapterTests {
     let (_, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
 
     let error = await #expect(throws: NSFileProviderError.self) {
-      _ = try await adapter.changes(fromAnchor: 99)
+      _ = try await adapter.changes(from: .through(99))
     }
     #expect(error?.code == .syncAnchorExpired)
   }
@@ -237,6 +239,40 @@ struct ProviderAdapterTests {
     var pages = 0
     repeat {
       let page = try await adapter.domainItems(after: token, limit: 2)
+      pages += 1
+      collected += page.items.map(\.itemIdentifier.rawValue)
+      token = page.nextToken
+    } while token != nil
+
+    #expect(pages == 3)
+    #expect(collected == ids)
+  }
+
+  @Test
+  func `container children page by row ID watermark until exhausted`() async throws {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let ids = (1...5).map { "id:f000\($0)" }
+    try await store.applyDeltaPage(
+      [
+        .upsert(try folderRecord(id: "id:docs01", path: "/Docs")),
+        .upsert(try fileRecord(id: "id:other1", path: "/other.txt"))
+      ] + ids.enumerated().map { .upsert(try fileRecord(id: $1, path: "/Docs/f\($0).txt")) },
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    try await store.markInitialIndexComplete()
+    let (_, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
+
+    var collected: [String] = []
+    var token: UInt64?
+    var pages = 0
+    repeat {
+      let page = try await adapter.children(
+        of: NSFileProviderItemIdentifier("id:docs01"),
+        after: token,
+        limit: 2
+      )
       pages += 1
       collected += page.items.map(\.itemIdentifier.rawValue)
       token = page.nextToken
@@ -310,7 +346,7 @@ struct ProviderAdapterTests {
     let initialAnchor = try await adapter.currentAnchor()
 
     await transport.enqueueJSON(Self.continuePageJSON)
-    let first = try await adapter.changes(fromAnchor: initialAnchor)
+    let first = try await adapter.changes(from: .through(initialAnchor))
     await transport.enqueueJSON(
       """
       {
@@ -326,23 +362,61 @@ struct ProviderAdapterTests {
       }
       """
     )
-    let second = try await adapter.changes(fromAnchor: first.anchor)
+    let second = try await adapter.changes(from: first.position)
 
     // Both replays answer from recordings; the empty transport queue traps
     // on any request, so passing proves no server page was consumed.
-    let firstReplay = try await adapter.changes(fromAnchor: initialAnchor)
+    let firstReplay = try await adapter.changes(from: .through(initialAnchor))
     #expect(
       Set(firstReplay.updated.map(\.itemIdentifier.rawValue))
         == Set(first.updated.map(\.itemIdentifier.rawValue))
     )
     #expect(Set(firstReplay.removed.map(\.rawValue)) == Set(first.removed.map(\.rawValue)))
-    #expect(firstReplay.anchor == first.anchor)
+    #expect(firstReplay.position == first.position)
     #expect(firstReplay.moreComing == true)
 
-    let secondReplay = try await adapter.changes(fromAnchor: first.anchor)
+    let secondReplay = try await adapter.changes(from: first.position)
     #expect(secondReplay.updated.map(\.itemIdentifier.rawValue) == ["id:filec1"])
-    #expect(secondReplay.anchor == second.anchor)
+    #expect(secondReplay.position == second.position)
     #expect(secondReplay.moreComing == false)
+  }
+
+  @Test
+  func `a generation larger than a batch is delivered across batches that resume within it`()
+    async throws
+  {
+    let (store, directory) = try makeStore()
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try await store.applyDeltaPage(
+      [
+        .upsert(try folderRecord(id: "id:docs01", path: "/Docs")),
+        .upsert(try folderRecord(id: "id:oldf01", path: "/Old")),
+        .upsert(try fileRecord(id: "id:gonef1", path: "/Old/gone.txt"))
+      ],
+      history: [],
+      advancingCursorTo: try cursor("c1")
+    )
+    try await store.markInitialIndexComplete()
+    let (transport, adapter) = await makeAdapter(store: store, scratchDirectory: directory)
+    let initialAnchor = try await adapter.currentAnchor()
+
+    await transport.enqueueJSON(Self.continuePageJSON)
+    let first = try await adapter.changes(from: .through(initialAnchor), limit: 2)
+    // The empty transport queue traps on any request, so the rest of the
+    // page can only have come from its recording.
+    let second = try await adapter.changes(from: first.position, limit: 2)
+
+    let generation = first.position.generation
+    #expect(try await store.cursor(forAnchorGeneration: generation)?.rawValue == "cursor-2")
+    #expect(first.position == .within(generation, delivered: 2))
+    #expect(first.updated.count + first.removed.count == 2)
+    #expect(first.moreComing == true)
+    #expect(second.position == .through(generation))
+    #expect(second.updated.count + second.removed.count == 1)
+    #expect((first.updated + second.updated).map(\.itemIdentifier.rawValue) == ["id:fileb1"])
+    #expect(Set((first.removed + second.removed).map(\.rawValue)) == ["id:oldf01", "id:gonef1"])
+    // Whether Dropbox had more behind the page was known only to the page.
+    #expect(second.moreComing == true)
   }
 
   @Test
@@ -366,7 +440,7 @@ struct ProviderAdapterTests {
        "path_lower": "/docs", "path_display": "/Docs"}
       """
     )
-    let batch = try await adapter.changes(fromAnchor: initialAnchor)
+    let batch = try await adapter.changes(from: .through(initialAnchor))
 
     let updated = try #require(batch.updated.first { $0.itemIdentifier.rawValue == "id:fileb1" })
     #expect(updated.parentItemIdentifier.rawValue == "id:docs01")
@@ -498,7 +572,7 @@ struct ProviderAdapterTests {
       """
     )
 
-    let batch = try await adapter.changes(fromAnchor: anchor)
+    let batch = try await adapter.changes(from: .through(anchor))
 
     #expect(batch.updated.map(\.itemIdentifier.rawValue) == ["id:fileb1"])
     for excluded in ["id:dsstor", "id:cache1"] {
@@ -841,7 +915,10 @@ struct ProviderAdapterTests {
     #expect(deep.pathNormalized.rawValue == "/archive/sub/deep.txt")
     #expect(deep.parentPathNormalized.rawValue == "/archive/sub")
     #expect(deep.pathCased.rawValue == "/Archive/Sub/deep.txt")
-    let children = try await adapter.children(of: NSFileProviderItemIdentifier("id:docs01"))
+    let children = try await adapter.children(
+      of: NSFileProviderItemIdentifier("id:docs01"),
+      after: nil
+    ).items
     #expect(Set(children.map(\.itemIdentifier.rawValue)) == ["id:filea1", "id:subf01"])
   }
 
@@ -1068,7 +1145,7 @@ struct ProviderAdapterTests {
     // A remote change to the same item must not wipe the system's tags.
     let anchor = try await adapter.currentAnchor()
     await transport.enqueueJSON(Self.continuePageJSON)
-    let batch = try await adapter.changes(fromAnchor: anchor)
+    let batch = try await adapter.changes(from: .through(anchor))
     let updated = try #require(batch.updated.first { $0.itemIdentifier.rawValue == "id:fileb1" })
     #expect(updated.tagData == tag)
   }
@@ -1180,7 +1257,7 @@ struct ProviderAdapterTests {
 
     // The system learns about the state change through a recorded local
     // generation; the empty transport queue proves no server page runs.
-    let batch = try await adapter.changes(fromAnchor: initialAnchor)
+    let batch = try await adapter.changes(from: .through(initialAnchor))
     #expect(batch.updated.map(\.itemIdentifier.rawValue) == ["id:filea1"])
     #expect(batch.updated.first?.userInfo?["ignored"] as? Bool == true)
   }
