@@ -153,9 +153,13 @@ struct RemoteIndexerTests {
     // change request replays it instead of refetching from a cursor this
     // page has already advanced past — where the deletion, already applied,
     // would resolve to nothing and never reach Finder.
-    let replay = try #require(try await store.recordedChanges(afterGeneration: enumerated))
+    let replay = try #require(
+      try await store.recordedChanges(after: .through(enumerated), limit: .max)
+    )
     #expect(replay.removedIDs == [try DropboxFileIdentifier(validating: "id:filea1")])
-    #expect(try await store.cursor(forAnchorGeneration: replay.generation)?.rawValue == "page-2")
+    #expect(
+      try await store.cursor(forAnchorGeneration: replay.position.generation)?.rawValue == "page-2"
+    )
   }
 
   @Test

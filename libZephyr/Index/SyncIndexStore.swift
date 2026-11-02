@@ -549,6 +549,36 @@ public final class SyncIndexStore: Sendable {
     }
   }
 
+  /**
+   One page of a folder's direct children in SQLite rowid order.
+
+   - Parameters:
+     - parent: The folder.
+     - rowID: The watermark from the previous page's last element, or `nil`
+       to start from the beginning.
+     - limit: The maximum number of children to return.
+   */
+  public func children(
+    of parent: NormalizedDropboxPath,
+    afterRowID rowID: Int64?,
+    limit: UInt
+  ) async throws -> [(rowID: Int64, entry: IndexEntryRecord)] {
+    try await read { db in
+      let rows = try Row.fetchAll(
+        db,
+        sql: """
+          SELECT *, rowid AS row_id FROM items
+          WHERE parent_path_normalized = ? AND rowid > ? ORDER BY rowid LIMIT ?
+          """,
+        arguments: [parent.rawValue, rowID ?? 0, Int(clamping: limit)]
+      )
+      return try rows.map { row in
+        let rowID: Int64 = row["row_id"]
+        return (rowID: rowID, entry: try IndexEntryRecord(row: row))
+      }
+    }
+  }
+
   /// The persisted delta cursor, or `nil` before the first successful page.
   public func currentCursor() async throws -> DeltaCursor? {
     try await read { db in
