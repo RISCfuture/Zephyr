@@ -65,6 +65,39 @@ extension SyncIndexStore {
     return UInt64(generation)
   }
 
+  /// The generation a read from `position` continues in, and how many of its
+  /// changes are already delivered.
+  private static func unreadGeneration(
+    after position: ChangePosition,
+    in db: Database
+  ) throws -> (generation: UInt64, delivered: UInt)? {
+    switch position {
+      case .through(let generation):
+        try Self.generation(after: generation, in: db).map { ($0, 0) }
+      case let .within(generation, delivered):
+        (generation, delivered)
+    }
+  }
+
+  private static func generation(after generation: UInt64, in db: Database) throws -> UInt64? {
+    try Int64.fetchOne(
+      db,
+      sql: "SELECT MIN(generation) FROM anchors WHERE generation > ?",
+      arguments: [Int64(generation)]
+    )
+    .map(UInt64.init)
+  }
+
+  private static func recordedChangeCount(of generation: UInt64, in db: Database) throws -> UInt {
+    UInt(
+      try Int.fetchOne(
+        db,
+        sql: "SELECT COUNT(*) FROM anchor_changes WHERE generation = ?",
+        arguments: [Int64(generation)]
+      ) ?? 0
+    )
+  }
+
   /**
    Records a sync anchor for a delta cursor, returning its generation.
 
@@ -132,8 +165,7 @@ extension SyncIndexStore {
       return AppliedChangeSet(
         generation: generation,
         updatedIDs: updated,
-        removedIDs: Array(removed),
-        isLatest: true
+        removedIDs: Array(removed)
       )
     }
     changeSignal?.post()
@@ -194,36 +226,31 @@ extension SyncIndexStore {
   }
 
   /**
-   The recorded change set of the first generation newer than `generation`,
-   or `nil` when `generation` is the newest anchor.
+   The next run of recorded changes past a position, at most `limit` of
+   them, or `nil` when the position has reached the newest anchor.
 
    Change requests from an anchor the index has already advanced past replay
    from these recordings; consuming a fresh server page instead would report
-   the intervening changes against pre-apply state that no longer exists.
+   the intervening changes against pre-apply state that no longer exists. A
+   run never spans two generations, and stops partway through one that
+   recorded more than `limit` changes.
    */
   public func recordedChanges(
-    afterGeneration generation: UInt64
-  ) async throws -> AppliedChangeSet? {
+    after position: ChangePosition,
+    limit: UInt
+  ) async throws -> RecordedChanges? {
     try await read { db in
-      guard
-        let next = try Int64.fetchOne(
-          db,
-          sql: "SELECT MIN(generation) FROM anchors WHERE generation > ?",
-          arguments: [Int64(generation)]
-        )
+      guard let (generation, delivered) = try Self.unreadGeneration(after: position, in: db)
       else { return nil }
-      let isLatest =
-        try Int64.fetchOne(
-          db,
-          sql: "SELECT COUNT(*) FROM anchors WHERE generation > ?",
-          arguments: [next]
-        ) == 0
       var updated: [DropboxFileIdentifier] = []
       var removed: [DropboxFileIdentifier] = []
       let rows = try Row.fetchAll(
         db,
-        sql: "SELECT dbx_id, kind FROM anchor_changes WHERE generation = ? ORDER BY rowid",
-        arguments: [next]
+        sql: """
+          SELECT dbx_id, kind FROM anchor_changes WHERE generation = ?
+          ORDER BY rowid LIMIT ? OFFSET ?
+          """,
+        arguments: [Int64(generation), Int(clamping: limit), Int(clamping: delivered)]
       )
       for row in rows {
         guard let id = try? DropboxFileIdentifier(validating: row["dbx_id"]),
@@ -234,11 +261,14 @@ extension SyncIndexStore {
           case .removed: removed.append(id)
         }
       }
-      return AppliedChangeSet(
-        generation: UInt64(next),
+      let reached = delivered + UInt(rows.count)
+      return RecordedChanges(
         updatedIDs: updated,
         removedIDs: removed,
-        isLatest: isLatest
+        position: try Self.recordedChangeCount(of: generation, in: db) > reached
+          ? .within(generation, delivered: reached)
+          : .through(generation),
+        newerGenerationRecorded: try Self.generation(after: generation, in: db) != nil
       )
     }
   }
@@ -260,9 +290,50 @@ extension SyncIndexStore {
 
     /// Identifiers whose items were removed.
     public let removedIDs: [DropboxFileIdentifier]
+  }
 
-    /// Whether this generation is the newest recorded anchor.
-    public let isLatest: Bool
+  /// A run of one generation's recorded changes, in recording order.
+  public struct RecordedChanges: Sendable {
+    /// Identifiers whose items were created or updated.
+    public let updatedIDs: [DropboxFileIdentifier]
+
+    /// Identifiers whose items were removed.
+    public let removedIDs: [DropboxFileIdentifier]
+
+    /// The position a reader reaches by taking this run.
+    public let position: ChangePosition
+
+    /// Whether a generation newer than this run's has been recorded.
+    public let newerGenerationRecorded: Bool
+  }
+}
+
+/**
+ How far a reader of the recorded change history has got: every change
+ through some generation, or every change before a generation plus the first
+ few of its own.
+ */
+public enum ChangePosition: Sendable, Hashable {
+  /// Every change through this generation has been read.
+  case through(UInt64)
+
+  /// Every generation before this one has been read, and this many of its
+  /// own changes, in recording order.
+  case within(UInt64, delivered: UInt)
+
+  /// The generation the position lies in or ends at.
+  public var generation: UInt64 {
+    switch self {
+      case .through(let generation), .within(let generation, _): generation
+    }
+  }
+
+  /// Whether the position lies partway through its generation.
+  public var isPartway: Bool {
+    switch self {
+      case .through: false
+      case .within: true
+    }
   }
 }
 
