@@ -548,52 +548,6 @@ private struct ZephyrMarkGallery: View {
   }
 }
 
-/**
- The drawn turn beside the turned one: every frame of a revolution laid out in
- order, over the same mark played as the menu bar plays it and turned as a view
- turns it.
-
- This is the only place the drawn rotation can be checked without launching the
- app — that the badge stays centered in its hole at every angle, and that all
- three turn the same way round.
- */
-private struct ZephyrMarkFilmstripGallery: View {
-  private static let size: CGFloat = 44
-  private static let activity = SyncActivity(latestChange: Date(), hasIssues: false)
-  private static let frameCount = 12
-
-  @Environment(\.colorScheme)
-  private var colorScheme
-
-  var body: some View {
-    let filmstrip = ZephyrMarkFilmstrip(Self.activity, size: Self.size, colorScheme: colorScheme)
-    VStack(alignment: .leading, spacing: 24) {
-      HStack(spacing: 24) {
-        ZephyrMark(Self.activity, size: Self.size)
-        TimelineView(.periodic(from: .now, by: ZephyrMarkFilmstrip.frameInterval)) { context in
-          Image(nsImage: filmstrip.frame(at: context.date))
-            .accessibilityHidden(true)
-        }
-        Text(verbatim: "Turned by a view, then played from the strip")
-      }
-      HStack(spacing: 8) {
-        ForEach(0..<Self.frameCount, id: \.self) { frame in
-          Image(
-            nsImage: ZephyrMark.image(
-              Self.activity,
-              size: Self.size,
-              colorScheme: colorScheme,
-              badgeRotation: .degrees(360 * Double(frame) / Double(Self.frameCount))
-            )
-          )
-          .accessibilityHidden(true)
-        }
-      }
-    }
-    .padding(40)
-  }
-}
-
 #Preview("Zephyr mark") {
   ZephyrMarkGallery()
 }
@@ -608,6 +562,44 @@ private struct ZephyrMarkFilmstripGallery: View {
     .environment(\.zephyrMarksTurn, false)
 }
 
+/**
+ The drawn turn beside the turned one: every frame of a revolution laid out in
+ order, over the same mark played as the menu bar plays it and turned as a view
+ turns it.
+
+ This is the only place the drawn rotation can be checked without launching the
+ app — that the badge stays centered in its hole at every angle, and that all
+ three turn the same way round.
+ */
 #Preview("Zephyr mark, turning") {
-  ZephyrMarkFilmstripGallery()
+  @Environment(\.colorScheme)
+  @Previewable var colorScheme
+  let size: CGFloat = 44
+  let activity = SyncActivity(latestChange: Date(), hasIssues: false)
+  let frameCount = 12
+  let filmstrip = ZephyrMarkFilmstrip(activity, size: size, colorScheme: colorScheme)
+  VStack(alignment: .leading, spacing: 24) {
+    HStack(spacing: 24) {
+      ZephyrMark(activity, size: size)
+      TimelineView(.periodic(from: .now, by: ZephyrMarkFilmstrip.frameInterval)) { context in
+        Image(nsImage: filmstrip.frame(at: context.date))
+          .accessibilityHidden(true)
+      }
+      Text(verbatim: "Turned by a view, then played from the strip")
+    }
+    HStack(spacing: 8) {
+      ForEach(0..<frameCount, id: \.self) { frame in
+        Image(
+          nsImage: ZephyrMark.image(
+            activity,
+            size: size,
+            colorScheme: colorScheme,
+            badgeRotation: .degrees(360 * Double(frame) / Double(frameCount))
+          )
+        )
+        .accessibilityHidden(true)
+      }
+    }
+  }
+  .padding(40)
 }
