@@ -13,6 +13,10 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
   20,000 items beneath it could crash the part of Zephyr that talks to Finder.
   Such changes now reach Finder in several smaller steps, and a folder with
   that many items directly inside it opens without trouble too.
+- When GitHub is too busy to answer Check for Updates, Zephyr now says so and
+  suggests trying again later, instead of reporting a network error. Zephyr
+  also keeps working while that message, or the “up to date” message, is on
+  screen.
 
 ## 2.0
 
