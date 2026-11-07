@@ -215,11 +215,11 @@ enum PathValidationFailure: WireError, Equatable {
 }
 
 extension PathValidationFailure: LocalizedError {
-  public var errorDescription: String? {
+  var errorDescription: String? {
     String(localized: "Invalid Dropbox path.", bundle: #bundle)
   }
 
-  public var failureReason: String? {
+  var failureReason: String? {
     switch self {
       case .missingLeadingSlash(let path):
         String(localized: "The path “\(path)” does not start with a slash.", bundle: #bundle)

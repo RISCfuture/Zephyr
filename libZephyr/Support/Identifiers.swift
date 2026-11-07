@@ -26,9 +26,12 @@ protocol ValidatedStringWrapper: Sendable, Hashable, Codable, CustomStringConver
 }
 
 extension ValidatedStringWrapper {
+  // periphery:ignore - public because the public identifiers take these three as their
+  // Codable and CustomStringConvertible witnesses
   /// The wrapped string, so interpolating an identifier prints what Dropbox sent.
   public var description: String { rawValue }
 
+  // periphery:ignore
   /// Decodes the wrapper from a single string value, re-running validation so a
   /// malformed identifier surfaces as a `DecodingError` at the point it arrives.
   public init(from decoder: any Decoder) throws {
@@ -40,6 +43,7 @@ extension ValidatedStringWrapper {
     }
   }
 
+  // periphery:ignore
   /// Encodes the wrapper as its bare string, matching the shape Dropbox expects.
   public func encode(to encoder: any Encoder) throws {
     var container = encoder.singleValueContainer()
@@ -68,11 +72,11 @@ struct IdentifierValidationFailure: WireError, Equatable {
 }
 
 extension IdentifierValidationFailure: LocalizedError {
-  public var errorDescription: String? {
+  var errorDescription: String? {
     String(localized: "Invalid Dropbox identifier.", bundle: #bundle)
   }
 
-  public var failureReason: String? {
+  var failureReason: String? {
     switch kind {
       case .fileIdentifier:
         String(

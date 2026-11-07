@@ -49,8 +49,19 @@ jobs:
             ${{ runner.temp }}/peri-dd/SourcePackages
           key: derived-periphery-xcode-27-${{ steps.toolchain.outputs.xcode }}-${{ hashFiles('**/Package.resolved') }}
 
+      # Pinned to a commit of the tap, which carries one version of the formula at a time, so a new
+      # Periphery release changes what this check reports only through a commit here.
       - name: Install Periphery
-        run: brew install periphery-pro/tap/periphery-cli
+        env:
+          # 1.0.0.beta.11
+          TAP_COMMIT: 15fd35bc652e9ad12b0ca7c4a8e41dc74b8db7aa
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+        run: |
+          brew tap periphery-pro/tap
+          git -C "$(brew --repository periphery-pro/tap)" fetch --quiet origin "$TAP_COMMIT"
+          git -C "$(brew --repository periphery-pro/tap)" checkout --quiet --detach "$TAP_COMMIT"
+          brew install periphery-pro/tap/periphery-cli
+          periphery version
 
       # Three schemes cover every target: the extensions are dependencies of both editions, the CLI
       # of the downloadable one alone, and each edition has an entry point the other does not — so

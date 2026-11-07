@@ -67,11 +67,11 @@ struct PKCEValidationFailure: AuthError, Equatable {
 }
 
 extension PKCEValidationFailure: LocalizedError {
-  public var errorDescription: String? {
+  var errorDescription: String? {
     String(localized: "Invalid PKCE code verifier.", bundle: #bundle)
   }
 
-  public var failureReason: String? {
+  var failureReason: String? {
     String(localized: "“\(value)” is not a valid RFC 7636 code verifier.", bundle: #bundle)
   }
 }

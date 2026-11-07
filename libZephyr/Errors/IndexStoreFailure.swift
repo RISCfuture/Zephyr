@@ -14,11 +14,11 @@ enum IndexStoreFailure: StoreError, SyncFatalError {
 }
 
 extension IndexStoreFailure: LocalizedError {
-  public var errorDescription: String? {
+  var errorDescription: String? {
     String(localized: "The sync index is unavailable.", bundle: #bundle)
   }
 
-  public var failureReason: String? {
+  var failureReason: String? {
     switch self {
       case .database(let detail):
         String(localized: "The index database reported: \(detail).", bundle: #bundle)
@@ -36,7 +36,7 @@ extension IndexStoreFailure: LocalizedError {
     }
   }
 
-  public var recoverySuggestion: String? {
+  var recoverySuggestion: String? {
     switch self {
       case .schemaFromNewerBuild:
         String(
@@ -56,7 +56,7 @@ extension IndexStoreFailure: LocalizedError {
    is where keeping only one is explained. The rest are faults in the database
    itself, which no article can talk the reader through.
    */
-  public var helpAnchor: String? {
+  var helpAnchor: String? {
     switch self {
       case .schemaFromNewerBuild: HelpAnchor.dropboxNotInFinder.rawValue
       default: nil

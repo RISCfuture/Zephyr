@@ -14,7 +14,7 @@ enum WireFormatFailure: WireError, Equatable {
 }
 
 extension WireFormatFailure: LocalizedError {
-  public var errorDescription: String? {
+  var errorDescription: String? {
     switch self {
       case .badRequest:
         String(localized: "Dropbox rejected a request.", bundle: #bundle)
@@ -23,7 +23,7 @@ extension WireFormatFailure: LocalizedError {
     }
   }
 
-  public var failureReason: String? {
+  var failureReason: String? {
     switch self {
       case let .malformedResponse(route, detail):
         String(
