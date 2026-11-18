@@ -40,11 +40,17 @@ env:
     CODE_SIGN_ENTITLEMENTS=
 
 jobs:
+  route:
+    uses: RISCfuture/ci-workflows/.github/workflows/minerva-route.yml@1.1.0
+    permissions:
+      contents: read
+
   # The bulk of the real coverage: the libZephyr scheme is host-less, so it builds just the
   # framework and its test bundle and needs no signing at all.
   unit:
     name: Unit Tests
-    runs-on: xcode-27
+    needs: route
+    runs-on: ${{ fromJSON(needs.route.outputs.macos-27) }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7.0.1
@@ -106,7 +112,8 @@ jobs:
   # this job needs no signing to produce that answer.
   build:
     name: Build App
-    runs-on: xcode-27
+    needs: route
+    runs-on: ${{ fromJSON(needs.route.outputs.xcode-27) }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v7.0.1
@@ -160,7 +167,8 @@ jobs:
   # ZephyrUITests, so this job runs both bundles; that is where the host-bound unit tests run.
   ui:
     name: UI Tests
-    runs-on: xcode-27
+    needs: route
+    runs-on: ${{ fromJSON(needs.route.outputs.macos-27) }}
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v7.0.1
@@ -224,7 +232,8 @@ jobs:
   # `- Parameter` name that has drifted from the code is caught here.
   docs:
     name: Documentation
-    runs-on: xcode-27
+    needs: route
+    runs-on: ${{ fromJSON(needs.route.outputs.xcode-27) }}
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7.0.1

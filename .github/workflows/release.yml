@@ -33,16 +33,21 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  route:
+    uses: RISCfuture/ci-workflows/.github/workflows/minerva-route.yml@1.1.0
+    permissions:
+      contents: read
+
   # The editions are released by two calls rather than one matrix, so the GitHub release waits on
   # the installer package alone and not on App Store Connect processing the store build, which can
   # take most of an hour and fail on its own account. Each call resolves the build number before
   # either has uploaded anything, so both editions carry the same one.
   store:
-    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.1
+    needs: route
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.3.0
     with:
-      # The image the release runs on. GitHub names its macOS images after the major Xcode version
-      # they carry rather than the OS they run.
-      runner: xcode-27
+      # The image the release runs on.
+      runner: ${{ needs.route.outputs.xcode-27 }}
       # Not a platform in the Apple sense — it is macOS. The reusable workflow passes it through to
       # the release lane verbatim, and `ci_release` reads it as an edition name.
       platforms: '["mas"]'
@@ -66,9 +71,10 @@ jobs:
       sentry-auth-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
   download:
-    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.2.1
+    needs: route
+    uses: RISCfuture/XCUITestKit/.github/workflows/ios-release.yml@1.3.0
     with:
-      runner: xcode-27
+      runner: ${{ needs.route.outputs.xcode-27 }}
       platforms: '["download"]'
       version: ${{ inputs.version || github.ref_name }}
       certificates-repo: RISCfuture/certificates
