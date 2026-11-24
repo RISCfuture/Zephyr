@@ -1,0 +1,93 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Zephyr in einem Kurzbefehl verwenden</title>
+<meta name="description" content="Synchronisierung anhalten, eine Datei hochladen oder einen geteilten Link abrufen, direkt aus der App „Kurzbefehle“.">
+<meta name="keywords" content="Kurzbefehle, Automation, Automatisierung, Siri, Spotlight, Skript, App-Intents, Aktion, automatisieren">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="automate-shortcuts" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="automate-shortcuts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Zephyr in einem Kurzbefehl verwenden</h1>
+<p>Zephyr fügt der App „Kurzbefehle“ Aktionen hinzu, damit du als Teil eines größeren Ablaufs die
+Synchronisierung anhalten, eine Datei an Dropbox senden oder einen geteilten Link abrufen kannst.
+Beide Versionen von Zephyr bieten sie.</p>
+
+<div class="Task">
+<h2 class="Name">Eine Zephyr-Aktion zu einem Kurzbefehl hinzufügen</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Öffne die App „Kurzbefehle“ und klicke in der Symbolleiste auf den Hinzufügen-Knopf, um
+      einen neuen Kurzbefehl anzulegen.</p></li>
+  <li><p>Gib in der Aktionsliste rechts im Suchfeld <em>Zephyr</em> ein.</p></li>
+  <li><p>Doppelklicke auf die gewünschte Aktion. Sie erscheint im Kurzbefehl.</p></li>
+  <li><p>Fülle aus, was die Aktion verlangt &#8212; eine Datei, einen Ordner, ein Konto &#8212;
+      und klicke dann zum Ausprobieren auf den Ausführen-Knopf.</p></li>
+</ol>
+<p>Zephyr fügt diese Aktionen hinzu:</p>
+<ul>
+  <li><p><em>Synchronisierung anhalten oder fortsetzen</em> hält die Synchronisierung für alle
+      Konten an oder setzt sie fort, genau wie „Synchronisierung anhalten“ im Bereich der
+      Menüleiste.</p></li>
+  <li><p><em>Mitteilungen von Zephyr stummschalten</em> hält alle Mitteilungen für 30 Minuten,
+      eine Stunde oder acht Stunden zurück oder beendet eine Stummschaltung vorzeitig. Die
+      Synchronisierung läuft weiter.</p></li>
+  <li><p><em>Synchronisierungsstatus abrufen</em> liefert, wie viele Dateien und Ordner Zephyr
+      indexiert hat und wie viele Objekte nicht synchronisiert werden konnten.</p></li>
+  <li><p><em>In Dropbox hochladen</em> sendet eine Datei in einen Ordner, den du auswählst.</p></li>
+  <li><p><em>Geteilten Dropbox-Link abrufen</em> liefert einen Link zu einer Datei oder einem
+      Ordner und erstellt einen, falls es noch keinen gibt. Setze danach „In Zwischenablage
+      kopieren“ ein, um den Link dort abzulegen.</p></li>
+  <li><p><em>Dropbox-Datei wiederherstellen</em> setzt eine Datei auf eine der Versionen zurück,
+      die Dropbox aufbewahrt hat. Sie fragt vorher nach.</p></li>
+</ul>
+<p>Die Felder für Dateien und Ordner durchsuchen den Index von Zephyr statt deiner Festplatte.
+Ein Ordner, aus dem noch nie etwas geladen wurde, wird also genauso angeboten wie einer, der
+schon hier ist.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Eine Aktion ohne eigenen Kurzbefehl ausführen</h2>
+<div class="TaskBody">
+<p>„Synchronisierung anhalten“, „Mitteilungen stummschalten“ und „Synchronisierungsstatus“ werden
+auch einzeln angeboten.</p>
+<ol>
+  <li><p>Drücke Befehl-Leertaste, um Spotlight zu öffnen.</p></li>
+  <li><p>Gib den Namen der Aktion ein, zum Beispiel <em>Synchronisierung anhalten</em>.</p></li>
+  <li><p>Drücke den Zeilenschalter.</p></li>
+</ol>
+<p>Du kannst sie auch über Siri anfordern, indem du etwa sagst: „Synchronisierung in Zephyr
+anhalten.“ Zephyr muss dafür nicht geöffnet sein: Es startet im Hintergrund, erledigt die Arbeit
+und kommt nicht in den Vordergrund.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Wenn eine Aktion meldet, dass kein Konto verknüpft ist</h2>
+<div class="TaskBody">
+<p>Kurzbefehle handeln im Namen der Konten, die du <em>in der Zephyr-App</em> verknüpft hast. Das
+Befehlszeilenprogramm <code>zephyr</code> verwahrt seine Zugangsdaten getrennt davon. Ein Konto,
+das du nur mit <code>zephyr auth link</code> verknüpft hast, kann ein Kurzbefehl also nicht
+verwenden.</p>
+<ol>
+  <li><p>Klicke in der Menüleiste auf Zephyr und dann auf „Konten verwalten&#160;…“.</p></li>
+  <li><p>Klicke in der Symbolleiste auf „Dropbox-Konto verknüpfen&#160;…“ und verknüpfe das Konto
+      dort.</p></li>
+</ol>
+<p>Sind mehrere Konten verknüpft, fragen Aktionen, die auf eine Dropbox zugreifen, welche
+gemeint ist. Mit nur einem Konto verwenden sie es, ohne zu fragen.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Synchronisierung anhalten</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Festlegen, welche Mitteilungen Zephyr zeigt</a>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Das Befehlszeilenprogramm „<code>zephyr</code>“ installieren</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Mehr als ein Dropbox-Konto verwenden</a>
+</div>
+</body>
+</html>

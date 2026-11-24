@@ -1,0 +1,66 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Mehr als ein Dropbox-Konto verwenden</title>
+<meta name="description" content="Verknüpfe mehrere Dropbox-Konten und unterscheide sie im Finder und in Zephyr.">
+<meta name="keywords" content="mehrere Konten, zweites Konto, geschäftlich, privat, mehrere, mehr als eins, wechseln, Dropbox-Konto">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="multiple-accounts" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="multiple-accounts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Mehr als ein Dropbox-Konto verwenden</h1>
+<p>Zephyr synchronisiert alle Konten, die du verknüpfst, gleichzeitig. Jedes bekommt seinen eigenen
+Platz in der Seitenleiste des Finders und seinen eigenen Index.</p>
+
+<div class="Task">
+<h2 class="Name">Ein weiteres Konto verknüpfen</h2>
+<div class="TaskBody">
+<p>Ein zweites Konto verknüpfst du genau wie das erste – siehe
+<a href="link-account.html#link-account" class="xRef AppleTopic">Dein Dropbox-Konto verknüpfen</a>. Du
+meldest dich für jedes Konto einmal in deinem Browser bei Dropbox an.</p>
+<p>Schalte Zephyr nach dem Verknüpfen für das neue Konto unter „Dateianbieter“ ein, falls macOS
+danach fragt; siehe
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Zephyr im Finder einschalten</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Die Konten unterscheiden</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>Im Finder:</em> Jedes Konto erscheint in der Seitenleiste als <em>Zephyr</em>,
+      gefolgt von der E-Mail-Adresse des Kontos, sodass die Adresse zwei Konten voneinander
+      unterscheidet.</p></li>
+  <li><p><em>In der Menüleiste:</em> Der Bereich listet jedes Konto mit eigener Statuszeile und
+      eigenen Zahlen auf. Ein Klick auf ein Konto öffnet es im Finder.</p></li>
+  <li><p><em>In den Einstellungen:</em> „Nicht synchronisiert“ gilt pro Konto und nennt bei mehr
+      als einem verknüpften Konto jedes Konto über seinen eigenen Bedienelementen. Bei „Bandbreite“
+      ist das nicht so: Die Übertragungslimits gehören zu diesem Mac, und alle Konten teilen
+      sie.</p></li>
+</ul>
+<p>Das Symbol in der Menüleiste und die Zeile daneben zeigen diesen Mac als Ganzes an, sodass ein
+sendendes Konto als Aktivität erscheint, auch wenn die anderen untätig sind. Etwas, das alle
+Konten gleichzeitig stoppt, etwa ein Netzwerk, dessen Nutzung dich etwas kostet, wird einmal oben
+im Bereich gemeldet statt unter jedem Konto.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Mit dem Befehlszeilenprogramm arbeiten</h2>
+<div class="TaskBody">
+<p><code>zephyr</code> wirkt auf das einzige verknüpfte Konto, sofern du nicht <code>--account</code>
+angibst; sind mehrere verknüpft, solltest du also eines nennen. <code>zephyr auth list</code> zeigt
+die Kennungen, die du verwenden kannst, und die Shell-Vervollständigung bietet sie an.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="link-account.html#link-account" class="xRef AppleTopic">Dein Dropbox-Konto verknüpfen</a>
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Begrenzen, wie viel Bandbreite Zephyr nutzt</a>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Das Befehlszeilenprogramm „zephyr“ installieren</a>
+</div>
+</body>
+</html>

@@ -4,6 +4,12 @@ Release notes for Zephyr. The version headings are what
 `Scripts/release-notes.sh` reads, and what the Release workflow attaches to a
 GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
+## Unreleased
+
+### Added
+
+- Zephyr is now available in German.
+
 ## 2.0.1
 
 ### Fixed

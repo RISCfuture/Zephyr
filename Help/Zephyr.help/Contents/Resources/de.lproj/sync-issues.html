@@ -1,0 +1,92 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Wenn eine Datei nicht synchronisiert wird</title>
+<meta name="description" content="Herausfinden, welche Objekte nicht synchronisiert werden konnten, nachlesen, was schiefging, und sie ausblenden.">
+<meta name="keywords" content="Synchronisierungsprobleme, nicht synchronisiert, fehlgeschlagen, Fehler, ausblenden, anzeigen, hängt, synchronisiert nicht">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="sync-issues" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="sync-issues"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Wenn eine Datei nicht synchronisiert wird</h1>
+<p>Wenn Zephyr etwas nicht synchronisieren kann, behält es das Objekt und den Grund, statt es still
+immer wieder zu versuchen. Unter dem Konto erscheint eine Anzahl, und die Liste dahinter zeigt, welche
+Objekte betroffen sind und warum.</p>
+
+<div class="Task">
+<h2 class="Name">Ansehen, was nicht synchronisiert werden konnte</h2>
+<div class="TaskBody">
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/sync-issues-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/sync-issues.webp" width="688" height="500" alt="Das Fenster „Synchronisierungsprobleme“, in dem Objekte nach Konto gruppiert aufgelistet sind, jeweils mit dem Grund des Fehlschlags und den Tasten „Anzeigen“ und „Ausblenden“.">
+  </picture>
+  <figcaption>Jedes Objekt nennt seinen Pfad, den Grund und was du tun kannst.</figcaption>
+</figure>
+<ol>
+  <li><p>Klicke in der Menüleiste auf Zephyr.</p></li>
+  <li><p>Klicke unter dem Konto auf die Zeile „konnten nicht synchronisiert werden“.</p>
+      <p>Du kannst auch „Konto ▸ Synchronisierungsprobleme“ in der
+      Menüleiste wählen, solange ein Zephyr-Fenster geöffnet ist.</p></li>
+</ol>
+<p>Jede Zeile nennt das Objekt mit seinem Pfad in deiner Dropbox und sagt darunter, was schiefging.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Mit einem Objekt umgehen</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>Anzeigen</em> zeigt das Objekt im Finder, damit du siehst, in welchem Zustand es
+      ist.</p></li>
+  <li><p><em>Ausblenden</em> entfernt die Zeile aus der Liste. Es behebt nichts &#8212; nutze es,
+      wenn du dich um das Objekt gekümmert hast oder der Grund nicht mehr zutrifft.</p></li>
+</ul>
+<p>Häufige Ursachen, die du prüfen kannst: Das Objekt ist größer, als in deiner Dropbox Platz ist,
+sein Name enthält etwas, das Dropbox nicht akzeptiert, oder das Objekt ist ein symbolischer Link, den
+Dropbox gar nicht annimmt. Eine Zeile, die besagt, dass ein Objekt erst geteilt werden kann, wenn die
+E-Mail-Adresse des Kontos bestätigt ist, wartet auf dich und nicht auf Zephyr &#8212; bestätige die
+Adresse bei Dropbox, dann verschwindet sie.</p>
+<p>Eine Datei, die an zwei Orten gleichzeitig geändert wurde, ist kein Fehlschlag und erscheint hier
+nicht. Dropbox behält beide und benennt die zweite Kopie selbst &#8212; siehe
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">Wenn dieselbe Datei an
+zwei Orten geändert wurde</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Ein Fehler oben in der Liste</h2>
+<div class="TaskBody">
+<p>Eine rote Zeile über den Objekten ist ein Problem mit dem Konto selbst und nicht mit einer
+einzelnen Datei, und solange sie besteht, kann nichts darunter synchronisiert werden. Kümmere dich
+zuerst darum &#8212; siehe
+<a href="reauthorize.html#reauthorize" class="xRef AppleTopic">Wenn Zephyr keine Verbindung zu
+deinem Dropbox-Konto herstellen kann</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Den Index des Kontos neu erstellen</h2>
+<div class="TaskBody">
+<p>Wenn die Liste lang ist und nichts darin Sinn ergibt, ist das Neuerstellen dessen, was Zephyr über
+das Konto weiß, das letzte Mittel.</p>
+<ol>
+  <li><p>Klicke in der Menüleiste auf Zephyr und dann auf „Konten verwalten&nbsp;…“.</p></li>
+  <li><p>Klicke bei gedrückter Taste „ctrl“ auf das Konto und wähle „Index neu erstellen&nbsp;…“.</p></li>
+</ol>
+<p>Zephyr liest das Konto von Grund auf neu von Dropbox. Deine Dateien werden nicht angetastet;
+nur Zephyrs Aufzeichnung darüber wird ersetzt.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="reauthorize.html#reauthorize" class="xRef AppleTopic">Wenn Zephyr keine Verbindung zu deinem Dropbox-Konto herstellen kann</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Festlegen, welche Mitteilungen Zephyr zeigt</a>
+<a href="diagnostics.html#diagnostics" class="xRef AppleTopic">Einen Diagnosebericht sammeln</a>
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">Wenn dieselbe Datei an zwei Orten geändert wurde</a>
+</div>
+</body>
+</html>

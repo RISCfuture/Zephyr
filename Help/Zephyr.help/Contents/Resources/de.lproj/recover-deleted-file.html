@@ -1,0 +1,84 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Wenn du etwas gelöscht hast, das du brauchst</title>
+<meta name="description" content="Was ein Löschen in deiner Dropbox bewirkt, was Zephyr wiederherstellen kann und was nicht.">
+<meta name="keywords" content="gelöscht, löschen, Papierkorb, wiederherstellen, Wiederherstellung, zurückholen, verschwunden, fehlende Datei, entfernt">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="recover-deleted-file" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="recover-deleted-file"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Wenn du etwas gelöscht hast, das du brauchst</h1>
+<p>Wenn du ein Objekt in deiner Dropbox löschst, wird es bei Dropbox und auf jedem Gerät gelöscht, das
+beim Konto angemeldet ist. Zephyr führt keinen eigenen Papierkorb, aus dem es sich zurückholen ließe.</p>
+
+<div class="Task">
+<h2 class="Name">Was ein Löschen bewirkt</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Das Objekt verschwindet innerhalb von Sekunden von Dropbox und von diesem Mac, und von deinen
+      anderen Geräten, sobald sie aufholen.</p></li>
+  <li><p>Deine Dropbox im Finder hat keinen eigenen Papierkorb. Dropbox bietet Zephyr keine Möglichkeit,
+      einen zu führen, daher tut Zephyr nicht so, als gäbe es einen.</p></li>
+  <li><p>Unter „Synchronisierungsprobleme“ erscheint nichts. Ein Löschen, das Dropbox erreicht hat,
+      hat funktioniert; es war nur das Falsche, was du wolltest.</p></li>
+</ul>
+<p>Zephyr kann ein gelöschtes Objekt nicht zurückbringen. Ob Dropbox selbst noch eine Kopie hat, ist eine
+Frage an Dropbox, auf der Website von Dropbox.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Wenn die Datei noch da, aber falsch ist</h2>
+<div class="TaskBody">
+<p>Eine Datei, die überschrieben statt gelöscht wurde, ist etwas anderes: Dropbox hat den früheren Stand
+aufbewahrt, und du kannst eine frühere Version wieder einsetzen, ohne den Finder zu verlassen.</p>
+<ol>
+  <li><p>Klicke im Finder bei gedrückter Taste „ctrl“ auf die Datei.</p></li>
+  <li><p>Wähle „Show Previous Versions…“.</p></li>
+</ol>
+<p>Siehe <a href="file-versions.html#file-versions" class="xRef AppleTopic">Zu einer früheren
+Version einer Datei zurückkehren</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Herausfinden, was wann gelöscht wurde</h2>
+<div class="TaskBody">
+<p>Zephyr bewahrt eine Woche dessen auf, was synchronisiert wurde. Das genügt, um zu sagen, was entfernt
+wurde und in welche Richtung – es ist keine Kopie von irgendetwas, sagt dir aber, ob das Löschen von
+diesem Mac kam oder von woanders eintraf.</p>
+<ol>
+  <li><p>Führe im Terminal <code>zephyr history</code> aus.</p></li>
+  <li><p>Suche in der Spalte CHANGE nach <em>removed</em> und in der Spalte DIRECTION nach
+      <em>up</em> – dieser Mac hat es gesendet – oder <em>down</em>, das heißt, ein anderes Gerät
+      war es.</p></li>
+</ol>
+<p>Der Befehl gehört zur herunterladbaren Version von Zephyr – siehe
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Das Befehlszeilenprogramm „zephyr“
+installieren</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Etwas aus Dropbox entfernen, ohne es zu löschen</h2>
+<div class="TaskBody">
+<p>Wenn du etwas nur nicht mehr synchronisieren, aber nicht verlieren wolltest, gibt es einen Befehl, der
+deine Kopie behält: „Delete from Dropbox, Keep on This Mac“ lädt das Objekt zuerst
+herunter und entfernt erst dann die Kopie bei Dropbox. Siehe
+<a href="stop-syncing-item.html#stop-syncing-item" class="xRef AppleTopic">Die Synchronisierung einer Datei
+oder eines Ordners beenden</a>.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="file-versions.html#file-versions" class="xRef AppleTopic">Zu einer früheren Version einer Datei zurückkehren</a>
+<a href="stop-syncing-item.html#stop-syncing-item" class="xRef AppleTopic">Die Synchronisierung einer Datei oder eines Ordners beenden</a>
+<a href="open-and-download.html#open-and-download" class="xRef AppleTopic">Eine Datei öffnen und Speicherplatz wieder freigeben</a>
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">Wenn dieselbe Datei an zwei Orten geändert wurde</a>
+</div>
+</body>
+</html>

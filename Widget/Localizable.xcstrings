@@ -2,23 +2,65 @@
   "sourceLanguage" : "en",
   "strings" : {
     "Pause Syncing" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Synchronisierung anhalten"
+          }
+        }
+      }
     },
     "Stop and start syncing every Dropbox account Zephyr keeps in Finder." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Hält die Synchronisierung aller Dropbox-Konten, die Zephyr im Finder bereitstellt, an oder setzt sie fort."
+          }
+        }
+      }
     },
     "Sync Status" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Synchronisierungsstatus"
+          }
+        }
+      }
     },
     "Syncing" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Synchronisierung läuft"
+          }
+        }
+      }
     },
     "Syncing Paused" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Synchronisierung angehalten"
+          }
+        }
+      }
     },
     "Your Dropbox accounts’ file counts and sync issues." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dateianzahlen und Synchronisierungsprobleme der Dropbox-Konten."
+          }
+        }
+      }
     }
   },
-  "version" : "1.2"
+  "version" : "1.3"
 }

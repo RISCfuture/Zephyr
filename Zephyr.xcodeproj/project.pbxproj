@@ -288,6 +288,7 @@
 		01673F193039C8B20053BC7A /* Exceptions for "Widget" folder in "ShareExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				InfoPlist.xcstrings,
 				Localizable.xcstrings,
 			);
 			target = 01EFF3A1303886F70082969B /* ShareExtension */;
@@ -317,6 +318,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				InfoPlist.xcstrings,
 			);
 			target = 01EFF3B63038870F0082969B /* WidgetExtension */;
 		};
@@ -908,6 +910,9 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
+				fr,
+				es,
 			);
 			mainGroup = 01EFF3523038864A0082969B;
 			minimizedProjectReferenceProxies = 1;
@@ -2450,14 +2455,6 @@
 				minimumVersion = 1.2.1;
 			};
 		};
-		0AC0000000000000000000C3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.32.0;
-			};
-		};
 		01EFFC0130390000008297A1 /* XCRemoteSwiftPackageReference "XCUIPromoKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RISCfuture/XCUIPromoKit";
@@ -2466,14 +2463,17 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		0AC0000000000000000000C3 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.32.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		01EFFC0130390000008297A2 /* XCUIPromoKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 01EFFC0130390000008297A1 /* XCRemoteSwiftPackageReference "XCUIPromoKit" */;
-			productName = XCUIPromoKit;
-		};
 		018BFED6303A0DC700F97190 /* GitHubUpdateChecker */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 01EFFB013038B00000829700 /* XCRemoteSwiftPackageReference "GitHubUpdateChecker" */;
@@ -2498,6 +2498,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01EFFB023038B00000829701 /* XCRemoteSwiftPackageReference "XCUITestKit" */;
 			productName = XCUITestKit;
+		};
+		01EFFC0130390000008297A2 /* XCUIPromoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01EFFC0130390000008297A1 /* XCRemoteSwiftPackageReference "XCUIPromoKit" */;
+			productName = XCUIPromoKit;
 		};
 		0AC0000000000000000000C2 /* Sentry */ = {
 			isa = XCSwiftPackageProductDependency;
