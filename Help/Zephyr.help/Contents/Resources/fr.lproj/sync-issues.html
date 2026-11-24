@@ -1,0 +1,92 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Si un fichier ne se synchronise pas</title>
+<meta name="description" content="Repérez les éléments qui n’ont pas pu être synchronisés, lisez ce qui s’est mal passé et effacez-les de la liste.">
+<meta name="keywords" content="problèmes de synchronisation, non synchronisé, échec, erreur, masquer, afficher, bloqué, ne se synchronise pas">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="sync-issues" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="sync-issues"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Si un fichier ne se synchronise pas</h1>
+<p>Lorsque Zephyr ne peut pas synchroniser un élément, il conserve l’élément et la raison au lieu de
+réessayer en silence. Un nombre apparaît sous le compte, et la liste qui s’ouvre indique quels
+éléments sont concernés et pourquoi.</p>
+
+<div class="Task">
+<h2 class="Name">Voir ce qui n’a pas pu être synchronisé</h2>
+<div class="TaskBody">
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/sync-issues-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/sync-issues.webp" width="688" height="500" alt="La fenêtre Problèmes de synchronisation, qui répertorie les éléments regroupés sous leur compte, chacun avec la raison de l’échec et les boutons Afficher et Masquer.">
+  </picture>
+  <figcaption>Chaque élément indique son chemin, la raison et ce que vous pouvez faire.</figcaption>
+</figure>
+<ol>
+  <li><p>Cliquez sur Zephyr dans la barre des menus.</p></li>
+  <li><p>Cliquez sur la ligne des éléments non synchronisés sous le compte.</p>
+      <p>Vous pouvez aussi choisir Compte &#9656; Problèmes de synchronisation dans la barre des
+      menus lorsqu’une fenêtre de Zephyr est ouverte.</p></li>
+</ol>
+<p>Chaque ligne désigne l’élément par son chemin dans votre Dropbox et indique en dessous ce qui
+s’est mal passé.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Traiter un élément</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>Afficher</em> révèle l’élément dans le Finder, pour que vous puissiez voir dans quel
+      état il se trouve.</p></li>
+  <li><p><em>Masquer</em> retire la ligne de la liste. Cela ne corrige rien &#8212; utilisez-le une
+      fois l’élément traité, ou lorsque la raison ne s’applique plus.</p></li>
+</ul>
+<p>Causes courantes à vérifier : l’élément est plus volumineux que l’espace dont dispose votre
+Dropbox, son nom contient quelque chose que Dropbox n’accepte pas, ou l’élément est un lien
+symbolique, que Dropbox n’accepte pas du tout. Une ligne indiquant qu’un élément ne peut pas être
+partagé tant que l’adresse e-mail du compte n’est pas vérifiée attend une action de votre part, et
+non de Zephyr &#8212; vérifiez l’adresse auprès de Dropbox et la ligne disparaît.</p>
+<p>Un fichier modifié à deux endroits en même temps n’est pas un échec et n’apparaît pas ici.
+Dropbox conserve les deux et nomme lui-même la seconde copie &#8212; consultez
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">Si un même fichier a été modifié à deux endroits</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Un échec en haut de la liste</h2>
+<div class="TaskBody">
+<p>Une ligne rouge au-dessus des éléments signale un problème du compte lui-même et non d’un fichier
+en particulier ; tant qu’il persiste, rien de ce qui se trouve en dessous ne peut être synchronisé.
+Réglez-le en premier &#8212; consultez
+<a href="reauthorize.html#reauthorize" class="xRef AppleTopic">Si Zephyr ne parvient pas à se connecter à votre compte Dropbox</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Repartir de zéro avec l’index du compte</h2>
+<div class="TaskBody">
+<p>Si la liste est longue et que rien n’y semble cohérent, reconstruire ce que Zephyr sait du compte
+est la solution radicale.</p>
+<ol>
+  <li><p>Cliquez sur Zephyr dans la barre des menus, puis sur Gérer les comptes&#8230;</p></li>
+  <li><p>Cliquez sur le compte en maintenant la touche Contrôle enfoncée, puis choisissez
+      Reconstruire l’index&#8230;</p></li>
+</ol>
+<p>Zephyr relit entièrement le compte depuis Dropbox. Vos fichiers ne sont pas touchés ; seul
+l’enregistrement que Zephyr en conserve est remplacé.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="reauthorize.html#reauthorize" class="xRef AppleTopic">Si Zephyr ne parvient pas à se connecter à votre compte Dropbox</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Choisir les notifications que Zephyr affiche</a>
+<a href="diagnostics.html#diagnostics" class="xRef AppleTopic">Collecter un rapport de diagnostic</a>
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">Si un même fichier a été modifié à deux endroits</a>
+</div>
+</body>
+</html>

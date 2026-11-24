@@ -16,6 +16,12 @@
             "state" : "new",
             "value" : "Zephyr"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr"
+          }
         }
       }
     },
@@ -34,6 +40,12 @@
             "state" : "new",
             "value" : "ShareExtension"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "ShareExtension"
+          }
         }
       }
     },
@@ -50,6 +62,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Copyright ©2026 Tim Morgan"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
             "value" : "Copyright ©2026 Tim Morgan"
           }
         }

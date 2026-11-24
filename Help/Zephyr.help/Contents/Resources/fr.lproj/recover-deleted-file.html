@@ -1,0 +1,80 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Si vous avez supprimé un élément dont vous aviez besoin</title>
+<meta name="description" content="Ce que fait une suppression dans votre Dropbox, ce que Zephyr peut récupérer et ce qu’il ne peut pas.">
+<meta name="keywords" content="supprimé, supprimer, suppression, corbeille, récupérer, restaurer, annuler la suppression, disparu, fichier manquant, effacé">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="recover-deleted-file" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="recover-deleted-file"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Si vous avez supprimé un élément dont vous aviez besoin</h1>
+<p>Supprimer un élément de votre Dropbox le supprime sur Dropbox et sur tous les appareils connectés au
+compte, et Zephyr ne tient pas de corbeille dans laquelle le récupérer.</p>
+
+<div class="Task">
+<h2 class="Name">Ce que fait une suppression</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>L’élément disparaît de Dropbox comme de ce Mac, en quelques secondes, puis de vos autres
+      appareils à mesure qu’ils se mettent à jour.</p></li>
+  <li><p>Votre Dropbox dans le Finder n’a pas de Corbeille propre. Dropbox ne permet pas à Zephyr d’en
+      conserver une ; Zephyr ne fait donc pas semblant.</p></li>
+  <li><p>Rien n’apparaît dans Problèmes de synchronisation. Une suppression qui a atteint Dropbox a
+      fonctionné ; c’est seulement qu’elle n’était pas souhaitée.</p></li>
+</ul>
+<p>Zephyr ne peut pas rétablir un élément supprimé. Savoir si Dropbox en détient encore une copie est une
+question qui relève de Dropbox, sur le site web de Dropbox.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Si le fichier est toujours là, mais incorrect</h2>
+<div class="TaskBody">
+<p>Un fichier écrasé plutôt que supprimé est un autre cas : Dropbox a conservé son contenu précédent, et
+vous pouvez rétablir une version antérieure sans quitter le Finder.</p>
+<ol>
+  <li><p>Dans le Finder, cliquez sur le fichier en maintenant la touche Contrôle enfoncée.</p></li>
+  <li><p>Choisissez Show Previous Versions…</p></li>
+</ol>
+<p>Consultez <a href="file-versions.html#file-versions" class="xRef AppleTopic">Revenir à une version antérieure d’un fichier</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Savoir ce qui a été supprimé, et quand</h2>
+<div class="TaskBody">
+<p>Zephyr conserve une semaine de ce qu’il a synchronisé, ce qui suffit pour dire ce qui a disparu et dans
+quel sens : ce n’est la copie de rien, mais cela vous indique si la suppression vient de ce Mac ou
+d’ailleurs.</p>
+<ol>
+  <li><p>Dans Terminal, exécutez <code>zephyr history</code></p></li>
+  <li><p>Repérez <em>removed</em> dans la colonne CHANGE, puis <em>up</em> dans la colonne
+      DIRECTION (ce Mac l’a envoyé) ou <em>down</em> (un autre appareil l’a fait).</p></li>
+</ol>
+<p>La commande est fournie avec la version téléchargeable de Zephyr ; consultez
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Installer l’outil en ligne de commande zephyr</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Retirer un élément de Dropbox sans le supprimer</h2>
+<div class="TaskBody">
+<p>Si vous vouliez arrêter la synchronisation d’un élément plutôt que le perdre, une commande conserve
+votre copie : Delete from Dropbox, Keep on This Mac télécharge d’abord l’élément, puis seulement
+supprime la copie de Dropbox. Consultez
+<a href="stop-syncing-item.html#stop-syncing-item" class="xRef AppleTopic">Arrêter la synchronisation d’un fichier ou d’un dossier</a>.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="file-versions.html#file-versions" class="xRef AppleTopic">Revenir à une version antérieure d’un fichier</a>
+<a href="stop-syncing-item.html#stop-syncing-item" class="xRef AppleTopic">Arrêter la synchronisation d’un fichier ou d’un dossier</a>
+<a href="open-and-download.html#open-and-download" class="xRef AppleTopic">Ouvrir un fichier, puis libérer de l’espace</a>
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">Si un même fichier a été modifié à deux endroits</a>
+</div>
+</body>
+</html>

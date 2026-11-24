@@ -1,0 +1,25 @@
+Votre Dropbox dans le Finder, chaque fichier n’étant téléchargé que lorsque vous l’ouvrez. Rien n’est dupliqué : un compte d’un téraoctet n’occupe aucun espace disque local.
+
+Zephyr est un client indépendant et open source, écrit en Swift sur le framework File Provider d’Apple. Le Finder, Coup d’œil, le menu de partage et les fenêtres Ouvrir et Enregistrer traitent donc les fichiers Dropbox comme des fichiers locaux. Aucun dossier surveillé, aucune analyse en arrière-plan.
+
+FONCTIONNALITÉS
+
+• Associez plusieurs comptes Dropbox en même temps. Chacun dispose de sa propre place dans la barre latérale du Finder et de son propre index de synchronisation.
+• Synchronisation bidirectionnelle grâce au flux de modifications de Dropbox : un fichier modifié sur un autre Mac apparaît en quelques secondes, et ce que vous enregistrez repart de la même manière.
+• Les transferts sont vérifiés par rapport au hachage de contenu de Dropbox, et l’envoi d’un gros fichier interrompu en cours de route reprend au lieu de recommencer.
+• Le Finder affiche de vraies vignettes pour les images que vous n’avez jamais téléchargées.
+• Consultez depuis le Finder les versions récentes d’un fichier et rétablissez une version antérieure. Les renommages et les déplacements sont suivis : renommer un fichier n’interrompt pas son historique.
+• Conservez le téléchargement d’un dossier ou d’un fichier sur ce Mac. Il est téléchargé immédiatement, reste à jour à mesure qu’il change sur Dropbox et n’est jamais supprimé pour libérer de l’espace.
+• Supprimez un élément de Dropbox tout en le gardant sur ce Mac, puis remettez-le plus tard, directement depuis le Finder. Les exclusions utilisent com.dropbox.ignored, le même attribut étendu que le client officiel : un fichier exclu dans l’un des clients le reste dans l’autre.
+• Envoyez des fichiers vers Dropbox depuis le menu Partager de n’importe quelle app, jusqu’à 20 à la fois, dans le dossier de votre choix.
+• Six actions Raccourcis : suspendre la synchronisation, masquer les notifications, vérifier l’état de la synchronisation, envoyer un fichier, obtenir un lien partagé et rétablir une version antérieure. Trois d’entre elles fonctionnent depuis Spotlight et Siri sans aucune configuration, et la synchronisation peut être suspendue depuis le Centre de contrôle.
+• Limites d’envoi et de téléchargement de 250 ko/s à 100 Mo/s, ou sans limite, plus une limite distincte pour les connexions facturées à l’usage : un portable relié à un partage de connexion ne parcourt pas tout votre Dropbox sans que vous l’ayez demandé.
+• Quatre niveaux de notifications, de chaque modification de fichier jusqu’à aucune, et une mise en sourdine de 30 minutes, d’une heure ou de huit heures. Tout ce qui a été retenu arrive à la fin de la mise en sourdine.
+• Un panneau dans la barre des menus pour l’activité en cours, un widget de bureau pour l’état, et des notifications lorsqu’un élément demande votre attention.
+• Tout ce qui n’a pas pu être synchronisé est regroupé dans une seule fenêtre qui indique ce qui a échoué et pourquoi.
+• Lorsque Dropbox invalide le curseur de synchronisation, Zephyr répertorie à nouveau le compte de lui-même. Vos marques du Finder, vos favoris, vos exclusions et vos éléments au téléchargement conservé en sortent intacts.
+• Compatible avec les espaces d’équipe Dropbox Business, et suit le changement lorsque vous rejoignez ou quittez une équipe.
+
+Nécessite macOS 27 ou version ultérieure.
+
+Zephyr est un logiciel libre sous licence MIT ; le code source complet est disponible sur GitHub. Zephyr n’est ni affilié à Dropbox, Inc., ni approuvé, ni parrainé par cette société. Il s’agit d’un client indépendant, conçu avec l’API HTTP publique de Dropbox. Dropbox est une marque de Dropbox, Inc.

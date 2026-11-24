@@ -1,0 +1,94 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Utiliser Zephyr dans un raccourci</title>
+<meta name="description" content="Suspendez la synchronisation, envoyez un fichier ou obtenez un lien partagé depuis l’app Raccourcis.">
+<meta name="keywords" content="raccourcis, automatisation, siri, spotlight, script, app intents, action, automatiser, lien partagé">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="automate-shortcuts" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="automate-shortcuts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Utiliser Zephyr dans un raccourci</h1>
+<p>Zephyr ajoute des actions à l’app Raccourcis, afin que vous puissiez suspendre la synchronisation,
+envoyer un fichier vers Dropbox ou obtenir un lien partagé comme une étape d’un ensemble plus vaste.
+Les deux versions de Zephyr les proposent.</p>
+
+<div class="Task">
+<h2 class="Name">Ajouter une action Zephyr à un raccourci</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Ouvrez l’app Raccourcis, puis cliquez sur le bouton d’ajout dans la barre d’outils pour créer
+      un nouveau raccourci.</p></li>
+  <li><p>Dans la liste d’actions à droite, saisissez <em>Zephyr</em> dans le champ de
+      recherche.</p></li>
+  <li><p>Double-cliquez sur l’action de votre choix. Elle apparaît dans le raccourci.</p></li>
+  <li><p>Renseignez ce que l’action demande — un fichier, un dossier, un compte — puis cliquez sur le
+      bouton d’exécution pour l’essayer.</p></li>
+</ol>
+<p>Voici les actions que Zephyr ajoute :</p>
+<ul>
+  <li><p><em>Suspendre ou reprendre la synchronisation</em> arrête ou relance la synchronisation de
+      tous les comptes, comme Suspendre la synchronisation dans le panneau de la barre des
+      menus.</p></li>
+  <li><p><em>Masquer les notifications de Zephyr</em> masque toutes les notifications pendant
+      30 minutes, une heure ou huit heures, ou met fin plus tôt à un masquage. La synchronisation se
+      poursuit.</p></li>
+  <li><p><em>Obtenir l’état de la synchronisation</em> indique combien de fichiers et de dossiers
+      Zephyr a indexés et combien d’éléments n’ont pas pu être synchronisés.</p></li>
+  <li><p><em>Envoyer vers Dropbox</em> envoie un fichier vers un dossier que vous choisissez.</p></li>
+  <li><p><em>Obtenir le lien partagé Dropbox</em> renvoie un lien vers un fichier ou un dossier, en
+      créant un s’il n’en a pas déjà un. Faites-la suivre de Copier dans le presse-papiers pour y
+      placer le lien.</p></li>
+  <li><p><em>Restaurer un fichier Dropbox</em> remet un fichier dans l’une des versions conservées par
+      Dropbox. Elle demande confirmation avant de le faire.</p></li>
+</ul>
+<p>Les champs de fichier et de dossier effectuent leur recherche dans l’index de Zephyr plutôt que sur
+votre disque ; un dossier dont rien n’a jamais été téléchargé est donc proposé exactement comme un
+dossier déjà présent.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Exécuter une action sans créer de raccourci</h2>
+<div class="TaskBody">
+<p>Suspendre la synchronisation, Masquer les notifications et État de la synchronisation sont aussi
+proposées séparément.</p>
+<ol>
+  <li><p>Appuyez sur Commande-Espace pour ouvrir Spotlight.</p></li>
+  <li><p>Saisissez le nom de l’action, par exemple <em>Suspendre la synchronisation</em>.</p></li>
+  <li><p>Appuyez sur Retour.</p></li>
+</ol>
+<p>Vous pouvez aussi les demander à Siri, en disant par exemple « Suspendre la synchronisation dans
+Zephyr ». Zephyr n’a pas besoin d’être ouvert : il démarre en arrière-plan, fait le travail et ne
+passe pas au premier plan.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Si une action indique qu’aucun compte n’est associé</h2>
+<div class="TaskBody">
+<p>Les raccourcis agissent au nom des comptes que vous avez associés <em>dans l’app Zephyr</em>.
+L’outil en ligne de commande <code>zephyr</code> conserve ses propres identifiants, séparés ; un
+compte que vous avez associé uniquement en exécutant <code>zephyr auth link</code> n’est donc pas un
+compte qu’un raccourci peut utiliser.</p>
+<ol>
+  <li><p>Cliquez sur Zephyr dans la barre des menus, puis sur Gérer les comptes…</p></li>
+  <li><p>Cliquez sur Associer un compte Dropbox… dans la barre d’outils, puis associez-y le
+      compte.</p></li>
+</ol>
+<p>Lorsque plusieurs comptes sont associés, les actions qui accèdent à un Dropbox demandent lequel
+utiliser. Avec un seul compte, elles l’utilisent sans rien demander.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Suspendre la synchronisation</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Choisir les notifications que Zephyr affiche</a>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Installer l’outil en ligne de commande <code>zephyr</code></a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Utiliser plusieurs comptes Dropbox</a>
+</div>
+</body>
+</html>

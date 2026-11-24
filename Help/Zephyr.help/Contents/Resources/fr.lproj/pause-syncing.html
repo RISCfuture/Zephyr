@@ -1,0 +1,81 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Suspendre la synchronisation</title>
+<meta name="description" content="Interrompez un moment l’envoi et la récupération des fichiers par Zephyr, sans quitter l’app.">
+<meta name="keywords" content="suspendre, reprendre, arrêter la synchronisation, partage de connexion, réseau facturé à l’usage, hors connexion, pause, centre de contrôle, commandes, interrupteur">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="pause-syncing" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="pause-syncing"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Suspendre la synchronisation</h1>
+<p>La suspension empêche Zephyr d’envoyer et de télécharger des fichiers &#8212; sur une connexion
+facturée à l’usage, par exemple, ou lorsqu’autre chose a besoin de la bande passante. Le Finder
+continue de fournir les fichiers qu’il détient déjà.</p>
+
+<div class="Task">
+<h2 class="Name">Suspendre et reprendre</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Cliquez sur Zephyr dans la barre des menus.</p></li>
+  <li><p>Cliquez sur Suspendre la synchronisation.</p>
+      <p>Le panneau reste ouvert, et la ligne du haut indique que la synchronisation est
+      suspendue.</p></li>
+  <li><p>Pour reprendre, cliquez sur Zephyr dans la barre des menus, puis sur
+      Reprendre la synchronisation.</p></li>
+</ol>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Suspendre depuis le centre de contrôle</h2>
+<div class="TaskBody">
+<p>Zephyr ajoute une commande Suspendre la synchronisation que vous pouvez conserver dans le centre
+de contrôle : inutile de chercher d’abord l’élément de la barre des menus.</p>
+<ol>
+  <li><p>Ouvrez le centre de contrôle et cliquez sur Modifier les commandes en bas.</p></li>
+  <li><p>Saisissez Zephyr dans le champ de recherche, puis faites glisser Suspendre la
+      synchronisation dans le centre de contrôle ou dans la barre des menus.</p></li>
+  <li><p>Cliquez sur Terminé.</p></li>
+  <li><p>Cliquez sur la commande pour suspendre, puis de nouveau pour reprendre.</p></li>
+</ol>
+<figure>
+  <picture>
+    <source srcset="../en.lproj/system/control-center-pause-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/system/control-center-pause.webp" width="292" height="168" alt="La grille de commandes au bas du centre de contrôle, avec la commande Suspendre la synchronisation de Zephyr dans un coin, représentée par l’icône de Zephyr accompagnée de flèches de synchronisation.">
+  </picture>
+  <figcaption>La commande se range avec les autres et affiche l’icône de Zephyr.</figcaption>
+</figure>
+<p>La commande et l’élément de la barre des menus sont toujours d’accord : une suspension
+effectuée de l’un apparaît aussi dans l’autre. Elle fonctionne que Zephyr soit ouvert ou non.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Ce que fait et ne fait pas une suspension</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Les fichiers déjà téléchargés restent ouvrables. Un fichier qui n’a pas été téléchargé
+      ne peut pas être ouvert tant que la synchronisation est suspendue.</p></li>
+  <li><p>Vos modifications ne sont pas perdues. Elles sont envoyées à la reprise.</p></li>
+  <li><p>Les modifications effectuées sur vos autres appareils ne sont pas perdues non plus.
+      Zephyr rattrape son retard à la reprise.</p></li>
+  <li><p>Une suspension concerne tous les comptes associés. Il n’existe pas de suspension par
+      compte.</p></li>
+</ul>
+<p>Si le problème est la bande passante plutôt que la synchronisation elle-même, une limite peut
+mieux vous convenir qu’une suspension &#8212; consultez
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limiter le débit utilisé par Zephyr</a>.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limiter le débit utilisé par Zephyr</a>
+<a href="menu-bar.html#menu-bar" class="xRef AppleTopic">Voir ce que fait Zephyr</a>
+<a href="automate-shortcuts.html#automate-shortcuts" class="xRef AppleTopic">Utiliser Zephyr dans un raccourci</a>
+</div>
+</body>
+</html>

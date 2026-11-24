@@ -16,6 +16,12 @@
             "state" : "new",
             "value" : "%1$@ added “%2$@”."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ a ajouté « %2$@ »."
+          }
         }
       }
     },
@@ -83,6 +89,40 @@
               }
             }
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ a modifié « %2$@ » et %#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 3,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg autre élément."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg autres éléments."
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg autre élément."
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -100,6 +140,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ deleted “%2$@”."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ a supprimé « %2$@ »."
           }
         }
       }
@@ -119,6 +165,12 @@
             "state" : "new",
             "value" : "%1$@ updated “%2$@”."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ a mis à jour « %2$@ »."
+          }
         }
       }
     },
@@ -129,6 +181,12 @@
             "state" : "machine_translated",
             "value" : "Zum Senden ausstehend: %@"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@ en attente d’envoi"
+          }
         }
       }
     },
@@ -136,6 +194,12 @@
       "comment" : "A transfer rate, such as “1.5 MB/s”",
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@/s"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "%@/s"
@@ -187,6 +251,30 @@
               }
             }
           }
+        },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld non synchronisé"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld non synchronisés"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld non synchronisé"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -196,6 +284,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "1 Stunde"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "1 heure"
           }
         }
       }
@@ -208,6 +302,12 @@
             "state" : "machine_translated",
             "value" : "1 Std."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "1 h"
+          }
         }
       }
     },
@@ -219,6 +319,12 @@
             "state" : "machine_translated",
             "value" : "30 Min."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "30 min"
+          }
         }
       }
     },
@@ -229,6 +335,12 @@
             "state" : "machine_translated",
             "value" : "30 Minuten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "30 minutes"
+          }
         }
       }
     },
@@ -238,6 +350,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "8 Stunden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "8 heures"
           }
         }
       }
@@ -250,6 +368,12 @@
             "state" : "machine_translated",
             "value" : "8 Std."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "8 h"
+          }
         }
       }
     },
@@ -259,6 +383,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Dateien eines verknüpften Kontos können erst im Finder erscheinen, wenn die File Provider-Erweiterung von Zephyr aktiviert ist."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Les fichiers d’un compte associé ne peuvent pas apparaître dans le Finder tant que l’extension File Provider de Zephyr n’est pas activée."
           }
         }
       }
@@ -270,6 +400,12 @@
             "state" : "machine_translated",
             "value" : "Info"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "À propos"
+          }
         }
       }
     },
@@ -279,6 +415,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Konto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Compte"
           }
         }
       }
@@ -292,6 +434,12 @@
             "state" : "machine_translated",
             "value" : "Kontoeinstellungen nicht lesbar"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Réglages du compte illisibles"
+          }
         }
       }
     },
@@ -303,6 +451,12 @@
             "state" : "machine_translated",
             "value" : "Konten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Comptes"
+          }
         }
       }
     },
@@ -313,6 +467,12 @@
             "state" : "machine_translated",
             "value" : "Aktion"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Action"
+          }
         }
       }
     },
@@ -322,6 +482,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Mitteilungen erlauben"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Autoriser les notifications"
           }
         }
       }
@@ -335,6 +501,12 @@
             "state" : "machine_translated",
             "value" : "Erlaubt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Autorisation accordée."
+          }
         }
       }
     },
@@ -344,6 +516,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Autorisierungscode"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Code d’autorisation"
           }
         }
       }
@@ -355,6 +533,12 @@
             "state" : "machine_translated",
             "value" : "Zurück"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Retour"
+          }
         }
       }
     },
@@ -364,6 +548,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Bandbreite"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Débit"
           }
         }
       }
@@ -375,6 +565,12 @@
             "state" : "machine_translated",
             "value" : "Abbrechen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Annuler"
+          }
         }
       }
     },
@@ -384,6 +580,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Lege fest, wie Zephyr dich benachrichtigt, was es überträgt und was es unberührt lässt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Modifiez la façon dont Zephyr vous envoie des notifications, ce qu’il transfère et ce qu’il laisse de côté."
           }
         }
       }
@@ -395,6 +597,12 @@
             "state" : "machine_translated",
             "value" : "Jetzt suchen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vérifier maintenant"
+          }
         }
       }
     },
@@ -404,6 +612,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Automatisch suchen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vérifier automatiquement"
           }
         }
       }
@@ -417,6 +631,12 @@
             "state" : "machine_translated",
             "value" : "Nach Updates suchen …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rechercher des mises à jour…"
+          }
         }
       }
     },
@@ -429,6 +649,12 @@
             "state" : "machine_translated",
             "value" : "Sammeln …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Collecter…"
+          }
         }
       }
     },
@@ -438,6 +664,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Befehlszeilenprogramm"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Outil en ligne de commande"
           }
         }
       }
@@ -449,6 +681,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox-Konto verknüpfen …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associer un compte Dropbox…"
+          }
         }
       }
     },
@@ -458,6 +696,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Weiter"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Continuer"
           }
         }
       }
@@ -469,6 +713,12 @@
             "state" : "machine_translated",
             "value" : "Kopiert"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copié"
+          }
         }
       }
     },
@@ -479,6 +729,12 @@
             "state" : "machine_translated",
             "value" : "Kopieren"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copier"
+          }
         }
       }
     },
@@ -488,6 +744,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "E-Mail-Adresse kopieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Copier l’adresse e-mail"
           }
         }
       }
@@ -501,6 +763,12 @@
             "state" : "machine_translated",
             "value" : "Das Befehlszeilenprogramm konnte nicht installiert werden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible d’installer l’outil en ligne de commande."
+          }
         }
       }
     },
@@ -511,6 +779,12 @@
             "state" : "machine_translated",
             "value" : "Die Autorisierungsseite von Dropbox konnte nicht geöffnet werden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible d’ouvrir la page d’autorisation de Dropbox."
+          }
         }
       }
     },
@@ -520,6 +794,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ konnte nicht synchronisiert werden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible de synchroniser « %@ »"
           }
         }
       }
@@ -533,6 +813,12 @@
             "state" : "machine_translated",
             "value" : "Täglich"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tous les jours"
+          }
         }
       }
     },
@@ -542,6 +828,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Diagnose"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Diagnostic"
           }
         }
       }
@@ -555,6 +847,12 @@
             "state" : "machine_translated",
             "value" : "Ausblenden"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Masquer"
+          }
         }
       }
     },
@@ -564,6 +862,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Fertig"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Terminé"
           }
         }
       }
@@ -575,6 +879,12 @@
             "state" : "machine_translated",
             "value" : "Siehst du es nicht in der Seitenleiste? Wähle Finder ▸ Einstellungen, klicke auf „Seitenleiste“ und aktiviere unter „Orte“ die Option „Cloud-Speicher“."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vous ne le voyez pas dans la barre latérale ? Choisissez Finder ▸ Réglages, cliquez sur « Barre latérale », puis activez « Stockage dans le cloud » sous « Emplacements »."
+          }
         }
       }
     },
@@ -584,6 +894,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Download-Limit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Limite de téléchargement"
           }
         }
       }
@@ -595,6 +911,12 @@
             "state" : "machine_translated",
             "value" : "Installationsprogramm laden"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Télécharger le programme d’installation"
+          }
         }
       }
     },
@@ -604,6 +926,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox-Dateien geändert"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fichiers Dropbox modifiés"
           }
         }
       }
@@ -615,6 +943,12 @@
             "state" : "machine_translated",
             "value" : "Dauer"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Durée"
+          }
         }
       }
     },
@@ -624,6 +958,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr im Finder aktivieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Activer Zephyr dans le Finder"
           }
         }
       }
@@ -635,6 +975,12 @@
             "state" : "machine_translated",
             "value" : "Aktiviert. Deine Dropbox befindet sich im Finder."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Activé. Votre Dropbox est dans le Finder."
+          }
         }
       }
     },
@@ -644,6 +990,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Stattdessen einen Code eingeben"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Saisir un code à la place"
           }
         }
       }
@@ -657,6 +1009,12 @@
             "state" : "machine_translated",
             "value" : "Fehler"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Erreur"
+          }
         }
       }
     },
@@ -668,6 +1026,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Alle Objekte, die Zephyr kennt, sind mit Dropbox synchron."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tous les éléments que Zephyr connaît sont synchronisés avec Dropbox."
           }
         }
       }
@@ -681,6 +1045,12 @@
             "state" : "machine_translated",
             "value" : "Alles, was eine Stummschaltung unterdrückt, auch Synchronisierungsfehler, wird am Ende als Mitteilung angezeigt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tout ce que masque une mise en sourdine, erreurs de synchronisation comprises, fait l’objet d’une notification à la fin de celle-ci."
+          }
         }
       }
     },
@@ -692,12 +1062,24 @@
             "state" : "machine_translated",
             "value" : "Die File Provider-Erweiterung ist nicht aktiviert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’extension File Provider n’est pas activée."
+          }
         }
       }
     },
     "Finder" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Finder"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Finder"
@@ -712,6 +1094,12 @@
             "state" : "machine_translated",
             "value" : "Der Finder erfährt innerhalb von Sekunden von Änderungen, die anderswo vorgenommen wurden – aber nur, solange Zephyr läuft."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le Finder est informé en quelques secondes des modifications effectuées ailleurs, mais uniquement tant que Zephyr est en cours d’exécution."
+          }
         }
       }
     },
@@ -722,6 +1110,12 @@
             "state" : "machine_translated",
             "value" : "Der Finder erfährt nur dann innerhalb von Sekunden von Änderungen aus der Ferne, wenn Zephyr bei der Anmeldung geöffnet werden darf."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le Finder n’est informé en quelques secondes des modifications distantes que si Zephyr est autorisé à s’ouvrir à l’ouverture de session."
+          }
         }
       }
     },
@@ -731,6 +1125,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Allgemein"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Général"
           }
         }
       }
@@ -744,6 +1144,12 @@
             "state" : "machine_translated",
             "value" : "Hol dir dazu Hilfe."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Obtenir de l’aide à ce sujet."
+          }
         }
       }
     },
@@ -754,6 +1160,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hilfe zu einer Dropbox, die Zephyr nicht erreichen kann"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur l’impossibilité pour Zephyr de joindre Dropbox"
           }
         }
       }
@@ -766,6 +1178,12 @@
             "state" : "machine_translated",
             "value" : "Hilfe zu einer Dropbox, die nicht im Finder erscheint"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur l’absence de Dropbox dans le Finder"
+          }
         }
       }
     },
@@ -776,6 +1194,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hilfe zu Diagnoseberichten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur les rapports de diagnostic"
           }
         }
       }
@@ -788,6 +1212,12 @@
             "state" : "machine_translated",
             "value" : "Hilfe zum Erteilen der Freigaben, die Zephyr benötigt"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur l’octroi des autorisations dont Zephyr a besoin"
+          }
         }
       }
     },
@@ -798,6 +1228,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hilfe zur Installation des Befehlszeilenprogramms"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur l’installation de l’outil en ligne de commande"
           }
         }
       }
@@ -810,6 +1246,12 @@
             "state" : "machine_translated",
             "value" : "Hilfe zu geladenen und behaltenen Objekten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur les éléments dont le téléchargement est conservé"
+          }
         }
       }
     },
@@ -820,6 +1262,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hilfe zu Objekten, die nicht synchronisiert werden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur les éléments qui ne se synchronisent pas"
           }
         }
       }
@@ -832,6 +1280,12 @@
             "state" : "machine_translated",
             "value" : "Hilfe zu Objekten, die nicht synchronisiert werden konnten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur les éléments qui n’ont pas pu être synchronisés"
+          }
         }
       }
     },
@@ -842,6 +1296,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hilfe dazu, Zephyr geöffnet zu halten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur le maintien de Zephyr en cours d’exécution"
           }
         }
       }
@@ -854,6 +1314,12 @@
             "state" : "machine_translated",
             "value" : "Hilfe zum Verknüpfen eines Dropbox-Kontos"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur l’association d’un compte Dropbox"
+          }
         }
       }
     },
@@ -864,6 +1330,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hilfe zu Mitteilungen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur les notifications"
           }
         }
       }
@@ -876,6 +1348,12 @@
             "state" : "machine_translated",
             "value" : "Hilfe zu Mitteilungen, die nicht ankommen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur les notifications qui n’arrivent pas"
+          }
         }
       }
     },
@@ -886,6 +1364,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hilfe zum erneuten Verknüpfen eines Dropbox-Kontos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur la nouvelle association d’un compte Dropbox"
           }
         }
       }
@@ -898,6 +1382,12 @@
             "state" : "machine_translated",
             "value" : "Hilfe zum Befehlszeilenprogramm"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur l’outil en ligne de commande"
+          }
         }
       }
     },
@@ -908,6 +1398,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hilfe zu Übertragungslimits"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur les limites de transfert"
           }
         }
       }
@@ -920,6 +1416,12 @@
             "state" : "machine_translated",
             "value" : "Hilfe zur Suche nach Updates"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur la recherche de mises à jour"
+          }
         }
       }
     },
@@ -931,6 +1433,12 @@
             "state" : "machine_translated",
             "value" : "Hilfe zur Verwendung von Zephyr in einem Kurzbefehl"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur l’utilisation de Zephyr dans un raccourci"
+          }
         }
       }
     },
@@ -941,6 +1449,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hilfe dazu, wo deine Dateien gespeichert sind"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aide sur l’emplacement de conservation de vos fichiers"
           }
         }
       }
@@ -954,6 +1468,12 @@
             "state" : "machine_translated",
             "value" : "Hält alle Mitteilungen, auch Synchronisierungsfehler, zurück, bis die Stummschaltung endet."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Masquez toutes les notifications, erreurs de synchronisation comprises, jusqu’à la fin de la mise en sourdine."
+          }
         }
       }
     },
@@ -964,6 +1484,12 @@
             "state" : "machine_translated",
             "value" : "Hält alle Übertragungen an, bis du sie fortsetzt. Dateien, die sich bereits auf diesem Mac befinden, bleiben unverändert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Suspendez tous les transferts jusqu’à la reprise. Les fichiers déjà présents sur ce Mac restent en place."
+          }
         }
       }
     },
@@ -973,6 +1499,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hält alle Mitteilungen von Zephyr, auch Synchronisierungsfehler, zurück, bis die Stummschaltung endet. Die Synchronisierung selbst läuft weiter."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Masque toutes les notifications de Zephyr, erreurs de synchronisation comprises, jusqu’à la fin de la mise en sourdine. La synchronisation elle-même se poursuit."
           }
         }
       }
@@ -986,6 +1518,12 @@
             "state" : "machine_translated",
             "value" : "Stündlich"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Toutes les heures"
+          }
         }
       }
     },
@@ -995,6 +1533,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Installiert in /usr/local/bin"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Installé dans /usr/local/bin"
           }
         }
       }
@@ -1006,6 +1550,12 @@
             "state" : "machine_translated",
             "value" : "Das Befehlszeilenprogramm lässt sich nur in der herunterladbaren Version installieren."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’installation de l’outil en ligne de commande est disponible dans la version téléchargeable."
+          }
         }
       }
     },
@@ -1015,6 +1565,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Installieren …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Installer…"
           }
         }
       }
@@ -1026,6 +1582,12 @@
             "state" : "machine_translated",
             "value" : "Sie wurde geschlossen, ohne zu antworten."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Elle s’est fermée sans répondre."
+          }
         }
       }
     },
@@ -1035,6 +1597,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Weiter indexieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Continuer l’indexation"
           }
         }
       }
@@ -1046,6 +1614,12 @@
             "state" : "machine_translated",
             "value" : "Solange Zephyr läuft, erfährt der Finder innerhalb von Sekunden von Änderungen in der Dropbox, die anderswo vorgenommen wurden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Tant que Zephyr reste en cours d’exécution, le Finder est informé en quelques secondes des modifications distantes apportées à Dropbox."
+          }
         }
       }
     },
@@ -1055,6 +1629,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Geladen und behalten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Téléchargement conservé"
           }
         }
       }
@@ -1066,6 +1646,12 @@
             "state" : "machine_translated",
             "value" : "Zuletzt geprüft"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dernière vérification"
+          }
         }
       }
     },
@@ -1076,6 +1662,12 @@
             "state" : "machine_translated",
             "value" : "Bei der Anmeldung öffnen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir à l’ouverture de session"
+          }
         }
       }
     },
@@ -1085,6 +1677,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verknüpfen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associer"
           }
         }
       }
@@ -1098,6 +1696,12 @@
             "state" : "machine_translated",
             "value" : "Erneut verknüpfen …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associer à nouveau…"
+          }
         }
       }
     },
@@ -1110,6 +1714,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox-Konto verknüpfen …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associer un compte Dropbox…"
+          }
         }
       }
     },
@@ -1119,6 +1729,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dein Dropbox-Konto verknüpfen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associer votre compte Dropbox"
           }
         }
       }
@@ -1130,6 +1746,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox-Konto verknüpfen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associer un compte Dropbox"
+          }
         }
       }
     },
@@ -1139,6 +1761,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox-Konto verknüpfen …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associer un compte Dropbox…"
           }
         }
       }
@@ -1150,6 +1778,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox-Konto verknüpfen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associer un compte Dropbox"
+          }
         }
       }
     },
@@ -1159,6 +1793,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verknüpfe ein Dropbox-Konto, um dessen Dateien im Finder zu durchsuchen. Konten, die nur mit dem Befehlszeilenprogramm „zephyr“ verknüpft wurden, behalten ihre Zugangsdaten für sich und erscheinen hier nicht – verknüpfe sie zusätzlich in der App."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associez un compte Dropbox pour parcourir ses fichiers dans le Finder. Les comptes associés uniquement avec l’outil en ligne de commande zephyr gardent leurs identifiants pour eux et n’apparaissent pas ici ; associez-les aussi dans l’app."
           }
         }
       }
@@ -1170,6 +1810,12 @@
             "state" : "machine_translated",
             "value" : "Verknüpfe ein Dropbox-Konto oder hebe die Verknüpfung eines Kontos auf, das Zephyr synchronisiert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associer un compte Dropbox ou dissocier un compte que Zephyr synchronise."
+          }
         }
       }
     },
@@ -1180,6 +1826,12 @@
             "state" : "machine_translated",
             "value" : "Legt in /usr/local/bin einen Link auf das mitgelieferte Programm „zephyr“ an"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Installer l’outil zephyr inclus dans /usr/local/bin"
+          }
         }
       }
     },
@@ -1189,6 +1841,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verknüpft. Weitere Konten kannst du später über das Menü „Konto“ hinzufügen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Compte associé. Vous pourrez en ajouter d’autres plus tard depuis le menu Compte."
           }
         }
       }
@@ -1202,6 +1860,12 @@
             "state" : "machine_translated",
             "value" : "Wird verknüpft …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Association…"
+          }
         }
       }
     },
@@ -1213,6 +1877,12 @@
             "state" : "machine_translated",
             "value" : "Konten verwalten …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Gérer les comptes…"
+          }
         }
       }
     },
@@ -1222,6 +1892,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Getaktete Netzwerke"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Réseaux facturés à l’usage"
           }
         }
       }
@@ -1233,6 +1909,12 @@
             "state" : "machine_translated",
             "value" : "Nie"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Jamais"
+          }
         }
       }
     },
@@ -1242,6 +1924,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Neue Limits gelten sofort und für alle verknüpften Konten gemeinsam."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Les nouvelles limites s’appliquent immédiatement et sont communes à tous les comptes associés."
           }
         }
       }
@@ -1253,6 +1941,12 @@
             "state" : "machine_translated",
             "value" : "Es ist noch kein Dropbox-Konto verknüpft."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucun compte Dropbox n’est encore associé."
+          }
         }
       }
     },
@@ -1262,6 +1956,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Keine verknüpften Konten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucun compte associé"
           }
         }
       }
@@ -1275,6 +1975,12 @@
             "state" : "machine_translated",
             "value" : "Nicht synchronisiert"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Éléments non synchronisés"
+          }
         }
       }
     },
@@ -1284,6 +1990,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Noch nicht erlaubt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pas encore autorisé"
           }
         }
       }
@@ -1295,6 +2007,12 @@
             "state" : "machine_translated",
             "value" : "Nicht installiert"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Non installé"
+          }
         }
       }
     },
@@ -1305,6 +2023,12 @@
             "state" : "machine_translated",
             "value" : "Noch nicht verknüpft"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pas encore associé"
+          }
         }
       }
     },
@@ -1314,6 +2038,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Wird noch nicht bei der Anmeldung geöffnet"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pas encore ouvert à l’ouverture de session"
           }
         }
       }
@@ -1327,6 +2057,12 @@
             "state" : "machine_translated",
             "value" : "Keine Synchronisierungsprobleme"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucun problème de synchronisation"
+          }
         }
       }
     },
@@ -1336,6 +2072,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Nichts wird geladen und behalten."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucun téléchargement n’est conservé."
           }
         }
       }
@@ -1349,6 +2091,12 @@
             "state" : "machine_translated",
             "value" : "Nichts ist von der Synchronisierung ausgeschlossen."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rien n’est exclu de la synchronisation."
+          }
         }
       }
     },
@@ -1358,6 +2106,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Mitteilungen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Notifications"
           }
         }
       }
@@ -1370,6 +2124,12 @@
             "state" : "machine_translated",
             "value" : "Mitteilungen sind nicht erlaubt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Les notifications ne sont pas autorisées."
+          }
         }
       }
     },
@@ -1380,12 +2140,24 @@
             "state" : "machine_translated",
             "value" : "Mitteilungen zu"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Notifier à propos de"
+          }
         }
       }
     },
     "OK" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "OK"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "OK"
@@ -1400,6 +2172,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox im Browser öffnen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir Dropbox dans le navigateur"
+          }
         }
       }
     },
@@ -1409,6 +2187,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Öffne Dropbox in deinem Browser, genehmige den Zugriff und füge dann den angezeigten Code hier ein."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrez Dropbox dans votre navigateur, autorisez l’accès, puis collez ici le code affiché."
           }
         }
       }
@@ -1420,6 +2204,12 @@
             "state" : "machine_translated",
             "value" : "„Dateianbieter“ öffnen, wo Zephyr für den Finder aktiviert wird"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir « Fournisseurs de fichiers », où Zephyr est activé pour le Finder"
+          }
         }
       }
     },
@@ -1430,6 +2220,12 @@
             "state" : "machine_translated",
             "value" : "„Anmeldeobjekte & Erweiterungen“ öffnen, wo das Anmeldeobjekt von Zephyr erlaubt wird"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir « Ouverture et extensions », où l’élément d’ouverture de Zephyr est autorisé"
+          }
         }
       }
     },
@@ -1439,6 +2235,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„Mitteilungen“ öffnen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir « Notifications »"
           }
         }
       }
@@ -1452,6 +2254,12 @@
             "state" : "machine_translated",
             "value" : "„Mitteilungen“ öffnen, wo die Mitteilungen von Zephyr erlaubt werden"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir « Notifications », où celles de Zephyr sont autorisées"
+          }
         }
       }
     },
@@ -1461,6 +2269,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Systemeinstellungen öffnen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir Réglages Système"
           }
         }
       }
@@ -1472,6 +2286,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr bei der Anmeldung öffnen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir Zephyr à l’ouverture de session"
+          }
         }
       }
     },
@@ -1481,6 +2301,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Bei der Anmeldung öffnen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir à l’ouverture de session"
           }
         }
       }
@@ -1493,6 +2319,12 @@
             "state" : "machine_translated",
             "value" : "„Bei der Anmeldung öffnen“ ist nicht aktiviert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’option « Ouvrir à l’ouverture de session » n’est pas activée."
+          }
         }
       }
     },
@@ -1502,6 +2334,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Im Finder öffnen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir dans le Finder"
           }
         }
       }
@@ -1513,6 +2351,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ im Finder öffnen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrir « %@ » dans le Finder"
+          }
         }
       }
     },
@@ -1523,6 +2367,12 @@
             "state" : "machine_translated",
             "value" : "Wird bei der Anmeldung geöffnet"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouverture à l’ouverture de session"
+          }
         }
       }
     },
@@ -1532,6 +2382,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Anhalten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Suspendre"
           }
         }
       }
@@ -1545,6 +2401,12 @@
             "state" : "machine_translated",
             "value" : "Synchronisierung anhalten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Suspendre la synchronisation"
+          }
         }
       }
     },
@@ -1555,6 +2417,12 @@
             "state" : "machine_translated",
             "value" : "Synchronisierung anhalten oder fortsetzen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Suspendre ou reprendre la synchronisation"
+          }
         }
       }
     },
@@ -1564,6 +2432,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Datenschutzerklärung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Politique de confidentialité"
           }
         }
       }
@@ -1577,6 +2451,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr beenden"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Quitter Zephyr"
+          }
         }
       }
     },
@@ -1588,6 +2468,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Neu erstellen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Reconstruire"
           }
         }
       }
@@ -1601,6 +2487,12 @@
             "state" : "machine_translated",
             "value" : "Index neu erstellen …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Reconstruire l’index…"
+          }
         }
       }
     },
@@ -1612,6 +2504,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Soll der Index für „%@“ neu erstellt werden?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Voulez-vous reconstruire l’index de « %@ » ?"
           }
         }
       }
@@ -1625,6 +2523,12 @@
             "state" : "machine_translated",
             "value" : "Erneut installieren"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Réinstaller"
+          }
         }
       }
     },
@@ -1635,6 +2539,12 @@
             "state" : "machine_translated",
             "value" : "Problem melden"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Signaler un problème"
+          }
         }
       }
     },
@@ -1644,6 +2554,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Fortsetzen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Reprendre"
           }
         }
       }
@@ -1657,6 +2573,12 @@
             "state" : "machine_translated",
             "value" : "Synchronisierung fortsetzen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Reprendre la synchronisation"
+          }
         }
       }
     },
@@ -1669,6 +2591,12 @@
             "state" : "machine_translated",
             "value" : "Sichert einen Bericht über die Konten von Zephyr, Synchronisierungsfehler und die letzten Aktivitäten und zeigt ihn dann im Finder an. Er nennt Dateien aus deiner Dropbox, also lies ihn durch, bevor du ihn sendest."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Enregistre un rapport sur les comptes de Zephyr, les échecs de synchronisation et l’activité récente, puis l’affiche dans le Finder. Il mentionne des fichiers de votre Dropbox ; relisez-le avant de l’envoyer."
+          }
         }
       }
     },
@@ -1678,6 +2606,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Einstellungen …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Réglages…"
           }
         }
       }
@@ -1691,6 +2625,12 @@
             "state" : "machine_translated",
             "value" : "Anzeigen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Afficher"
+          }
         }
       }
     },
@@ -1700,6 +2640,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dauer der Stummschaltung"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Durée du masquage"
           }
         }
       }
@@ -1712,6 +2658,12 @@
             "state" : "machine_translated",
             "value" : "Mitteilungen stummschalten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Masquer les notifications"
+          }
         }
       }
     },
@@ -1722,6 +2674,12 @@
             "state" : "machine_translated",
             "value" : "Mitteilungen von Zephyr stummschalten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Masquer les notifications de Zephyr"
+          }
         }
       }
     },
@@ -1731,6 +2689,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Stummgeschaltet bis"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Masquées jusqu’à"
           }
         }
       }
@@ -1743,6 +2707,12 @@
             "state" : "machine_translated",
             "value" : "Stummgeschaltet bis %@"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Masquées jusqu’à %@"
+          }
         }
       }
     },
@@ -1752,6 +2722,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Damit Zephyr dir mitteilen kann, wenn sich deine Dateien ändern oder etwas nicht synchronisiert werden konnte."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pour que Zephyr puisse vous prévenir lorsque vos fichiers changent ou qu’un élément n’a pas pu être synchronisé."
           }
         }
       }
@@ -1763,6 +2739,12 @@
             "state" : "machine_translated",
             "value" : "Setze die Übertragungen fort."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Reprenez les transferts."
+          }
         }
       }
     },
@@ -1772,6 +2754,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Status"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "État"
           }
         }
       }
@@ -1783,6 +2771,12 @@
             "state" : "machine_translated",
             "value" : "Nicht mehr behalten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ne plus conserver"
+          }
         }
       }
     },
@@ -1793,6 +2787,12 @@
             "state" : "machine_translated",
             "value" : "Beende Zephyr. Der Finder erfährt erst wieder von Änderungen aus der Ferne, wenn du Zephyr erneut öffnest."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Quittez Zephyr. Le Finder n’est plus informé des modifications distantes tant que vous ne rouvrez pas Zephyr."
+          }
         }
       }
     },
@@ -1802,6 +2802,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hält die Synchronisierung aller Dropbox-Konten, die Zephyr im Finder bereitstellt, an oder setzt sie fort."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Suspend ou reprend la synchronisation de tous les comptes Dropbox que Zephyr conserve dans le Finder."
           }
         }
       }
@@ -1815,6 +2821,12 @@
             "state" : "machine_translated",
             "value" : "Synchronisierungsprobleme"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Problèmes de synchronisation"
+          }
         }
       }
     },
@@ -1824,6 +2836,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Synchronisierungsaktion"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Action de synchronisation"
           }
         }
       }
@@ -1837,6 +2855,12 @@
             "state" : "machine_translated",
             "value" : "Die Synchronisierung wurde für dieses Konto gestoppt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La synchronisation s’est arrêtée pour ce compte."
+          }
         }
       }
     },
@@ -1847,6 +2871,12 @@
             "state" : "machine_translated",
             "value" : "Die Synchronisierung ist angehalten."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La synchronisation est suspendue."
+          }
         }
       }
     },
@@ -1856,6 +2886,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Synchronisierung läuft."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La synchronisation est active."
           }
         }
       }
@@ -1869,6 +2905,12 @@
             "state" : "machine_translated",
             "value" : "Die Synchronisierung wurde gestoppt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La synchronisation s’est arrêtée."
+          }
         }
       }
     },
@@ -1881,6 +2923,12 @@
             "state" : "machine_translated",
             "value" : "Der App Store hält Zephyr auf dem neuesten Stand."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’App Store maintient Zephyr à jour."
+          }
         }
       }
     },
@@ -1890,6 +2938,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Diese Objekte werden geladen, sobald sie sich ändern, und bleiben auf diesem Mac, auch wenn nur noch wenig Speicherplatz frei ist. „Nicht mehr behalten“ lässt die Inhalte an Ort und Stelle, und macOS kann den Speicherplatz bei Bedarf freigeben."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ces éléments sont téléchargés dès qu’ils sont modifiés et restent sur ce Mac, même s’il reste très peu d’espace. Si vous arrêtez, le contenu reste en place et macOS peut récupérer l’espace quand il en a besoin."
           }
         }
       }
@@ -1903,6 +2957,12 @@
             "state" : "machine_translated",
             "value" : "Diese Objekte bleiben nur auf diesem Mac. Wird die Synchronisierung eines Objekts fortgesetzt, kommt es zurück in deine Dropbox."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ces éléments restent uniquement sur ce Mac. Si vous en reprenez un, il est remis dans votre Dropbox."
+          }
         }
       }
     },
@@ -1912,6 +2972,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Diese Version von Zephyr enthält das Befehlszeilenprogramm „zephyr“ nicht."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cette version de Zephyr n’inclut pas l’outil en ligne de commande zephyr."
           }
         }
       }
@@ -1923,6 +2989,12 @@
             "state" : "machine_translated",
             "value" : "Dadurch werden die Dateien des Kontos aus dem Finder entfernt und Zephyr wird von Dropbox getrennt. In deiner Dropbox wird nichts gelöscht."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cette action retire du Finder les fichiers du compte et déconnecte Zephyr de Dropbox. Rien n’est supprimé dans votre Dropbox."
+          }
         }
       }
     },
@@ -1932,6 +3004,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zum manuellen Installieren führe diesen Befehl aus: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pour installer manuellement, exécutez : %@"
           }
         }
       }
@@ -1943,6 +3021,12 @@
             "state" : "machine_translated",
             "value" : "Umschalten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Basculer"
+          }
         }
       }
     },
@@ -1952,6 +3036,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Übertragungslimit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Limite de débit"
           }
         }
       }
@@ -1965,6 +3055,12 @@
             "state" : "machine_translated",
             "value" : "Fehlerbehebung"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dépannage"
+          }
         }
       }
     },
@@ -1974,6 +3070,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Versuche es erneut oder verknüpfe das Konto stattdessen mit einem Autorisierungscode."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Réessayez ou associez plutôt le compte avec un code d’autorisation."
           }
         }
       }
@@ -1985,6 +3087,12 @@
             "state" : "machine_translated",
             "value" : "Stummschaltung beenden"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ne plus masquer"
+          }
         }
       }
     },
@@ -1995,6 +3103,12 @@
             "state" : "machine_translated",
             "value" : "Unbegrenzt"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Illimité"
+          }
         }
       }
     },
@@ -2004,6 +3118,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verknüpfung aufheben"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dissocier"
           }
         }
       }
@@ -2017,6 +3137,12 @@
             "state" : "machine_translated",
             "value" : "Verknüpfung von „%@“ aufheben?"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dissocier « %@ » ?"
+          }
         }
       }
     },
@@ -2026,6 +3152,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verknüpfung aufheben …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dissocier…"
           }
         }
       }
@@ -2037,6 +3169,12 @@
             "state" : "machine_translated",
             "value" : "Aktualisiert %@"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mis à jour %@"
+          }
         }
       }
     },
@@ -2046,6 +3184,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Updates"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mises à jour"
           }
         }
       }
@@ -2057,12 +3201,24 @@
             "state" : "machine_translated",
             "value" : "Upload-Limit"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Limite de transfert"
+          }
         }
       }
     },
     "Version" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Version"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Version"
@@ -2077,6 +3233,12 @@
             "state" : "machine_translated",
             "value" : "Warten auf die Aktivierung von Zephyr"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "En attente de l’activation de Zephyr"
+          }
         }
       }
     },
@@ -2089,6 +3251,12 @@
             "state" : "machine_translated",
             "value" : "Warten auf erste Synchronisierung"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "En attente de la première synchronisation"
+          }
         }
       }
     },
@@ -2098,6 +3266,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Wöchentlich"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Toutes les semaines"
           }
         }
       }
@@ -2109,6 +3283,12 @@
             "state" : "machine_translated",
             "value" : "Willkommen bei Zephyr"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Bienvenue dans Zephyr"
+          }
         }
       }
     },
@@ -2118,6 +3298,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Was Zephyr benötigt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ce dont Zephyr a besoin"
           }
         }
       }
@@ -2129,12 +3315,24 @@
             "state" : "machine_translated",
             "value" : "Du kannst all das später in den Einstellungen von Zephyr ändern."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vous pourrez modifier tout cela plus tard dans les réglages de Zephyr."
+          }
         }
       }
     },
     "Zephyr" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr"
@@ -2151,6 +3349,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr (%@)"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr (%@)"
+          }
         }
       }
     },
@@ -2160,6 +3364,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr ist bereit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr est prêt"
           }
         }
       }
@@ -2171,6 +3381,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr wird von einer Kopie aus ausgeführt"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr s’exécute depuis une copie"
+          }
         }
       }
     },
@@ -2180,6 +3396,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr einrichten …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Configurer Zephyr…"
           }
         }
       }
@@ -2191,6 +3413,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr erscheint in dieser Liste, sobald ein Konto verknüpft ist – gehe zuerst einen Schritt zurück."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr apparaît dans cette liste dès qu’un compte est associé ; revenez d’abord à l’étape précédente."
+          }
         }
       }
     },
@@ -2200,6 +3428,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr kann dies nicht selbst installieren. Führe im Terminal Folgendes aus:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr ne peut pas l’installer lui-même. Exécutez ceci dans Terminal :"
           }
         }
       }
@@ -2212,6 +3446,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr kann Dropbox nicht erreichen."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr ne parvient pas à joindre Dropbox."
+          }
         }
       }
     },
@@ -2223,6 +3463,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr kann die Einstellungen dieses Kontos nicht lesen."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr ne peut pas lire les réglages de ce compte."
+          }
         }
       }
     },
@@ -2233,6 +3479,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr kann die Einstellungen dieses Kontos nicht lesen. Verknüpfe das Konto erneut, um sie zu reparieren."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr ne peut pas lire les réglages de ce compte. Associez-le à nouveau pour les réparer."
+          }
         }
       }
     },
@@ -2242,6 +3494,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr kann keine Dateiänderungen oder Synchronisierungsprobleme melden, solange Mitteilungen nicht erlaubt sind."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr ne peut pas signaler les modifications de fichiers ni les problèmes de synchronisation tant que les notifications ne sont pas autorisées."
           }
         }
       }
@@ -2255,6 +3513,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr konnte „%@“ im Finder nicht finden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr n’a pas trouvé « %@ » dans le Finder."
+          }
         }
       }
     },
@@ -2266,6 +3530,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr konnte „%@“ nicht fortsetzen. Versuche es über das Dropbox-Menü im Finder."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr n’a pas pu reprendre « %@ ». Essayez depuis le menu Dropbox du Finder."
           }
         }
       }
@@ -2279,6 +3549,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr wird macOS um drei Dinge bitten. Jedes davon erteilst du selbst, und nichts davon geschieht ohne dich."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr va demander trois choses à macOS. C’est à vous d’accorder chacune d’elles, et aucune n’a lieu sans vous."
+          }
         }
       }
     },
@@ -2289,6 +3565,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr steht in keiner Verbindung zu Dropbox, Inc. und wird von Dropbox, Inc. weder unterstützt noch gesponsert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr n’est ni affilié à Dropbox, Inc., ni approuvé, ni parrainé par cette société."
+          }
         }
       }
     },
@@ -2298,6 +3580,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr teilt dem Finder mit, dass sich die Dropbox geändert hat. Solange Zephyr nicht läuft, holt der Finder das stattdessen beim nächsten Öffnen von Zephyr nach."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "C’est Zephyr qui prévient le Finder que Dropbox a changé. Tant qu’il n’est pas en cours d’exécution, le Finder se met à jour la prochaine fois que vous l’ouvrez."
           }
         }
       }
@@ -2311,6 +3599,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr erhält keine Rückmeldung von Dropbox."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr ne reçoit aucune réponse de Dropbox."
+          }
         }
       }
     },
@@ -2320,6 +3614,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr hält deine Dateinamen aus dem Systemprotokoll heraus, daher nennt ein zusammen mit diesem Bericht erfasstes Protokoll sie nicht. Der Bericht selbst nennt sie."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr n’inscrit pas les noms de vos fichiers dans le journal système ; un journal capturé avec ce rapport ne les mentionnera donc pas. Le rapport, lui, les mentionne."
           }
         }
       }
@@ -2333,6 +3633,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr listet deine gesamte Dropbox erneut auf und lädt die Dateien, die der Finder bereithält, erneut herunter. Deine Dropbox bleibt unverändert, ebenso Finder-Tags und Objekte, die du von der Synchronisierung ausgenommen hast – aber die Aufzeichnung der letzten Änderungen in Zephyr geht verloren, weil Dropbox sie nie ein zweites Mal sendet."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr répertorie à nouveau l’ensemble de votre Dropbox et retélécharge les fichiers que le Finder conserve. Votre Dropbox n’est pas modifié, pas plus que les tags du Finder et les éléments que vous avez exclus de la synchronisation. En revanche, l’historique des modifications récentes de Zephyr est perdu, car Dropbox ne l’envoie jamais deux fois."
+          }
         }
       }
     },
@@ -2342,6 +3648,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr wartet normalerweise auf ein Netzwerk, dessen Nutzung nichts kostet, bevor es deine Dropbox indexiert oder nach Änderungen sucht. Dateien, die du öffnest, werden trotzdem geladen. Im Datensparmodus wird das Indexieren immer zurückgehalten."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr attend normalement un réseau gratuit avant d’indexer votre Dropbox ou de rechercher des modifications. Les fichiers que vous ouvrez sont tout de même téléchargés. Le mode Faibles données empêche toujours l’indexation."
           }
         }
       }
@@ -2353,6 +3665,12 @@
             "state" : "machine_translated",
             "value" : "Die Mitteilungen von Zephyr sind aktiviert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Les notifications de Zephyr sont activées."
+          }
         }
       }
     },
@@ -2362,6 +3680,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Mitteilungen von Zephyr sind bis %@ stummgeschaltet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Les notifications de Zephyr sont masquées jusqu’à %@."
           }
         }
       }
@@ -2373,6 +3697,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr im Web"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr sur le Web"
+          }
         }
       }
     },
@@ -2382,6 +3712,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr wird bei der Anmeldung geöffnet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr s’ouvre à l’ouverture de session."
           }
         }
       }
@@ -2393,6 +3729,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr stellt deine Dropbox im Finder bereit und lädt Dateien erst herunter, wenn du sie öffnest. Die Einrichtung dauert nur wenige kurze Schritte."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr place votre Dropbox dans le Finder et ne télécharge les fichiers que lorsque vous les ouvrez. La configuration ne prend que quelques étapes rapides."
+          }
         }
       }
     },
@@ -2402,6 +3744,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr läuft in der Menüleiste – sein Symbol zeigt, was gerade synchronisiert wird. Deine Dropbox befindet sich im Finder, und Dateien werden heruntergeladen, wenn du sie öffnest."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr s’exécute dans la barre des menus — son icône indique ce qui se synchronise. Votre Dropbox se trouve dans le Finder, et les fichiers se téléchargent lorsque vous les ouvrez."
           }
         }
       }
@@ -2413,6 +3761,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr meldet sich über Dropbox selbst an, daher erhält Zephyr dein Passwort nie."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr se connecte via Dropbox lui-même : votre mot de passe ne lui parvient jamais."
+          }
         }
       }
     },
@@ -2422,6 +3776,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr kommuniziert nur mit Dropbox und mit sonst niemandem. Deine Autorisierung bleibt in deinem Schlüsselbund."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr ne communique qu’avec Dropbox, et avec rien d’autre. Votre autorisation reste dans votre trousseau."
           }
         }
       }
@@ -2433,12 +3793,24 @@
             "state" : "machine_translated",
             "value" : "Zephyr teilt dir mit, wenn sich deine Dateien ändern und wenn etwas nicht synchronisiert werden konnte. Wie viel es mitteilt, legst du in den Einstellungen fest."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr vous prévient lorsque vos fichiers changent ou qu’un élément n’a pas pu être synchronisé. Vous choisissez dans les réglages le niveau de détail des notifications."
+          }
         }
       }
     },
     "Zephyr, %@" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr, %@"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr, %@"
@@ -2453,6 +3825,12 @@
             "state" : "machine_translated",
             "value" : "Die Aktionen von Zephyr sind in beiden Versionen in der App „Kurzbefehle“ verfügbar."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Les actions de Zephyr sont disponibles dans l’app Raccourcis dans les deux versions."
+          }
         }
       }
     },
@@ -2465,6 +3843,12 @@
             "state" : "machine_translated",
             "value" : "Dateien"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "fichiers"
+          }
         }
       }
     },
@@ -2474,6 +3858,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ordner"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "dossiers"
           }
         }
       }
@@ -2485,6 +3875,12 @@
             "state" : "machine_translated",
             "value" : "macOS lässt alle Dateianbieter ausgeschaltet, bis du sie aktivierst. Öffne die Systemeinstellungen und aktiviere Zephyr."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "macOS laisse chaque extension File Provider désactivée tant que vous ne l’activez pas. Ouvrez Réglages Système et activez Zephyr."
+          }
         }
       }
     },
@@ -2494,6 +3890,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "macOS lässt Dateianbieter ausgeschaltet, bis du sie aktivierst. Solange das nicht geschehen ist, kann deine Dropbox nicht im Finder erscheinen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "macOS laisse les extensions File Provider désactivées tant que vous ne les activez pas. D’ici là, votre Dropbox ne peut pas apparaître dans le Finder."
           }
         }
       }
@@ -2505,6 +3907,12 @@
             "state" : "machine_translated",
             "value" : "macOS führt eine App, die aus einem heruntergeladenen Disk-Image herausgezogen wurde, von einer eigenen temporären Kopie aus, und stellt dabei keine Dropbox im Finder bereit. Das Installationsprogramm von Zephyr legt die App ordnungsgemäß ab. Lade es herunter, führe es aus und öffne Zephyr dann erneut."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "macOS exécute une app glissée hors d’une image disque téléchargée à partir d’une copie temporaire d’elle-même, et n’affiche alors aucun Dropbox dans le Finder. Le programme d’installation de Zephyr l’installe correctement. Téléchargez-le, lancez-le, puis rouvrez Zephyr."
+          }
         }
       }
     },
@@ -2514,6 +3922,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "macOS hat sie nicht geöffnet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "macOS ne l’a pas ouverte."
           }
         }
       }
@@ -2582,6 +3996,40 @@
               }
             }
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %1$@ » et %#@count@"
+          },
+          "substitutions" : {
+            "count" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg autre a été modifié."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg autres ont été modifiés."
+                    }
+                  },
+                  "zero" : {
+                    "stringUnit" : {
+                      "state" : "machine_translated",
+                      "value" : "%arg autre a été modifié."
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -2593,6 +4041,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ wurde hinzugefügt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » a été ajouté."
           }
         }
       }
@@ -2606,6 +4060,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ wurde gelöscht."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » a été supprimé."
+          }
         }
       }
     },
@@ -2615,6 +4075,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ wurde aktualisiert."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » a été mis à jour."
           }
         }
       }
