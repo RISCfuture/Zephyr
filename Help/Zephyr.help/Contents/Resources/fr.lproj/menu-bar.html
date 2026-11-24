@@ -1,0 +1,91 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Voir ce que fait Zephyr</title>
+<meta name="description" content="Lisez l’état de la synchronisation, ouvrez un compte dans le Finder et accédez aux commandes de Zephyr depuis la barre des menus.">
+<meta name="keywords" content="barre des menus, état, panneau, icône, envoi, à jour, suspendue, comptes, quitter, réglages, synchronisation">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="menu-bar" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="menu-bar"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Voir ce que fait Zephyr</h1>
+<p>Zephyr n’a pas de fenêtre principale qui reste ouverte. Son icône dans la barre des menus indique
+l’état de la synchronisation, et un clic dessus ouvre le panneau qui contient tout le reste.</p>
+
+<div class="Task">
+<h2 class="Name">Lire le panneau</h2>
+<div class="TaskBody">
+<p>Cliquez sur l’icône de Zephyr dans la barre des menus.</p>
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/menu-bar-panel-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/menu-bar-panel.webp" width="448" height="480" alt="Le panneau de Zephyr dans la barre des menus, qui répertorie deux comptes avec leur nombre de fichiers et de dossiers, au-dessus de Gérer les comptes…, Réglages…, Suspendre la synchronisation, Masquer les notifications et Quitter Zephyr.">
+  </picture>
+  <figcaption>Une ligne par compte, avec les actions du panneau en dessous.</figcaption>
+</figure>
+<p>Le panneau indique en haut ce qui concerne ce Mac et, plus bas, ce qui concerne chaque compte,
+sans jamais dire la même chose aux deux endroits.</p>
+<ul>
+  <li><p><em>La ligne du haut</em> décrit ce que fait la synchronisation sur l’ensemble de ce Mac, et
+      rien d’autre : <em>À jour</em>, <em>Synchronisation en cours</em>, <em>Envoi en cours</em>,
+      <em>Problèmes de synchronisation</em> ou <em>Suspendue</em>.</p></li>
+  <li><p><em>Les messages juste en dessous</em> n’apparaissent que lorsque quelque chose gêne la
+      synchronisation, et disent de quoi il s’agit : un réseau facturé à l’usage, un Dropbox que
+      Zephyr n’est plus parvenu à joindre depuis un moment, ou Zephyr désactivé dans le Finder.
+      Chacun comporte un lien Obtenir de l’aide à ce sujet. vers la page correspondante. Aucun
+      n’est un bouton.</p>
+      <p>Les notifications et l’ouverture à l’ouverture de session n’y figurent pas. Ce sont des
+      choix sur le comportement de Zephyr, et non des obstacles à la synchronisation ; la fenêtre
+      Zephyr les répertorie avec l’extension du Finder.</p></li>
+  <li><p><em>Comptes</em> répertorie chaque compte associé, avec ce qu’il est en train de faire et le
+      nombre de fichiers et de dossiers qu’il contient. Cliquez sur un compte pour l’ouvrir dans le
+      Finder.</p></li>
+  <li><p><em>La ligne sous le nom d’un compte</em> ne concerne que ce compte :
+      <em>… en attente d’envoi</em> compte les modifications qu’il doit encore à Dropbox &#8212;
+      modifications, changements de nom et suppressions autant que nouveaux fichiers &#8212; et,
+      à défaut, elle indique quand le compte a changé pour la dernière fois.</p></li>
+  <li><p><em>Un avertissement sous un compte</em> signale soit un problème du compte lui-même, soit
+      le nombre d’éléments qui n’ont pas pu être synchronisés, et comporte son propre lien
+      Obtenir de l’aide à ce sujet.</p></li>
+</ul>
+<p>L’icône elle-même reprend le même message que la ligne du haut : vous voyez d’un coup d’œil si
+quelque chose bouge, sans ouvrir le panneau.</p>
+<div class="Alert"><p class="Note"><em>Remarque : </em>Un réseau facturé à l’usage ne retient que
+le travail que personne n’a demandé. Les fichiers que vous ouvrez sont tout de même téléchargés.
+Consultez
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limiter le débit utilisé par Zephyr</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Actions au bas du panneau</h2>
+<div class="TaskBody">
+<div class="table-wrapper">
+<table data-type="Multicolumn" aria-label="Les actions du panneau de la barre des menus">
+<thead><tr><th scope="col"><p class="TableHead">Action</p></th><th scope="col"><p class="TableHead">Effet</p></th></tr></thead>
+<tbody>
+<tr><td><p>Gérer les comptes&#8230;</p></td><td><p>Ouvre la fenêtre Zephyr, où l’on associe et dissocie les comptes.</p></td></tr>
+<tr><td><p>Réglages&#8230;</p></td><td><p>Ouvre les réglages de Zephyr. <kbd>&#8984;,</kbd></p></td></tr>
+<tr><td><p>Suspendre la synchronisation</p></td><td><p>Interrompt l’envoi et la récupération des fichiers jusqu’à la reprise. Consultez <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Suspendre la synchronisation</a>.</p></td></tr>
+<tr><td><p>Masquer les notifications</p></td><td><p>Masque toutes les notifications pendant 30 minutes, 1 heure ou 8 heures.</p></td></tr>
+<tr><td><p>Quitter Zephyr</p></td><td><p>Quitte l’app. Vos fichiers restent dans le Finder, mais plus rien de nouveau n’est synchronisé tant que vous n’avez pas rouvert Zephyr. <kbd>&#8984;Q</kbd></p></td></tr>
+</tbody>
+</table>
+</div>
+<p>Une ligne qui ouvre une fenêtre referme le panneau derrière elle ; une ligne qui modifie
+quelque chose sur place le laisse ouvert. Appuyez sur <kbd>Échap</kbd> pour fermer le panneau.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Suspendre la synchronisation</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Choisir les notifications que Zephyr affiche</a>
+<a href="sync-issues.html#sync-issues" class="xRef AppleTopic">Si un fichier ne se synchronise pas</a>
+<a href="cannot-reach-dropbox.html#cannot-reach-dropbox" class="xRef AppleTopic">Si Zephyr ne parvient pas à joindre Dropbox</a>
+<a href="add-widget.html#add-widget" class="xRef AppleTopic">Ajouter le widget Zephyr à votre bureau</a>
+</div>
+</body>
+</html>

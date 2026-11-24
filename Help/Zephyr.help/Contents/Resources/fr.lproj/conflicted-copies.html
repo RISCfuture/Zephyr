@@ -1,0 +1,77 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Si un même fichier a été modifié à deux endroits</title>
+<meta name="description" content="Pourquoi une deuxième copie d’un fichier apparaît, comment Dropbox l’a nommée et laquelle conserver.">
+<meta name="keywords" content="conflit, copie en conflit, deux appareils, doublon, deuxième copie, écrasé, même fichier, les deux">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="conflicted-copies" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="conflicted-copies"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Si un même fichier a été modifié à deux endroits</h1>
+<p>Lorsqu’un fichier est modifié à deux endroits avant que l’un ou l’autre ne soit synchronisé, Dropbox
+conserve les deux au lieu de choisir, et le second apparaît à côté du premier sous un nom que Dropbox lui
+a donné.</p>
+
+<div class="Task">
+<h2 class="Name">Ce que vous verrez</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Deux fichiers dans le dossier : celui que vous connaissez, qui contient la modification arrivée
+      en premier sur Dropbox, et un second fichier dont le nom en découle.</p></li>
+  <li><p>C’est Dropbox, et non Zephyr, qui choisit ce nom. Il indique de quel compte et de quel jour
+      provient la copie.</p></li>
+  <li><p>Rien dans Problèmes de synchronisation, et aucune notification d’échec. Rien n’a échoué :
+      Zephyr n’écrase jamais une modification dont il n’avait pas connaissance ; conserver les deux est
+      donc la solution.</p></li>
+</ul>
+<p>Les deux fichiers sont dès lors des fichiers ordinaires de votre Dropbox, sur ce Mac et sur tous les
+appareils connectés au compte.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Décider lequel conserver</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Ouvrez les deux et comparez-les.</p></li>
+  <li><p>Copiez tout ce que vous voulez de celui que vous ne conservez pas.</p></li>
+  <li><p>Supprimez celui que vous ne conservez pas, ou renommez-le si vous souhaitez le garder.</p>
+      <p>La suppression le retire aussi de Dropbox et de vos autres appareils ; consultez
+      <a href="recover-deleted-file.html#recover-deleted-file" class="xRef AppleTopic">Si vous avez supprimé un élément dont vous aviez besoin</a>.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Remarque : </em>Le fichier que vous avez conservé a toujours son propre
+historique ; une modification que vous vouliez garder puis avez écrasée est donc récupérable
+séparément. Consultez
+<a href="file-versions.html#file-versions" class="xRef AppleTopic">Revenir à une version antérieure d’un fichier</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Réduire les risques</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Laissez Zephyr s’exécuter. Le Finder n’est informé d’une modification faite ailleurs que
+      lorsque Zephyr est en cours d’exécution, et un Mac qui n’en a pas été informé est un Mac sur le
+      point de créer une deuxième copie ; consultez
+      <a href="settings-general.html#settings-general" class="xRef AppleTopic">Laisser Zephyr s’exécuter en arrière-plan</a>.</p></li>
+  <li><p>Laissez à un Mac qui était en veille ou hors connexion un instant pour se mettre à jour avant de
+      modifier quoi que ce soit dans votre Dropbox. Le panneau de la barre des menus indique quand c’est
+      terminé.</p></li>
+  <li><p>Soyez attentif à ce cas après une période de synchronisation suspendue, qui est précisément la
+      situation où il se produit ; consultez
+      <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Suspendre la synchronisation</a>.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="file-versions.html#file-versions" class="xRef AppleTopic">Revenir à une version antérieure d’un fichier</a>
+<a href="sync-issues.html#sync-issues" class="xRef AppleTopic">Si un fichier ne se synchronise pas</a>
+<a href="recover-deleted-file.html#recover-deleted-file" class="xRef AppleTopic">Si vous avez supprimé un élément dont vous aviez besoin</a>
+</div>
+</body>
+</html>

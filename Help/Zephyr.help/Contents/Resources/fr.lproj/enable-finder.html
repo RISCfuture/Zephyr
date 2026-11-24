@@ -1,0 +1,77 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Activer Zephyr dans le Finder</title>
+<meta name="description" content="Activez le fournisseur de fichiers de Zephyr dans Réglages Système pour que les fichiers d’un compte associé apparaissent dans le Finder.">
+<meta name="keywords" content="finder, activer, fournisseur de fichiers, extension, ouverture et extensions, réglages système, barre latérale, activer zephyr, file provider">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="enable-finder" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="enable-finder"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Activer Zephyr dans le Finder</h1>
+<p>C’est macOS, et non Zephyr, qui vous demande si une app peut placer des fichiers dans le Finder. Tant que vous n’avez pas
+activé Zephyr sous Fournisseurs de fichiers, un compte associé se synchronise mais n’apparaît jamais.</p>
+
+<div class="Task">
+<h2 class="Name">Avant de commencer</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Installez Zephyr au lieu de le glisser hors d’une image disque téléchargée. macOS exécute une
+      app téléchargée depuis une copie temporaire qui lui est propre et n’enregistre pas de fournisseur de
+      fichiers pour une telle copie : Zephyr n’atteint donc jamais la liste Fournisseurs de fichiers. Consultez
+      <a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">Si votre Dropbox n’apparaît pas dans le Finder</a>.</p></li>
+  <li><p>Associez d’abord un compte Dropbox. Zephyr n’apparaît dans la liste Fournisseurs de fichiers que
+      lorsqu’il y a un compte à afficher : le réglage que vous cherchez n’y figure donc pas encore si vous
+      n’en avez pas associé. Consultez
+      <a href="link-account.html#link-account" class="xRef AppleTopic">Associer votre compte Dropbox</a>.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Activer Zephyr</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Choisissez le menu Pomme &gt; Réglages Système, cliquez sur Général dans
+      la barre latérale, cliquez sur Ouverture et extensions, puis sur
+      Fournisseurs de fichiers.</p>
+      <p><a href="x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.fileprovider-nonui" class="URL">Ouvrir
+      « Fournisseurs de fichiers » pour moi</a></p></li>
+  <li><p>Activez Zephyr.</p></li>
+  <li><p>Ouvrez une nouvelle fenêtre du Finder. Votre Dropbox apparaît dans la barre latérale sous
+      Emplacements. S’il n’y figure pas, le Finder masque peut-être les emplacements cloud &#8212; consultez
+      <a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">Si votre Dropbox n’apparaît pas dans le Finder</a>.</p></li>
+</ol>
+<figure>
+  <picture>
+    <source srcset="../en.lproj/system/system-settings-file-providers-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/system/system-settings-file-providers.webp" width="470" height="465" alt="La feuille Fournisseurs de fichiers dans Réglages Système, qui liste toutes les apps autorisées à placer des fichiers dans le Finder, avec le commutateur de Zephyr activé.">
+  </picture>
+  <figcaption>Zephyr apparaît ici dès qu’un compte est associé. Le commutateur suffit.</figcaption>
+</figure>
+<div class="Alert"><p class="Note"><em>Remarque : </em>Zephyr surveille ce réglage et cesse de vous le demander dès que
+vous l’avez activé. Si l’avertissement s’affiche encore, cliquez sur l’icône de Zephyr dans la barre des menus
+&#8212; la vérification est relancée à chaque ouverture du panneau.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Laisser Zephyr s’exécuter</h2>
+<div class="TaskBody">
+<p>C’est Zephyr qui surveille les modifications de Dropbox : le Finder n’est donc informé d’une modification faite sur un autre
+appareil que si Zephyr est en cours d’exécution. L’ouvrir à l’ouverture de session garantit cela sans que vous
+ayez à y penser &#8212; consultez
+<a href="settings-general.html#settings-general" class="xRef AppleTopic">Laisser Zephyr s’exécuter en arrière-plan</a>.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">Si votre Dropbox n’apparaît pas dans le Finder</a>
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Où se trouvent vos fichiers Dropbox</a>
+<a href="withheld-approval.html#withheld-approval" class="xRef AppleTopic">Si Zephyr attend votre autorisation</a>
+</div>
+</body>
+</html>

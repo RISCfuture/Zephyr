@@ -1,0 +1,89 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Limiter le débit utilisé par Zephyr</title>
+<meta name="description" content="Plafonnez les débits d’envoi et de téléchargement de Zephyr, et choisissez ce qu’il fait sur un point d’accès ou en mode Faibles données.">
+<meta name="keywords" content="débit, limite, limite de débit, limiter, ralentir, envoi, téléchargement, vitesse, illimité, réseau facturé à l’usage, point d’accès, partage de connexion, mode Faibles données, cellulaire, coûteux">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="settings-bandwidth" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="settings-bandwidth"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Limiter le débit utilisé par Zephyr</h1>
+<p>Un gros envoi peut saturer entièrement une connexion. Vous pouvez limiter Zephyr à un débit de
+votre choix, dans chaque sens.</p>
+
+<div class="Task">
+<h2 class="Name">Définir une limite</h2>
+<div class="TaskBody">
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-bandwidth-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-bandwidth.webp" width="460" height="156" alt="La section Débit des réglages de Zephyr : un curseur Limite de transfert et un curseur Limite de téléchargement, tous deux sur Illimité, au-dessus d’une ligne indiquant que les nouvelles limites s’appliquent immédiatement et sont communes à tous les comptes associés.">
+  </picture>
+  <figcaption>La section Débit, avec un débit à côté de chaque curseur.</figcaption>
+</figure>
+<ol>
+  <li><p>Cliquez sur Zephyr dans la barre des menus, puis sur Réglages&#8230;</p></li>
+  <li><p>Faites défiler jusqu’à Débit.</p></li>
+  <li><p>Faites glisser le curseur Limite de transfert ou Limite de téléchargement.</p>
+      <p>Le débit défini s’affiche à côté. Les crans vont de 250&nbsp;ko/s en bas de la course
+      jusqu’à 100&nbsp;Mo/s, puis Illimité tout en haut.
+      Il n’y a aucun cran en dessous de 250&nbsp;ko/s.</p></li>
+</ol>
+<p>Les nouvelles limites s’appliquent immédiatement &#8212; un transfert déjà en cours ralentit au lieu
+d’attendre la fin. Il n’y a rien à enregistrer.</p>
+<div class="Alert"><p class="Note"><em>Remarque : </em>Une limite appartient à ce Mac, et non à un seul compte.
+Si plusieurs comptes sont associés, ils la partagent : deux comptes qui se synchronisent en même temps
+restent, à eux deux, sous le débit que vous avez défini, au lieu de s’en octroyer chacun la totalité.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Sur un réseau facturé à l’usage</h2>
+<div class="TaskBody">
+<p>Un réseau facturé à l’usage est un réseau dont l’utilisation vous coûte : un point d’accès personnel,
+une connexion que macOS considère comme coûteuse, ou une connexion que vous avez placée en mode Faibles
+données. Zephyr modère son activité sur ces réseaux, et la section Réseaux facturés à l’usage vous permet de
+régler jusqu’où. Elle reste repliée tant que vous ne cliquez pas dessus.</p>
+<ol>
+  <li><p>Cliquez sur Zephyr dans la barre des menus, puis sur Réglages&#8230;</p></li>
+  <li><p>Cliquez sur Réseaux facturés à l’usage.</p></li>
+  <li><p>Faites glisser le curseur Limite de débit. Il démarre à 250&nbsp;ko/s.</p>
+      <p>Contrairement aux curseurs ci-dessus, ce débit unique plafonne aussi bien les envois que les
+      téléchargements, et seulement lorsque vous êtes sur un réseau qui coûte quelque chose. Il plafonne les
+      limites ci-dessus sans les remplacer : c’est la valeur la plus basse qui s’applique.</p></li>
+  <li><p>Activez Continuer l’indexation si vous pouvez utiliser librement la connexion de ce Mac.</p>
+      <p>Sinon, Zephyr attend un réseau moins cher avant d’indexer votre Dropbox ou de rechercher des
+      modifications &#8212; le travail que personne n’a demandé. Les fichiers que vous ouvrez se téléchargent
+      dans tous les cas, sur n’importe quel réseau.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Remarque : </em>Le mode Faibles données empêche toujours l’indexation,
+quel que soit le réglage de Continuer l’indexation. Activer le mode Faibles données est une instruction que vous avez donnée à macOS,
+alors que « coûteux » n’est qu’une supposition de macOS &#8212; et vous ne pouvez passer outre qu’à
+cette supposition.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Choisir un débit</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>L’<em>envoi</em> est celui qu’il vaut la peine de limiter sur la plupart des connexions domestiques, où
+      le débit montant est bien plus faible que le débit descendant, et partagé avec les appels vidéo.</p></li>
+  <li><p>Le <em>téléchargement</em> a rarement besoin d’être limité, puisque Zephyr ne télécharge que ce que
+      vous ouvrez.</p></li>
+  <li><p>Si vous voulez que Zephyr s’arrête complètement plutôt que de ralentir, suspendez-le &#8212; consultez
+      <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Suspendre la synchronisation</a>.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Suspendre la synchronisation</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Utiliser plusieurs comptes Dropbox</a>
+</div>
+</body>
+</html>

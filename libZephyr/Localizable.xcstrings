@@ -8,6 +8,12 @@
             "state" : "machine_translated",
             "value" : "%@"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%@"
+          }
         }
       }
     },
@@ -26,6 +32,12 @@
             "state" : "new",
             "value" : "%1$@ has %2$@ files in %3$@ folders, with %4$@ sync issues."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ contient %2$@ fichiers dans %3$@ dossiers, avec %4$@ problèmes de synchronisation."
+          }
         }
       }
     },
@@ -41,6 +53,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ thumbnails were requested and %2$@ were returned"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "%1$@ miniatures ont été demandées et %2$@ ont été renvoyées"
           }
         }
       }
@@ -60,6 +78,30 @@
                 "stringUnit" : {
                   "state" : "machine_translated",
                   "value" : "%lld Dropbox-Objekte"
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld élément Dropbox"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld éléments Dropbox"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld élément Dropbox"
                 }
               }
             }
@@ -111,6 +153,30 @@
               }
             }
           }
+        },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld non synchronisé"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld non synchronisés"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld non synchronisé"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -158,6 +224,30 @@
               }
             }
           }
+        },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld en attente d’envoi"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld en attente d’envoi"
+                }
+              },
+              "zero" : {
+                "stringUnit" : {
+                  "state" : "machine_translated",
+                  "value" : "%lld en attente d’envoi"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -167,6 +257,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Eine Dropbox-Teamrichtlinie erlaubt diese Änderung an „%@“ nicht."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Une règle de l’équipe Dropbox n’autorise pas cette modification de « %@ »."
           }
         }
       }
@@ -178,6 +274,12 @@
             "state" : "machine_translated",
             "value" : "Unter „%@“ existiert bereits eine Datei mit Konflikt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Un fichier en conflit existe déjà à l’emplacement « %@ »."
+          }
         }
       }
     },
@@ -187,6 +289,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Unter „%@“ existiert bereits ein Ordner mit Konflikt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Un dossier en conflit existe déjà à l’emplacement « %@ »."
           }
         }
       }
@@ -198,6 +306,12 @@
             "state" : "machine_translated",
             "value" : "Dieser Index wurde von einer neueren Version von Zephyr erstellt und kann daher von dieser Version nicht sicher gelesen werden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Cet index a été créé par une version plus récente de Zephyr et ne peut pas être lu en toute sécurité par cette version."
+          }
         }
       }
     },
@@ -207,6 +321,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Eine Anfrage konnte nicht codiert werden: %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Une requête n’a pas pu être encodée : %@."
           }
         }
       }
@@ -218,6 +338,12 @@
             "state" : "machine_translated",
             "value" : "Für „%@“ existiert bereits ein geteilter Link."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Un lien partagé existe déjà pour « %@ »."
+          }
         }
       }
     },
@@ -228,6 +354,12 @@
             "state" : "machine_translated",
             "value" : "Der Zugriff auf Dropbox wurde widerrufen."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’accès à Dropbox a été révoqué."
+          }
         }
       }
     },
@@ -237,6 +369,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Konto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Compte"
           }
         }
       }
@@ -250,6 +388,12 @@
             "state" : "machine_translated",
             "value" : "Alle Dateiänderungen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Toutes les modifications de fichiers"
+          }
         }
       }
     },
@@ -262,6 +406,12 @@
             "state" : "machine_translated",
             "value" : "Ein unerwarteter Fehler ist aufgetreten."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Une erreur inattendue s’est produite."
+          }
         }
       }
     },
@@ -271,6 +421,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ein anderer Prozess verwendet die Datei."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Un autre processus utilise le fichier."
           }
         }
       }
@@ -282,6 +438,12 @@
             "state" : "machine_translated",
             "value" : "Ein anderer Synchronisierungsvorgang läuft bereits."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Une autre opération de synchronisation est en cours."
+          }
         }
       }
     },
@@ -291,6 +453,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Abbrechen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Annuler"
           }
         }
       }
@@ -302,6 +470,12 @@
             "state" : "machine_translated",
             "value" : "Es kann keine Verbindung zu Dropbox hergestellt werden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible de se connecter à Dropbox."
+          }
         }
       }
     },
@@ -311,6 +485,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ordner auswählen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Choisissez un dossier"
           }
         }
       }
@@ -322,6 +502,12 @@
             "state" : "machine_translated",
             "value" : "Wähle stattdessen einen Ordner aus."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Choisissez plutôt un dossier."
+          }
         }
       }
     },
@@ -331,6 +517,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Wähle das Objekt im Kurzbefehl erneut aus."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Choisissez à nouveau l’élément dans le raccourci."
           }
         }
       }
@@ -342,6 +534,12 @@
             "state" : "machine_translated",
             "value" : "Schließen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fermer"
+          }
         }
       }
     },
@@ -351,6 +549,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Der Ordner konnte nicht erneut in Dropbox erstellt werden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible de recréer le dossier sur Dropbox."
           }
         }
       }
@@ -362,6 +566,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ konnte nicht gelesen werden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible de lire « %@ »."
+          }
         }
       }
     },
@@ -371,6 +581,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Dropbox-Kopie des ignorierten Objekts konnte nicht entfernt werden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible de supprimer la copie Dropbox de l’élément ignoré."
           }
         }
       }
@@ -382,6 +598,12 @@
             "state" : "machine_translated",
             "value" : "Das Objekt konnte nicht auf diesem Mac gesichert werden und wird daher weiterhin mit Dropbox synchronisiert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible d’enregistrer l’élément sur ce Mac ; il reste donc synchronisé avec Dropbox."
+          }
         }
       }
     },
@@ -391,6 +613,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Der neue Ordner konnte nicht mit deinem Team geteilt werden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible de partager le nouveau dossier avec votre équipe."
           }
         }
       }
@@ -402,6 +630,12 @@
             "state" : "machine_translated",
             "value" : "Ein Objekt konnte nicht synchronisiert werden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible de synchroniser un élément."
+          }
         }
       }
     },
@@ -411,6 +645,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Synchronisierung mit Dropbox ist fehlgeschlagen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Impossible de synchroniser avec Dropbox."
           }
         }
       }
@@ -422,6 +662,12 @@
             "state" : "machine_translated",
             "value" : "Aktuell"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Actuelle"
+          }
         }
       }
     },
@@ -432,12 +678,24 @@
             "state" : "machine_translated",
             "value" : "Fertig"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "OK"
+          }
         }
       }
     },
     "Dropbox" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox"
@@ -452,6 +710,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox-Konto"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Compte Dropbox"
+          }
         }
       }
     },
@@ -461,6 +725,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox-Objekt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Élément Dropbox"
           }
         }
       }
@@ -472,6 +742,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox-Synchronisierungsstatus"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "État de la synchronisation Dropbox"
+          }
         }
       }
     },
@@ -481,6 +757,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox genehmigt immer das Konto, bei dem dein Browser angemeldet ist. Melde dich dort ab und versuche es dann erneut."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox approuve le compte auquel votre navigateur est connecté. Déconnectez-vous dans le navigateur, puis réessayez."
           }
         }
       }
@@ -492,6 +774,12 @@
             "state" : "machine_translated",
             "value" : "Die Authentifizierung bei Dropbox ist fehlgeschlagen."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’authentification auprès de Dropbox a échoué."
+          }
         }
       }
     },
@@ -501,6 +789,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox hat keine frühere Version dieser Datei aufbewahrt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox n’a conservé aucune version antérieure de ce fichier."
           }
         }
       }
@@ -512,6 +806,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox hat keine frühere Version von „%@“."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox n’a aucune version antérieure de « %@ »."
+          }
         }
       }
     },
@@ -521,6 +821,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox begrenzt die Anfragen dieses Kontos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox limite le débit de requêtes de ce compte."
           }
         }
       }
@@ -532,6 +838,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox hat die Autorisierungsanfrage abgelehnt: %@."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox a refusé la demande d’autorisation : %@."
+          }
         }
       }
     },
@@ -541,6 +853,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox hat eine Anfrage abgelehnt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox a rejeté une requête."
           }
         }
       }
@@ -552,6 +870,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox hat den Autorisierungscode oder das Aktualisierungstoken abgelehnt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox a rejeté le code d’autorisation ou le jeton d’actualisation."
+          }
         }
       }
     },
@@ -561,6 +885,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox hat die für „%@“ angeforderten Linkeinstellungen abgelehnt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox a rejeté les réglages de lien demandés pour « %@ »."
           }
         }
       }
@@ -572,6 +902,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox hat für „%@“ einen Serverfehler gemeldet."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox a signalé une erreur de serveur pour « %@ »."
+          }
         }
       }
     },
@@ -581,6 +917,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox hat den Synchronisierungsstatus zurückgesetzt; der Index muss neu erstellt werden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox a réinitialisé l’état de synchronisation ; l’index doit être reconstruit."
           }
         }
       }
@@ -592,6 +934,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox schränkt die Synchronisierung der Inhalte unter „%@“ ein."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox restreint la synchronisation du contenu à l’emplacement « %@ »."
+          }
         }
       }
     },
@@ -601,6 +949,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dropbox hat den HTTP-Status %@ zurückgegeben."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dropbox a renvoyé le statut HTTP %@."
           }
         }
       }
@@ -612,6 +966,12 @@
             "state" : "machine_translated",
             "value" : "Der Token-Endpunkt von Dropbox hat den Status %@ zurückgegeben."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le point de terminaison de jeton de Dropbox a renvoyé le statut %@."
+          }
         }
       }
     },
@@ -621,6 +981,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Nur Fehler"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Erreurs uniquement"
           }
         }
       }
@@ -632,6 +998,12 @@
             "state" : "machine_translated",
             "value" : "Unter „%@“ wurde eine Datei erwartet, aber ein Ordner gefunden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Un fichier était attendu à l’emplacement « %@ », mais un dossier a été trouvé."
+          }
         }
       }
     },
@@ -641,6 +1013,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Unter „%@“ wurde ein Ordner erwartet, aber eine Datei gefunden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Un dossier était attendu à l’emplacement « %@ », mais un fichier a été trouvé."
           }
         }
       }
@@ -652,6 +1030,12 @@
             "state" : "machine_translated",
             "value" : "Datei"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fichier"
+          }
         }
       }
     },
@@ -661,6 +1045,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dateien"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Fichiers"
           }
         }
       }
@@ -672,6 +1062,12 @@
             "state" : "machine_translated",
             "value" : "Ordner filtern"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Filtrer les dossiers"
+          }
         }
       }
     },
@@ -681,6 +1077,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Der Finder zeigt die Änderung in Kürze an."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le Finder se mettra à jour dans un instant."
           }
         }
       }
@@ -692,6 +1094,12 @@
             "state" : "machine_translated",
             "value" : "Ordner"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dossier"
+          }
         }
       }
     },
@@ -701,6 +1109,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ordner"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Dossiers"
           }
         }
       }
@@ -712,6 +1126,12 @@
             "state" : "machine_translated",
             "value" : "Geteilten Dropbox-Link abrufen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Obtenir le lien partagé Dropbox"
+          }
         }
       }
     },
@@ -721,6 +1141,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Synchronisierungsstatus abrufen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Obtenir l’état de la synchronisation"
           }
         }
       }
@@ -732,6 +1158,12 @@
             "state" : "machine_translated",
             "value" : "Ruft einen Link zu einer Dropbox-Datei oder einem Dropbox-Ordner ab und erstellt einen, falls noch keiner existiert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Obtient un lien vers un fichier ou un dossier Dropbox et en crée un s’il n’en a pas déjà un."
+          }
         }
       }
     },
@@ -741,6 +1173,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hier ist ein Link zu „%@“."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Voici un lien vers « %@ »."
           }
         }
       }
@@ -752,6 +1190,12 @@
             "state" : "machine_translated",
             "value" : "Indexierung läuft"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Indexation en cours"
+          }
         }
       }
     },
@@ -761,6 +1205,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Installiere die neueste Version von Zephyr und behalte nur eine Kopie der App."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Installez la dernière version de Zephyr et ne conservez qu’une seule copie de l’app."
           }
         }
       }
@@ -772,6 +1222,12 @@
             "state" : "machine_translated",
             "value" : "Ungültige Dropbox-Kennung."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Identifiant Dropbox non valide."
+          }
         }
       }
     },
@@ -781,6 +1237,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ungültiger Dropbox-Pfad."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Chemin Dropbox non valide."
           }
         }
       }
@@ -792,6 +1254,12 @@
             "state" : "machine_translated",
             "value" : "Ungültiger PKCE-Code-Verifier."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vérificateur de code PKCE non valide."
+          }
         }
       }
     },
@@ -801,6 +1269,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Objekt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Élément"
           }
         }
       }
@@ -812,6 +1286,12 @@
             "state" : "machine_translated",
             "value" : "Verbinde dich mit einem Netzwerk, dessen Nutzung nichts kostet. Dateien, die du öffnest, werden trotzdem geladen."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Rejoignez un réseau dont l’utilisation est gratuite. Les fichiers que vous ouvrez sont tout de même téléchargés."
+          }
         }
       }
     },
@@ -821,6 +1301,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Verknüpfe ein Konto mit „zephyr auth link“ oder in der App."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associez un compte avec « zephyr auth link » ou depuis l’app."
           }
         }
       }
@@ -832,6 +1318,12 @@
             "state" : "machine_translated",
             "value" : "Verknüpfe das Konto erneut und wähle auf der Dropbox-Seite „Zulassen“."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associez à nouveau le compte, puis choisissez Autoriser sur la page Dropbox."
+          }
         }
       }
     },
@@ -841,6 +1333,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zeige stattdessen die vorhandenen Links an, statt einen zu erstellen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Affichez les liens existants au lieu d’en créer un."
           }
         }
       }
@@ -852,6 +1350,12 @@
             "state" : "machine_translated",
             "value" : "Der Datensparmodus ist für dieses Netzwerk aktiviert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le mode Faibles données est activé pour ce réseau."
+          }
         }
       }
     },
@@ -861,6 +1365,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Geändert"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Date de modification"
           }
         }
       }
@@ -872,6 +1382,12 @@
             "state" : "machine_translated",
             "value" : "Name"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Nom"
+          }
         }
       }
     },
@@ -881,6 +1397,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Es ist noch kein Dropbox-Konto verknüpft. Öffne zuerst Zephyr, um eines zu verknüpfen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucun compte Dropbox n’est encore associé. Ouvrez d’abord Zephyr pour en associer un."
           }
         }
       }
@@ -892,6 +1414,12 @@
             "state" : "machine_translated",
             "value" : "Es ist kein Dropbox-Konto verknüpft."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucun compte Dropbox n’est associé."
+          }
         }
       }
     },
@@ -901,6 +1429,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Im Finder ist kein Dropbox-Konto eingerichtet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucun compte Dropbox n’est configuré dans le Finder."
           }
         }
       }
@@ -912,6 +1446,12 @@
             "state" : "machine_translated",
             "value" : "Kein Ordner stimmt überein."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucun dossier ne correspond."
+          }
         }
       }
     },
@@ -921,6 +1461,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Kein Messwert"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucune mesure"
           }
         }
       }
@@ -932,6 +1478,12 @@
             "state" : "machine_translated",
             "value" : "Keine"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucune"
+          }
         }
       }
     },
@@ -941,6 +1493,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Kein Zugriff auf „%@“ erlaubt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Accès à « %@ » non autorisé."
           }
         }
       }
@@ -952,6 +1510,12 @@
             "state" : "machine_translated",
             "value" : "Hier lässt sich nichts hochladen. Ordner müssen als die darin enthaltenen Dateien geteilt werden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Aucun de ces éléments ne peut être envoyé. Les dossiers doivent être partagés sous la forme des fichiers qu’ils contiennent."
+          }
         }
       }
     },
@@ -961,6 +1525,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Öffne Zephyr und verknüpfe ein Dropbox-Konto."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrez Zephyr et associez un compte Dropbox."
           }
         }
       }
@@ -972,6 +1542,12 @@
             "state" : "machine_translated",
             "value" : "Öffne Zephyr und aktiviere es im Finder."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrez Zephyr et activez-le dans le Finder."
+          }
         }
       }
     },
@@ -981,6 +1557,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Öffne Zephyr, um ein Dropbox-Konto zu verknüpfen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ouvrez Zephyr pour associer un compte Dropbox."
           }
         }
       }
@@ -992,6 +1574,12 @@
             "state" : "machine_translated",
             "value" : "Anderer Ordner …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Autre dossier…"
+          }
         }
       }
     },
@@ -1001,6 +1589,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Pfad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Chemin"
           }
         }
       }
@@ -1012,6 +1606,12 @@
             "state" : "machine_translated",
             "value" : "Synchronisierung anhalten"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Suspendre la synchronisation"
+          }
         }
       }
     },
@@ -1021,6 +1621,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Angehalten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Suspendue"
           }
         }
       }
@@ -1032,6 +1638,12 @@
             "state" : "machine_translated",
             "value" : "Wird vorbereitet …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Préparation…"
+          }
         }
       }
     },
@@ -1041,6 +1653,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Problem"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Problème"
           }
         }
       }
@@ -1052,6 +1670,12 @@
             "state" : "machine_translated",
             "value" : "Setzt eine Dropbox-Datei auf eine frühere Version zurück."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Restaure un fichier Dropbox à une version antérieure."
+          }
         }
       }
     },
@@ -1061,6 +1685,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Frühere Versionen werden gelesen …"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lecture des versions antérieures…"
           }
         }
       }
@@ -1080,6 +1710,12 @@
             "state" : "new",
             "value" : "Received HTTP status %1$@ (request %2$@)."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Statut HTTP %1$@ reçu (requête %2$@)."
+          }
         }
       }
     },
@@ -1090,6 +1726,12 @@
             "state" : "machine_translated",
             "value" : "HTTP-Status %@ erhalten."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Statut HTTP %@ reçu."
+          }
         }
       }
     },
@@ -1099,6 +1741,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Von Dropbox wurde eine unerwartete Antwort empfangen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Une réponse inattendue a été reçue de Dropbox."
           }
         }
       }
@@ -1112,6 +1760,12 @@
             "state" : "machine_translated",
             "value" : "Verknüpfe das Konto erneut mit „zephyr auth link“ oder in der App."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Associez à nouveau le compte avec « zephyr auth link » ou depuis l’app."
+          }
         }
       }
     },
@@ -1121,6 +1775,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Vorhandene Datei ersetzen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Remplacer le fichier existant"
           }
         }
       }
@@ -1132,6 +1792,12 @@
             "state" : "machine_translated",
             "value" : "Meldet, wie viel eines Dropbox-Kontos Zephyr indexiert hat und was nicht synchronisiert werden konnte."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Indique la part d’un compte Dropbox que Zephyr a indexée, ainsi que ce qu’il n’a pas pu synchroniser."
+          }
         }
       }
     },
@@ -1141,6 +1807,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Wiederherstellen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Restaurer"
           }
         }
       }
@@ -1152,6 +1824,12 @@
             "state" : "machine_translated",
             "value" : "Dropbox-Datei wiederherstellen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Restaurer un fichier Dropbox"
+          }
         }
       }
     },
@@ -1161,6 +1839,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Soll eine frühere Version von „%@“ wiederhergestellt werden?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Voulez-vous restaurer « %@ » à une version antérieure ?"
           }
         }
       }
@@ -1172,6 +1856,12 @@
             "state" : "machine_translated",
             "value" : "Diese Version von „%@“ wiederherstellen?"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Restaurer « %@ » à cette version ?"
+          }
         }
       }
     },
@@ -1181,6 +1871,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ wurde wiederhergestellt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Restauration de « %@ » effectuée."
           }
         }
       }
@@ -1192,6 +1888,12 @@
             "state" : "machine_translated",
             "value" : "Wiederherstellen …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Restaurer…"
+          }
         }
       }
     },
@@ -1201,6 +1903,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Sichern"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Enregistrer"
           }
         }
       }
@@ -1212,6 +1920,12 @@
             "state" : "machine_translated",
             "value" : "Sichern in:"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Enregistrer dans :"
+          }
         }
       }
     },
@@ -1221,6 +1935,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Wähle eine einzelne Datei aus und versuche es erneut."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sélectionnez un seul fichier, puis réessayez."
           }
         }
       }
@@ -1233,6 +1953,12 @@
             "state" : "machine_translated",
             "value" : "Wird gesendet"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Envoi en cours"
+          }
         }
       }
     },
@@ -1242,6 +1968,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Sendet eine Datei an einen Ordner in deiner Dropbox."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Envoie un fichier dans un dossier de votre Dropbox."
           }
         }
       }
@@ -1253,6 +1985,12 @@
             "state" : "machine_translated",
             "value" : "Größe"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Taille"
+          }
         }
       }
     },
@@ -1262,6 +2000,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Übersprungen: %@ – Ordner können nicht hochgeladen werden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Éléments ignorés : %@. Les dossiers ne peuvent pas être envoyés."
           }
         }
       }
@@ -1273,6 +2017,12 @@
             "state" : "machine_translated",
             "value" : "Deine Ordner werden noch gelesen …"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Lecture de vos dossiers en cours…"
+          }
         }
       }
     },
@@ -1282,6 +2032,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Deaktiviere den Datensparmodus für dieses Netzwerk oder verbinde dich mit einem anderen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Désactivez le mode Faibles données pour ce réseau ou rejoignez-en un autre."
           }
         }
       }
@@ -1293,6 +2049,12 @@
             "state" : "machine_translated",
             "value" : "Synchronisierungsprobleme"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Problèmes de synchronisation"
+          }
         }
       }
     },
@@ -1302,6 +2064,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Synchronisierungsprobleme"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Problèmes de synchronisation"
           }
         }
       }
@@ -1313,6 +2081,12 @@
             "state" : "machine_translated",
             "value" : "Synchronisierung läuft"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Synchronisation en cours"
+          }
         }
       }
     },
@@ -1322,6 +2096,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Synchronisierung ist in Zephyr angehalten."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La synchronisation est suspendue dans Zephyr."
           }
         }
       }
@@ -1333,6 +2113,12 @@
             "state" : "machine_translated",
             "value" : "Die Synchronisierung wartet auf ein günstigeres Netzwerk."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La synchronisation attend un réseau moins coûteux."
+          }
         }
       }
     },
@@ -1342,6 +2128,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Synchronisierung wurde gestoppt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La synchronisation s’est arrêtée."
           }
         }
       }
@@ -1353,6 +2145,12 @@
             "state" : "machine_translated",
             "value" : "Diese Datei befindet sich nicht mehr in deiner Dropbox."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ce fichier ne se trouve plus dans votre Dropbox."
+          }
         }
       }
     },
@@ -1362,6 +2160,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Das ist nicht das Dropbox-Konto, für das dies gedacht war."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ce n’est pas le compte Dropbox concerné."
           }
         }
       }
@@ -1375,6 +2179,12 @@
             "state" : "machine_translated",
             "value" : "Der Root-Namespace des Dropbox-Kontos hat sich geändert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’espace de noms racine du compte Dropbox a changé."
+          }
         }
       }
     },
@@ -1384,6 +2194,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Das Zugriffstoken ist abgelaufen und konnte nicht aktualisiert werden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le jeton d’accès a expiré et n’a pas pu être actualisé."
           }
         }
       }
@@ -1397,6 +2213,12 @@
             "state" : "machine_translated",
             "value" : "Der App-Registrierung fehlt die Berechtigung „%@“."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’enregistrement de l’app ne comporte pas l’autorisation « %@ »."
+          }
         }
       }
     },
@@ -1406,6 +2228,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Autorisierungsantwort konnte nicht gelesen werden: %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La réponse d’autorisation n’a pas pu être lue : %@."
           }
         }
       }
@@ -1417,6 +2245,12 @@
             "state" : "machine_translated",
             "value" : "Die Autorisierungsantwort hat die Integritätsprüfung nicht bestanden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La réponse d’autorisation a échoué à la vérification d’intégrité."
+          }
         }
       }
     },
@@ -1427,6 +2261,12 @@
             "state" : "machine_translated",
             "value" : "Das Cache-Verzeichnis ist nicht verwendbar."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le dossier de cache est inutilisable."
+          }
         }
       }
     },
@@ -1436,6 +2276,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Das Volume hat einen Ein-/Ausgabefehler gemeldet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le disque a signalé une erreur d’entrée/sortie."
           }
         }
       }
@@ -1449,6 +2295,12 @@
             "state" : "machine_translated",
             "value" : "Die Indexdatenbank konnte nicht migriert werden: %@."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La base de données de l’index n’a pas pu être migrée : %@."
+          }
         }
       }
     },
@@ -1458,6 +2310,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Indexdatenbank hat gemeldet: %@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La base de données de l’index a signalé : %@."
           }
         }
       }
@@ -1469,6 +2327,12 @@
             "state" : "machine_translated",
             "value" : "Der Schlüsselbund hat den Fehler %@ gemeldet."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le trousseau a signalé l’erreur %@."
+          }
         }
       }
     },
@@ -1478,6 +2342,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Das Netzwerkvolume ist nicht mehr verfügbar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le volume réseau n’est plus disponible."
           }
         }
       }
@@ -1489,6 +2359,12 @@
             "state" : "machine_translated",
             "value" : "Der Vorgang wurde abgebrochen."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’opération a été annulée."
+          }
         }
       }
     },
@@ -1499,6 +2375,12 @@
             "state" : "machine_translated",
             "value" : "Der Pfad enthält ein Nullbyte."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le chemin contient un octet nul."
+          }
         }
       }
     },
@@ -1508,6 +2390,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Der Pfad „%@“ enthält eine leere Komponente."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le chemin « %@ » contient un composant vide."
           }
         }
       }
@@ -1521,6 +2409,12 @@
             "state" : "machine_translated",
             "value" : "Der Pfad „%@“ beginnt nicht mit einem Schrägstrich."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le chemin « %@ » ne commence pas par une barre oblique."
+          }
         }
       }
     },
@@ -1530,6 +2424,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Der Pfad „%@“ endet mit einem Schrägstrich."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le chemin « %@ » se termine par une barre oblique."
           }
         }
       }
@@ -1546,6 +2446,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "The path “%1$@” was rejected: %2$@."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le chemin « %1$@ » a été rejeté : %2$@."
           }
         }
       }
@@ -1565,6 +2471,12 @@
             "state" : "new",
             "value" : "The response from “%1$@” couldn’t be read: %2$@."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La réponse de « %1$@ » n’a pas pu être lue : %2$@."
+          }
         }
       }
     },
@@ -1581,6 +2493,12 @@
             "state" : "new",
             "value" : "The route “%1$@” failed: %2$@."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La route « %1$@ » a échoué : %2$@."
+          }
         }
       }
     },
@@ -1590,6 +2508,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Der Synchronisierungsindex ist nicht verfügbar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’index de synchronisation n’est pas disponible."
           }
         }
       }
@@ -1602,6 +2526,12 @@
             "state" : "machine_translated",
             "value" : "Das System hat den Fehler %@ gemeldet."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le système a signalé l’erreur %@."
+          }
         }
       }
     },
@@ -1611,6 +2541,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die übertragenen Daten für „%@“ haben die Überprüfung nicht bestanden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Les données transférées pour « %@ » ont échoué à la vérification."
           }
         }
       }
@@ -1622,6 +2558,12 @@
             "state" : "machine_translated",
             "value" : "Die Upload-Sitzung muss neu gestartet werden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "La session d’envoi doit être redémarrée."
+          }
         }
       }
     },
@@ -1631,6 +2573,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Das Volume ist schreibgeschützt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le volume est en lecture seule."
           }
         }
       }
@@ -1642,6 +2590,12 @@
             "state" : "machine_translated",
             "value" : "Das Volume reagiert nicht mehr."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le volume ne répond plus."
+          }
         }
       }
     },
@@ -1652,6 +2606,12 @@
             "state" : "machine_translated",
             "value" : "Das Speicherkontingent des Volumes ist aufgebraucht."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le quota de disque du volume est atteint."
+          }
         }
       }
     },
@@ -1661,6 +2621,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Es ist nicht genügend Speicherplatz vorhanden, um „%@“ zu synchronisieren."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’espace disponible est insuffisant pour synchroniser « %@ »."
           }
         }
       }
@@ -1674,6 +2640,12 @@
             "state" : "machine_translated",
             "value" : "Dieser Dropbox-Tarif bietet die angeforderten Linkeinstellungen für „%@“ nicht."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ce forfait Dropbox ne propose pas les réglages de lien demandés pour « %@ »."
+          }
         }
       }
     },
@@ -1683,6 +2655,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Nutzung dieses Netzwerks kostet Geld oder Akku."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "L’utilisation de ce réseau coûte de l’argent ou de la batterie."
           }
         }
       }
@@ -1696,6 +2674,12 @@
             "state" : "machine_translated",
             "value" : "Dieser Prozess hat den Index schreibgeschützt geöffnet."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Ce processus a ouvert l’index en lecture seule."
+          }
         }
       }
     },
@@ -1705,6 +2689,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Es sind zu viele Dateien geöffnet."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Trop de fichiers sont ouverts."
           }
         }
       }
@@ -1716,6 +2706,12 @@
             "state" : "machine_translated",
             "value" : "Entsperre den Schlüsselbund „Anmeldung“ und verknüpfe das Konto dann erneut."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Déverrouillez le trousseau « session », puis associez à nouveau le compte."
+          }
         }
       }
     },
@@ -1725,6 +2721,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Auf dem neuesten Stand"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "À jour"
           }
         }
       }
@@ -1736,6 +2738,12 @@
             "state" : "machine_translated",
             "value" : "Aktualisiert %@"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Mis à jour %@"
+          }
         }
       }
     },
@@ -1745,6 +2753,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Wechsle zu einem höheren Dropbox-Tarif oder lass Passwort und Ablaufdatum weg."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Passez à un forfait Dropbox supérieur ou omettez le mot de passe et la date d’expiration."
           }
         }
       }
@@ -1756,6 +2770,12 @@
             "state" : "machine_translated",
             "value" : "In Dropbox hochladen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Envoyer vers Dropbox"
+          }
         }
       }
     },
@@ -1766,6 +2786,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ wurde in Dropbox hochgeladen."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » a été envoyé vers Dropbox."
+          }
         }
       }
     },
@@ -1775,6 +2801,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hochgeladen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Envoyé."
           }
         }
       }
@@ -1792,6 +2824,12 @@
             "state" : "new",
             "value" : "Uploading %1$@ of %2$@…"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Envoi de %1$@ sur %2$@…"
+          }
         }
       }
     },
@@ -1804,12 +2842,24 @@
             "state" : "machine_translated",
             "value" : "Bestätige die E-Mail-Adresse dieses Dropbox-Kontos."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vérifiez l’adresse e-mail de ce compte Dropbox."
+          }
         }
       }
     },
     "Version" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Version"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Version"
@@ -1824,6 +2874,12 @@
             "state" : "machine_translated",
             "value" : "Versionen werden jeweils nur für eine Datei angezeigt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Les versions ne s’affichent que pour un fichier à la fois."
+          }
         }
       }
     },
@@ -1834,6 +2890,12 @@
             "state" : "machine_translated",
             "value" : "Der aktuelle Inhalt der Datei wird ersetzt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le contenu actuel du fichier sera remplacé."
+          }
         }
       }
     },
@@ -1843,6 +2905,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Welches Dropbox-Konto?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Quel compte Dropbox ?"
           }
         }
       }
@@ -1860,12 +2928,24 @@
             "state" : "new",
             "value" : "You approved “%1$@”, but this repairs “%2$@”."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Vous avez approuvé « %1$@ », mais cette opération répare « %2$@ »."
+          }
         }
       }
     },
     "Zephyr" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr"
@@ -1880,6 +2960,12 @@
             "state" : "machine_translated",
             "value" : "Zephyr konnte diesen Kurzbefehl nicht ausführen."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr n’a pas pu exécuter ce raccourci."
+          }
         }
       }
     },
@@ -1889,6 +2975,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr konnte keine früheren Versionen anzeigen."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr n’a pas pu afficher les versions antérieures."
           }
         }
       }
@@ -1908,6 +3000,12 @@
             "state" : "new",
             "value" : "Zephyr is still indexing %1$@: %2$@ files so far."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr indexe encore %1$@ : %2$@ fichiers jusqu’à présent."
+          }
         }
       }
     },
@@ -1917,6 +3015,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Zephyr wurde kein Zugriff auf deine Dropbox gewährt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr n’a pas obtenu l’accès à votre Dropbox."
           }
         }
       }
@@ -1928,6 +3032,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "ein Objekt"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "un élément"
           }
         }
       }
@@ -1941,6 +3051,12 @@
             "state" : "machine_translated",
             "value" : "ein unerwarteter Fehler"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "une erreur inattendue"
+          }
         }
       }
     },
@@ -1950,6 +3066,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Die Dateimetadaten enthielten keinen Pfad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "les métadonnées du fichier ne contenaient aucun chemin"
           }
         }
       }
@@ -1961,6 +3083,12 @@
             "state" : "machine_translated",
             "value" : "Dateien"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "fichiers"
+          }
         }
       }
     },
@@ -1971,6 +3099,12 @@
             "state" : "machine_translated",
             "value" : "Die Ordnermetadaten enthielten keinen Pfad"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "les métadonnées du dossier ne contenaient aucun chemin"
+          }
         }
       }
     },
@@ -1980,6 +3114,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Ordner"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "dossiers"
           }
         }
       }
@@ -1992,6 +3132,12 @@
             "state" : "machine_translated",
             "value" : "ungültige Zeichen"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "caractères non valides"
+          }
         }
       }
     },
@@ -2001,6 +3147,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "sie enthielt weder ein Aktualisierungstoken noch ein Konto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "elle ne contenait ni jeton d’actualisation ni compte"
           }
         }
       }
@@ -2014,6 +3166,12 @@
             "state" : "machine_translated",
             "value" : "sie konnte nicht als JSON geschrieben werden"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "elle n’a pas pu être écrite en JSON"
+          }
         }
       }
     },
@@ -2026,6 +3184,12 @@
             "state" : "machine_translated",
             "value" : "sie entsprach nicht dem erwarteten Format"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "elle ne correspondait pas au format attendu"
+          }
         }
       }
     },
@@ -2036,6 +3200,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "fehlerhafter Pfad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "chemin mal formé"
           }
         }
       }
@@ -2048,6 +3218,12 @@
             "state" : "machine_translated",
             "value" : "fehlerhafter geteilter Link"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "lien partagé mal formé"
+          }
         }
       }
     },
@@ -2057,6 +3233,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Das Verschieben hat eine Löschung zurückgegeben"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Le déplacement a renvoyé une suppression."
           }
         }
       }
@@ -2069,6 +3251,12 @@
             "state" : "machine_translated",
             "value" : "Name nicht zulässig"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "nom non autorisé"
+          }
         }
       }
     },
@@ -2079,6 +3267,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Name von Dropbox nicht zugelassen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "nom non autorisé par Dropbox"
           }
         }
       }
@@ -2091,6 +3285,12 @@
             "state" : "machine_translated",
             "value" : "Name zu lang"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "nom trop long"
+          }
         }
       }
     },
@@ -2100,6 +3300,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "der Header „Dropbox-API-Result“ fehlte"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "l’en-tête Dropbox-API-Result était absent"
           }
         }
       }
@@ -2111,6 +3317,12 @@
             "state" : "machine_translated",
             "value" : "der Callback enthielt keinen Autorisierungscode"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "le rappel ne contenait aucun code d’autorisation"
+          }
         }
       }
     },
@@ -2120,6 +3332,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "das codierte JSON war kein gültiges UTF-8"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "le JSON encodé n’était pas de l’UTF-8 valide"
           }
         }
       }
@@ -2132,6 +3350,12 @@
             "state" : "machine_translated",
             "value" : "der Fehlertext der Antwort konnte nicht ausgewertet werden"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "le corps de l’erreur n’a pas pu être analysé"
+          }
         }
       }
     },
@@ -2141,6 +3365,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "der Token-Endpunkt hat den Status %@ zurückgegeben"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "le point de terminaison de jeton a renvoyé le statut %@"
           }
         }
       }
@@ -2152,6 +3382,12 @@
             "state" : "machine_translated",
             "value" : "unbekannt"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "inconnue"
+          }
         }
       }
     },
@@ -2161,6 +3397,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ kann erst geteilt werden, wenn die E-Mail-Adresse des Kontos bestätigt ist."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » ne peut pas être partagé tant que l’adresse e-mail du compte n’est pas vérifiée."
           }
         }
       }
@@ -2172,6 +3414,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ wurde während des Hochladens geändert."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » a été modifié pendant son envoi."
+          }
         }
       }
     },
@@ -2181,6 +3429,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ wurde nicht gefunden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » est introuvable."
           }
         }
       }
@@ -2192,6 +3446,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ ist ein Dateityp, den Dropbox nicht synchronisieren kann."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » est un type de fichier que Dropbox ne peut pas synchroniser."
+          }
         }
       }
     },
@@ -2201,6 +3461,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ ist eine Datei, kein Ordner."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » est un fichier, pas un dossier."
           }
         }
       }
@@ -2214,6 +3480,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ ist ein symbolischer Link und kann nicht hochgeladen werden."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » est un lien symbolique, qui ne peut pas être envoyé."
+          }
         }
       }
     },
@@ -2223,6 +3495,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ ist ein Teamordner, den nur ein:e Team-Admin ändern kann."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » est un dossier d’équipe, que seul un administrateur de l’équipe peut modifier."
           }
         }
       }
@@ -2234,6 +3512,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ ist bereits mit Zephyr verknüpft."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » est déjà associé à Zephyr."
+          }
         }
       }
     },
@@ -2243,6 +3527,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ ist größer, als Dropbox zulässt."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » dépasse la taille maximale autorisée par Dropbox."
           }
         }
       }
@@ -2254,6 +3544,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ befindet sich nicht mehr in deiner Dropbox."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » ne se trouve plus dans votre Dropbox."
+          }
         }
       }
     },
@@ -2263,6 +3559,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ ist keine gültige Dropbox-Konto-Kennung."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » n’est pas un identifiant de compte Dropbox valide."
           }
         }
       }
@@ -2274,6 +3576,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ ist kein gültiger Dropbox-Inhalts-Hash."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » n’est pas un hachage de contenu Dropbox valide."
+          }
         }
       }
     },
@@ -2283,6 +3591,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ ist kein gültiger Dropbox-Delta-Cursor."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » n’est pas un curseur delta Dropbox valide."
           }
         }
       }
@@ -2294,6 +3608,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ ist keine gültige Dropbox-Datei-Kennung."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » n’est pas un identifiant de fichier Dropbox valide."
+          }
         }
       }
     },
@@ -2303,6 +3623,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ ist keine gültige Dropbox-Dateiversion."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » n’est pas une version de fichier Dropbox valide."
           }
         }
       }
@@ -2314,6 +3640,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ ist keine gültige Dropbox-Namespace-Kennung."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » n’est pas un identifiant d’espace de noms Dropbox valide."
+          }
         }
       }
     },
@@ -2323,6 +3655,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "„%@“ ist keine gültige Dropbox-Upload-Sitzungskennung."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » n’est pas un identifiant de session d’envoi Dropbox valide."
           }
         }
       }
@@ -2334,6 +3672,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ ist kein gültiger Code-Verifier nach RFC 7636."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » n’est pas un vérificateur de code RFC 7636 valide."
+          }
         }
       }
     },
@@ -2344,6 +3688,12 @@
             "state" : "machine_translated",
             "value" : "„%@“ hat die übergebenen Argumente abgelehnt."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "« %@ » a rejeté ses arguments."
+          }
         }
       }
     },
@@ -2353,6 +3703,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "… und %@ weitere"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "…et %@ de plus"
           }
         }
       }

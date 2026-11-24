@@ -1,0 +1,126 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Associer votre compte Dropbox</title>
+<meta name="description" content="Connectez un compte Dropbox à Zephyr pour que ses fichiers apparaissent dans le Finder.">
+<meta name="keywords" content="associer, compte, dropbox, connexion, se connecter, autoriser, autorisation, oauth, connecter, ajouter un compte, code d’autorisation">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="link-account" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="link-account"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Associer votre compte Dropbox</h1>
+<p>Zephyr affiche dans le Finder les fichiers d’un compte Dropbox dès que vous associez ce compte.
+L’association ouvre la page de Dropbox elle-même, où vous autorisez l’accès que Zephyr demande ;
+une fois l’accès autorisé, vous revenez directement dans Zephyr.</p>
+
+<div class="Task">
+<h2 class="Name">Avant de commencer</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>Installez Zephyr au lieu de le glisser hors d’une image disque téléchargée. L’association
+      fonctionne où que se trouve Zephyr, mais macOS exécute une app téléchargée depuis une copie
+      temporaire qui lui est propre et n’affiche pas dans le Finder un compte associé à une telle
+      copie. Consultez
+      <a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">Si votre Dropbox n’apparaît pas dans le Finder</a>.</p></li>
+  <li><p>Ayez votre mot de passe Dropbox sous la main. Vous autorisez l’accès sur le site web de
+      Dropbox, et non dans Zephyr &#8212; Zephyr ne voit jamais votre mot de passe.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Associer un compte</h2>
+<div class="TaskBody">
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/accounts-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/accounts.webp" width="688" height="480" alt="La fenêtre de Zephyr affichant deux comptes Dropbox associés, avec leur nom et leur adresse e-mail, le nombre de fichiers et de dossiers de chacun à droite, et le bouton Associer un compte Dropbox dans la barre d’outils.">
+  </picture>
+  <figcaption>Les comptes associés, avec Associer un compte Dropbox&#8230; en haut à droite.</figcaption>
+</figure>
+<ol>
+  <li><p>Cliquez sur Zephyr dans la barre des menus, puis sur Gérer les comptes…</p></li>
+  <li><p>Cliquez sur Associer un compte Dropbox… <span class="NoBreak">(+)</span> dans la
+      barre d’outils.</p>
+      <p>Vous pouvez aussi choisir Compte &#9656; Associer un compte Dropbox&#8230;
+      ou appuyer sur <kbd>&#8984;L</kbd>.</p></li>
+  <li><p>Cliquez sur Associer un compte Dropbox…</p>
+      <p>La page d’autorisation de Dropbox s’ouvre dans sa propre fenêtre. Connectez-vous si vous ne
+      l’êtes pas déjà, puis autorisez l’accès que Zephyr demande. La fenêtre se ferme d’elle-même
+      une fois que c’est fait.</p></li>
+</ol>
+<p>Le compte apparaît dans la liste, et Zephyr commence à construire un index de son contenu. La
+première indexation d’un grand Dropbox prend un certain temps ; vous n’avez pas besoin d’attendre
+qu’elle se termine pour utiliser vos fichiers.</p>
+<div class="Alert"><p class="Note"><em>Remarque : </em>Fermer la fenêtre d’autorisation sans
+autoriser l’accès annule l’association et ne change rien. Cliquez de nouveau sur Associer un compte Dropbox… pour
+recommencer.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Si Dropbox ne parvient pas à vous renvoyer vers Zephyr</h2>
+<div class="TaskBody">
+<p>Dropbox peut aussi vous remettre un code à rapporter vous-même. Utilisez cette méthode si la fenêtre
+d’autorisation ne s’ouvre pas, ou si Dropbox signale un problème pour revenir vers Zephyr.</p>
+<ol>
+  <li><p>Dans la fenêtre d’association, cliquez sur Saisir un code à la place.</p></li>
+  <li><p>Cliquez sur Ouvrir Dropbox dans le navigateur, puis autorisez l’accès comme ci-dessus.</p></li>
+  <li><p>Copiez le code d’autorisation que Dropbox affiche, revenez dans Zephyr et collez-le dans
+      le champ Code d’autorisation.</p>
+      <div class="Alert"><p class="Note"><em>Remarque : </em>Si vous avez fermé la page du navigateur ou si le code
+      a expiré, cliquez de nouveau sur Ouvrir Dropbox dans le navigateur pour en obtenir un nouveau.</p></div></li>
+  <li><p>Cliquez sur Associer.</p></li>
+</ol>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Activer Zephyr dans le Finder</h2>
+<div class="TaskBody">
+<p>Associer un compte ne suffit pas à lui seul. C’est macOS, et non Zephyr, qui vous demande si un
+fournisseur de fichiers peut afficher des fichiers dans le Finder, et il ne propose le réglage qu’une fois un
+compte associé. Consultez
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Activer Zephyr dans le Finder</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Ouvrir un compte ou copier son adresse</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Dans la fenêtre de Zephyr, cliquez sur le compte en maintenant la touche Contrôle enfoncée.</p></li>
+  <li><p>Choisissez Ouvrir dans le Finder pour afficher les fichiers de ce compte, ou
+      Copier l’adresse e-mail pour placer l’adresse dans le presse-papiers.</p></li>
+</ol>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Dissocier un compte</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Dans la fenêtre de Zephyr, cliquez sur le compte en maintenant la touche Contrôle enfoncée.</p></li>
+  <li><p>Choisissez Dissocier…, puis confirmez.</p></li>
+</ol>
+<p>Dissocier révoque l’accès de Zephyr au compte et le retire du Finder. Rien n’est supprimé dans
+votre Dropbox.</p>
+</div>
+</div>
+
+<div class="Alert"><p class="Note"><em>Remarque : </em>L’outil en ligne de commande <code>zephyr</code> conserve
+ses identifiants séparément de l’app : il peut donc lister un compte associé par l’app, mais ne peut pas
+agir en son nom. Exécutez <code>zephyr auth link</code> une fois pour l’outil, même si l’app est déjà configurée.
+Consultez <a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Installer l’outil en ligne de commande zephyr</a>.</p></div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Activer Zephyr dans le Finder</a>
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Où se trouvent vos fichiers Dropbox</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Utiliser plusieurs comptes Dropbox</a>
+<a href="reauthorize.html#reauthorize" class="xRef AppleTopic">Si Zephyr ne parvient pas à se connecter à votre compte Dropbox</a>
+</div>
+</body>
+</html>

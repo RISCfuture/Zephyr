@@ -1,0 +1,64 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Utiliser plusieurs comptes Dropbox</title>
+<meta name="description" content="Associez plusieurs comptes Dropbox et distinguez-les dans le Finder et dans Zephyr.">
+<meta name="keywords" content="plusieurs comptes, deuxième compte, travail, personnel, plusieurs, multicompte, changer de compte">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="multiple-accounts" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="multiple-accounts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Utiliser plusieurs comptes Dropbox</h1>
+<p>Zephyr synchronise en même temps tous les comptes que vous associez. Chacun a sa propre place dans la barre latérale
+du Finder et son propre index.</p>
+
+<div class="Task">
+<h2 class="Name">Associer un autre compte</h2>
+<div class="TaskBody">
+<p>Associer un deuxième compte se fait exactement comme le premier &#8212; consultez
+<a href="link-account.html#link-account" class="xRef AppleTopic">Associer votre compte Dropbox</a>. Vous vous connectez
+à Dropbox dans votre navigateur une fois par compte.</p>
+<p>Après l’association, activez Zephyr pour le nouveau compte sous
+Fournisseurs de fichiers si macOS vous le demande ; consultez
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Activer Zephyr dans le Finder</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Les distinguer</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>Dans le Finder :</em> chaque compte apparaît dans la barre latérale sous le nom <em>Zephyr</em> suivi de
+      l’adresse e-mail du compte ; c’est donc l’adresse qui permet de distinguer deux comptes.</p></li>
+  <li><p><em>Dans la barre des menus :</em> le panneau répertorie chaque compte avec sa propre ligne d’état et ses
+      compteurs. Un clic sur l’un d’eux ouvre ce compte dans le Finder.</p></li>
+  <li><p><em>Dans les réglages :</em> Éléments non synchronisés s’applique à chaque compte et nomme chacun au-dessus de ses
+      propres commandes lorsque plusieurs comptes sont associés. Ce n’est pas le cas de Débit : les limites de transfert
+      appartiennent à ce Mac, et tous les comptes les partagent.</p></li>
+</ul>
+<p>L’icône de la barre des menus et la ligne qui l’accompagne reflètent l’ensemble de ce Mac : un seul compte en cours
+d’envoi s’affiche donc comme une activité, même si les autres sont inactifs. Ce qui arrête tous les comptes à la
+fois, comme un réseau facturé à l’usage, n’est signalé qu’une fois en haut du panneau plutôt que sous chaque
+compte.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Utiliser l’outil en ligne de commande</h2>
+<div class="TaskBody">
+<p><code>zephyr</code> agit sur l’unique compte associé, sauf si vous passez <code>--account</code> ; lorsque plusieurs
+comptes sont associés, vous devrez donc en désigner un. <code>zephyr auth list</code> affiche les
+identifiants à utiliser, et la complétion du shell les propose.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="link-account.html#link-account" class="xRef AppleTopic">Associer votre compte Dropbox</a>
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limiter le débit utilisé par Zephyr</a>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Installer l’outil en ligne de commande zephyr</a>
+</div>
+</body>
+</html>

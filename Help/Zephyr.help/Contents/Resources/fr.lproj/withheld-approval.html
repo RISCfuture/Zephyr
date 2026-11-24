@@ -1,0 +1,83 @@
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Si Zephyr attend votre autorisation</title>
+<meta name="description" content="Accordez ce que macOS retient : l’extension du Finder, les notifications et l’ouverture à l’ouverture de session.">
+<meta name="keywords" content="autorisation, permission, attention requise, réglages système, éléments d’ouverture, notifications, retenu, activer, ouverture et extensions">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="withheld-approval" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="withheld-approval"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Si Zephyr attend votre autorisation</h1>
+<p>Trois éléments dont Zephyr a besoin sont accordés par vous dans Réglages Système, et non par Zephyr. Lorsque
+macOS en retient un, Zephyr le signale en bas de sa fenêtre, où la
+ligne comporte un bouton Ouvrir Réglages Système &#8212; et ne dit
+rien du tout lorsque tout est en ordre.</p>
+<p>Seule l’extension du Finder apparaît aussi en haut du panneau de la barre des menus, qui répertorie
+ce qui entrave la synchronisation. Sans elle, il n’y a aucun Dropbox dans le Finder.
+Les deux autres sont des choix sur la quantité d’informations que Zephyr donne et sur le moment où il s’exécute :
+des notifications désactivées n’empêchent pas la synchronisation, et un Mac sur lequel vous ouvrez Zephyr à la main se
+synchronise parfaitement bien une fois l’app ouverte.</p>
+
+<div class="Task">
+<h2 class="Name">En accorder un</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Cliquez sur Zephyr dans la barre des menus, puis sur Gérer les comptes&#8230;</p></li>
+  <li><p>Cliquez sur Ouvrir Réglages Système sur la ligne en bas de la
+      fenêtre.</p>
+      <p>Réglages Système s’ouvre sur le volet qui l’accorde. Zephyr peut ouvrir le volet ; vous seul pouvez
+      activer le commutateur.</p></li>
+  <li><p>Activez le réglage, puis revenez dans Zephyr.</p></li>
+</ol>
+<p>Le panneau de la barre des menus nomme l’extension du Finder et renvoie vers la page qui la concerne, mais c’est
+la fenêtre qui porte le bouton : un panneau qui se ferme dès que vous cliquez ailleurs n’est pas l’endroit d’où vous
+envoyer vers une autre app.</p>
+<p>Zephyr vérifie de nouveau chaque fois que le panneau s’ouvre et que sa fenêtre passe au premier plan : l’avertissement
+disparaît donc de lui-même dès que vous avez terminé.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Ce que chacun implique</h2>
+<div class="TaskBody">
+<div class="table-wrapper">
+<table data-type="Multicolumn" aria-label="Ce dont Zephyr a besoin de la part de macOS">
+<thead><tr><th scope="col"><p class="TableHead">Retenu</p></th><th scope="col"><p class="TableHead">Ce qui cesse de fonctionner</p></th><th scope="col"><p class="TableHead">Où l’accorder</p></th></tr></thead>
+<tbody>
+<tr><td><p>Activer Zephyr dans le Finder&#8230;</p></td><td><p>Les fichiers d’un compte associé ne peuvent pas apparaître dans le Finder.</p></td><td><p>Général &#9656; Ouverture et extensions &#9656; Fournisseurs de fichiers</p></td></tr>
+<tr><td><p>Autoriser les notifications de Zephyr&#8230;</p></td><td><p>Les modifications de fichiers et les problèmes de synchronisation ne sont pas signalés.</p></td><td><p>Notifications</p></td></tr>
+<tr><td><p>Autoriser Zephyr à s’ouvrir à l’ouverture de session&#8230;</p></td><td><p>Le Finder n’est informé des modifications distantes que tant que vous avez ouvert Zephyr vous-même.</p></td><td><p>Général &#9656; Ouverture et extensions</p></td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.fileprovider-nonui" class="URL">Ouvrir
+« Fournisseurs de fichiers » pour moi</a></p>
+<p><a href="x-apple.systempreferences:com.apple.LoginItems-Settings.extension" class="URL">Ouvrir
+« Ouverture et extensions » pour moi</a></p>
+<p><a href="x-apple.systempreferences:com.apple.Notifications-Settings.extension" class="URL">Ouvrir
+« Notifications » pour moi</a></p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Pourquoi Zephyr ne peut pas simplement demander</h2>
+<div class="TaskBody">
+<p>macOS n’affiche qu’une seule fois la demande d’autorisation d’une app. Une fois que vous avez répondu, si l’app
+redemande, elle obtient la même réponse sans que rien n’apparaisse à l’écran &#8212; c’est pourquoi Zephyr vous envoie
+dans Réglages Système au lieu de redemander.</p>
+<p>Zephyr ne mentionne aussi que ce que vous avez réellement refusé. Ce qu’il ne vous a jamais demandé est une
+préférence, et non un refus ; il n’en dit rien.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Voir aussi</strong>
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Activer Zephyr dans le Finder</a>
+<a href="notifications-denied.html#notifications-denied" class="xRef AppleTopic">Si vous ne voyez pas les notifications de Zephyr</a>
+<a href="settings-general.html#settings-general" class="xRef AppleTopic">Laisser Zephyr s’exécuter en arrière-plan</a>
+</div>
+</body>
+</html>
