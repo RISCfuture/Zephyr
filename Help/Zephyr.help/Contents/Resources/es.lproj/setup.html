@@ -1,0 +1,97 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Configurar Zephyr la primera vez que lo abres</title>
+<meta name="description" content="Recorre el asistente de configuración que Zephyr abre en su primer arranque y vuelve a abrirlo más tarde.">
+<meta name="keywords" content="configuración, primer arranque, asistente, bienvenida, guía, primeros pasos, puesta en marcha, configurar zephyr, continuar, hecho">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="setup" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="setup"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Configurar Zephyr la primera vez que lo abres</h1>
+<p>La primera vez que abres Zephyr aparece una ventana llamada Te damos la bienvenida a Zephyr
+que te guía para vincular una cuenta de Dropbox y conceder las tres cosas que solo puedes
+conceder tú.</p>
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/setup-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/setup.webp" width="708" height="630" alt="La ventana Te damos la bienvenida a Zephyr, con el icono de Zephyr sobre el título Te damos la bienvenida a Zephyr, una frase sobre la descarga de archivos al abrirlos y un botón Continuar abajo a la derecha.">
+  </picture>
+  <figcaption>La primera de las siete páginas. Continuar avanza; Atrás vuelve a la anterior.</figcaption>
+</figure>
+
+<div class="Task">
+<h2 class="Name">Recorrer la configuración</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Lee Te damos la bienvenida a Zephyr y Lo que Zephyr necesita, y haz clic en
+      Continuar después de cada una.</p></li>
+  <li><p>En Vincular tu cuenta de Dropbox, vincula una cuenta.</p>
+      <p>Apruebas el acceso en la propia página de Dropbox, así que tu contraseña nunca llega a Zephyr;
+      consulta <a href="link-account.html#link-account" class="xRef AppleTopic">Vincular tu cuenta
+      de Dropbox</a>. Nada de lo que viene después de esta página puede hacerse sin ella: macOS no tiene
+      ningún proveedor de archivos que ofrecerte hasta que una cuenta le ha dado uno a Zephyr.</p></li>
+  <li><p>En Activar Zephyr en el Finder, haz clic en Abrir Ajustes del Sistema
+      y activa Zephyr en Proveedores de archivos.</p>
+      <p>La página lo detecta y, cuando lo has hecho, muestra <em>Activado. Tu Dropbox está en la barra
+      lateral del Finder.</em></p></li>
+  <li><p>En Permitir notificaciones, haz clic en Permitir notificaciones y
+      responde a la solicitud de macOS.</p>
+      <p>macOS solo lo pregunta una vez. Si ya ha registrado una respuesta, el botón pasa a decir
+      Abrir “Notificaciones” y te lleva a Ajustes del Sistema.</p></li>
+  <li><p>En Abrir Zephyr al iniciar sesión, haz clic en Abrir al iniciar sesión.</p></li>
+  <li><p>En Zephyr está listo, haz clic en Abrir en el Finder para ir directamente a
+      tus archivos y, después, en OK.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Nota: </em>Puedes dejar cualquiera de las tres aprobaciones
+para más tarde: ninguna bloquea Continuar. Zephyr indica cuáles siguen pendientes en la parte
+inferior de su ventana; consulta
+<a href="withheld-approval.html#withheld-approval" class="xRef AppleTopic">Si Zephyr está esperando tu
+permiso</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Volver a abrir la configuración</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Haz clic en Zephyr en la barra de menús y, después, en Gestionar cuentas…</p>
+      <p>Zephyr no mantiene ninguna ventana abierta propia, así que sus menús solo están en la barra de
+      menús mientras una de sus ventanas está en primer plano.</p></li>
+  <li><p>Elige Ayuda &#9656; Configurar Zephyr…</p></li>
+</ol>
+<p>La configuración se abre otra vez en la primera página y no deshace nada. Una página cuya aprobación
+ya has concedido lo indica en lugar de pedírtela por segunda vez.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Si la configuración dice que Zephyr se está ejecutando desde una copia</h2>
+<div class="TaskBody">
+<p>En lugar de Activar Zephyr en el Finder, la configuración puede mostrar
+Zephyr se está ejecutando desde una copia. macOS está ejecutando Zephyr desde una copia temporal
+propia y no registrará un proveedor de archivos para ella; por eso no hay ningún ajuste que
+encontrar y el resto de la configuración no puede completarse.</p>
+<ol>
+  <li><p>Haz clic en Descargar el instalador.</p></li>
+  <li><p>Sal de Zephyr, abre el paquete de instalación que has descargado y sigue sus pasos.</p></li>
+  <li><p>Vuelve a abrir Zephyr y recorre la configuración desde el principio.</p></li>
+</ol>
+<p>Esta es la versión guiada de la solución que se describe en
+<a href="dropbox-not-in-finder.html#dropbox-not-in-finder" class="xRef AppleTopic">Si tu Dropbox no
+aparece en el Finder</a>, donde también se explica cómo quitar el indicador a mano si prefieres no
+volver a descargar Zephyr.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Consulta también</strong>
+<a href="link-account.html#link-account" class="xRef AppleTopic">Vincular tu cuenta de Dropbox</a>
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Activar Zephyr en el Finder</a>
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Dónde se guardan tus archivos de Dropbox</a>
+<a href="withheld-approval.html#withheld-approval" class="xRef AppleTopic">Si Zephyr está esperando tu permiso</a>
+</div>
+</body>
+</html>

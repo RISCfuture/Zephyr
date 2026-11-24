@@ -1,0 +1,92 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Usar Zephyr en un atajo</title>
+<meta name="description" content="Pausa la sincronización, sube un archivo u obtén un enlace compartido desde la app Atajos.">
+<meta name="keywords" content="atajos, automatización, siri, spotlight, script, app intents, acción, automatizar">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="automate-shortcuts" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="automate-shortcuts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Usar Zephyr en un atajo</h1>
+<p>Zephyr añade acciones a la app Atajos, para que puedas pausar la sincronización, enviar un
+archivo a Dropbox u obtener un enlace compartido como un paso de algo más grande. Las dos versiones
+de Zephyr las incluyen.</p>
+
+<div class="Task">
+<h2 class="Name">Añadir una acción de Zephyr a un atajo</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Abre la app Atajos y haz clic en el botón de añadir de la barra de herramientas para crear
+      un atajo nuevo.</p></li>
+  <li><p>En la lista de acciones de la derecha, escribe <em>Zephyr</em> en el campo de
+      búsqueda.</p></li>
+  <li><p>Haz doble clic en la acción que quieras. Aparece en el atajo.</p></li>
+  <li><p>Rellena lo que te pida la acción (un archivo, una carpeta, una cuenta) y haz clic en el
+      botón de ejecutar para probarla.</p></li>
+</ol>
+<p>Estas son las acciones que añade Zephyr:</p>
+<ul>
+  <li><p><em>Pausar o reanudar la sincronización</em> detiene o inicia la sincronización de todas
+      las cuentas, igual que Pausar la sincronización en el panel de la barra de menús.</p></li>
+  <li><p><em>Silenciar las notificaciones de Zephyr</em> retiene todas las notificaciones durante 30
+      minutos, una hora u ocho horas, o termina antes un silencio. La sincronización
+      continúa.</p></li>
+  <li><p><em>Obtener estado de la sincronización</em> responde con cuántos archivos y carpetas ha
+      indexado Zephyr y cuántos elementos no se han podido sincronizar.</p></li>
+  <li><p><em>Subir a Dropbox</em> envía un archivo a una carpeta que elijas.</p></li>
+  <li><p><em>Obtener enlace compartido de Dropbox</em> responde con un enlace a un archivo o una
+      carpeta, y lo crea si todavía no tiene uno. Añade después Copiar en el portapapeles para
+      poner el enlace en él.</p></li>
+  <li><p><em>Restaurar archivo de Dropbox</em> devuelve un archivo a una de las versiones que ha
+      conservado Dropbox. Pregunta antes de hacerlo.</p></li>
+</ul>
+<p>Los campos de archivo y de carpeta buscan en el índice de Zephyr, no en tu disco, así que una
+carpeta que nunca se ha descargado se ofrece exactamente igual que una que ya está aquí.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Ejecutar una acción sin crear un atajo</h2>
+<div class="TaskBody">
+<p>Pausar la sincronización, Silenciar las notificaciones y Estado de la sincronización también se
+ofrecen por separado.</p>
+<ol>
+  <li><p>Pulsa Comando-Espacio para abrir Spotlight.</p></li>
+  <li><p>Escribe el nombre de la acción, como <em>Pausar la sincronización</em>.</p></li>
+  <li><p>Pulsa Retorno.</p></li>
+</ol>
+<p>También puedes pedírselas a Siri, diciendo algo como “Pausa la sincronización en Zephyr”.
+Zephyr no necesita estar abierto: se inicia en segundo plano, hace el trabajo y no pasa a primer
+plano.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Si una acción dice que no hay ninguna cuenta vinculada</h2>
+<div class="TaskBody">
+<p>Los atajos actúan como las cuentas que vinculaste <em>en la app Zephyr</em>. La herramienta de
+línea de comandos <code>zephyr</code> guarda sus propias credenciales, aparte, así que una cuenta
+que vinculaste solo ejecutando <code>zephyr auth link</code> no es una que pueda usar un
+atajo.</p>
+<ol>
+  <li><p>Haz clic en Zephyr en la barra de menús y, a continuación, en Gestionar cuentas…</p></li>
+  <li><p>Haz clic en Vincular cuenta de Dropbox… en la barra de herramientas y vincula ahí la
+      cuenta.</p></li>
+</ol>
+<p>Cuando tienes más de una cuenta vinculada, las acciones que acceden a un Dropbox preguntan
+cuál. Con una sola, la usan sin preguntar.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Consulta también</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pausar la sincronización</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Elegir qué notificaciones muestra Zephyr</a>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Instalar la herramienta de línea de comandos <code>zephyr</code></a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Usar más de una cuenta de Dropbox</a>
+</div>
+</body>
+</html>

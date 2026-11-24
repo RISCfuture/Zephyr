@@ -1,0 +1,65 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Usar más de una cuenta de Dropbox</title>
+<meta name="description" content="Vincula varias cuentas de Dropbox y distínguelas en el Finder y en Zephyr.">
+<meta name="keywords" content="varias cuentas, segunda cuenta, trabajo, personal, varias, más de una, cambiar">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="multiple-accounts" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="multiple-accounts"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Usar más de una cuenta de Dropbox</h1>
+<p>Zephyr sincroniza a la vez todas las cuentas que vinculas. Cada una tiene su propio lugar en la
+barra lateral del Finder y su propio índice.</p>
+
+<div class="Task">
+<h2 class="Name">Vincular otra cuenta</h2>
+<div class="TaskBody">
+<p>Vincular una segunda cuenta funciona exactamente igual que la primera; consulta
+<a href="link-account.html#link-account" class="xRef AppleTopic">Vincular tu cuenta de Dropbox</a>.
+Inicias sesión en Dropbox en tu navegador una vez por cada cuenta.</p>
+<p>Después de vincularla, si macOS te lo pide, activa Zephyr para la nueva cuenta en
+Proveedores de archivos; consulta
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Activar Zephyr en el Finder</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Cómo distinguirlas</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>En el Finder:</em> cada cuenta aparece en la barra lateral como <em>Zephyr</em> seguido
+      del correo electrónico de esa cuenta, así que la dirección es lo que permite distinguir dos
+      de ellas.</p></li>
+  <li><p><em>En la barra de menús:</em> el panel enumera todas las cuentas, cada una con su propia
+      línea de estado y sus recuentos. Al hacer clic en una, se abre esa cuenta en el Finder.</p></li>
+  <li><p><em>En los ajustes:</em> Sin sincronizar es propio de cada cuenta, y cuando hay más de una
+      vinculada, nombra cada cuenta sobre sus propios controles. El ancho de banda no: los límites
+      de transferencia pertenecen a este Mac y todas las cuentas los comparten.</p></li>
+</ul>
+<p>El icono de la barra de menús y la línea que tiene al lado reflejan este Mac en conjunto, de modo
+que una cuenta que envía datos se muestra como actividad aunque las demás estén inactivas. Lo que
+detiene todas las cuentas a la vez, como una red cuyo uso te cuesta dinero, se indica una sola vez en
+la parte superior del panel y no bajo cada cuenta.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Trabajar con la herramienta de línea de comandos</h2>
+<div class="TaskBody">
+<p><code>zephyr</code> actúa sobre la única cuenta vinculada salvo que pases <code>--account</code>,
+así que con varias vinculadas tendrás que indicar una. <code>zephyr auth list</code> muestra los
+identificadores que puedes usar, y el autocompletado del shell los ofrece.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Consulta también</strong>
+<a href="link-account.html#link-account" class="xRef AppleTopic">Vincular tu cuenta de Dropbox</a>
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Limitar el ancho de banda que usa Zephyr</a>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Instalar la herramienta de línea de comandos zephyr</a>
+</div>
+</body>
+</html>
