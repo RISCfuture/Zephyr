@@ -1,0 +1,91 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Begrenzen, wie viel Bandbreite Zephyr nutzt</title>
+<meta name="description" content="Begrenze die Upload- und Download-Rate von Zephyr und lege fest, was es bei einem Hotspot oder im Datensparmodus tut.">
+<meta name="keywords" content="Bandbreite, Limit, Begrenzung, drosseln, Upload, Download, Geschwindigkeit, Rate, unbegrenzt, getaktet, Hotspot, Tethering, Datensparmodus, Mobilfunk, teuer, Übertragungslimit">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="settings-bandwidth" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="settings-bandwidth"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Begrenzen, wie viel Bandbreite Zephyr nutzt</h1>
+<p>Ein großer Upload kann eine Verbindung vollständig auslasten. Zephyr lässt sich in jeder
+Richtung auf eine Rate begrenzen, die du wählst.</p>
+
+<div class="Task">
+<h2 class="Name">Ein Limit festlegen</h2>
+<div class="TaskBody">
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-bandwidth-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-bandwidth.webp" width="460" height="156" alt="Der Bereich „Bandbreite“ in den Einstellungen von Zephyr: je ein Regler für „Upload-Limit“ und „Download-Limit“, beide auf „Unbegrenzt“, darüber eine Zeile, die sagt, dass neue Limits sofort gelten und von allen verknüpften Konten gemeinsam genutzt werden.">
+  </picture>
+  <figcaption>Der Bereich „Bandbreite“ mit einer Rate neben jedem Regler.</figcaption>
+</figure>
+<ol>
+  <li><p>Klicke in der Menüleiste auf Zephyr und dann auf „Einstellungen&nbsp;…“.</p></li>
+  <li><p>Scrolle zu „Bandbreite“.</p></li>
+  <li><p>Ziehe den Regler „Upload-Limit“ oder „Download-Limit“.</p>
+      <p>Die eingestellte Rate steht daneben. Die Stufen reichen von 250&nbsp;kB/s am unteren
+      Ende des Reglers bis 100&nbsp;MB/s und danach „Unbegrenzt“ ganz oben. Unter 250&nbsp;kB/s
+      gibt es keine Stufe.</p></li>
+</ol>
+<p>Neue Limits gelten sofort – eine bereits laufende Übertragung wird langsamer, statt erst zu
+Ende zu laufen. Es gibt nichts zu sichern.</p>
+<div class="Alert"><p class="Note"><em>Hinweis: </em>Ein Limit gehört zu diesem Mac, nicht zu einem
+einzelnen Konto. Sind mehrere Konten verknüpft, teilen sie es sich: Synchronisieren zwei Konten
+gleichzeitig, bleiben sie zusammen unter der Rate, die du eingestellt hast, statt dass jedes
+die ganze Rate nutzt.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">In einem getakteten Netzwerk</h2>
+<div class="TaskBody">
+<p>Ein getaktetes Netzwerk ist eines, dessen Nutzung dich etwas kostet: ein persönlicher Hotspot,
+eine Verbindung, die macOS als teuer einstuft, oder eine, für die du den Datensparmodus aktiviert
+hast. Zephyr hält sich dort zurück, und im Bereich „Getaktete Netzwerke“ legst du fest, wie weit.
+Er bleibt eingeklappt, bis du darauf klickst.</p>
+<ol>
+  <li><p>Klicke in der Menüleiste auf Zephyr und dann auf „Einstellungen&nbsp;…“.</p></li>
+  <li><p>Klicke auf „Getaktete Netzwerke“.</p></li>
+  <li><p>Ziehe den Regler „Übertragungslimit“. Er beginnt bei 250&nbsp;kB/s.</p>
+      <p>Anders als die Regler darüber begrenzt dieser eine Wert Uploads und Downloads
+      gleichermaßen, und nur solange du in einem Netzwerk bist, das etwas kostet. Er begrenzt
+      zusätzlich zu den obigen Limits, ersetzt sie aber nicht – es gilt also das niedrigere.</p></li>
+  <li><p>Schalte „Weiter indexieren“ ein, wenn die Verbindung dieses Macs ohne Bedenken genutzt
+      werden kann.</p>
+      <p>Sonst wartet Zephyr auf ein günstigeres Netzwerk, bevor es deine Dropbox indexiert oder
+      nach Änderungen sucht – also die Arbeit, die niemand angefordert hat. Dateien, die du
+      öffnest, werden in jedem Fall geladen, in jedem Netzwerk.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Hinweis: </em>Der Datensparmodus hält das Indexieren immer
+zurück, egal was bei „Weiter indexieren“ steht. Ihn einzuschalten ist eine Anweisung, die du macOS
+gegeben hast, während „teuer“ eine Vermutung von macOS ist – und nur die Vermutung darfst du
+überstimmen.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Eine Rate wählen</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>Upload</em> ist bei den meisten Heimanschlüssen der, den es sich zu begrenzen lohnt:
+      Er ist deutlich schmaler als der Download, und eine Videokonferenz teilt ihn sich mit
+      Zephyr.</p></li>
+  <li><p><em>Download</em> braucht selten ein Limit, da Zephyr nur lädt, was du öffnest.</p></li>
+  <li><p>Wenn Zephyr ganz aufhören soll, statt langsam weiterzumachen, halte es stattdessen an –
+      siehe <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Synchronisierung anhalten</a>.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Synchronisierung anhalten</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Mehr als ein Dropbox-Konto verwenden</a>
+</div>
+</body>
+</html>

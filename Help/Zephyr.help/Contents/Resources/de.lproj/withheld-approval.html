@@ -1,0 +1,82 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Wenn Zephyr auf deine Erlaubnis wartet</title>
+<meta name="description" content="Erteile, was macOS zurückhält: die Finder-Erweiterung, Mitteilungen und das Öffnen bei der Anmeldung.">
+<meta name="keywords" content="Erlaubnis, Freigabe, Berechtigung, Aufmerksamkeit erforderlich, Systemeinstellungen, Anmeldeobjekte, Mitteilungen, zurückgehalten, aktivieren">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="withheld-approval" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="withheld-approval"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Wenn Zephyr auf deine Erlaubnis wartet</h1>
+<p>Drei Dinge, die Zephyr braucht, erteilst du in den Systemeinstellungen und nicht in Zephyr. Hält
+macOS eines davon zurück, weist Zephyr am unteren Rand des Fensters darauf hin, wo die Zeile
+eine Taste Systemeinstellungen öffnen trägt &#8212; und sagt
+gar nichts, wenn alles in Ordnung ist.</p>
+<p>Nur die Finder-Erweiterung erscheint zusätzlich oben im Bereich in der Menüleiste, der auflistet,
+was der Synchronisierung im Weg steht. Ohne sie gibt es überhaupt keine Dropbox im Finder.
+Die beiden anderen betreffen, wie viel Zephyr mitteilt und wann es startet: Auch bei
+abgeschalteten Mitteilungen wird synchronisiert, und ein Mac, auf dem du Zephyr von Hand öffnest,
+synchronisiert einwandfrei, sobald es geöffnet ist.</p>
+
+<div class="Task">
+<h2 class="Name">Eine Freigabe erteilen</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Klicke in der Menüleiste auf Zephyr und dann auf Konten verwalten &#8230;</p></li>
+  <li><p>Klicke in der Zeile am unteren Rand des Fensters auf Systemeinstellungen öffnen.</p>
+      <p>Die Systemeinstellungen öffnen sich im passenden Bereich. Zephyr kann den Bereich öffnen;
+      den Schalter einschalten kannst nur du.</p></li>
+  <li><p>Schalte die Einstellung ein und kehre dann zu Zephyr zurück.</p></li>
+</ol>
+<p>Der Bereich in der Menüleiste nennt die Finder-Erweiterung und verweist auf die zugehörige Seite, aber die
+Taste befindet sich im Zephyr-Fenster: Ein Bereich, der sich schließt, sobald du woanders hinklickst,
+ist kein geeigneter Ort, um dich in eine andere App zu schicken.</p>
+<p>Zephyr prüft jedes Mal erneut, wenn der Bereich in der Menüleiste geöffnet wird und wenn sein Fenster
+in den Vordergrund kommt, sodass die Warnung von selbst verschwindet, sobald du es erledigt hast.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Was jede Freigabe bewirkt</h2>
+<div class="TaskBody">
+<div class="table-wrapper">
+<table data-type="Multicolumn" aria-label="Was Zephyr von macOS benötigt">
+<thead><tr><th scope="col"><p class="TableHead">Zurückgehalten</p></th><th scope="col"><p class="TableHead">Was nicht mehr funktioniert</p></th><th scope="col"><p class="TableHead">Wo du sie erteilst</p></th></tr></thead>
+<tbody>
+<tr><td><p>Zephyr im Finder aktivieren &#8230;</p></td><td><p>Die Dateien eines verknüpften Kontos können überhaupt nicht im Finder erscheinen.</p></td><td><p>Allgemein &#9656; Anmeldeobjekte &amp; Erweiterungen &#9656; Dateianbieter</p></td></tr>
+<tr><td><p>Mitteilungen von Zephyr erlauben &#8230;</p></td><td><p>Dateiänderungen und Synchronisierungsprobleme werden nicht mitgeteilt.</p></td><td><p>Mitteilungen</p></td></tr>
+<tr><td><p>Öffnen von Zephyr bei der Anmeldung erlauben &#8230;</p></td><td><p>Der Finder erfährt nur von Änderungen aus der Ferne, solange du Zephyr selbst geöffnet hast.</p></td><td><p>Allgemein &#9656; Anmeldeobjekte &amp; Erweiterungen</p></td></tr>
+</tbody>
+</table>
+</div>
+<p><a href="x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.fileprovider-nonui" class="URL">Dateianbieter
+für mich öffnen</a></p>
+<p><a href="x-apple.systempreferences:com.apple.LoginItems-Settings.extension" class="URL">Anmeldeobjekte &amp; Erweiterungen
+für mich öffnen</a></p>
+<p><a href="x-apple.systempreferences:com.apple.Notifications-Settings.extension" class="URL">Mitteilungen
+für mich öffnen</a></p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Warum Zephyr nicht einfach fragen kann</h2>
+<div class="TaskBody">
+<p>macOS zeigt die Berechtigungsabfrage einer App nur einmal. Hast du geantwortet, erhält eine App,
+die erneut fragt, dieselbe Antwort, ohne dass etwas auf dem Bildschirm erscheint &#8212; deshalb schickt
+Zephyr dich in die Systemeinstellungen, statt ein zweites Mal zu fragen.</p>
+<p>Außerdem erwähnt Zephyr nur, was du tatsächlich verweigert hast. Etwas, wonach es dich nie gefragt
+hat, ist eine Vorliebe und keine Ablehnung, und darüber schweigt es.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Zephyr im Finder einschalten</a>
+<a href="notifications-denied.html#notifications-denied" class="xRef AppleTopic">Wenn du die Mitteilungen von Zephyr nicht siehst</a>
+<a href="settings-general.html#settings-general" class="xRef AppleTopic">Zephyr im Hintergrund laufen lassen</a>
+</div>
+</body>
+</html>

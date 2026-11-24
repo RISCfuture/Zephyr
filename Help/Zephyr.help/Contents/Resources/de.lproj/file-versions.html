@@ -1,0 +1,92 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Zu einer früheren Version einer Datei zurückkehren</title>
+<meta name="description" content="Sieh dir die Versionen an, die Dropbox von einer Datei aufbewahrt hat, und stelle eine davon wieder her.">
+<meta name="keywords" content="Version, Versionen, Versionsverlauf, Verlauf, Revision, Revisionen, wiederherstellen, frühere Version, vorherige Version, rückgängig, zurücksetzen, zurückkehren">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="file-versions" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="file-versions"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Zu einer früheren Version einer Datei zurückkehren</h1>
+<p>Dropbox bewahrt frühere Versionen einer Datei eine Zeit lang auf, nachdem du sie geändert hast.
+Wenn du etwas gesichert hast, das du nicht sichern wolltest, oder eine App eine Datei fehlerhaft
+überschrieben hat, kannst du eine frühere Version wiederherstellen, ohne den Finder zu
+verlassen.</p>
+
+<div class="Task">
+<h2 class="Name">Ansehen, was Dropbox aufbewahrt hat</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Klicke im Finder bei gedrückter Taste „ctrl“ auf die Datei.</p></li>
+  <li><p>Wähle „Show Previous Versions…“.</p></li>
+</ol>
+<figure>
+  <picture>
+    <source srcset="../en.lproj/system/finder-menu-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/system/finder-menu.webp" width="370" height="475" alt="Ein Kontextmenü des Finders für Quarterly Report.pdf, das mit „Schnellaktionen“ und danach den beiden Befehlen von Zephyr endet: „Show Previous Versions…“ und „Delete from Dropbox, Keep on This Mac“.">
+  </picture>
+  <figcaption>Die Befehle von Zephyr stehen am Ende des Menüs, unterhalb von „Schnellaktionen“.</figcaption>
+</figure>
+<p>Jede Version ist mit dem Datum aufgeführt, das Dropbox festgehalten hat, und mit der damaligen
+Größe der Datei, die neueste zuerst. Die Version, die dein Mac gerade hat, ist als <em>Aktuell</em>
+markiert.</p>
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/file-versions-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/file-versions.webp" width="644" height="556" alt="Das Fenster mit den früheren Versionen: Es listet vier datierte Versionen von Quarterly Report.pdf mit ihren Größen auf, die neueste ist als „Aktuell“ markiert, die darunter ist ausgewählt, und unten stehen die Tasten „Abbrechen“ und „Wiederherstellen&nbsp;…“.">
+  </picture>
+  <figcaption>Oben der Pfad der Datei, darunter alles, was Dropbox noch aufbewahrt.</figcaption>
+</figure>
+
+<div class="Alert"><p class="Note"><em>Hinweis: </em>Der Befehl wird nur angeboten, wenn genau ein
+Objekt ausgewählt ist, und nur für eine Datei &#8212; nicht für einen Ordner, nicht für zwei Dateien
+auf einmal und nicht für ein Objekt, dessen Synchronisierung du beendet hast. Bei jeder anderen
+Auswahl fehlt er im Menü einfach.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Eine Version wiederherstellen</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Wähle die gewünschte Version aus. Die neueste Version, die nicht die aktuelle ist, ist beim
+      Öffnen des Fensters bereits ausgewählt.</p></li>
+  <li><p>Klicke auf „Wiederherstellen&nbsp;…“ und bestätige mit einem Klick auf „Wiederherstellen“.</p></li>
+</ol>
+<p>Die Datei wird auf den Stand dieser Version zurückgesetzt, in Dropbox und auf jedem Gerät, das
+beim selben Account angemeldet ist. Der Finder zieht einen Moment später nach, sobald die Änderung
+zurückgekommen ist.</p>
+<div class="Alert"><p class="Note"><em>Hinweis: </em>Das ist das Einzige hier, was du nicht
+rückgängig machen kannst, indem du es noch einmal tust: Der jetzige Inhalt der Datei wird ersetzt.
+Die ersetzte Version wird selbst als frühere Version aufbewahrt, sodass du auf demselben Weg zu ihr
+zurückkehren kannst.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Wenn es nichts anzuzeigen gibt</h2>
+<div class="TaskBody">
+<p>Bei einer Datei, von der Dropbox keine frühere Version hat &#8212; einer, die du seit dem
+Hinzufügen nie geändert hast &#8212;, steht <em>Dropbox hat keine frühere Version dieser Datei
+aufbewahrt.</em>, und die Taste unten heißt „Schließen“ statt „Abbrechen“.</p>
+<p>Versionen bleiben einer Datei auch beim Umbenennen und Verschieben erhalten. Eine Datei, die du
+umbenannt hast, zeigt also weiterhin, wie sie vorher war.</p>
+<div class="Alert"><p class="Note"><em>Hinweis: </em>Das Fenster zeigt höchstens zehn Versionen,
+und es gibt keine Möglichkeit, darüber hinaus zu blättern. Wie weit zurück Dropbox Versionen
+aufbewahrt, hängt von deinem Dropbox-Tarif ab, aber eine Datei, die oft genug gesichert wird, hat
+alle zehn schon innerhalb eines Tages aufgebraucht. <code>zephyr revs</code> reicht weiter zurück
+&#8212; siehe <a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Das Befehlszeilenprogramm „zephyr“ installieren</a>.</p></div>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="open-and-download.html#open-and-download" class="xRef AppleTopic">Eine Datei öffnen und Speicherplatz wieder freigeben</a>
+<a href="automate-shortcuts.html#automate-shortcuts" class="xRef AppleTopic">Zephyr in einem Kurzbefehl verwenden</a>
+<a href="recover-deleted-file.html#recover-deleted-file" class="xRef AppleTopic">Wenn du etwas gelöscht hast, das du brauchst</a>
+</div>
+</body>
+</html>

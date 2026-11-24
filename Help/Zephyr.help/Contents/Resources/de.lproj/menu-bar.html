@@ -1,0 +1,89 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Nachsehen, was Zephyr gerade tut</title>
+<meta name="description" content="Lies den Synchronisierungsstatus ab, öffne ein Konto im Finder und erreiche die Bedienelemente von Zephyr über die Menüleiste.">
+<meta name="keywords" content="Menüleiste, Status, Bereich, Symbol, Senden, Auf dem neuesten Stand, Angehalten, Konten, Beenden, Einstellungen, Synchronisierung">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="menu-bar" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="menu-bar"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Nachsehen, was Zephyr gerade tut</h1>
+<p>Zephyr hat kein Hauptfenster, das dauerhaft geöffnet bleibt. Das Symbol in der Menüleiste zeigt
+den Status an, und ein Klick darauf öffnet den Bereich, in dem alles andere zu finden ist.</p>
+
+<div class="Task">
+<h2 class="Name">Den Bereich lesen</h2>
+<div class="TaskBody">
+<p>Klicke in der Menüleiste auf das Zephyr-Symbol.</p>
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/menu-bar-panel-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/menu-bar-panel.webp" width="448" height="480" alt="Der Zephyr-Bereich in der Menüleiste mit zwei Konten und ihrer Anzahl an Dateien und Ordnern, darunter „Konten verwalten …“, „Einstellungen …“, „Synchronisierung anhalten“, „Mitteilungen stummschalten“ und „Zephyr beenden“.">
+  </picture>
+  <figcaption>Eine Zeile pro Konto, darunter die Aktionen des Bereichs.</figcaption>
+</figure>
+<p>Oben sagt der Bereich etwas über diesen Mac, weiter unten etwas über ein einzelnes Konto –
+und nie dasselbe an beiden Stellen.</p>
+<ul>
+  <li><p><em>Die oberste Zeile</em> zeigt, was die Synchronisierung auf diesem Mac insgesamt
+      gerade tut, und nur das: <em>Auf dem neuesten Stand</em>, <em>Synchronisierung läuft</em>,
+      <em>Wird gesendet</em>, <em>Synchronisierungsprobleme</em> oder <em>Angehalten</em>.</p></li>
+  <li><p><em>Die Meldungen direkt darunter</em> erscheinen nur, wenn der Synchronisierung etwas
+      im Weg steht, und sagen, was das ist: ein Netzwerk, dessen Nutzung dich etwas kostet, eine
+      Dropbox, die Zephyr schon länger nicht erreichen konnte, oder ein im Finder ausgeschaltetes
+      Zephyr. Jede enthält einen Link „Hol dir dazu Hilfe.“, der zur passenden Seite führt. Keine
+      davon ist ein Knopf.</p>
+      <p>Mitteilungen und das Öffnen bei der Anmeldung fehlen hier. Beides sind Entscheidungen
+      darüber, wie sich Zephyr verhält, und keine Hindernisse für die Synchronisierung; das
+      Zephyr-Fenster listet sie zusammen mit der Finder-Erweiterung auf.</p></li>
+  <li><p><em>Konten</em> listet jedes verknüpfte Konto auf, dazu was es gerade tut und wie viele
+      Dateien und Ordner es enthält. Klicke auf ein Konto, um es im Finder zu öffnen.</p></li>
+  <li><p><em>Die Zeile unter dem Kontonamen</em> gehört nur diesem Konto:
+      <em>… noch zu senden</em> zählt die Änderungen, die es Dropbox noch schuldet – auch
+      Bearbeitungen, Umbenennungen und Löschungen, nicht nur neue Dateien –, und sonst steht dort,
+      wann sich das Konto zuletzt geändert hat.</p></li>
+  <li><p><em>Eine Warnung unter einem Konto</em> betrifft entweder das Konto selbst oder nennt die
+      Anzahl der Objekte, die nicht synchronisiert werden konnten, und hat ihren eigenen Link
+      „Hol dir dazu Hilfe.“</p></li>
+</ul>
+<p>Das Symbol selbst zeigt dasselbe wie die oberste Zeile, sodass du auf einen Blick siehst, ob
+sich etwas bewegt, ohne den Bereich zu öffnen.</p>
+<div class="Alert"><p class="Note"><em>Hinweis: </em>Ein Netzwerk, das dich etwas kostet, hält nur
+Arbeit zurück, die niemand angefordert hat. Dateien, die du öffnest, werden trotzdem geladen. Siehe
+<a href="settings-bandwidth.html#settings-bandwidth" class="xRef AppleTopic">Begrenzen, wie viel Bandbreite Zephyr nutzt</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Aktionen am unteren Rand des Bereichs</h2>
+<div class="TaskBody">
+<div class="table-wrapper">
+<table data-type="Multicolumn" aria-label="Die Aktionen des Bereichs in der Menüleiste">
+<thead><tr><th scope="col"><p class="TableHead">Aktion</p></th><th scope="col"><p class="TableHead">Was sie bewirkt</p></th></tr></thead>
+<tbody>
+<tr><td><p>Konten verwalten&nbsp;…</p></td><td><p>Öffnet das Zephyr-Fenster, in dem Konten verknüpft und die Verknüpfung aufgehoben wird.</p></td></tr>
+<tr><td><p>Einstellungen&nbsp;…</p></td><td><p>Öffnet die Einstellungen von Zephyr. <kbd>&#8984;,</kbd></p></td></tr>
+<tr><td><p>Synchronisierung anhalten</p></td><td><p>Hält das Senden und Laden an, bis du es fortsetzt. Siehe <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Synchronisierung anhalten</a>.</p></td></tr>
+<tr><td><p>Mitteilungen stummschalten</p></td><td><p>Hält alle Mitteilungen 30 Minuten, 1 Stunde oder 8 Stunden zurück.</p></td></tr>
+<tr><td><p>Zephyr beenden</p></td><td><p>Beendet Zephyr. Deine Dateien bleiben im Finder, aber nichts Neues wird synchronisiert, bis du Zephyr wieder öffnest. <kbd>&#8984;Q</kbd></p></td></tr>
+</tbody>
+</table>
+</div>
+<p>Eine Zeile, die ein Fenster öffnet, schließt den Bereich dahinter; eine Zeile, die direkt etwas
+ändert, lässt ihn geöffnet. Drücke die <kbd>Escape</kbd>-Taste, um den Bereich zu schließen.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Synchronisierung anhalten</a>
+<a href="settings-notifications.html#settings-notifications" class="xRef AppleTopic">Festlegen, welche Mitteilungen Zephyr zeigt</a>
+<a href="sync-issues.html#sync-issues" class="xRef AppleTopic">Wenn eine Datei nicht synchronisiert wird</a>
+<a href="cannot-reach-dropbox.html#cannot-reach-dropbox" class="xRef AppleTopic">Wenn Zephyr Dropbox nicht erreicht</a>
+<a href="add-widget.html#add-widget" class="xRef AppleTopic">Das Zephyr-Widget zum Schreibtisch hinzufügen</a>
+</div>
+</body>
+</html>

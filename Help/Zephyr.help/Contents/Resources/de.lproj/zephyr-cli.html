@@ -1,0 +1,114 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Das Befehlszeilenprogramm „zephyr“ installieren</title>
+<meta name="description" content="Das Programm „zephyr“ in den PATH aufnehmen und deine Dropbox im Terminal verwenden.">
+<meta name="keywords" content="Befehlszeile, Terminal, CLI, zephyr, installieren, usr local bin, Shell, Vervollständigung, Skript, sudo, Symlink, Befehlszeilenprogramm">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="zephyr-cli" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="zephyr-cli"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Das Befehlszeilenprogramm „zephyr“ installieren</h1>
+<p>Die herunterladbare Version von Zephyr enthält ein Befehlszeilenprogramm. Es liest dieselben Konten
+und denselben Index wie die App und kann daher einen Ordner auflisten, aus dem noch nie etwas geladen
+wurde, ohne das Netzwerk zu verwenden.</p>
+
+<div class="Task">
+<h2 class="Name">Installieren</h2>
+<div class="TaskBody">
+<p>Wenn du Zephyr mit dem Installationspaket installiert und „Befehlszeilenprogramm“ eingeschaltet
+gelassen hast, befindet sich das Programm bereits in deinem <code>PATH</code> – das Installationsprogramm
+legt die Verknüpfung während der Installation an. Öffne ein Terminal-Fenster und führe
+<code>zephyr --help</code> aus. Das zeigen auch die Einstellungen von Zephyr: Unter „Befehlszeilenprogramm“
+steht <em>Installiert in /usr/local/bin</em>.</p>
+<p>Wenn du diese Option im Installationsprogramm ausgeschaltet oder Zephyr aus einem Disk-Image herausgezogen
+hast, hat niemand die Verknüpfung angelegt. macOS erlaubt es Zephyr nicht, selbst etwas in deinen
+<code>PATH</code> zu legen, daher zeigt Zephyr dir den Befehl, der das erledigt.</p>
+<ol>
+  <li><p>Klicke in der Menüleiste auf Zephyr und dann auf „Einstellungen&nbsp;…“.</p></li>
+  <li><p>Scrolle zu „Befehlszeilenprogramm“ und klicke auf „Kopieren“.</p></li>
+  <li><p>Füge den Befehl im Terminal ein und drücke den Zeilenschalter.</p>
+      <p>Der Befehl verknüpft das Programm mit <code>/usr/local/bin</code>. <code>sudo</code> fragt nach
+      deinem Passwort, und das Konto, bei dem du angemeldet bist, muss ein Administratorkonto sein.</p></li>
+  <li><p>Öffne ein neues Terminal-Fenster und führe <code>zephyr --help</code> aus.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Hinweis: </em>Die App-Store-Version enthält das Programm nicht,
+und der Bereich weist darauf hin. Der App Store erlaubt es einer App nicht, etwas in deinen
+<code>PATH</code> zu legen. Um das Programm zu verwenden, installiere die herunterladbare Version von
+<a href="https://zephyrmac.app/#download">zephyrmac.app</a> – siehe
+<a href="editions.html#editions" class="xRef AppleTopic">Zwischen den beiden Versionen von
+Zephyr wählen</a>; dort steht auch, wie du wechselst, ohne deinen Ort im Finder zu verlieren.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Ein Konto für das Programm verknüpfen</h2>
+<div class="TaskBody">
+<p>Das Programm bewahrt seine Zugangsdaten getrennt von denen der App in deinem Anmeldungs-Schlüsselbund
+auf. Es kann ein von der App verknüpftes Konto <em>sehen</em>, aber nicht als ein Konto handeln, das es
+nicht selbst verknüpft hat.</p>
+<ol>
+  <li><p>Führe im Terminal <code>zephyr auth link</code> aus.</p>
+      <p>Das Programm gibt eine Autorisierungs-URL aus und öffnet sie in deinem Browser.</p></li>
+  <li><p>Erteile auf der Seite von Dropbox den Zugriff und kopiere dann den Autorisierungscode, den
+      Dropbox dir anzeigt.</p></li>
+  <li><p>Wechsle zurück zum Terminal, füge den Code nach
+      <em>Enter the authorization code shown by Dropbox:</em> ein und drücke den Zeilenschalter.</p></li>
+</ol>
+<p><code>zephyr auth list</code> zeigt, als welche Konten sich das Programm authentifizieren kann.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Was das Programm kann</h2>
+<div class="TaskBody">
+<p><code>zephyr --help</code> listet alles auf. Kurz gesagt: <code>ls</code>, <code>get</code>,
+<code>put</code>, <code>rm</code>, <code>mkdir</code> und <code>mv</code> für Dateien;
+<code>revs</code>, <code>restore</code> und <code>diff</code> für frühere Versionen einer Datei;
+<code>sharelink</code> für geteilte Links; <code>find</code>, um ein Objekt überall in deiner Dropbox
+nach Namen zu suchen, auch Dateien, die nicht auf diesem Mac sind; und
+<code>status</code>, <code>filestatus</code> und <code>history</code> für
+das, was Zephyr weiß.</p>
+<p>Fünf weitere sind die Terminal-Entsprechungen von Einstellungen, für die du sonst die App öffnen
+würdest: <code>bandwidth-limit</code> legt die Upload-, Download- und Limits für getaktete Netzwerke fest;
+<code>ignored</code> listet auf, was du von der Synchronisierung ausgenommen hast;
+<code>keep-downloaded</code> listet auf, was du auf diesem Mac festgehalten hast; <code>notify</code>
+schaltet Mitteilungen stumm; und <code>rebuild-index</code> erstellt den Index eines Kontos neu.
+<code>log</code> liest das aktuelle Protokoll von Zephyr, und <code>gui</code> öffnet die App.</p>
+<p>Befehle wirken auf das einzige verknüpfte Konto, sofern du nicht <code>--account</code> angibst.
+<code>bandwidth-limit</code>, <code>notify</code>, <code>log</code> und <code>gui</code> kennen
+<code>--account</code> gar nicht, weil keiner davon zu einem einzelnen Konto gehört. Dreizehn Befehle
+nehmen außerdem <code>--json</code> an.</p>
+<div class="Alert"><p class="Note"><em>Hinweis: </em><code>watch</code> ist ein Diagnosebefehl und kein
+Weg, ein Konto aktuell zu halten. Zephyr selbst beobachtet Dropbox auf Änderungen – siehe
+<a href="settings-general.html#settings-general" class="xRef AppleTopic">Zephyr im Hintergrund laufen lassen</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Shell-Vervollständigung hinzufügen</h2>
+<div class="TaskBody">
+<p><code>zephyr --generate-completion-script</code> schreibt ein Vervollständigungsskript für
+<code>zsh</code>, <code>bash</code> oder <code>fish</code>. Für zsh:</p>
+<ol>
+  <li><p>Führe <code>mkdir -p ~/.zsh/completions</code> aus.</p></li>
+  <li><p>Führe <code>zephyr --generate-completion-script zsh &gt; ~/.zsh/completions/_zephyr</code> aus.</p></li>
+  <li><p>Füge <code>fpath=(~/.zsh/completions $fpath)</code> zu <code>~/.zshrc</code> hinzu,
+      <em>oberhalb</em> der Zeile mit <code>compinit</code>, und öffne dann ein neues Terminal-Fenster.</p></li>
+</ol>
+<p>Dropbox-Pfade werden aus dem Index von Zephyr vervollständigt, ein Ordner pro Tabulatortaste. Ein Ordner,
+aus dem nichts geladen wurde, wird daher genauso vervollständigt wie einer, der schon hier ist.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="cli-install.html#cli-install" class="xRef AppleTopic">Wenn sich das Befehlszeilenprogramm nicht installieren lässt</a>
+<a href="automate-shortcuts.html#automate-shortcuts" class="xRef AppleTopic">Zephyr in einem Kurzbefehl verwenden</a>
+<a href="editions.html#editions" class="xRef AppleTopic">Zwischen den beiden Versionen von Zephyr wählen</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Mehr als ein Dropbox-Konto verwenden</a>
+</div>
+</body>
+</html>

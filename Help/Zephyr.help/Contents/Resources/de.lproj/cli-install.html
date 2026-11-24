@@ -1,0 +1,103 @@
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Wenn sich das Befehlszeilenprogramm nicht installieren lässt</title>
+<meta name="description" content="Was du tun kannst, wenn sich der Link „zephyr“ nicht anlegen lässt oder das Programm nicht in deiner Version enthalten ist.">
+<meta name="keywords" content="Befehlszeile, Terminal, installieren, Installation, fehlgeschlagen, Autorisierung, usr local bin, Symlink, symbolischer Link, sudo, Passwort, Administrator, PATH, nicht gefunden">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="cli-install" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="cli-install"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Wenn sich das Befehlszeilenprogramm nicht installieren lässt</h1>
+<p>Das Programm zu installieren bedeutet, einen Link unter <code>/usr/local/bin/zephyr</code> anzulegen.
+Das Installationspaket erledigt das für dich; bei einer Kopie, die du aus einem Disk-Image
+herausgezogen hast, genügt dafür ein Befehl im Terminal. So kann dabei etwas schiefgehen.</p>
+
+<div class="Task">
+<h2 class="Name">Wenn du erwartet hast, dass Zephyr es für dich installiert</h2>
+<div class="TaskBody">
+<p>Das Installationspaket tut das während der Installation, es sei denn, du hast im Bereich
+„Anpassen“ das Häkchen bei „Befehlszeilenprogramm“ entfernt. macOS hält eine laufende App jedoch
+aus <code>/usr/local/bin</code> heraus. Ein Zephyr, das du aus einem Disk-Image herausgezogen
+oder ohne diese Auswahl installiert hast, kann dir deshalb nur den Befehl zeigen, den du dann einmal selbst
+ausführst.</p>
+<ol>
+  <li><p>Scrolle in den Einstellungen von Zephyr zu „Befehlszeilenprogramm“ und klicke auf „Kopieren“.</p></li>
+  <li><p>Füge den Befehl im Terminal ein und drücke die Eingabetaste (Return).</p></li>
+</ol>
+<p>Zephyr muss dafür nicht geöffnet sein, und du musst das nur einmal pro Kopie der App tun. Wenn im
+Bereich <em>Installiert in /usr/local/bin</em> steht und kein Befehl angeboten wird, ist nichts zu
+tun.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Wenn das Terminal den Link nicht anlegt</h2>
+<div class="TaskBody">
+<p>Der Befehl beginnt mit <code>sudo</code>, und dafür gibt es zwei Voraussetzungen.</p>
+<ul>
+  <li><p><em>Es wird ein Passwort abgefragt.</em> Gib dein Anmeldepasswort ein &#8212; beim Tippen
+      erscheint nichts, das ist normal &#8212; und drücke die Eingabetaste.</p></li>
+  <li><p><em>Dein Account muss ein Administrator sein.</em> Ein Standard-Account darf dort nichts
+      schreiben. Prüfe das in Systemeinstellungen &gt; Benutzer:innen &amp; Gruppen oder frage die
+      Person, die den Mac verwaltet.</p></li>
+</ul>
+<p>Wenn das Terminal <code>no such file or directory</code> meldet, fehlt der Ordner selbst. Führe
+zuerst <code>sudo mkdir -p /usr/local/bin</code> aus und danach den Befehl, den Zephyr dir
+angezeigt hat.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Wenn Zephyr meldet, dass das Programm nicht enthalten ist</h2>
+<div class="TaskBody">
+<p>Zwei Versionen melden das, aus verschiedenen Gründen.</p>
+<ul>
+  <li><p><em>Die Version aus dem App Store.</em> Der App Store erlaubt es einer App nicht, etwas in
+      deinem <code>PATH</code> zu installieren. Deshalb wird sie ohne das Programm ausgeliefert, und
+      der Bereich weist darauf hin. Die Version zum Herunterladen findest du unter
+      <a href="https://zephyrmac.app/#download">zephyrmac.app</a>
+      &#8212; siehe <a href="editions.html#editions" class="xRef AppleTopic">Zwischen den beiden Versionen von Zephyr wählen</a>.</p></li>
+  <li><p><em>Eine Version, die es schlicht nicht enthält.</em> Lade Zephyr erneut von der Website
+      des Projekts herunter.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Wenn die Shell <code>zephyr</code> nicht findet</h2>
+<div class="TaskBody">
+<p>Der Link ist installiert, aber deine Shell sucht nicht an dieser Stelle.</p>
+<ol>
+  <li><p>Öffne ein neues Terminalfenster. Eine bereits laufende Shell erkennt einen neuen Befehl
+      nie.</p></li>
+  <li><p>Führe <code>echo $PATH</code> aus und prüfe, ob <code>/usr/local/bin</code> darin
+      enthalten ist.</p></li>
+  <li><p>Wenn nicht, ergänze es in der Startdatei deiner Shell &#8212;
+      <code>~/.zshrc</code> für zsh.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Hinweis: </em>Wenn du Zephyr.app an einen anderen Ort
+verschiebst, zeigt der Link weiterhin auf den bisherigen Ort. Kopiere den Befehl erneut aus den
+Einstellungen von Zephyr und führe ihn aus: Er nennt den neuen Ort und ersetzt den alten Link.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Wenn sich das Programm nicht authentifizieren kann</h2>
+<div class="TaskBody">
+<p><code>zephyr</code> verwaltet seine Zugangsdaten getrennt von der App. Ein Account, den die App
+verknüpft hat, kann vom Programm daher aufgelistet, aber nicht verwendet werden. Führe einmal
+<code>zephyr auth link</code> für das Programm aus. Der Exit-Code&nbsp;69 bedeutet, dass überhaupt
+kein Account verknüpft ist. So kann ein Skript das von einem echten Fehler unterscheiden.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Siehe auch</strong>
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Das Befehlszeilenprogramm „zephyr“ installieren</a>
+<a href="editions.html#editions" class="xRef AppleTopic">Zwischen den beiden Versionen von Zephyr wählen</a>
+</div>
+</body>
+</html>
