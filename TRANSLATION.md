@@ -65,6 +65,9 @@ term” mean the wording those products ship in that language; look it up rather
   general statement, `failureReason` the specifics. Keep each a complete sentence.
 - **The non-affiliation notice** (“not affiliated with, endorsed by, or sponsored by Dropbox”)
   is translated faithfully and in full, wherever it appears.
+- **“Your Dropbox”**, the user's folder and account, is masculine in French and Spanish, as
+  Dropbox's own interface has it (« votre Dropbox est plein », “tu Dropbox está lleno”).
+  Dropbox the service takes no article.
 
 ## Help book
 
