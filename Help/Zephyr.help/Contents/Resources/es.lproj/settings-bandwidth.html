@@ -1,0 +1,89 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Limitar el ancho de banda que usa Zephyr</title>
+<meta name="description" content="Limita las velocidades de carga y descarga de Zephyr e indica qué hace en una zona Wi-Fi compartida o con el modo de datos reducidos.">
+<meta name="keywords" content="ancho de banda, límite, limitar, carga, descarga, velocidad, sin límite, uso medido, zona Wi-Fi, compartir internet, modo de datos reducidos, datos móviles, red de precio elevado">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="settings-bandwidth" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="settings-bandwidth"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Limitar el ancho de banda que usa Zephyr</h1>
+<p>Una carga grande puede acaparar por completo una conexión. Zephyr puede limitarse a la velocidad que
+elijas, en cada sentido.</p>
+
+<div class="Task">
+<h2 class="Name">Establecer un límite</h2>
+<div class="TaskBody">
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/settings-bandwidth-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/settings-bandwidth.webp" width="460" height="156" alt="La sección Ancho de banda de los ajustes de Zephyr: un regulador Límite de carga y otro Límite de descarga, ambos con el valor Sin límite, encima de una línea que indica que los nuevos límites se aplican de inmediato y que todas las cuentas vinculadas los comparten.">
+  </picture>
+  <figcaption>La sección Ancho de banda, con una velocidad junto a cada regulador.</figcaption>
+</figure>
+<ol>
+  <li><p>Haz clic en Zephyr en la barra de menús y, después, en Ajustes&#8230;</p></li>
+  <li><p>Desplázate hasta Ancho de banda.</p></li>
+  <li><p>Arrastra el regulador Límite de carga o Límite de descarga.</p>
+      <p>La velocidad establecida aparece junto a él. Los valores van desde 250&nbsp;kB/s, en el
+      extremo inferior del recorrido, hasta 100&nbsp;MB/s y, por último, Sin límite en el extremo
+      superior. No hay ningún valor por debajo de 250&nbsp;kB/s.</p></li>
+</ol>
+<p>Los nuevos límites se aplican de inmediato: una transferencia que ya está en curso se ralentiza en
+lugar de esperar a terminar. No hay nada que guardar.</p>
+<div class="Alert"><p class="Note"><em>Nota: </em>Un límite pertenece a este Mac, no a una cuenta concreta.
+Si hay varias cuentas vinculadas, lo comparten, de modo que dos cuentas que se sincronicen a la vez
+se mantienen entre ambas por debajo de la velocidad que has fijado, en lugar de que cada una
+aproveche toda.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">En una red de uso medido</h2>
+<div class="TaskBody">
+<p>Una red de uso medido es la que te cuesta dinero usar: una zona Wi-Fi personal, una conexión que
+macOS considera de precio elevado o una que has puesto en modo de datos reducidos. Zephyr se contiene
+en ellas, y la sección Redes de uso medido es donde indicas hasta qué punto. Permanece plegada hasta
+que haces clic en ella.</p>
+<ol>
+  <li><p>Haz clic en Zephyr en la barra de menús y, después, en Ajustes&#8230;</p></li>
+  <li><p>Haz clic en Redes de uso medido.</p></li>
+  <li><p>Arrastra el regulador Límite de transferencia. Empieza en 250&nbsp;kB/s.</p>
+      <p>A diferencia de los reguladores anteriores, esta única velocidad limita por igual las cargas y
+      las descargas, y solo mientras estés en una red que cuesta dinero. Limita los límites anteriores
+      en lugar de sustituirlos, así que se aplica el más bajo de los dos.</p></li>
+  <li><p>Activa Seguir indexando si la conexión de este Mac se puede usar sin problema.</p>
+      <p>De lo contrario, Zephyr espera a una red más barata antes de indexar tu Dropbox o de comprobar
+      si hay cambios, es decir, el trabajo que nadie ha pedido. Los archivos que abres se descargan
+      igualmente, en cualquier red.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Nota: </em>El modo de datos reducidos siempre frena la indexación,
+diga lo que diga Seguir indexando. Activarlo es una instrucción que le has dado a macOS, mientras que
+&#8220;de precio elevado&#8221; es una suposición de macOS, y solo la suposición es algo que tú puedes
+contradecir.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Elegir una velocidad</h2>
+<div class="TaskBody">
+<ul>
+  <li><p><em>La carga</em> es la que conviene limitar en la mayoría de las conexiones domésticas, donde es
+      mucho más estrecha que la descarga y donde se comparte con una videollamada.</p></li>
+  <li><p><em>La descarga</em> rara vez necesita un límite, ya que Zephyr solo descarga lo que abres.</p></li>
+  <li><p>Si quieres que Zephyr se detenga por completo en lugar de ir despacio, ponlo en pausa; consulta
+      <a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pausar la sincronización</a>.</p></li>
+</ul>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Consulta también</strong>
+<a href="pause-syncing.html#pause-syncing" class="xRef AppleTopic">Pausar la sincronización</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Usar más de una cuenta de Dropbox</a>
+</div>
+</body>
+</html>

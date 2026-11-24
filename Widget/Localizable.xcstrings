@@ -9,6 +9,12 @@
             "value" : "Synchronisierung anhalten"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pausar la sincronización"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -23,6 +29,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Hält die Synchronisierung aller Dropbox-Konten, die Zephyr im Finder bereitstellt, an oder setzt sie fort."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Pausa o reanuda la sincronización de todas las cuentas de Dropbox que Zephyr mantiene en el Finder."
           }
         },
         "fr" : {
@@ -41,6 +53,12 @@
             "value" : "Synchronisierungsstatus"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Estado de la sincronización"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -55,6 +73,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Synchronisierung läuft"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sincronizando"
           }
         },
         "fr" : {
@@ -73,6 +97,12 @@
             "value" : "Synchronisierung angehalten"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Sincronización en pausa"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -87,6 +117,12 @@
           "stringUnit" : {
             "state" : "machine_translated",
             "value" : "Dateianzahlen und Synchronisierungsprobleme der Dropbox-Konten."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Número de archivos y problemas de sincronización de tus cuentas de Dropbox."
           }
         },
         "fr" : {

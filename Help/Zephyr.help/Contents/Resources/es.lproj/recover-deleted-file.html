@@ -1,0 +1,80 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Si has eliminado algo que necesitabas</title>
+<meta name="description" content="Qué hace una eliminación en tu Dropbox, qué puede recuperar Zephyr y qué no.">
+<meta name="keywords" content="eliminado, eliminar, borrar, borrado, papelera, recuperar, restaurar, desaparecido, archivo perdido, archivo que falta">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="recover-deleted-file" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="recover-deleted-file"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Si has eliminado algo que necesitabas</h1>
+<p>Eliminar un elemento de tu Dropbox lo elimina en Dropbox y en todos los dispositivos con la sesión
+iniciada en la cuenta, y Zephyr no tiene una papelera propia de la que recuperarlo.</p>
+
+<div class="Task">
+<h2 class="Name">Qué hace una eliminación</h2>
+<div class="TaskBody">
+<ul>
+  <li><p>El elemento desaparece de Dropbox además de este Mac, en cuestión de segundos, y de tus
+      otros dispositivos a medida que se ponen al día.</p></li>
+  <li><p>Tu Dropbox en el Finder no tiene una papelera propia. Dropbox no ofrece a Zephyr ninguna
+      forma de tenerla, así que Zephyr no finge tenerla.</p></li>
+  <li><p>No aparece nada en Problemas de sincronización. Una eliminación que ha llegado a Dropbox
+      ha funcionado; lo único que ocurre es que no era lo que querías.</p></li>
+</ul>
+<p>Zephyr no tiene forma de recuperar un elemento eliminado. Si Dropbox conserva todavía una copia
+es una cuestión que debes consultar con Dropbox, en el propio sitio web de Dropbox.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Si el archivo sigue ahí pero es incorrecto</h2>
+<div class="TaskBody">
+<p>Un archivo que se ha sobrescrito en lugar de eliminarse es otro asunto: Dropbox conservó lo que
+decía antes, y puedes restaurar una versión anterior sin salir del Finder.</p>
+<ol>
+  <li><p>En el Finder, haz clic en el archivo mientras mantienes pulsada la tecla Control.</p></li>
+  <li><p>Elige Show Previous Versions…</p></li>
+</ol>
+<p>Consulta <a href="file-versions.html#file-versions" class="xRef AppleTopic">Volver a una versión anterior de un archivo</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Averiguar qué se eliminó y cuándo</h2>
+<div class="TaskBody">
+<p>Zephyr guarda una semana de lo que ha sincronizado, lo bastante para decirte qué desapareció y en
+qué dirección: no es una copia de nada, pero te dirá si la eliminación partió de este Mac o llegó
+desde otro sitio.</p>
+<ol>
+  <li><p>En Terminal, ejecuta <code>zephyr history</code></p></li>
+  <li><p>Busca <em>removed</em> en la columna CHANGE y <em>up</em> (este Mac lo envió) o
+      <em>down</em> (lo hizo otro dispositivo) en la columna DIRECTION.</p></li>
+</ol>
+<p>El comando se incluye con la versión descargable de Zephyr; consulta
+<a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Instalar la herramienta de línea de comandos zephyr</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Sacar algo de Dropbox sin eliminarlo</h2>
+<div class="TaskBody">
+<p>Si lo que querías era dejar de sincronizar algo en lugar de perderlo, hay un comando que conserva
+tu copia: Delete from Dropbox, Keep on This Mac descarga primero el elemento y solo después elimina
+la copia de Dropbox. Consulta
+<a href="stop-syncing-item.html#stop-syncing-item" class="xRef AppleTopic">Dejar de sincronizar un archivo o una carpeta</a>.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Consulta también</strong>
+<a href="file-versions.html#file-versions" class="xRef AppleTopic">Volver a una versión anterior de un archivo</a>
+<a href="stop-syncing-item.html#stop-syncing-item" class="xRef AppleTopic">Dejar de sincronizar un archivo o una carpeta</a>
+<a href="open-and-download.html#open-and-download" class="xRef AppleTopic">Abrir un archivo y volver a liberar espacio</a>
+<a href="conflicted-copies.html#conflicted-copies" class="xRef AppleTopic">Si el mismo archivo se ha modificado en dos sitios</a>
+</div>
+</body>
+</html>

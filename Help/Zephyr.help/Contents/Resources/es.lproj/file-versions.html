@@ -1,0 +1,89 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Volver a una versión anterior de un archivo</title>
+<meta name="description" content="Consulta las versiones de un archivo que ha conservado Dropbox y restaura una.">
+<meta name="keywords" content="versión, versiones, historial, revisión, revisiones, restaurar, versión anterior, deshacer, revertir, recuperar, anterior">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="file-versions" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="file-versions"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Volver a una versión anterior de un archivo</h1>
+<p>Dropbox conserva durante un tiempo las versiones anteriores de un archivo después de que lo
+modifiques. Si has guardado algo sin querer, o una app ha sobrescrito mal un archivo, puedes
+restaurar una versión anterior sin salir del Finder.</p>
+
+<div class="Task">
+<h2 class="Name">Consultar lo que ha conservado Dropbox</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>En el Finder, haz clic en el archivo mientras mantienes pulsada la tecla Control.</p></li>
+  <li><p>Elige Show Previous Versions…</p></li>
+</ol>
+<figure>
+  <picture>
+    <source srcset="../en.lproj/system/finder-menu-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/system/finder-menu.webp" width="370" height="475" alt="Menú contextual del Finder para Quarterly Report.pdf, que termina con Acciones rápidas y, a continuación, los dos comandos de Zephyr, Show Previous Versions… y Delete from Dropbox, Keep on This Mac.">
+  </picture>
+  <figcaption>Los comandos de Zephyr están al final del menú, debajo de Acciones rápidas.</figcaption>
+</figure>
+<p>Cada versión aparece con la fecha en que Dropbox la registró y el tamaño que tenía entonces el
+archivo, de la más reciente a la más antigua. La que tiene ahora tu Mac lleva la marca
+<em>Actual</em>.</p>
+<figure>
+  <picture>
+    <source srcset="../en.lproj/images/file-versions-dark.webp" media="(prefers-color-scheme: dark)">
+    <img src="../en.lproj/images/file-versions.webp" width="644" height="556" alt="La ventana Show Previous Versions, con cuatro versiones fechadas de Quarterly Report.pdf y sus tamaños; la más reciente lleva la marca Actual y la que está justo debajo está seleccionada, encima de los botones Cancelar y Restaurar…">
+  </picture>
+  <figcaption>La ruta del archivo en la parte superior y, debajo, todo lo que Dropbox conserva aún.</figcaption>
+</figure>
+
+<div class="Alert"><p class="Note"><em>Nota: </em>El comando solo se ofrece cuando hay exactamente un
+elemento seleccionado, y solo para un archivo: no para una carpeta, ni para dos archivos a la vez,
+ni para un elemento cuya sincronización has detenido. Con cualquier otra selección, sencillamente no
+aparece en el menú.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Restaurar una versión</h2>
+<div class="TaskBody">
+<ol>
+  <li><p>Selecciona la versión que quieras. La más reciente que no es la versión actual ya está
+      seleccionada cuando se abre la ventana.</p></li>
+  <li><p>Haz clic en Restaurar… y, para confirmar, en Restaurar.</p></li>
+</ol>
+<p>El archivo vuelve a ser como era en esa versión, en Dropbox y en todos los dispositivos con la
+sesión iniciada en la misma cuenta. El Finder se pone al día un momento después, cuando el cambio
+regresa.</p>
+<div class="Alert"><p class="Note"><em>Nota: </em>Es lo único de aquí que no puedes deshacer
+repitiéndolo: se sustituye lo que dice ahora el archivo. La versión que has sustituido se conserva
+a su vez como versión anterior, así que puedes volver a ella del mismo modo.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Si no hay nada que mostrar</h2>
+<div class="TaskBody">
+<p>Si Dropbox no tiene ninguna versión anterior de un archivo (uno que no has modificado desde que
+lo añadiste), la ventana indica <em>Dropbox no ha conservado ninguna versión anterior de este
+archivo.</em> y el botón de la parte inferior es Cerrar en lugar de Cancelar.</p>
+<p>Las versiones acompañan a un archivo cuando se le cambia el nombre o se mueve, así que un archivo
+al que has cambiado el nombre sigue mostrando lo que era antes.</p>
+<div class="Alert"><p class="Note"><em>Nota: </em>La ventana muestra como máximo diez versiones y no
+hay forma de ir más allá. Cuánto tiempo las conserva Dropbox depende de tu plan de Dropbox, pero un
+archivo que se guarda con la frecuencia suficiente habrá agotado las diez en un día.
+<code>zephyr revs</code> llega más atrás; consulta <a href="zephyr-cli.html#zephyr-cli" class="xRef AppleTopic">Instalar la herramienta de línea de comandos zephyr</a>.</p></div>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Consulta también</strong>
+<a href="open-and-download.html#open-and-download" class="xRef AppleTopic">Abrir un archivo y volver a liberar espacio</a>
+<a href="automate-shortcuts.html#automate-shortcuts" class="xRef AppleTopic">Usar Zephyr en un atajo</a>
+<a href="recover-deleted-file.html#recover-deleted-file" class="xRef AppleTopic">Si has eliminado algo que necesitabas</a>
+</div>
+</body>
+</html>

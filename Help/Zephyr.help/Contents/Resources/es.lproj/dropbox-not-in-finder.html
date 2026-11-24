@@ -1,0 +1,122 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Si tu Dropbox no aparece en el Finder</title>
+<meta name="description" content="Repasa los motivos por los que una cuenta vinculada puede no aparecer en la barra lateral del Finder.">
+<meta name="keywords" content="finder, no aparece, falta, barra lateral, almacenamiento en la nube, ubicaciones, proveedor de archivos, carpeta aplicaciones, restablecer dominios, bloqueado">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="dropbox-not-in-finder" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="dropbox-not-in-finder"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Si tu Dropbox no aparece en el Finder</h1>
+<p>Una cuenta puede estar vinculada, indexada y sincronizándose, y aun así no aparecer en el Finder.
+Estos son los motivos, en el orden en que conviene revisarlos.</p>
+
+<div class="Task">
+<h2 class="Name">Comprobar que Zephyr está activado</h2>
+<div class="TaskBody">
+<p>Es macOS, no Zephyr, quien decide si un proveedor de archivos puede mostrar archivos. Esta es, con
+diferencia, la causa más habitual.</p>
+<ol>
+  <li><p>Elige el menú Apple &gt; Ajustes del Sistema, haz clic en General, haz clic en Ítems de
+      inicio y extensiones y, después, en Proveedores de archivos.</p>
+      <p><a href="x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.fileprovider-nonui" class="URL">Abrir
+      Proveedores de archivos por mí</a></p></li>
+  <li><p>Activa Zephyr.</p></li>
+</ol>
+<p>Si Zephyr no aparece en esa lista, todavía no hay ninguna cuenta vinculada: macOS no tiene nada
+que ofrecer. Consulta <a href="link-account.html#link-account" class="xRef AppleTopic">Vincular tu
+cuenta de Dropbox</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Comprobar que el Finder muestra las ubicaciones en la nube</h2>
+<div class="TaskBody">
+<p>El Finder agrupa todas las ubicaciones en la nube (la de Zephyr y las de cualquier otra app de
+sincronización) bajo un único ajuste, y las oculta todas mientras está desactivado. Una cuenta puede
+estar vinculada, activada, indexada y sincronizándose, y aun así no tener ninguna fila en la barra
+lateral.</p>
+<ol>
+  <li><p>Haz clic en el icono del Finder en el Dock y elige Finder &gt; Ajustes.</p></li>
+  <li><p>Haz clic en Barra lateral.</p></li>
+  <li><p>En Ubicaciones, selecciona Almacenamiento en la nube.</p></li>
+</ol>
+<p>Tu Dropbox aparece al instante: no hace falta reiniciar nada ni cambiar nada en Zephyr. Si usas
+otra app de sincronización, aparece en el mismo momento, lo que confirma que esta era la causa.</p>
+<div class="Alert"><p class="Note"><em>Nota: </em>Este ajuste pertenece al Finder, no a las apps
+cuyos archivos muestra, así que Zephyr no puede leerlo ni activarlo por ti, ni avisarte cuando es
+lo que falla. Comprobarlo primero no cuesta nada.</p></div>
+<p>Si prefieres no tocar el ajuste, pon tu Dropbox en Favoritos: ábrelo en el Finder y arrastra el
+icono de la carpeta, desde la parte superior de la ventana, a la sección Favoritos de la barra
+lateral. Un favorito no depende de Almacenamiento en la nube. Consulta
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Dónde se guardan tus archivos de Dropbox</a>.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Comprobar que Zephyr no se está ejecutando desde una copia</h2>
+<div class="TaskBody">
+<p>Una app que has descargado lleva una marca que lo indica, y macOS ejecuta una app marcada desde
+una copia temporal propia en lugar de desde la carpeta donde la dejaste. No registrará un proveedor
+de archivos para ella, así que Zephyr nunca llega a la lista de Proveedores de archivos.</p>
+<p>Zephyr no puede quitar la marca por sí mismo, y mover la app en el Finder tampoco la quita.
+Instalarla, sí.</p>
+<ol>
+  <li><p>Cierra Zephyr.</p></li>
+  <li><p>Descarga el paquete instalador (el archivo que termina en <code>.pkg</code>) desde
+      <a href="https://zephyrmac.app/#download">zephyrmac.app</a>.</p></li>
+  <li><p>Ábrelo y sigue el instalador. Instala Zephyr en tu carpeta Aplicaciones sin la marca y
+      sustituye la copia que tienes.</p></li>
+  <li><p>Vuelve a abrir Zephyr.</p></li>
+</ol>
+<p>El Finder pone la marca una sola vez, cuando arrastras una app fuera de una imagen de disco
+descargada. Nunca se pone en nada que escriba un instalador, así que es una solución puntual: no hay
+que repetirla después de una actualización.</p>
+<div class="Alert"><p class="Note"><em>Nota: </em>Si prefieres no volver a descargar Zephyr, también
+puedes quitar la marca a mano. Cierra Zephyr, ejecuta <code>xattr -dr com.apple.quarantine
+&quot;/Applications/Zephyr.app&quot;</code> en Terminal (indicando dónde tengas Zephyr, si no es en
+la carpeta Aplicaciones) y vuelve a abrirlo.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Comprobar que solo hay una versión instalada</h2>
+<div class="TaskBody">
+<p>Para macOS, la versión de App Store y la descargable son la misma app, y con ambas instaladas
+puede acabar atendiendo tus archivos una más antigua. Conserva solo una. Consulta
+<a href="editions.html#editions" class="xRef AppleTopic">Elegir entre las dos versiones de
+Zephyr</a>.</p>
+<div class="Alert"><p class="Note"><em>Nota: </em>Para cambiar de versión, instala la copia nueva y
+ábrela, confirma que tu cuenta sigue apareciendo en el Finder y solo entonces elimina la antigua. Si
+eliminas primero, puedes perder también la ubicación del Finder.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Empieza de cero con la ubicación del Finder</h2>
+<div class="TaskBody">
+<p>Una ubicación del Finder sobrevive a la app que la registró, y la registrada por una compilación
+antigua puede conservar ajustes que no hay manera de corregir. Este paso los borra.</p>
+<ol>
+  <li><p>Cierra Zephyr.</p></li>
+  <li><p>En Terminal, ejecuta:</p>
+      <p><code>/Applications/Zephyr.app/Contents/MacOS/Zephyr --reset-domains</code></p></li>
+  <li><p>Vuelve a abrir Zephyr.</p></li>
+</ol>
+<p>Zephyr registra tus cuentas desde cero y cada una vuelve a indexarse. No se toca nada de tu
+Dropbox y no se pierde ninguna descarga que ya tengas, pero tendrás que volver a activar Zephyr en
+Proveedores de archivos.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Consulta también</strong>
+<a href="enable-finder.html#enable-finder" class="xRef AppleTopic">Activar Zephyr en el Finder</a>
+<a href="withheld-approval.html#withheld-approval" class="xRef AppleTopic">Si Zephyr está esperando tu permiso</a>
+<a href="diagnostics.html#diagnostics" class="xRef AppleTopic">Recopilar un informe de diagnóstico</a>
+</div>
+</body>
+</html>

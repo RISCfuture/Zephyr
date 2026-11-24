@@ -1,0 +1,117 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Instalar la herramienta de línea de comandos zephyr</title>
+<meta name="description" content="Pon la herramienta zephyr en tu PATH y usa tu Dropbox desde Terminal.">
+<meta name="keywords" content="línea de comandos, terminal, cli, zephyr, instalar, usr local bin, shell, autocompletado, script, sudo, enlace simbólico">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="zephyr-cli" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="zephyr-cli"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Instalar la herramienta de línea de comandos zephyr</h1>
+<p>La versión descargable de Zephyr incluye una herramienta de línea de comandos. Lee las mismas
+cuentas y el mismo índice que la app, así que puede listar una carpeta que nunca se ha descargado
+sin tocar la red.</p>
+
+<div class="Task">
+<h2 class="Name">Instalarla</h2>
+<div class="TaskBody">
+<p>Si instalaste Zephyr con el paquete instalador y dejaste activada la opción Herramienta de línea
+de comandos, la herramienta ya está en tu <code>PATH</code>: el instalador crea el enlace mientras
+se ejecuta. Abre una ventana de Terminal y ejecuta <code>zephyr --help</code>. Los ajustes de Zephyr
+también lo indican: Herramienta de línea de comandos dice <em>Instalada en /usr/local/bin</em>.</p>
+<p>Si desactivaste esa opción en el instalador, o instalaste Zephyr arrastrándolo desde una imagen
+de disco, nada ha creado el enlace. macOS no permite que Zephyr ponga nada en tu
+<code>PATH</code> por sí mismo, así que te muestra el comando que lo hace.</p>
+<ol>
+  <li><p>Haz clic en Zephyr en la barra de menús y, a continuación, en Ajustes…</p></li>
+  <li><p>Desplázate hasta Herramienta de línea de comandos y haz clic en Copiar.</p></li>
+  <li><p>En Terminal, pega el comando y pulsa Retorno.</p>
+      <p>Enlaza la herramienta en <code>/usr/local/bin</code>. <code>sudo</code> te pide la
+      contraseña, y la cuenta con la que has iniciado sesión tiene que ser de
+      administrador.</p></li>
+  <li><p>Abre una ventana de Terminal nueva y ejecuta <code>zephyr --help</code>.</p></li>
+</ol>
+<div class="Alert"><p class="Note"><em>Nota: </em>La versión de App Store no incluye la
+herramienta, y el panel lo indica. App Store no permite que una app ponga nada en tu
+<code>PATH</code>. Para usar la herramienta, instala la versión descargable desde
+<a href="https://zephyrmac.app/#download">zephyrmac.app</a>; consulta
+<a href="editions.html#editions" class="xRef AppleTopic">Elegir entre las dos versiones de
+Zephyr</a>, donde se explica cómo cambiar sin perder tu ubicación en el Finder.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Vincular una cuenta para la herramienta</h2>
+<div class="TaskBody">
+<p>La herramienta guarda sus credenciales en tu llavero “inicio de sesión”, aparte de las de la app.
+Puede <em>ver</em> una cuenta que la app haya vinculado, pero no puede actuar como una que no haya
+vinculado ella misma.</p>
+<ol>
+  <li><p>En Terminal, ejecuta <code>zephyr auth link</code></p>
+      <p>Imprime una URL de autorización y la abre en tu navegador.</p></li>
+  <li><p>Aprueba el acceso en la página de Dropbox y copia el código de autorización que te
+      muestra Dropbox.</p></li>
+  <li><p>Vuelve a Terminal, pega el código después de
+      <em>Enter the authorization code shown by Dropbox:</em> y pulsa Retorno.</p></li>
+</ol>
+<p><code>zephyr auth list</code> muestra con qué cuentas puede autenticarse la herramienta.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Qué puede hacer</h2>
+<div class="TaskBody">
+<p><code>zephyr --help</code> lo lista todo. En resumen: <code>ls</code>, <code>get</code>,
+<code>put</code>, <code>rm</code>, <code>mkdir</code> y <code>mv</code> para archivos;
+<code>revs</code>, <code>restore</code> y <code>diff</code> para las versiones anteriores de un
+archivo; <code>sharelink</code> para los enlaces compartidos; <code>find</code> para buscar un
+elemento por su nombre en cualquier parte de tu Dropbox, incluidos los archivos que no están en
+este Mac; y <code>status</code>, <code>filestatus</code> y <code>history</code> para lo que Zephyr
+sabe.</p>
+<p>Otros cinco son los equivalentes en Terminal de ajustes para los que, si no, abrirías la app:
+<code>bandwidth-limit</code> fija las velocidades de carga, de descarga y de las redes de uso
+medido; <code>ignored</code> lista lo que has excluido de la sincronización;
+<code>keep-downloaded</code> lista lo que has fijado en este Mac; <code>notify</code> silencia las
+notificaciones; y <code>rebuild-index</code> reinicia el índice de una cuenta. <code>log</code> lee
+el registro reciente de Zephyr y <code>gui</code> abre la app.</p>
+<p>Los comandos actúan sobre la única cuenta vinculada, salvo que indiques <code>--account</code>.
+<code>bandwidth-limit</code>, <code>notify</code>, <code>log</code> y <code>gui</code> no admiten
+<code>--account</code> en absoluto, porque ninguno pertenece a una sola cuenta. Trece comandos
+admiten también <code>--json</code>.</p>
+<div class="Alert"><p class="Note"><em>Nota: </em><code>watch</code> es un comando de diagnóstico, no
+una forma de mantener una cuenta al día. Quien vigila los cambios de Dropbox es Zephyr mismo;
+consulta
+<a href="settings-general.html#settings-general" class="xRef AppleTopic">Mantener Zephyr funcionando en segundo plano</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Añadir el autocompletado del shell</h2>
+<div class="TaskBody">
+<p><code>zephyr --generate-completion-script</code> escribe un script de autocompletado para
+<code>zsh</code>, <code>bash</code> o <code>fish</code>. Para zsh:</p>
+<ol>
+  <li><p>Ejecuta <code>mkdir -p ~/.zsh/completions</code></p></li>
+  <li><p>Ejecuta <code>zephyr --generate-completion-script zsh &gt; ~/.zsh/completions/_zephyr</code></p></li>
+  <li><p>Añade <code>fpath=(~/.zsh/completions $fpath)</code> a <code>~/.zshrc</code>,
+      <em>encima</em> de la línea <code>compinit</code>, y abre una ventana de Terminal
+      nueva.</p></li>
+</ol>
+<p>Las rutas de Dropbox se completan a partir del índice de Zephyr, una carpeta por cada pulsación
+de Tab, así que una carpeta que no se ha descargado se completa exactamente igual que una que ya
+está aquí.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Consulta también</strong>
+<a href="cli-install.html#cli-install" class="xRef AppleTopic">Si la herramienta de línea de comandos no se instala</a>
+<a href="automate-shortcuts.html#automate-shortcuts" class="xRef AppleTopic">Usar Zephyr en un atajo</a>
+<a href="editions.html#editions" class="xRef AppleTopic">Elegir entre las dos versiones de Zephyr</a>
+<a href="multiple-accounts.html#multiple-accounts" class="xRef AppleTopic">Usar más de una cuenta de Dropbox</a>
+</div>
+</body>
+</html>

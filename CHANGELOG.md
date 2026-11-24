@@ -8,7 +8,7 @@ GitHub release — so a heading is `## <version>`, matching the tag exactly.
 
 ### Added
 
-- Zephyr is now available in German and French.
+- Zephyr is now available in German, French and Spanish.
 
 ## 2.0.1
 

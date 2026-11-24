@@ -1,0 +1,122 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Qué envía Zephyr y qué no</title>
+<meta name="description" content="Adónde van tus archivos y credenciales, qué contiene el índice local, qué incluye un informe de fallos y la comprobación de actualizaciones que hace Zephyr.">
+<meta name="keywords" content="privacidad, datos, seguridad, llavero, token, índice, permisos, oauth, telemetría, rastreo, qué se envía, informe de fallos, sentry, diagnóstico">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="anchors">
+<link media="all" href="zephyr-help.css" type="text/css" rel="stylesheet">
+</head>
+<body dir="ltr" id="privacy-and-data" class="AppleTopic apd-topic dark-mode-enabled" data-istaskopen="true" data-designversion="2">
+<a name="privacy-and-data"></a>
+<figure class="topicIcon"><img src="../help-icon.png" alt="" height="30" width="30"></figure>
+<h1>Qué envía Zephyr y qué no</h1>
+<p>Zephyr mueve tus archivos entre tu Mac y Dropbox. Eso es casi lo único que envía a cualquier parte, y
+no existe ningún servidor de Zephyr al que pueda ir a parar nada de ello. Lo demás es un informe de fallos y una
+comprobación de actualizaciones, descritos más abajo.</p>
+
+<div class="Task">
+<h2 class="Name">Tus archivos</h2>
+<div class="TaskBody">
+<p>El contenido de los archivos viaja directamente entre tu Mac y Dropbox mediante conexiones
+cifradas, y no pasa por nada intermedio. Zephyr descarga un archivo cuando algo lo abre y sube uno
+cuando lo creas o lo modificas.</p>
+<p>Una vez que tus archivos están en Dropbox, lo que ocurra con ellos se rige por la política de
+privacidad de Dropbox, que conviene leer junto con esta página.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Tus credenciales de Dropbox</h2>
+<div class="TaskBody">
+<p>Escribes tu contraseña de Dropbox en el sitio web de Dropbox, nunca en Zephyr. Lo que Dropbox
+devuelve es un token de actualización, que Zephyr guarda en el llavero de macOS y envía únicamente
+a Dropbox.</p>
+<p>Zephyr pide a Dropbox seis tipos de acceso y ninguno más: leer el perfil básico y el uso de tu
+cuenta; leer los nombres, los tamaños y las marcas de tiempo de tus archivos; descargar el
+contenido de los archivos; crear y modificar archivos; listar enlaces compartidos; y crearlos y
+revocarlos. Dropbox te muestra la lista cuando vinculas la cuenta. Zephyr no pide acceso a equipos,
+contactos ni Paper, y no puede ver ninguna cuenta que no sea la que vinculas.</p>
+<p>Puedes retirar el acceso en cualquier momento, desde la sección Aplicaciones conectadas de la
+configuración de Dropbox o desvinculando la cuenta en Zephyr.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">El índice de tu Mac</h2>
+<div class="TaskBody">
+<p>Para que el Finder pueda listar tu Dropbox sin descargarlo, Zephyr mantiene una base de datos que
+describe tu cuenta: el nombre, la ruta, el tamaño, las marcas de tiempo y el hash de contenido de
+cada elemento, y si lo has excluido, además de aproximadamente una semana de historial reciente de
+sincronización y notas sobre cualquier cosa que haya fallado.</p>
+<p>Nunca sale de tu Mac. No se sube a ningún sitio y nadie más puede leerla. Al desvincular la
+cuenta se elimina.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Informes de fallos</h2>
+<div class="TaskBody">
+<p>Cuando Zephyr deja de funcionar (la app, la parte que ejecuta el Finder, la ventana que
+lista las versiones anteriores de un archivo, la extensión Compartir, el widget o el comando
+<code>zephyr</code>), informa del fallo a Sentry, un servicio de supervisión de errores, para
+que se pueda encontrar y corregir. Un informe indica cuál de ellos se estaba ejecutando, qué versión
+era, en qué tipo de Mac estaba y en qué punto del propio código de Zephyr se produjo el problema.
+Desde la app y la parte que ejecuta el Finder, envía además una muestra de cuánto tardó el trabajo
+propio de Zephyr, para poder encontrar los puntos lentos.</p>
+<p>No lleva nada tuyo. Los nombres de archivos, los nombres de carpetas y las rutas de Dropbox se
+eliminan de todos los mensajes del informe antes de enviarlo, igual que las direcciones de correo y
+cualquier cosa que se parezca a una credencial. Zephyr también indica a Sentry que no adjunte tu
+dirección IP ni el nombre de tu Mac, y no existe ninguna cuenta de Zephyr a la que asociar un
+informe. Lo que une un informe con otro es un número aleatorio que Zephyr generó en este Mac; al
+eliminar los datos de Zephyr, ese número se descarta.</p>
+<p>Todavía no hay ningún ajuste para esto. Los informes de las compilaciones de desarrollo no se
+envían nunca.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Búsqueda de actualizaciones</h2>
+<div class="TaskBody">
+<p>La versión descargable consulta GitHub en busca de nuevas versiones. La solicitud no está
+autenticada y no dice nada sobre ti, tu cuenta ni tus archivos. Para detenerla, elige Nunca en Buscar
+automáticamente, en los ajustes de Zephyr; consulta
+<a href="settings-updates.html#settings-updates" class="xRef AppleTopic">Buscar actualizaciones de
+Zephyr</a>. La versión de App Store no hace esta comprobación.</p>
+<p>No hay ningún identificador publicitario, ni rastreo entre apps, ni nada que se venda o se
+comparta con nadie.</p>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Registro de diagnóstico</h2>
+<div class="TaskBody">
+<p>Zephyr escribe mensajes en el registro unificado de macOS. Permanecen en tu Mac; nada de ellos se
+sube, ni a Sentry ni a ningún otro sitio.</p>
+<div class="Alert"><p class="Note"><em>Nota: </em>Los datos del registro unificado se incluyen en un
+sysdiagnose. Si generas uno y lo envías a Apple, o lo adjuntas a un informe de error, esos datos del
+registro van adonde tú los envíes. Revísalo antes de compartirlo. Lo mismo vale para un informe de
+diagnóstico; consulta
+<a href="diagnostics.html#diagnostics" class="xRef AppleTopic">Recopilar un informe de
+diagnóstico</a>.</p></div>
+</div>
+</div>
+
+<div class="Task">
+<h2 class="Name">Leer la política completa</h2>
+<div class="TaskBody">
+<p>La política está en
+<a href="https://zephyrmac.app/privacy">zephyrmac.app/privacy</a>.
+Zephyr también la enlaza: haz clic en Zephyr en la barra de menús, haz clic en Ajustes&#8230; y, a
+continuación, en Política de privacidad, en la sección Acerca de.</p>
+</div>
+</div>
+
+<div class="LinkUniversal"><strong>Consulta también</strong>
+<a href="about-zephyr.html#about-zephyr" class="xRef AppleTopic">Encontrar la versión de Zephyr y su política de privacidad</a>
+<a href="where-files-live.html#where-files-live" class="xRef AppleTopic">Dónde se guardan tus archivos de Dropbox</a>
+<a href="link-account.html#link-account" class="xRef AppleTopic">Vincular tu cuenta de Dropbox</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Novedad: conserva cualquier carpeta o archivo en este Mac. Se descarga al instante, se actualiza con los cambios en Dropbox y nunca se elimina para liberar espacio.

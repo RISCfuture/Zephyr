@@ -17,6 +17,12 @@
             "value" : "Zephyr"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -41,6 +47,12 @@
             "value" : "Zephyr"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
+            "value" : "Zephyr"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "machine_translated",
@@ -62,6 +74,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Copyright ©2026 Tim Morgan"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "machine_translated",
             "value" : "Copyright ©2026 Tim Morgan"
           }
         },
